@@ -21,9 +21,10 @@
                 <a href="#" class="nav-link">Categrias</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-            <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/ventas.php','content-wrapper');">
+            <!-- <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/ventas.php','content-wrapper');"> -->
+            <a style="cursor:pointer;" class="nav-link" onclick="users();">
 
-                    Ventas</a>
+                    Usuarios</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
             <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/compras.php','content-wrapper');">

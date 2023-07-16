@@ -62,6 +62,23 @@ class UsuarioModel extends Conexion
         $users = $this->get_table_assoc($consulta);
         return $users;
     }
+
+    public function crearUsuario($request)
+    {
+        $sql = "insert into usuarios (login,email,nombre,apellido,clave) 
+        values (
+                '".$request['email']."'
+                ,'".$request['email']."'
+                ,'".$request['nombreUsuario']."'
+                ,'".$request['apellidoUsuario']."'
+                ,'".$request['password']."'
+
+        ) " ; 
+
+        $consulta = mysql_query($sql,$this->connectMysql());
+
+    }
+
 }
 
 ?>
