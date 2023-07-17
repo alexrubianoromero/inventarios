@@ -16,6 +16,7 @@ function pedirInfoUsuario()
 
     //  verificarCredencialesJsonAsignarSessionStorage(user,clave);
 }
+
 function crearUsuario()
 {
     var valida =  validaInfoUsuario();
@@ -27,6 +28,7 @@ function crearUsuario()
         var apellidoUsuario = document.getElementById('apellidoUsuario').value;
         var password = document.getElementById('password').value;
         var email = document.getElementById('email').value;
+        var idSucursal = document.getElementById('idSucursal').value;
         const http=new XMLHttpRequest();
         const url = 'users/users.php';
         http.onreadystatechange = function(){
@@ -42,6 +44,7 @@ function crearUsuario()
                     +'&apellidoUsuario='+apellidoUsuario
                     +'&password='+password
                     +'&email='+email
+                    +'&idSucursal='+idSucursal
                 );
                 
     }
@@ -68,13 +71,29 @@ function  validaInfoUsuario()
         document.getElementById('email').focus();
         return 0;
     }
+    if( document.getElementById('idSucursal').value == ''){
+        alert('Por favor escoger una sucursal ');
+        document.getElementById('idSucursal').focus();
+        return 0;
+    }
 
     return 1;
 }
 
 function mostrarUsuarios()
 {
-    
+    const http=new XMLHttpRequest();
+    const url = 'users/users.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("modalBodyUsuario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=mostrarUsuarios'
+    );
 }
 
 

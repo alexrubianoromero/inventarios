@@ -32,7 +32,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" id="div_content_wrapper">
-          <?php include "vistas/dashboard.php"   ?>
+          <?php 
+            // include "vistas/dashboard.php"   
+          ?>
         </div>
         <!-- /.content-wrapper -->
 

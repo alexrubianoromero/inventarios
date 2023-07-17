@@ -1,9 +1,17 @@
 <?php
 $raiz = dirname(dirname(dirname(__file__)));
  require_once($raiz.'/vista/vista.php');  
+ require_once($raiz.'/sucursales/models/SucursalModel.php');  
+
 
 class usersView 
 {
+    private $sucursalModel; 
+    public function __construct()
+    {
+        $this->sucursalModel = new SucursalModel();
+    }
+
     public function usersMenu($users)
     {
 
@@ -38,17 +46,18 @@ class usersView
                     <thead>
                         <th>Nombre</th>
                         <th>Usuario</th>
-                        <th>Perfil</th>
+                        <th>Sucursal</th>
                     </thead>
                     <tbody>
                         
                         <?php
                       foreach($users as $user)
                       {
+                        $infoSucursal = $this->sucursalModel->traerSucursalId($user['idSucursal']); 
                           echo '<tr>'; 
                           echo '<td>'.$user['nombre'].' '.$user['apellido']. '</td>';
                           echo '<td>'.$user['login'].'</td>';
-                          echo '<td>'.$user['nombre_perfil'].'</td>';
+                          echo '<td>'.$infoSucursal['nombre'].'</td>';
                           echo '</tr>';  
                         }
                         ?>
@@ -113,6 +122,27 @@ class usersView
                 <div class="col-md-6">
                     <label for="">email:</label>
                       <input class ="form-control" type="text" id="email">          
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-md-6">
+                    <label for="">Sucursal:</label>
+                    <select id="idSucursal" class ="form-control">
+                        <option value ="">Seleccione Sucursal</option>
+                        <?php
+                            $sucursales = $this->sucursalModel->traerSucursales();
+                            foreach($sucursales as $sucursal)
+                            {
+                                echo '<option value ="'.$sucursal['id'].'" >'.$sucursal['nombre'].'</option>';
+                            }
+                        ?>
+
+                    </select>   
+                      <!-- <input class ="form-control" type="text" id="id">           -->
+                </div>
+                <div class="col-md-6">
+                    <!-- <label for="">email:</label>
+                      <input class ="form-control" type="text" id="email">           -->
                 </div>
         </div>
 

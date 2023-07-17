@@ -13,7 +13,7 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/dashboard.php','content-wrapper');">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
@@ -21,10 +21,10 @@
                             </p>
                         </a>
                     </li>    
-                
+                 -->
     
                     <!-- <li class="nav-item menu-open"> -->
-                    <li class="nav-item ">
+                    <!-- <li class="nav-item ">
                         <a href="#" class="nav-link ">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -52,18 +52,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                    <!-- <a style="cursor:pointer;" class="nav-link" onclick="CargarContenido('vistas/usuarios.php','content-wrapper');"> -->
-                    <a style="cursor:pointer;" class="nav-link" onclick="users();">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Usuarios
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                    <!-- <a style="cursor:pointer;" class="nav-link" onclick="CargarContenido('vistas/usuarios.php','content-wrapper');"> -->
                     <a style="cursor:pointer;" class="nav-link" onclick="sucursales();">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
@@ -72,6 +62,22 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                    <a style="cursor:pointer;" class="nav-link" onclick="users();">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Usuarios
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                    <a style="cursor:pointer;" class="nav-link" onclick="perfiles();">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Perfiles
+                            </p>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="CargarContenido('vistas/compras.php','content-wrapper');">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
@@ -94,7 +100,7 @@
                                 Configuracion
                             </p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="salir();">
                             <i class="nav-icon fas fa-th"></i>

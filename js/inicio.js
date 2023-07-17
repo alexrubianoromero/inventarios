@@ -116,7 +116,7 @@ function sucursales()
     };
     http.open("POST",url);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    http.send();
+    http.send('opcion=sucursalesMenu');
 
 }
 

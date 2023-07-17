@@ -65,13 +65,14 @@ class UsuarioModel extends Conexion
 
     public function crearUsuario($request)
     {
-        $sql = "insert into usuarios (login,email,nombre,apellido,clave) 
+        $sql = "insert into usuarios (login,email,nombre,apellido,clave,idSucursal) 
         values (
                 '".$request['email']."'
                 ,'".$request['email']."'
                 ,'".$request['nombreUsuario']."'
                 ,'".$request['apellidoUsuario']."'
                 ,'".$request['password']."'
+                ,'".$request['idSucursal']."'
 
         ) " ; 
 
