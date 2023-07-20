@@ -35,6 +35,11 @@
 
                     Perfiles</a>
             </li>
+            <li class="nav-item d-none d-sm-inline-block">
+            <a style="cursor:pointer;" class="nav-link" onclick="inventarios();">
+
+            inventarios</a>
+            </li>
             <!-- <li class="nav-item d-none d-sm-inline-block">
             <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/compras.php','content-wrapper');">
 

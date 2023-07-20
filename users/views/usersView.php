@@ -2,14 +2,18 @@
 $raiz = dirname(dirname(dirname(__file__)));
  require_once($raiz.'/vista/vista.php');  
  require_once($raiz.'/sucursales/models/SucursalModel.php');  
+ require_once($raiz.'/perfiles/models/PerfilModel.php');  
 
 
 class usersView 
 {
     private $sucursalModel; 
+    private $perfilModel; 
+
     public function __construct()
     {
         $this->sucursalModel = new SucursalModel();
+        $this->perfilModel = new PerfilModel();
     }
 
     public function usersMenu($users)
@@ -46,6 +50,7 @@ class usersView
                     <thead>
                         <th>Nombre</th>
                         <th>Usuario</th>
+                        <th>Perfil</th>
                         <th>Sucursal</th>
                     </thead>
                     <tbody>
@@ -54,9 +59,11 @@ class usersView
                       foreach($users as $user)
                       {
                         $infoSucursal = $this->sucursalModel->traerSucursalId($user['idSucursal']); 
+                        $infoPerfil = $this->perfilModel->traerPerfilId($user['id_perfil']); 
                           echo '<tr>'; 
                           echo '<td>'.$user['nombre'].' '.$user['apellido']. '</td>';
                           echo '<td>'.$user['login'].'</td>';
+                          echo '<td>'.$infoPerfil['nombre_perfil'].'</td>';
                           echo '<td>'.$infoSucursal['nombre'].'</td>';
                           echo '</tr>';  
                         }
@@ -141,8 +148,19 @@ class usersView
                       <!-- <input class ="form-control" type="text" id="id">           -->
                 </div>
                 <div class="col-md-6">
-                    <!-- <label for="">email:</label>
-                      <input class ="form-control" type="text" id="email">           -->
+                <label for="">Perfil:</label>
+                    <select id="idPerfil" class ="form-control">
+                        <option value ="">Seleccione Perfil</option>
+                        <?php
+                            $perfiles = $this->perfilModel->traerPerfiles();
+                            foreach($perfiles as $perfil)
+                            {
+                                echo '<option value ="'.$perfil['id_perfil'].'" >'.$perfil['nombre_perfil'].'</option>';
+                            }
+                        ?>
+
+                    </select>   
+                    
                 </div>
         </div>
 

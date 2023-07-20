@@ -29,6 +29,7 @@ function crearUsuario()
         var password = document.getElementById('password').value;
         var email = document.getElementById('email').value;
         var idSucursal = document.getElementById('idSucursal').value;
+        var idPerfil = document.getElementById('idPerfil').value;
         const http=new XMLHttpRequest();
         const url = 'users/users.php';
         http.onreadystatechange = function(){
@@ -45,6 +46,7 @@ function crearUsuario()
                     +'&password='+password
                     +'&email='+email
                     +'&idSucursal='+idSucursal
+                    +'&idPerfil='+idPerfil
                 );
                 
     }
@@ -74,6 +76,11 @@ function  validaInfoUsuario()
     if( document.getElementById('idSucursal').value == ''){
         alert('Por favor escoger una sucursal ');
         document.getElementById('idSucursal').focus();
+        return 0;
+    }
+    if( document.getElementById('idPerfil').value == ''){
+        alert('Por favor escoger un perfil');
+        document.getElementById('idPerfil').focus();
         return 0;
     }
 

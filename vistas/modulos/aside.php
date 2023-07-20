@@ -77,6 +77,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                    <a style="cursor:pointer;" class="nav-link" onclick="inventarios();">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Inventario
+                            </p>
+                        </a>
+                    </li>
                     <!-- <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="CargarContenido('vistas/compras.php','content-wrapper');">
                             <i class="nav-icon fas fa-th"></i>
