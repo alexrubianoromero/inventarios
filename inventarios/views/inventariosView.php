@@ -35,10 +35,12 @@ class inventariosView
             <div id="resultados">
                 <table class="table table-striped hover-hover">
                     <thead>
-                        <th>Importacion</th>
-                        <th>Lote</th>
+                      
                         <th>Serial</th>
-                        <th>Marca</th>
+                        <th>Procesador</th>
+                        <th>Generacion</th>
+                        <th>Ram</th>
+                        <th>Tipo Disco</th>
                         <th>Acciones</th>
 
                     </thead>
@@ -50,10 +52,11 @@ class inventariosView
                         // $infoSucursal = $this->sucursalModel->traerSucursalId($user['idSucursal']); 
                         // $infoPerfil = $this->perfilModel->traerPerfilId($user['id_perfil']); 
                           echo '<tr>'; 
-                          echo '<td>'.$inventario['idImportacion'].'</td>';
-                          echo '<td>'.$inventario['lote'].'</td>';
                           echo '<td>'.$inventario['serial'].'</td>';
-                          echo '<td>'.$inventario['marca'].'</td>';
+                          echo '<td>'.$inventario['procesador'].'</td>';
+                          echo '<td>'.$inventario['generacion'].'</td>';
+                          echo '<td>'.$inventario['ram'].'</td>';
+                          echo '<td>'.$inventario['discoTipo'].'</td>';
                           echo '<td>';
                           echo '<button 
                           data-bs-toggle="modal" 
