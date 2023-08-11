@@ -15,6 +15,23 @@ class InventariosModel extends Conexion
         $inventario = $this->get_table_assoc($consulta);
         return $inventario;
     } 
+    
+    public function traerComputadoresMonitores()
+    {
+        $sql = "select * from inventario where idTipoParte in ('1','2') order by idInventario asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $inventario = $this->get_table_assoc($consulta);
+        return $inventario;
+    }
+    public function traerPartesEnGeneral()
+    {
+        $sql = "select * from inventario where idTipoParte not in ('1','2') order by idInventario asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $inventario = $this->get_table_assoc($consulta);
+        return $inventario;
+    }
+   
+
 
     public function crearProducto($request)
     {

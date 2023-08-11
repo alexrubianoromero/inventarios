@@ -1,3 +1,54 @@
+function computadoresMenu()
+{
+    const http=new XMLHttpRequest();
+    const url = 'inventarios/inventarios.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("divResultadosInventario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=computadoresMenu'
+    );
+
+}
+
+function hardwareMenu()
+{
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("divResultadosInventario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=hardwareMenu'
+    );
+
+}
+
+
+function partesMenu()
+{
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("divResultadosInventario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=partesMenu'
+    );
+
+}
 function pedirInfoProducto()
 {
     // alert('verificando credenciales');

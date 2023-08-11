@@ -19,6 +19,10 @@ class inventariosController
         {
             $this->inventariosMenu();
         }
+        if($_REQUEST['opcion']=='computadoresMenu')
+        {
+            $this->computadoresMenu();
+        }
         if($_REQUEST['opcion']=='pedirInfoProducto')
         {
             $this->pedirInfoProducto();
@@ -31,6 +35,10 @@ class inventariosController
         {
             $this->verProducto($_REQUEST);
         }
+        if($_REQUEST['opcion']=='partesMenu')
+        {
+            $this->partesMenu($_REQUEST);
+        }
 
 
     }    
@@ -39,6 +47,18 @@ class inventariosController
     {
         $inventarios = $this->model->traerInventarios();
         $this->view->inventariosMenu($inventarios);
+    }
+    public function computadoresMenu()
+    {
+        $computadoresMonitores  = $this->model->traerComputadoresMonitores();
+        $this->view->computadoresMenu($computadoresMonitores);
+    }
+    public function partesMenu()
+    {
+        // die('esta en partes de controller ');
+        $partes  = $this->model->traerPartesEnGeneral();
+        $this->view->partesMenu($partes);
+
     }
     
     
