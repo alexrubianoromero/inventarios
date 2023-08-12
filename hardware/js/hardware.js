@@ -82,4 +82,118 @@ function verHardware(id)
                 );
 }
 
+function quitarRam(idHardware,idRam)
+{
+     let response = confirm("Esta seguro que desea quitar la ram de este hardware");
+    // alert(response);
+    // alert(idHardware + idRam);
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodySubirArchivo").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=quitarRam'
+                  +'&idHardware='+idHardware
+                  +'&idRam='+idRam
+        );
+    }
+
+}
+function agregarRam(idHardware)
+{
+     let response = confirm("Esta seguro que desea Agregar la ram a este hardware");
+    // alert(response);
+    // alert(idHardware + idRam);
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=agregarRam'
+                  +'&idHardware='+idHardware
+        );
+    }
+
+}
+
+function quitarDisco(idHardware,idDisco)
+{
+    // alert(idDisco);
+    let response = confirm("Esta seguro que desea quitar el disco de este hardware");
+    // alert(response);
+    // alert(idHardware + idRam);
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodySubirArchivo").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=quitarDisco'
+                  +'&idHardware='+idHardware
+                  +'&idDisco='+idDisco
+        );
+    }
+}
+
+function formuAgregarDisco(idHardware)
+{
+   
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=formuAgregarDisco'
+                  +'&idHardware='+idHardware
+        );
+    
+}
+
+function agregarDisco(idHardware,idDisco)
+{
+    let response = confirm("Esta seguro que desea quitar este disco?");
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=agregarDisco'
+                  +'&idHardware='+idHardware
+                  +'&idDisco='+idDisco
+        );
+    }
+}
+
 

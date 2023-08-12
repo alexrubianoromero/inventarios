@@ -27,6 +27,25 @@ class HardwareModel extends Conexion
         // die();
         return $hardware;  
     }
+    
+    public function desligarRamDeEquipo($request)
+    {
+        $sql = "update hardware set  idRam = 0  where  id= '".$request['idHardware']."'   ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    public function desligarDiscoDeEquipo($request)
+    {
+        $sql = "update hardware set  idDisco = 0  where  id= '".$request['idHardware']."'   ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    public function asociarParteEnTablaHardware($request)
+    {
+        $sql = "update hardware set idDisco = '".$request['idDisco']."'      where id =   '".$request['idHardware']."'   "; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+
+
+
 
 
 }
