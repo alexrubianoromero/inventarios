@@ -43,6 +43,11 @@ class HardwareModel extends Conexion
         $sql = "update hardware set idDisco = '".$request['idDisco']."'      where id =   '".$request['idHardware']."'   "; 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    public function asociarParteRamEnTablaHardware($request)
+    {
+        $sql = "update hardware set idRam = '".$request['idRam']."'      where id =   '".$request['idHardware']."'   "; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
 
 
 

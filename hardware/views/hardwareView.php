@@ -173,7 +173,7 @@ class hardwareView
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Parte</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar o Quitar Parte</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBodyAgregarRam">
@@ -298,11 +298,16 @@ class hardwareView
                         data-bs-toggle="modal" 
                         data-bs-target="#modalAgregarRam"
                         class ="btn btn-success" 
-                        onclick="agregarRam('.$producto['id'].');"
+                        onclick="formuAgregarRam('.$producto['id'].');"
                         >AGREGAR RAM</button>';
 
                 }else{
-                    echo '<button class ="btn btn-primary" onclick="quitarRam('.$producto['id'].','.$producto['idRam'].');">QUITAR RAM</button>';
+                    echo '<button 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalAgregarRam"
+                        class ="btn btn-primary" 
+                        onclick="quitarRam('.$producto['id'].','.$producto['idRam'].');"
+                        >QUITAR RAM</button>';
 
                 }
                 ?>
@@ -319,7 +324,12 @@ class hardwareView
                             >AGREGAR DISCO</button>';
 
                 }else{
-                    echo '<button class ="btn btn-primary" onclick="quitarDisco('.$producto['id'].','.$producto['idDisco'].');">QUITAR DISCO</button>';
+                    echo '<button 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalAgregarRam"
+                            class ="btn btn-primary" 
+                            onclick="quitarDisco('.$producto['id'].','.$producto['idDisco'].');"
+                            >QUITAR DISCO</button>';
                 }
              ?>       
             </div>    
@@ -340,17 +350,52 @@ class hardwareView
         <?php
     }
 
+
     public function formuAgregarRam($idHardware)
     {
+        $memorias = $this->partesModel->traerMemoriasDisponibles();
+        // echo '<pre>';
+        // print_r($memorias); 
+        // echo '</pre>';
+        // die();
+
        
        ?>
        <div>
-          <h3>Escoja la memoria a agregar</h3>
+          <h3>Escoja la ram a agregar</h3>
+          <table class="table">
+            <thead>
+
+                <tr>
+                    <td>Id</td>
+                    <td>Parte</td>
+                    <td>Subtipo</td>
+                    <td>Capacidad</td>
+                    <td>Acciones</td>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <?php
+                    foreach($memorias as $memoria)
+                    {
+                        echo '<tr>'; 
+                        echo '<td>'.$memoria['id'].'</td>';
+                        echo '<td>'.$memoria['descriParte'].'</td>';
+                        echo '<td>'.$memoria['descriSubParte'].'</td>';
+                        echo '<td>'.$memoria['capacidad'].'</td>';
+                        echo '<td><button class ="btn btn-primary" onclick ="agregarMemoriaRam('.$idHardware.','.$memoria['id'].');">Agregar</button></td>';
+                        echo '</tr>';
+                    }
+                ?>
+            </tbody>
+          </table>
             
        </div>
        <?php
     }
-
 
 
     public function formuAgregarDisco($idHardware)

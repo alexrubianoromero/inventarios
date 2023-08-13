@@ -94,7 +94,7 @@ function quitarRam(idHardware,idRam)
         http.onreadystatechange = function(){
     
             if(this.readyState == 4 && this.status ==200){
-                   document.getElementById("modalBodySubirArchivo").innerHTML  = this.responseText;
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
             }
         };
         http.open("POST",url);
@@ -143,7 +143,7 @@ function quitarDisco(idHardware,idDisco)
         http.onreadystatechange = function(){
     
             if(this.readyState == 4 && this.status ==200){
-                   document.getElementById("modalBodySubirArchivo").innerHTML  = this.responseText;
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
             }
         };
         http.open("POST",url);
@@ -154,8 +154,7 @@ function quitarDisco(idHardware,idDisco)
         );
     }
 }
-
-function formuAgregarDisco(idHardware)
+function formuAgregarRam(idHardware)
 {
    
         const http=new XMLHttpRequest();
@@ -168,12 +167,32 @@ function formuAgregarDisco(idHardware)
         };
         http.open("POST",url);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send('opcion=formuAgregarDisco'
+        http.send('opcion=formuAgregarRam'
                   +'&idHardware='+idHardware
         );
     
 }
-
+function agregarMemoriaRam(idHardware,idRam)
+{
+    let response = confirm("Esta seguro que desea quitar este disco?");
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=agregarMemoriaRam'
+                  +'&idHardware='+idHardware
+                  +'&idRam='+idRam
+        );
+    }
+}
 function agregarDisco(idHardware,idDisco)
 {
     let response = confirm("Esta seguro que desea quitar este disco?");
@@ -195,5 +214,26 @@ function agregarDisco(idHardware,idDisco)
         );
     }
 }
+
+
+function formuAgregarDisco(idHardware)
+{
+   
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=formuAgregarDisco'
+                  +'&idHardware='+idHardware
+        );
+    
+}
+
 
 

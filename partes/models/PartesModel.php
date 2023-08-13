@@ -23,6 +23,27 @@ class PartesModel extends Conexion
         $partes = $this->get_table_assoc($consulta);
         return $partes;
     }
+    public function traerMemoriasDisponibles()
+    {
+        $sql = "select id from tipoparte where descripcion = 'Ram' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $ArridTipoParte = mysql_fetch_assoc($consulta);
+        $idTipoParteRam = $ArridTipoParte['id'];
+
+
+
+        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad  from  partes p
+        inner join subtipoParte s on (s.id = p.idSubtipoParte )
+        inner join tipoparte t on (t.id = s.idParte)
+        where t.descripcion = 'Ram'    
+        and p.idHardware = 0
+        and p.idEstadoParte = 0
+        ";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $ram = $this->get_table_assoc($consulta);
+        return $ram;  
+    }
     public function traerDiscosDisponibles()
     {
         $sql = "select id from tipoparte where descripcion = 'Disco' ";
@@ -56,6 +77,16 @@ class PartesModel extends Conexion
         $sql = "update partes set  idHardware = '".$request['idHardware']."'      where id=  '".$request['idDisco']."'  "; 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    public function asociarRamHardwareEnTablaPartes($request)
+    {
+        $sql = "update partes set  idHardware = '".$request['idHardware']."'      where id=  '".$request['idRam']."'  "; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    public function desligarRamDeHardware($request)
+    {
+        $sql = "update partes set  idHardware = 0      where id=  '".$request['idRam']."'  "; 
+        $consulta = mysql_query($sql,$this->connectMysql());
 
+    }
 
 }

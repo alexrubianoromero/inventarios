@@ -40,6 +40,14 @@ class hardwareController
         {
             $this->quitarDisco($_REQUEST);
         }
+        if($_REQUEST['opcion']=='formuAgregarRam')
+        {
+            $this->formuAgregarRam($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='agregarMemoriaRam')
+        {
+            $this->agregarMemoriaRam($_REQUEST);
+        }
         if($_REQUEST['opcion']=='formuAgregarDisco')
         {
             $this->formuAgregarDisco($_REQUEST);
@@ -77,16 +85,11 @@ class hardwareController
         // echo 'llego a controller y quitar ram '; 
         //desligar la parte del hardware
         $this->model->desligarRamDeEquipo($request);
+        $this->partesModel->desligarRamDeHardware($request);
         //ahora deberia crear el movimiento 
+        echo 'La Ram fue desasociada del hardware';
     }
-    public function agregarRam($request)
-    {
-        // echo 'llego a controller y quitar ram '; 
-        //desligar la parte del hardware
-        // $this->model->desligarRamDeEquipo($request);
-        //ahora deberia crear el movimiento 
-        $this->view->formuAgregarRam($request['idHardware']);
-    }
+
     public function quitarDisco($request)
     {
         // echo 'llego a controller y quitar Disco '; 
@@ -95,12 +98,24 @@ class hardwareController
         $this->partesModel->desligarParteDeHardware($request['idDisco']);
         
         //ahora deberia crear el movimiento 
-        echo 'El disco se ha desligado del computador '; 
+        echo 'El disco ya no esta asociado a este hardware '; 
     }
     
+    public function formuAgregarRam($request)
+    {
+        $this->view->formuAgregarRam($request['idHardware']);
+    }
+
     public function formuAgregarDisco($request)
     {
         $this->view->formuAgregarDisco($request['idHardware']);
+    }
+
+    public function agregarMemoriaRam($request)
+    {
+        $this->model->asociarParteRamEnTablaHardware($request);
+        $this->partesModel->asociarRamHardwareEnTablaPartes($request);
+        echo 'Memoria Agregado!!';
     }
     public function agregarDisco($request)
     {
