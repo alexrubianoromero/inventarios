@@ -174,7 +174,7 @@ function formuAgregarRam(idHardware)
 }
 function agregarMemoriaRam(idHardware,idRam)
 {
-    let response = confirm("Esta seguro que desea quitar este disco?");
+    let response = confirm("Esta seguro que desea agregar esta parte?");
     if(response == 1)
     {
         const http=new XMLHttpRequest();
@@ -195,7 +195,7 @@ function agregarMemoriaRam(idHardware,idRam)
 }
 function agregarDisco(idHardware,idDisco)
 {
-    let response = confirm("Esta seguro que desea quitar este disco?");
+    let response = confirm("Esta seguro que desea  agregar esta parte?");
     if(response == 1)
     {
         const http=new XMLHttpRequest();

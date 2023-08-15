@@ -87,7 +87,7 @@ class hardwareView
                           echo '<button 
                           data-bs-toggle="modal" 
                           data-bs-target="#modalHardwareMostrar"
-                          onclick="verHardware('.$hard['id'].');" class="btn btn-primary btn-sm m-2">
+                          onclick="verHardware('.$hard['id'].');" class="btn btn-primary btn-sm ">
                           Ver
                           </button>' ;
                           //   echo '<button onclick="verProducto123('.$inventario['idInventario'].');" class="btn btn-primary btn-sm m-2">

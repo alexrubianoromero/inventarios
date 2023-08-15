@@ -86,6 +86,12 @@ class PartesModel extends Conexion
     {
         $sql = "update partes set  idHardware = 0      where id=  '".$request['idRam']."'  "; 
         $consulta = mysql_query($sql,$this->connectMysql());
+        
+    }
+    public function cambiarEstadodePArte($idParte,$estado)
+    {
+        $sql = "update partes set estado = '".$estado."'  where idParte = '".$idParte."' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
 
     }
 
