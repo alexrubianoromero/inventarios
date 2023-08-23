@@ -62,25 +62,35 @@ class UsuarioModel extends Conexion
         $users = $this->get_table_assoc($consulta);
         return $users;
     }
-
+    
     public function crearUsuario($request)
     {
         $sql = "insert into usuarios (login,email,nombre,apellido,clave,idSucursal,id_perfil) 
         values (
-                '".$request['email']."'
-                ,'".$request['email']."'
-                ,'".$request['nombreUsuario']."'
-                ,'".$request['apellidoUsuario']."'
-                ,'".$request['password']."'
-                ,'".$request['idSucursal']."'
-                ,'".$request['idPerfil']."'
-
+            '".$request['email']."'
+            ,'".$request['email']."'
+            ,'".$request['nombreUsuario']."'
+            ,'".$request['apellidoUsuario']."'
+            ,'".$request['password']."'
+            ,'".$request['idSucursal']."'
+            ,'".$request['idPerfil']."'
+            
         ) " ; 
-
+        
         $consulta = mysql_query($sql,$this->connectMysql());
-
+        
     }
-
+    public function  traerTecnicos()
+    {
+        $sql = "select u.id_usuario as id_usuario , u.nombre as nombre from usuarios u 
+        inner join perfiles p on (p.id_perfil = u.id_perfil) 
+        where p.nombre_perfil = 'Tecnico'";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $tecnicos = $this->get_table_assoc($consulta);
+        return $tecnicos;
+        // die($sql);   
+    }
+    
 }
 
 ?>

@@ -151,5 +151,37 @@ function inventarios()
     http.send('opcion=inventariosMenu');
 
 }
+function pedidos()
+{
+    const http=new XMLHttpRequest();
+    const url = './pedidos/pedidos.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_content_wrapper").innerHTML  = this.responseText;
+
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=pedidosMenu');
+
+}
+function clientes()
+{
+    const http=new XMLHttpRequest();
+    const url = './clientes/clientes.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_content_wrapper").innerHTML  = this.responseText;
+
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=clientesMenu');
+
+}
 
 

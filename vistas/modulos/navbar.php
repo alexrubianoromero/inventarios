@@ -38,12 +38,18 @@
             <li class="nav-item d-none d-sm-inline-block">
             <a style="cursor:pointer;" class="nav-link" onclick="inventarios();">
 
-            inventarios</a>
+            Inventarios</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
             <a style="cursor:pointer;" class="nav-link" onclick="pedidos();">
 
-            pedidos</a>
+            Pedidos</a>
+            </li>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+            <a style="cursor:pointer;" class="nav-link" onclick="clientes();">
+
+            Clientes</a>
             </li>
             <!-- <li class="nav-item d-none d-sm-inline-block">
             <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/compras.php','content-wrapper');">

@@ -68,6 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="hardware/js/hardware.js"></script>  
         <script src="movimientos/js/movimientosPartes.js"></script>  
         <script src="pedidos/js/pedidos.js"></script>  
+        <script src="clientes/js/clientes.js"></script>  
         <script>
         function CargarContenido(pagina_php,contenedor)
         {
