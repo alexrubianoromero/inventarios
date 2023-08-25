@@ -24,6 +24,10 @@ class pedidosController
             // echo 'pedidos controlador '; 
             $this->pedirInfoNuevoPedido($_REQUEST);
         }
+        if($_REQUEST['opcion']=='continuarAItemsPedido')
+        {
+            $this->continuarAItemsPedido($_REQUEST);
+        }
 
     }   
 
@@ -40,6 +44,17 @@ class pedidosController
     public function pedirInfoNuevoPedido($request)
     {
         $this->view->pedirInfoNuevoPedido($request);
+    }
+
+    public function continuarAItemsPedido($request)
+    {
+        $ultimoIdPedido = $this->model->grabarEncabezadoPedido($request);
+        // echo '<pre>'; 
+        // print_r($ultimoIdPedido); 
+        // echo '</pre>';
+        // die(); 
+        //llamar a la siguiente pantalla de pedidos apra agregar los itemsiniciales
+        $this->view->siguientePantallaPedido($ultimoIdPedido);
     }
 
 }

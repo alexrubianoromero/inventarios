@@ -29,5 +29,13 @@ class ClienteModel extends Conexion
         // return $clientes;
     }
 
+    public function traerClienteId($id)
+    {
+        $sql = "select * from cliente0 where idcliente = '".$id."'  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $cliente = $this->get_table_assoc($consulta);
+        return $cliente;
+    }
+
 
 }
