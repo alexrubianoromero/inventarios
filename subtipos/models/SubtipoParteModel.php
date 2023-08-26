@@ -16,5 +16,14 @@ class SubtipoParteModel extends Conexion
         return $subTipoParte;
     }
 
+    public function traerSubTipoParteIdParte($idParte)
+    {
+        $sql = "select * from subtipoParte where idParte = '".$idParte."'  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $subTiposParte = $this->get_table_assoc($consulta);
+        return $subTiposParte;
+    }
+
+
 
 }

@@ -28,6 +28,25 @@ class pedidosController
         {
             $this->continuarAItemsPedido($_REQUEST);
         }
+        if($_REQUEST['opcion']=='siguientePantallaPedido')
+        {
+            $this->siguientePantallaPedido($_REQUEST);
+        }
+
+        if($_REQUEST['opcion']=='actualizarWoPedido')
+        {
+            $this->actualizarWoPedido($_REQUEST);
+        }
+
+        if($_REQUEST['opcion']=='actualizarRPedido')
+        {
+            $this->actualizarRPedido($_REQUEST);
+        }
+
+        if($_REQUEST['opcion']=='actulizarIPedido')
+        {
+            $this->actulizarIPedido($_REQUEST);
+        }
 
     }   
 
@@ -55,6 +74,27 @@ class pedidosController
         // die(); 
         //llamar a la siguiente pantalla de pedidos apra agregar los itemsiniciales
         $this->view->siguientePantallaPedido($ultimoIdPedido);
+    }
+
+    public function siguientePantallaPedido($request)
+    {
+        // $ultimoIdPedido = $this->model->grabarEncabezadoPedido($request);
+        $this->view->siguientePantallaPedido($request['idPedido']);
+    }
+
+    public function actualizarWoPedido($request)
+    {
+        $this->model->actualizarWoPedido($request);
+    }
+
+    public function actualizarRPedido($request)
+    {
+        $this->model->actualizarRPedido($request);
+    }
+    
+    public function actulizarIPedido($request)
+    {
+        $this->model->actulizarIPedido($request);
     }
 
 }

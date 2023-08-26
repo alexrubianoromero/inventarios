@@ -5,8 +5,9 @@ require_once($raiz.'/login/models/UsuarioModel.php');
 require_once($raiz.'/clientes/models/ClienteModel.php'); 
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
+require_once($raiz.'/pedidos/views/itemInicioPedidoView.php'); 
+require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 // require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
-// require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 
 class pedidosView
 {
@@ -15,6 +16,8 @@ class pedidosView
     protected $usuarioModel;
     protected $clienteModel;
     protected $estIniPedModel;
+    protected $itemInicioPedidoView;
+    protected $tipoParteModel;
 
     public function __construct()
     {
@@ -23,6 +26,8 @@ class pedidosView
         $this->usuarioModel = new UsuarioModel();
         $this->clienteModel = new ClienteModel();
         $this->estIniPedModel = new EstadoInicioPedidoModel();
+        $this->itemInicioPedidoView = new iteminicioPedidoView();
+        $this->tipoParteModel = new TipoParteModel();
     }
     
 
@@ -51,6 +56,7 @@ class pedidosView
                         <th>Cliente</th>
                         <th>Observaciones</th>
                         <th>Estado</th>
+                        <th>Ver</th>
                     </thead>
                 <tbody>
                     <?php
@@ -63,12 +69,10 @@ class pedidosView
                           echo '<td>'.$pedido['idCliente'].'</td>';
                            echo '<td>'.$pedido['observaciones'].'</td>';
                            echo '<td>'.$pedido['idestadoPedido'].'</td>';
-                        //    echo '<td><button 
-                        //              data-bs-toggle="modal" 
-                        //              data-bs-target="#modalVerMovimientos"
-                        //              class="btn btn-primary btn-sm " 
-                        //              onclick="verMovimientosParte('.$parte['id'].');"
-                        //              >Mov</button></td>';
+                           echo '<td><button 
+                                     class="btn btn-primary btn-sm " 
+                                     onclick="siguientePantallaPedido('.$pedido['idPedido'].');"
+                                     >Ver</button></td>';
                            echo '</tr>';  
                         }
                         ?>
@@ -197,34 +201,11 @@ class pedidosView
                     </select>
                 </div>
 
-                
-                    <label class="col-lg-2">
-                        Urgencia:
-                    </label>
-                    <div class="col-lg-3">
-                        <select  id="idPrioridad" class="form-control">
-                                <option value="">Seleccione...</option>
-                                <?php
-                                     foreach($prioridades as $prioridad)       
-                                     {
-                                        echo '<option value ="'.$prioridad['id'].'">'.$prioridad['descripcion'].'</option>';
-                                     }
-                                ?>
-                        </select>
-                    </div>          
-                
-               
-           </div>
 
-           <div >
+        </div >
+            <div>
                     <button class="btn btn-primary" onclick="continuarAItemsPedido();">Continuar</button>
            </div>
-      
-          
-
-         </div>   
-
-
         <?php
     }
 
@@ -234,6 +215,8 @@ class pedidosView
         $infoPedido    = $this->pedidoModel->traerPedidoId($idPedido);
         $infoCliente   = $this->clienteModel->traerClienteId($infoPedido['idCliente']);
         $estadosInicio = $this->estIniPedModel->traerEstadosInicioPedido(); 
+        $tiposPartes =   $this->tipoParteModel->traerTodasLosTipoPartes();
+
         //    echo '<pre>'; 
         //     print_r($infoCliente); 
         //     echo '</pre>';
@@ -252,67 +235,107 @@ class pedidosView
                 </div>
                 
             </div>
-            
+        
             <div class="row">
                 <div class="col-lg-4">
                     <label class="col.lg-1">Cliente:</label>
                     <span class="col-lg-3"><?php  echo $infoCliente[0]['nombre'];  ?></span>
                 </div>
                 <div class="col-lg-6">
-                    <label class="col-lg-2" align="rigtht">WO <input type="checkbox"  id="wo"></label>
-                    
-                    <label class="col-lg-2">R <input type="checkbox"  id="wo"></label>
-                    
-                    <label class="col-lg-2">I <input type="checkbox"  id="wo"></label>
+                    <?php
+                      if($infoPedido['wo']==1)  
+                      {
+                          echo '<label class="col-lg-2" align="rigtht">WO <input type="checkbox" checked  id="checkwo"  onclick="actulizarWoPedido('.$idPedido.');"></label>';
+                    }
+                    else{
+                          echo '<label class="col-lg-2" align="rigtht">WO <input type="checkbox"  id="checkwo"  onclick="actulizarWoPedido('.$idPedido.');"></label>';
+                      }
+                      if($infoPedido['r']==1)  
+                      {
+                          echo '<label class="col-lg-2" align="rigtht">R<input type="checkbox" checked  id="checkr"  onclick="actulizarRPedido('.$idPedido.');"></label>';
+                    }
+                    else{
+                          echo '<label class="col-lg-2" align="rigtht">R <input type="checkbox"  id="checkr"  onclick="actulizarRPedido('.$idPedido.');"></label>';
+                      }
+                      if($infoPedido['i']==1)  
+                      {
+                          echo '<label class="col-lg-2" align="rigtht">I<input type="checkbox" checked  id="checki"  onclick="actulizarIPedido('.$idPedido.');"></label>';
+                    }
+                    else{
+                          echo '<label class="col-lg-2" align="rigtht">I<input type="checkbox"  id="checki"  onclick="actulizarIPedido('.$idPedido.');"></label>';
+                      }
+
+                    ?>
                     
                 </div>
             </div>
-            
             <div class="row">
+                <textarea id="comentarios" placeholder = "Comentarios"></textarea>
+            </div>
+            <div class="row" >
                 <table class="table">
-                    <tr>
-                        <th>Cantidad</th>
-                        <th>Tipo</th>
-                        <th>Modelo</th>
-                        <th>Pulgadas</th>
-                        <th>Procesador</th>
-                        <th>Generacion</th>
-                        <th>Ram</th>
-                        <th>Disco</th>
-                        <th>Estado</th>
-                        <th>Precio</th>
-                        <th>Accion</th>
-                    </tr>
-                    <tr>
-                        <th><input type="text" id="icantidad" size="1px"></th>
-                        <th><input type="text" id="itipo" size="1px"></th>
-                        <th><input type="text" id="imodelo" size="1px"></th>
-                        <th><input type="text" id="ipulgadas" size="1px"></th>
-                        <th><input type="text" id="iprocesador" size="1px"></th>
-                        <th><input type="text" id="igeneracion" size="1px"></th>
-                        <th><input type="text" id="iram" size="1px"></th>
-                        <th><input type="text" id="idisco" size="1px"></th>
-                        <th>
-                            <select id="idEstadoInicio"  size="1px" >
+                   <thead >
+                       
+                       <tr>
+                           <th>Cantidad</th>
+                           <th>Tipo</th>
+                           <th>Subtipo</th>
+                           <th>Modelo</th>
+                           <th>Pulgadas</th>
+                           <th>Procesador</th>
+                           <th>Generacion</th>
+                           <th>Ram</th>
+                           <th>Disco</th>
+                           <th>Estado</th>
+                           <th>Precio</th>
+                           <th>Accion</th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+
+                        <tr>
+                            <th><input type="text" id="icantidad" size="1px"></th>
+                            <!-- <th><input type="text" id="itipo" size="1px"></th> -->
+                            <th>
+                                <select id="itipo"  size="1px" onchange="buscarSuptiposParaSelect();">
+                                    <option value=''>...</option>
+                                    <?php
+                                    foreach($tiposPartes as $tipoParte)
+                                    {
+                                        echo '<option value = "'.$tipoParte['id'].'">'.$tipoParte['descripcion'].'</option>';    
+                                    }
+                                    
+                                    ?>
+                                </select>
+                            </th>
+                            <th><select id="isubtipo">222</select> </th>
+                            <th><input type="text" id="imodelo" size="1px"></th>
+                            <th><input type="text" id="ipulgadas" size="1px"></th>
+                            <th><input type="text" id="iprocesador" size="1px"></th>
+                            <th><input type="text" id="igeneracion" size="1px"></th>
+                            <th><input type="text" id="iram" size="1px"></th>
+                            <th><input type="text" id="idisco" size="1px"></th>
+                            <th>
+                                <select id="idEstadoInicio"  size="1px" >
                                 <option value="">Seleccione...</option>
                                 <?php
                                     foreach($estadosInicio as $estadoInicio)
                                     {
                                         echo '<option value = "'.$estadoInicio['id'].'">'.$estadoInicio['descripcion'].'</option>';    
                                     }
-
-                                ?>
+                                    
+                                    ?>
                             </select> 
                         </th>
                         <th><input type="text" id="iprecio" size="5px"></th>
                         <th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedido();">+</button></th>
                     </tr>
+                </tbody>
                 </table>
                     <div id="div_items_solicitados_pedido">
-                        </div>
+                          <?php   $this->itemInicioPedidoView->mostrarItemsInicioPedido($idPedido);  ?>
                     </div>
-            
-
+            </div>
         </div>
    <?php
     } 

@@ -32,8 +32,8 @@ class PedidoModel extends Conexion
         
         public function grabarEncabezadoPedido($request)
         {
-            $sql = "insert into pedidos (idCliente, idUrgencia,fecha)   
-                values ('".$request['idEmpresaCliente']."','".$request['idPrioridad']."',now())";
+            $sql = "insert into pedidos (idCliente,fecha)   
+                values ('".$request['idEmpresaCliente']."',now())";
                 $consulta = mysql_query($sql,$this->connectMysql());
                 //  die($sql); 
             $ultimoId =  $this->obtenerUltimoIdPedidos();   
@@ -48,7 +48,24 @@ class PedidoModel extends Conexion
             $ultimo = $arr['maximo']; 
             // die($ultimo); 
             return $ultimo;
-
+            
+        }
+        
+        public function actualizarWoPedido($request)
+        {
+            $sql = "update pedidos set wo = '".$request['valor']."'   where idPedido = '".$request['idPedido']."'    "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
+        
+        public function actualizarRPedido($request)
+        {
+            $sql = "update pedidos set r = '".$request['valor']."'   where idPedido = '".$request['idPedido']."'    "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
+        public function actulizarIPedido($request)
+        {
+            $sql = "update pedidos set i = '".$request['valor']."'   where idPedido = '".$request['idPedido']."'    "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
         }
 
         
