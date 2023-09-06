@@ -27,6 +27,14 @@ class hardwareView
             <div id="botones" class="mt-3">
                 <button type="button" 
                 data-bs-toggle="modal" 
+                data-bs-target="#modalNuevoHardware"
+                class="btn btn-primary  float-right" 
+                onclick="formuNuevoHardware()"
+                >
+                    Subir Archivo
+                </button>
+                <button type="button" 
+                data-bs-toggle="modal" 
                 data-bs-target="#modalSubirArchivo"
                 class="btn btn-primary  float-right" 
                 onclick="formularioSubirArchivo()"
@@ -110,6 +118,7 @@ class hardwareView
             $this->modalSubirArchivo();  
             $this->modalHardwareMostrar();  
             $this->modalAgregarRam();  
+            $this->modalNuevoHardware();  
             ?>
 
             
@@ -153,6 +162,30 @@ class hardwareView
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBodyHardwareMostrar">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();">Cerrar</button>
+                    <!-- <button onclick ="actualizarProducto();" type="button" class="btn btn-primary">Actualizar Producto</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+    public function modalNuevoHardware()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalNuevoHardware" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hardware</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyNuevoHardware">
                     ...
                 </div>
                 <div class="modal-footer">

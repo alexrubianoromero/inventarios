@@ -2,17 +2,22 @@
 $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/pedidos/views/pedidosView.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
+require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
+// die('controller'.$raiz);
 // die('control123'.$raiz);
 
 class pedidosController
 {
     protected $view; 
     protected $model ; 
+    // protected $asignacionModel ; 
+
     public function __construct()
     {
         // die('desde controlador') ;
         $this->view = new pedidosView();
         $this->model = new pedidoModel();
+        // $this->asignacionModel = new AsisgnacionTecnicoPedidoModel();
 
         if($_REQUEST['opcion']=='pedidosMenu')
         {
@@ -46,6 +51,10 @@ class pedidosController
         if($_REQUEST['opcion']=='actulizarIPedido')
         {
             $this->actulizarIPedido($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='asignarTecnicoAPedido')
+        {
+            $this->asignarTecnicoAPedido($_REQUEST);
         }
 
     }   
@@ -96,5 +105,10 @@ class pedidosController
     {
         $this->model->actulizarIPedido($request);
     }
+    // public function asignarTecnicoAPedido($request)
+    // {
+    //     $this->asignacionModel->registrarAsignacionTecnicoAPedido($request);
+    //     $this->view->siguientePantallaPedido($request['idPedido']);
+    // }
 
 }

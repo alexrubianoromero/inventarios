@@ -157,3 +157,47 @@ function actulizarIPedido(idPedido)
     );
     siguientePantallaPedido(idPedido);
 }
+
+
+
+function asignarTecnicoAPedido(idPedido)
+{
+    // alert('funcion javascript');
+    var valida = validarInfoTecnico();
+    if(valida==1)
+    {
+        var idPrioridad = document.getElementById('idPrioridad').value;
+        var idTecnico = document.getElementById('idTecnico').value;
+        const http=new XMLHttpRequest();
+        const url = 'pedidos/pedidos.php';
+        http.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=asignarTecnicoAPedido'
+        +'&idPedido='+idPedido
+        +'&idPrioridad='+idPrioridad
+        +'&idTecnico='+idTecnico
+    );
+   }
+
+}
+
+function validarInfoTecnico()
+{
+    if( document.getElementById('idPrioridad').value == ''){
+        alert('Por escoger urgencia');
+        document.getElementById('idPrioridad').focus();
+        return 0;
+    }
+    if( document.getElementById('idTecnico').value == ''){
+        alert('Por escoger Tecnico');
+        document.getElementById('idTecnico').focus();
+        return 0;
+    }
+    return 1;
+}

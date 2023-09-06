@@ -7,6 +7,8 @@ require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php');
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/pedidos/views/itemInicioPedidoView.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
+require_once($raiz.'/prioridades/models/PrioridadModel.php'); 
+
 // require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
 
 class pedidosView
@@ -124,6 +126,7 @@ class pedidosView
         $tecnicos =  $this->usuarioModel->traerTecnicos(); 
         $clientes = $this->clienteModel->traerClientes();
         $estIniPedModel = $this->estIniPedModel->traerEstadosInicioPedido();
+       
 
         //  echo '123<pre>';
         // print_r($tecnicos); 
@@ -215,7 +218,9 @@ class pedidosView
         $infoPedido    = $this->pedidoModel->traerPedidoId($idPedido);
         $infoCliente   = $this->clienteModel->traerClienteId($infoPedido['idCliente']);
         $estadosInicio = $this->estIniPedModel->traerEstadosInicioPedido(); 
-        $tiposPartes =   $this->tipoParteModel->traerTodasLosTipoPartes();
+        $tiposPartes   =   $this->tipoParteModel->traerTodasLosTipoPartes();
+        $prioridades   =  $this->prioridadModel->traerPrioridades();
+        $tecnicos      = $this->usuarioModel->traerTecnicos();
 
         //    echo '<pre>'; 
         //     print_r($infoCliente); 
@@ -233,6 +238,11 @@ class pedidosView
                     <label>OC:</label>
                     <span class="col-lg-2"><?php  echo $infoPedido['idPedido'];  ?></span>
                 </div>
+                <div class="col-lg-6">
+                    <?php
+                        echo '<button class="btn btn-success" onclick="asignarTecnicoAPedido('.$idPedido.');"> Asignar Pedido</button>';
+                    ?>
+                    </div>
                 
             </div>
         
@@ -241,7 +251,7 @@ class pedidosView
                     <label class="col.lg-1">Cliente:</label>
                     <span class="col-lg-3"><?php  echo $infoCliente[0]['nombre'];  ?></span>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-2">
                     <?php
                       if($infoPedido['wo']==1)  
                       {
@@ -268,6 +278,37 @@ class pedidosView
                     ?>
                     
                 </div>
+                <div class="col-lg-6">
+
+                      <label >Urgencia:</label>
+                      <select id="idPrioridad">
+                      <option value = ''>Seleccione...</option>
+                      <?php
+                            foreach($prioridades as $prioridad)
+                            {
+                                echo '<option value = "'.$prioridad['id'].'">'.$prioridad['descripcion'].'</option>';    
+                            }
+                                    
+                        ?>
+                      </select>  
+                      <label for="">Tecnico</label>
+                      <select id="idTecnico">
+                      <option value = ''>Seleccione...</option>
+                      <?php
+                            foreach($tecnicos as $tecnico)
+                            {
+                                echo '<option value = "'.$tecnico['id_usuario'].'">'.$tecnico['nombre'].'</option>';    
+                            }
+                                    
+                        ?>
+                      </select>  
+                      
+                </div>
+            </div>
+            <div class="row" id = "tecnicoAsignado">
+                <?php
+
+                ?>     
             </div>
             <div class="row">
                 <textarea id="comentarios" placeholder = "Comentarios"></textarea>

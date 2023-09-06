@@ -59,6 +59,10 @@ class hardwareController
         {
             $this->agregarDisco($_REQUEST);
         }
+        if($_REQUEST['opcion']=='formuNuevoHardware')
+        {
+            $this->formuNuevoHardware();
+        }
 
     }
 
@@ -173,5 +177,10 @@ class hardwareController
         $this->partesModel->asociarHardwareEnTablaPartes($request);
         $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idDisco'],'2',$request['opcion']);
         echo 'Disco Agregado!!';
+    }
+
+    public function formuNuevoHardware()
+    {
+        $this->view->formuNuevoHardware();
     }
 }

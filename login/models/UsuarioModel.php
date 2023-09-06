@@ -82,9 +82,10 @@ class UsuarioModel extends Conexion
     }
     public function  traerTecnicos()
     {
-        $sql = "select u.id_usuario as id_usuario , u.nombre as nombre from usuarios u 
-        inner join perfiles p on (p.id_perfil = u.id_perfil) 
-        where p.nombre_perfil = 'Tecnico'";
+        $sql = "select u.id_usuario as id_usuario , u.nombre as nombre 
+                from usuarios u 
+                inner join perfiles p on (p.id_perfil = u.id_perfil) 
+                where p.nombre_perfil = 'Tecnico'";
         $consulta = mysql_query($sql,$this->connectMysql());
         $tecnicos = $this->get_table_assoc($consulta);
         return $tecnicos;
