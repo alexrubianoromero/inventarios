@@ -28,6 +28,7 @@ function crearSucursal()
         // alert('validacion correcta');
         var nombreSucursal = document.getElementById('nombreSucursal').value;
         var direccionSucursal = document.getElementById('direccionSucursal').value;
+        var ciudad = document.getElementById('ciudad').value;
         // var password = document.getElementById('password').value;
         // var email = document.getElementById('email').value;
         const http=new XMLHttpRequest();
@@ -43,8 +44,7 @@ function crearSucursal()
                 http.send('opcion=crearSucursal'
                     +'&nombreSucursal='+nombreSucursal
                     +'&direccionSucursal='+direccionSucursal
-                    // +'&password='+password
-                    // +'&email='+email
+                    +'&ciudad='+ciudad
                 );
                 
     }

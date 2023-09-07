@@ -24,6 +24,7 @@ class sucursalesView
                         <th>Id</th>
                         <th>Nombre_Sucursal</th>
                         <th>Direccion</th>
+                        <th>Ciudad</th>
                     </thead>
                     <tbody>
                         
@@ -34,6 +35,7 @@ class sucursalesView
                           echo '<td>'.$sucursal['id']. '</td>';
                           echo '<td>'.$sucursal['nombre']. '</td>';
                           echo '<td>'.$sucursal['direccion'].'</td>';
+                          echo '<td>'.$sucursal['ciudad'].'</td>';
                           echo '</tr>';  
                         }
                         ?>
@@ -82,6 +84,15 @@ class sucursalesView
                 <div class="col-md-6">
                     <label for="">Direccion:</label>
                       <input class ="form-control" type="text" id="direccionSucursal">          
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-md-6">
+                    <label for="">Ciudad:</label>
+                      <input class ="form-control" type="text" id="ciudad">          
+                </div>
+                <div class="col-md-6">
+                   
                 </div>
         </div>
         <!-- <div class="row">

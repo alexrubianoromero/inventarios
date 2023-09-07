@@ -8,7 +8,7 @@ class SucursalModel extends Conexion
 {
     public function traerSucursales()
     {
-        $sql = "select * from sucursales ";
+        $sql = "select * from sucursales order by id desc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $sucursales = $this->get_table_assoc($consulta);
         return $sucursales;
@@ -16,10 +16,11 @@ class SucursalModel extends Conexion
 
     public function crearSucursal($request)
     {
-        $sql = "insert into sucursales (nombre,direccion)
+        $sql = "insert into sucursales (nombre,direccion,ciudad)
         values (
             '".$request['nombreSucursal']."'
             ,'".$request['direccionSucursal']."'
+            ,'".$request['ciudad']."'
     
         ); 
         ";
