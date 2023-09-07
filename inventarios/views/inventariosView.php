@@ -26,7 +26,7 @@ class inventariosView
             <title>Document</title>
         </head>
         <body>
-            <div id="div_principal_inventarios"  style="padding:10px;">
+            <div id="div_principal_inventarios"  style="padding:5px;">
                 <br>
                 <div class="row">
                     <!-- <select id="idTipoParte" class="form-control col-lg-2">
@@ -56,7 +56,7 @@ class inventariosView
                     </div>
             </div>
         </div>
-                <br>
+                
                 <div id="divResultadosInventario">
 
                 </div>

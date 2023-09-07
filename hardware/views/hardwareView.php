@@ -26,7 +26,7 @@ class hardwareView extends vista
     public function hardwareMenu($hardware)
     {
         ?>
-        <div  style="padding:10px;">
+        <div  style="padding:5px;">
             <div class="col-lg-2"></div>
             <div class="col-lg-2"></div>
             <div class="col-lg-2"></div>
