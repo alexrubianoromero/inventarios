@@ -1,12 +1,25 @@
 <?php
-
 $raiz =dirname(dirname(dirname(__file__)));
 //  die('rutamodel '.$raiz);
-
 require_once($raiz.'/conexion/Conexion.php');
+require_once($raiz.'/subtipos/models/SubtipoParteModel.php');
 
 class PartesModel extends Conexion
 {
+    protected $subTipoModel; 
+
+    public function __construct()
+    {
+        $this->subTipoModel = new SubtipoParteModel();
+    }
+
+    public function grabarParte($idSubTipo,$capacidad)
+    {
+      
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
+                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador')
+        ";
+    }
 
     public function traerParte($id)
     {

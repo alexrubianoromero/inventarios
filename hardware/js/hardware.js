@@ -237,7 +237,7 @@ function formuAgregarDisco(idHardware)
 
 function formuNuevoHardware()
 {
-   
+//    alert('buenas ');
         const http=new XMLHttpRequest();
         const url = 'hardware/hardware.php';
         http.onreadystatechange = function(){
@@ -252,7 +252,49 @@ function formuNuevoHardware()
                 //   +'&idHardware='+idHardware
         );
     
-}
+ }
+
+function grabarNuevoHardware()
+{
+    // alert('grabar');
+
+    var itipo = document.getElementById('itipo').value;
+    var isubtipo = document.getElementById('isubtipo').value;
+    var idImportacion = document.getElementById('idImportacion').value;
+    var lote = document.getElementById('lote').value;
+    var serial = document.getElementById('serial').value;
+    var marca = document.getElementById('marca').value;
+    var chasis = document.getElementById('chasis').value;
+    var modelo = document.getElementById('modelo').value;
+    var pulgadas = document.getElementById('pulgadas').value;
+    var procesador = document.getElementById('procesador').value;
+    var generacion = document.getElementById('generacion').value;
+
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=grabarNuevoHardware'
+                  +'&itipo='+itipo
+                  +'&isubtipo='+isubtipo
+                  +'&idImportacion='+idImportacion
+                  +'&lote='+lote
+                  +'&serial='+serial
+                  +'&marca='+marca
+                  +'&chasis='+chasis
+                  +'&modelo='+modelo
+                  +'&pulgadas='+pulgadas
+                  +'&procesador='+procesador
+                  +'&generacion='+generacion
+        );
+    
+ }
 
 
 

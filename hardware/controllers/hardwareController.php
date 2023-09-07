@@ -1,6 +1,7 @@
 <?php
 $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/hardware/views/hardwareView.php'); 
+// die('controol'.$raiz);
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
@@ -63,6 +64,11 @@ class hardwareController
         {
             $this->formuNuevoHardware();
         }
+        if($_REQUEST['opcion']=='grabarNuevoHardware')
+        {
+            $this->grabarNuevoHardware($_REQUEST);
+        }
+        
 
     }
 
@@ -178,9 +184,18 @@ class hardwareController
         $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idDisco'],'2',$request['opcion']);
         echo 'Disco Agregado!!';
     }
-
+    
     public function formuNuevoHardware()
     {
         $this->view->formuNuevoHardware();
+    }
+    public function grabarNuevoHardware($request)
+    {
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die();
+        $this->model->grabarNuevoHardware($request);
+        echo 'Grabado Satisfactoriamente'; 
     }
 }

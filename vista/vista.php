@@ -12,7 +12,7 @@ class vista
                         }
                     return $arreglo_assoc;
     }
-public function draw_table($datos)
+    public function draw_table($datos)
                 {
                 
                             echo '<table border = "1" class="table">';
@@ -35,6 +35,16 @@ public function draw_table($datos)
 
                 
                 }
+    public function colocarSelect($valores)
+    {
+        echo '<option value="-1">Seleccione...</option>';
+        
+            foreach($valores as $valor)
+            {
+                echo ' <option value="'.$valor['id'].'">'.$valor['descripcion'].'</option>';
+            }
+    
+    }            
 
 }
 

@@ -24,6 +24,21 @@ class TipoParteModel extends Conexion
         return $tipopartes;
     }
     
+    /*
+    trae todos los tipos de parte que sean hardware osea hardwareoparte = 1
+    */
+    public function traerTipoParteHardware($hardwareoparte)
+    {
+        $sql = "select id,descripcion from tipoparte where hardwareoparte = '".$hardwareoparte."' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $tipopartes = $this->get_table_assoc($consulta);
+        //      echo '<pre>';
+        // print_r($tipopartes); 
+        // echo '</pre>';
+        // die();
+        return $tipopartes;
+    }
+    
 
 
 }

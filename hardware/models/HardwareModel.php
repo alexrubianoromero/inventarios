@@ -48,8 +48,27 @@ class HardwareModel extends Conexion
         $sql = "update hardware set idRam = '".$request['idRam']."'      where id =   '".$request['idHardware']."'   "; 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
-
-
+    
+    public function grabarNuevoHardware($request)
+    {
+        $sql = "insert into hardware(idImportacion,lote,serial,idMarca,idTipoInv,idSubInv,
+        chasis,modelo,pulgadas,procesador,generacion)
+        values ( '".$request['idImportacion']."'
+        ,'".$request['lote']."'
+        ,'".$request['serial']."'
+        ,'".$request['marca']."'
+        ,'".$request['itipo']."'
+        ,'".$request['isubtipo']."'
+        ,'".$request['chasis']."'
+        ,'".$request['modelo']."'
+        ,'".$request['pulgadas']."'
+        ,'".$request['procesador']."'
+        ,'".$request['generacion']."'
+        )";
+        // die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        
+    }
 
 
 

@@ -15,6 +15,14 @@ class MarcaModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    
+    public function traerTodasLasMarcas()
+    {
+        $sql = "select id, marca as descripcion from marcas  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $marcas = $this->get_table_assoc($consulta);
+        return $marcas;
+    }
 }
 
 

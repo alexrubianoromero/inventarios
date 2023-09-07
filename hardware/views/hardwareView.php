@@ -4,13 +4,16 @@ require_once($raiz.'/hardware/models/HardwareModel.php');
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
 require_once($raiz.'/marcas/models/MarcaModel.php'); 
+require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
+require_once($raiz.'/vista/vista.php'); 
 
-class hardwareView
+class hardwareView extends vista
 {
     protected $hardwareModel;
     protected $partesModel;
     protected $SubtipoParteModel;
     protected $MarcaModel;
+    protected $tipoParteModel;
 
     public function __construct()
     {
@@ -18,29 +21,37 @@ class hardwareView
         $this->partesModel = new PartesModel();
         $this->SubtipoParteModel = new SubtipoParteModel();
         $this->MarcaModel = new MarcaModel();
+        $this->tipoParteModel = new TipoParteModel();
     }
     public function hardwareMenu($hardware)
     {
         ?>
         <div  style="padding:10px;">
-
-            <div id="botones" class="mt-3">
-                <button type="button" 
-                data-bs-toggle="modal" 
-                data-bs-target="#modalNuevoHardware"
-                class="btn btn-primary  float-right" 
-                onclick="formuNuevoHardware()"
-                >
-                    Subir Archivo
-                </button>
-                <button type="button" 
-                data-bs-toggle="modal" 
-                data-bs-target="#modalSubirArchivo"
-                class="btn btn-primary  float-right" 
-                onclick="formularioSubirArchivo()"
-                >
-                    Subir Archivo
-                </button>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-2"></div>
+            <div  class="row" id="botones" class="mt-3 float-right" >
+                <div class="col-lg-2">
+                    <button type="button" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalNuevoHardware"
+                    class="btn btn-primary  float-right" 
+                    onclick="formuNuevoHardware()"
+                    >
+                    Nuevo Hardware
+                    </button>
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalSubirArchivo"
+                    class="btn btn-primary  float-right" 
+                    onclick="formularioSubirArchivo()"
+                    >
+                        Subir Archivo
+                    </button>
+                </div>
             </div>
             <!-- <div id="botones" class="mt-3">
                 <button type="button" 
@@ -475,6 +486,95 @@ class hardwareView
             
        </div>
        <?php
+    }
+
+    
+    
+    public function formuNuevoHardware()
+    {
+        $tipopartes = $this->tipoParteModel->traerTipoParteHardware('1');
+
+        // $marca = $this->MarcaModel->traerMarcaId($producto['id']);
+        // $disco = $this->partesModel->traerParte($producto['idDisco']);
+        $subTiposDisco = $this->SubtipoParteModel->traerSubtiposPartesConDescriptParte('Disco');
+        // $ram = $this->partesModel->traerParte($producto['idRam']);
+        $subTiposRam = $this->SubtipoParteModel->traerSubtiposPartesConDescriptParte('ram');
+        $marcas = $this->MarcaModel->traerTodasLasMarcas();
+        // die('llego a la vista 123');
+        ?>
+        <div class="row">
+                <div class="col-md-3">
+                    <!-- computador monitor impresora -->
+                    <label for="">Tipo Hardware</label>
+                    <select class ="form-control"  id="itipo" onchange="buscarSuptiposParaSelect();">
+                            <?php  $this->colocarSelect($tipopartes);  ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="">Subtipo:</label>
+                    <select class ="form-control"  id="isubtipo">
+                    </select>
+                </div>
+         
+        </div>
+        <div class="row">
+                <div class="col-md-3">
+                    <label for="">Importacion #:</label>
+                      <input class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Lote:</label>
+                      <input class ="form-control" type="text" id="lote" value ="<?php  echo $producto['lote'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Serial:</label>
+                      <input class ="form-control" type="text" id="serial" value ="<?php  echo $producto['serial'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Marca:</label>
+                    <select class ="form-control"  id="marca" >
+                            <?php  $this->colocarSelect($marcas);  ?>
+                    </select>
+                </div>
+        </div>
+        <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="">Chasis:</label>
+                      <input class ="form-control" type="text" id="chasis" value ="<?php  echo $producto['chasis'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Modelo:</label>
+                      <input class ="form-control" type="text" id="modelo" value ="<?php  echo $producto['modelo'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Pulgadas:</label>
+                      <input class ="form-control" type="text" id="pulgadas" value ="<?php  echo $producto['pulgadas'] ?>">          
+                </div>
+        </div>
+        <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="">Procesador:</label>
+                      <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Generacion:</label>
+                      <input class ="form-control" type="text" id="generacion" value ="<?php  echo $producto['generacion'] ?>">          
+                </div>
+            
+        </div>
+  
+       <div class="row">
+                <button type="button" 
+                class="btn btn-primary  float-right mt-3" 
+                onclick="grabarNuevoHardware()"
+                >
+                Grabar Hardware
+            </button>
+       </div>
+        
+
+
+        <?php
     }
 
 
