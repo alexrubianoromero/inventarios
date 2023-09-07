@@ -257,45 +257,106 @@ function formuNuevoHardware()
 function grabarNuevoHardware()
 {
     // alert('grabar');
+    var valida = validacionCamposNuevoHardware();
+    if(valida)
+    {
 
-    var itipo = document.getElementById('itipo').value;
-    var isubtipo = document.getElementById('isubtipo').value;
-    var idImportacion = document.getElementById('idImportacion').value;
-    var lote = document.getElementById('lote').value;
-    var serial = document.getElementById('serial').value;
-    var marca = document.getElementById('marca').value;
-    var chasis = document.getElementById('chasis').value;
-    var modelo = document.getElementById('modelo').value;
-    var pulgadas = document.getElementById('pulgadas').value;
-    var procesador = document.getElementById('procesador').value;
-    var generacion = document.getElementById('generacion').value;
-
+        var itipo = document.getElementById('itipo').value;
+        var isubtipo = document.getElementById('isubtipo').value;
+        var idImportacion = document.getElementById('idImportacion').value;
+        var lote = document.getElementById('lote').value;
+        var serial = document.getElementById('serial').value;
+        var marca = document.getElementById('marca').value;
+        var chasis = document.getElementById('chasis').value;
+        var modelo = document.getElementById('modelo').value;
+        var pulgadas = document.getElementById('pulgadas').value;
+        var procesador = document.getElementById('procesador').value;
+        var generacion = document.getElementById('generacion').value;
+        
         const http=new XMLHttpRequest();
         const url = 'hardware/hardware.php';
         http.onreadystatechange = function(){
-    
+            
             if(this.readyState == 4 && this.status ==200){
-                   document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
+                document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
             }
         };
         http.open("POST",url);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.send('opcion=grabarNuevoHardware'
-                  +'&itipo='+itipo
-                  +'&isubtipo='+isubtipo
-                  +'&idImportacion='+idImportacion
-                  +'&lote='+lote
-                  +'&serial='+serial
-                  +'&marca='+marca
-                  +'&chasis='+chasis
-                  +'&modelo='+modelo
-                  +'&pulgadas='+pulgadas
-                  +'&procesador='+procesador
-                  +'&generacion='+generacion
+        +'&itipo='+itipo
+        +'&isubtipo='+isubtipo
+        +'&idImportacion='+idImportacion
+        +'&lote='+lote
+        +'&serial='+serial
+        +'&marca='+marca
+        +'&chasis='+chasis
+        +'&modelo='+modelo
+        +'&pulgadas='+pulgadas
+        +'&procesador='+procesador
+        +'&generacion='+generacion
         );
-    
+    }
+        
  }
 
 
+function validacionCamposNuevoHardware()
+{
+    if( document.getElementById("itipo").value == '-1')
+    {
+        document.getElementById("itipo").focus();
+        alert('Por favor escojer tipo');
+        return 0;
+    }
 
+    if( document.getElementById("isubtipo").value == '-1' || document.getElementById("isubtipo").value == '')
+    {
+        document.getElementById("isubtipo").focus();
+        alert('Por favor escojer subtipo');
+        return 0;
+    }
+    if( document.getElementById("idImportacion").value == '')
+    {
+        document.getElementById("idImportacion").focus();
+        alert('Por favor digitar idImportacion');
+        return 0;
+    }
+    if( document.getElementById("lote").value == '')
+    {
+        document.getElementById("lote").focus();
+        alert('Por favor digitar lote');
+        return 0;
+    }
+  
+    if( document.getElementById("serial").value == '')
+    {
+        document.getElementById("serial").focus();
+        alert('Por favor digitar serial');
+        return 0;
+    }
+  
+    if( document.getElementById("marca").value == '-1')
+    {
+        document.getElementById("marca").focus();
+        alert('Por favor escoja la  marca');
+        return 0;
+    }
+  
+    if( document.getElementById("chasis").value == '-1')
+    {
+        document.getElementById("chasis").focus();
+        alert('Por favor digite el   chasis');
+        return 0;
+    }
+  
+    if( document.getElementById("modelo").value == '')
+    {
+        document.getElementById("modelo").focus();
+        alert('Por favor digitar modelo');
+        return 0;
+    }
+  
+    return 1;
 
+}

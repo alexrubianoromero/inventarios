@@ -12,15 +12,26 @@ class PartesModel extends Conexion
     {
         $this->subTipoModel = new SubtipoParteModel();
     }
-
+    //esta la cree cuando se suben muchos hardware desde un archivo de excell
     public function grabarParte($idSubTipo,$capacidad)
     {
       
         $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
                 values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador')
         ";
+        $consulta = mysql_query($sql,$this->connectMysql());
     }
 
+    //esta es para cuando se crean las partes independientes 
+    public function grabarParteIndividual($request)
+    {
+      
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
+                values('".$request['isubtipo']."','".$request['capacidad']."','Creacion desde Modulo')
+        ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+   
     public function traerParte($id)
     {
         $sql = "select * from partes where id = '".$id."'  ";
@@ -31,7 +42,7 @@ class PartesModel extends Conexion
     
     public function traerTodasLasPartes()
     {
-        $sql = "select * from partes  ";
+        $sql = "select * from partes  order by id desc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $partes = $this->get_table_assoc($consulta);
         return $partes;

@@ -16,6 +16,14 @@ class partesController
         {
             $this->partesMenu();
         }
+        if($_REQUEST['opcion']=='formuCreacionParte')
+        {
+            $this->formuCreacionParte();
+        }
+        if($_REQUEST['opcion']=='grabarNuevaParte')
+        {
+            $this->grabarNuevaParte($_REQUEST);
+        }
 
     }
 
@@ -23,5 +31,21 @@ class partesController
     {
         $partes =  $this->model->traerTodasLasPartes();
         $this->view->partesMenu($partes);
+    }
+    
+    public function formuCreacionParte()
+    {
+        $this->view->formuCreacionParte();
+    }
+    
+    public function grabarNuevaParte($request)
+    {
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die();
+        $partes =  $this->model->grabarParteIndividual($request);
+        echo 'Parte creada exitosamente';
+        // $this->view->partesMenu($partes);
     }
 }
