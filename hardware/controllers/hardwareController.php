@@ -69,6 +69,24 @@ class hardwareController
             $this->grabarNuevoHardware($_REQUEST);
         }
         
+        if($_REQUEST['opcion']=='formuDividirRam')
+        {
+            $this->formuDividirRam($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='crearRamAgregarHardware')
+        {
+            $this->crearRamAgregarHardware($_REQUEST);
+        }
+        
+        if($_REQUEST['opcion']=='agregarTemporalDividirMemoria')
+        {
+            $this->agregarTemporalDividirMemoria($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='registrarRamDividaHardware')
+        {
+            $this->registrarRamDividaHardware($_REQUEST);
+        }
+        
 
     }
 
@@ -198,4 +216,31 @@ class hardwareController
         $this->model->grabarNuevoHardware($request);
         echo 'Grabado Satisfactoriamente'; 
     }
+
+    public function formuDividirRam($request)
+    {
+        $this->view->formuDividirRam($request['idHardware']);
+    }
+    
+    
+    public function agregarTemporalDividirMemoria($request)
+    {
+        $this->model->agregarTemporalDividirMemoria($request);
+        $temporales = $this->model->traerRegistrosTemporales($request['idHardware']);
+        //  echo '<pre>';
+        // print_r($temporales); 
+        // echo '</pre>';
+        // die();
+        $this->view->mostrarTemporales($temporales);  
+    }
+    public function registrarRamDividaHardware($request)
+    {
+        $this->model->asignarDivisionHadware($request['idHardware']);
+        //limpiar los temporales 
+        $this->model->limpiarTablaDivisionRam($request['idHardware']);
+        //inactgivar el boton de dividir
+        $this->model->inactivarBotonDividir($request['idHardware']);
+        echo 'Division realizada';
+    }
+    
 }

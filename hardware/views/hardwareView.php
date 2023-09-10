@@ -98,10 +98,49 @@ class hardwareView extends vista
                           echo '<td>'.$hard['procesador'].'</td>';
                           echo '<td>'.$hard['generacion'].'</td>';
                         //   echo '<td>'.$hard['idRam'].'</td>';
-                          echo '<td>'.$ram[0]['capacidad'].'GB-'.$subTipoRam[0]['descripcion'].'</td>';
-                        //   echo '<td>'.$hard['idDisco'].'</td>';
-                          echo '<td>'.$subTipoDisco[0]['descripcion'].'</td>';
-                          echo '<td>'.$disco[0]['capacidad'].'</td>';
+                        //aqui depende de la info lo que se muestra
+                        //si idRam = 0 entonces muestra info de los campos del cargue para ram 
+                        if($hard['idRam1'] == '0' && $hard['idRam2']=='0' && $hard['idRam3']=='0' && $hard['idRam4']=='0')
+                        {
+                            // die('entro al condicional');
+                            $subTipoRamCargue = $this->SubtipoParteModel->traerSubTipoParte($hard['tipoRamCargue']);
+
+                            echo '<td>'.$hard['capacidadRamCargue'].'GB-'.$subTipoRamCargue[0]['descripcion'].'</td>';
+                        }
+                        else{
+                            $totalRam = $this->hardwareModel->totalizarRamHardwareId($hard['id']);
+                            echo '<td>'.$totalRam.'GB</td>';
+                            
+                        }
+                        //ahora los discos 
+                        if($hard['idDisco1'] == '0' && $hard['idDisco2']=='0')
+                        {
+                            $subTipoDisco = $this->SubtipoParteModel->traerSubTipoParte($hard['tipoDiscoCargue']);
+                            
+                            echo '<td>'.$subTipoDisco[0]['descripcion'].'</td>';
+                            echo '<td>'.$hard['capacidadDiscoCargue'].'GB'.'</td>';
+                        }
+                        else{
+                            
+                            $infD1 = $this->partesModel->traerParte($hard['idDisco1']); 
+                            $subTipoDisco1 = $this->SubtipoParteModel->traerSubTipoParte($infD1[0]['idSubtipoParte']);
+                            //    echo '<pre>';
+                            //     print_r($subTipoDisco1); 
+                            //     echo '</pre>';
+                            //     die();
+                            $infD2 = $this->partesModel->traerParte($hard['idDisco2']); 
+                            $subTipoDisco2 = $this->SubtipoParteModel->traerSubTipoParte($infD2[0]['idSubtipoParte']);
+
+                            // $infoDisco2 = $this->partesModel->traerParte($hard['idDisco2']); 
+                            
+                            $totalDisco = $this->hardwareModel->totalizarDiscoHardwareId($hard['id']);
+                            //si son varios tipos de discos?
+                            echo '<td>'.$subTipoDisco1[0]['descripcion'].'/'.$subTipoDisco2[0]['descripcion'].'</td>';
+                            echo '<td>'.$totalDisco.'GB</td>';
+                        }
+
+                        //   echo '<td>'.$subTipoDisco[0]['descripcion'].'</td>';
+                        //   echo '<td>'.$disco[0]['capacidad'].'</td>';
                           echo '<td>';
                           echo '<button 
                           data-bs-toggle="modal" 
@@ -130,6 +169,7 @@ class hardwareView extends vista
             $this->modalHardwareMostrar();  
             $this->modalAgregarRam();  
             $this->modalNuevoHardware();  
+            $this->modalDividirRam();  
             ?>
 
             
@@ -137,6 +177,7 @@ class hardwareView extends vista
         </div>
         <?php
     }
+ 
     public function modalSubirArchivo()
     {
         ?>
@@ -209,6 +250,30 @@ class hardwareView extends vista
 
         <?php
     }
+    public function modalDividirRam()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalDividirRam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Dividir Ram</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyDividirRam">
+                
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();">Cerrar</button>
+                    <!-- <button onclick ="actualizarProducto();" type="button" class="btn btn-primary">Actualizar Producto</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
     public function modalAgregarRam()
     {
         ?>
@@ -256,16 +321,28 @@ class hardwareView extends vista
     
     public function verHardware($producto)
     {
-        $marca = $this->MarcaModel->traerMarcaId($producto['id']);
+        $marca = $this->MarcaModel->traerMarcaId($producto['idMarca']);
         $disco = $this->partesModel->traerParte($producto['idDisco']);
         $subTipoDisco = $this->SubtipoParteModel->traerSubTipoParte($disco[0]['idSubtipoParte']);
-        $ram = $this->partesModel->traerParte($producto['idRam']);
+        $ram = $this->partesModel->traerParte($producto['idRam1']);
         $subTipoRam = $this->SubtipoParteModel->traerSubTipoParte($ram[0]['idSubtipoParte']);
-        // die('llego a la vista 123');
+        $tipoParte  = $this->tipoParteModel->traerTipoParteId($producto['idTipoInv']);  
         ?>
+        <div class="row" >
+            <?php
+                 if($producto['idRam1']==0 && $producto['idRam2']==0 && $producto['idRam3']==0 &&$producto['idRam4']==0)
+                 {
+                    $this->mostrarInfoCargueArchivoRam($producto);
+                 }
+                 if($producto['idDisco1']==0 && $producto['idDisco2']==0 )
+                 {
+                    $this->mostrarInfoCargueArchivoDisco($producto);
+                 }
+            ?>
+        </div>
         <div class="row">
                 <div class="col-md-3">
-                    <label for="">Importacion #:</label>
+                    <label for="">Importacion#:</label>
                       <input class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
                 </div>
                 <div class="col-md-3">
@@ -278,14 +355,14 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-3">
                     <label for="">Marca:</label>
-                      <input class ="form-control" type="hidden" id="marca" value ="<?php  echo $producto['marca'] ?>">   
+                      <input class ="form-control" type="hidden" id="marca" value ="<?php  echo $producto['idMarca'] ?>">   
                       <input class ="form-control" type="text" id="nombremarca" onfocus="blur();" value ="<?php  echo $marca[0]['marca'] ?>">   
                 </div>
         </div>
         <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="">Producto:</label>
-                      <input class ="form-control" type="text" id="tipoProd" value ="<?php  echo $producto['idTipoProducto'] ?>">          
+                      <input class ="form-control" type="text" id="tipoProd" value ="<?php  echo $tipoParte['descripcion'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Chasis:</label>
@@ -301,24 +378,64 @@ class hardwareView extends vista
                 </div>
         </div>
         <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="">Procesador:</label>
-                      <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+            <div class="col-md-3">
+                <label for="">Procesador:</label>
+                <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+            </div>
+            <div class="col-md-3">
+                <label for="">Generacion:</label>
+                <input class ="form-control" type="text" id="generacion" value ="<?php  echo $producto['generacion'] ?>">          
+            </div>
+        </div>
+        <div class="mt-3">
+            <?php
+               if($producto['ramdividida']==0)
+               {
+                   echo '<button 
+                            class ="btn btn-success" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalDividirRam"
+                            onclick= "formuDividirRam('.$producto['id'].'); "
+                        >DividirRam</button>';
+               }
+            ?>
+        </div>
+   
+        <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="">Ram 1:</label>
+
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                        value ="<?php  echo $ram[0]['capacidad'].'GB-'.$subTipoRam[0]['descripcion']  ?>"
+                    >   
                 </div>
-                <div class="col-md-3">
-                    <label for="">Generacion:</label>
-                      <input class ="form-control" type="text" id="generacion" value ="<?php  echo $producto['generacion'] ?>">          
+                <div class="col-md-6">
+                    <label for="">Ram 2:</label>
+                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php    ?>">   
                 </div>
+    
+        </div>
+        <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="">Ram 3:</label>
+
+                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php   ?>">   
+                </div>
+                <div class="col-md-6">
+                    <label for="">Ram 4:</label>
+                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php     ?>">   
+                </div>
+    
+        </div>
+        <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="">Ram Tipo:</label>
-                      <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $subTipoRam[0]['descripcion']  ?>">   
+                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $subTipoRam[0]['descripcion']  ?>">   
                 </div>
                 <div class="col-md-3">
                     <label for="">Ram (GB):</label>
                     <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $ram[0]['capacidad']    ?>">   
                 </div>
-        </div>
-        <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="">Disco TIpo:</label>
                     <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $subTipoDisco[0]['descripcion']   ?>">  
@@ -328,8 +445,6 @@ class hardwareView extends vista
                     <label for="">Disco (GB):</label>
                       <input class ="form-control" type="text"  onfocus="blur();"value ="<?php  echo $disco[0]['capacidad'] ?>">          
                 </div>
-                
-               
         </div>
 
         <!--  botones de quitar ram y disco   -->
@@ -393,7 +508,16 @@ class hardwareView extends vista
 
         <?php
     }
-
+    public function mostrarInfoCargueArchivoRam($producto)
+    {
+        $tipoParte =    $this->SubtipoParteModel->traerSubTipoParte($producto['tipoRamCargue']);
+        echo 'Ram : '.$producto['capacidadRamCargue'].'GB-'.$tipoParte[0]['descripcion'];                            
+    }
+    public function mostrarInfoCargueArchivoDisco($producto)
+    {
+        $tipoParte =    $this->SubtipoParteModel->traerSubTipoParte($producto['tipoDiscoCargue']);
+        echo ' Disco: '.$producto['capacidadDiscoCargue'].'-'.$tipoParte[0]['descripcion'];                            
+    }
 
     public function formuAgregarRam($idHardware)
     {
@@ -577,8 +701,63 @@ class hardwareView extends vista
         <?php
     }
 
+    public function formuDividirRam($idHardware)
+    {
 
+        $tiposRam =  $this->SubtipoParteModel->traerSubtiposPartesConDescriptParte('ram');
+        ?>
+        <div class="row">
+            <div class="col-lg-4">
+             
+                <select class="form-control" id="idSubTipoRamHardware">
+                    <?php
+                    $this->colocarSelect($tiposRam); 
+                    ?>
+                </select>
+            </div>
+            <div class="col-lg-4">
+              
+                <input class="form-control" type="text" id="capacidadRamHardware" placeholder= "capacidad">
+            </div>
+            <div class="col-lg-4">
+               <button onclick = "agregarTemporalDividirMemoria(<?php echo  $idHardware; ?>); " class="btn btn-primary btn-block ">Agregar </button>
+            </div>
+        </div>
+        <div class="row" id="div_resultados_dividir_ram">
+                <?php  
+                    $temporales =  $this->hardwareModel->traerRegistrosTemporales($idHardware);                     
+                    $this->mostrarTemporales($temporales)  
+                ?>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-success  btn-block" onclick ="registrarRamDividaHardware(<?php echo  $idHardware;  ?>); ">Aplicar Cambios</button>
+        </div>
+        <?php
+    }
 
+    public function mostrarTemporales($temporales)
+    {
+            //    echo '<pre>';
+            // print_r($temporales); 
+            // echo '</pre>';
+            // die();
+        echo '<div class="mt-3">';    
+        echo '<table class="table table-striped">'; 
+        echo '<tr>';
+        echo '<td>Tipo</td>'; 
+        echo '<td>Capacidad</td>'; 
+        echo '</tr>';
+        foreach($temporales as $temporal)
+        {
+            $infoSubtipo = $this->SubtipoParteModel->traerSubTipoParte($temporal['idSubtipo']);
+            echo '<tr>';
+            echo '<td>'.$infoSubtipo[0]['descripcion'].'</td>';
+            echo '<td>'.$temporal['capacidad'].'</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '</div>'; 
+    }
 
 }
 ?>

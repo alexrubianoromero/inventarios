@@ -4,10 +4,15 @@ $raiz =dirname(dirname(dirname(__file__)));
 //  die('rutamodel '.$raiz);
 
 require_once($raiz.'/conexion/Conexion.php');
+require_once($raiz.'/partes/models/PartesModel.php');
 
 class HardwareModel extends Conexion
 {
-
+    protected $parteModel; 
+    public function __construct()
+    {
+        $this->parteModel = new PartesModel();
+    }
     public function traerHardware()
     {
         $sql = "select * from hardware order by id asc";
@@ -27,7 +32,100 @@ class HardwareModel extends Conexion
         // die();
         return $hardware;  
     }
+
+    public function totalizarRamHardwareId($idHardware)
+    {
+        $infoH = $this->verHardware($idHardware);
+        $ram1 = $this->parteModel->traerParte($infoH['idRam1']);
+        $ram2 = $this->parteModel->traerParte($infoH['idRam2']);
+        $ram3 = $this->parteModel->traerParte($infoH['idRam3']);
+        $ram4 = $this->parteModel->traerParte($infoH['idRam4']);
+        $totalRam = $ram1[0]['capacidad'] + $ram2[0]['capacidad'] + $ram3[0]['capacidad'] + $ram4[0]['capacidad'] ; 
+        return $totalRam;
+    }
+    public function totalizarDiscoHardwareId($idHardware)
+    {
+        $infoH = $this->verHardware($idHardware);
+        $disco1 = $this->parteModel->traerParte($infoH['idDisco1']);
+        $disco2 = $this->parteModel->traerParte($infoH['idDisco2']);
+        $totalDisco = $disco1[0]['capacidad'] + $disco2[0]['capacidad'] ; 
+        return $totalDisco;
+    }
+
+    public function agregarTemporalDividirMemoria($request)
+    {
+        $sql = "insert into tablaTemporalDividirMemoria (idHardware,idSubtipo,capacidad)     
+        values ('".$request['idHardware']."','".$request['idSubTipoRamHardware']."','".$request['capacidadRamHardware']."')"; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
     
+    public function traerRegistrosTemporales($idHardware)
+    {
+        $sql = "select * from tablaTemporalDividirMemoria   where idHardware =  '".$idHardware."'  order by id asc  " ;    
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrTempo = $this->get_table_assoc($consulta); 
+        return $arrTempo; 
+    }
+    
+    public function asignarDivisionHadware($idHardware)
+    {
+        $temporales = $this->traerRegistrosTemporales($idHardware);
+        $memorias = [
+            "0" => "idRam1",
+           "1" => "idRam2",
+           "2" => "idRam3",
+           "3" => "idRam4"
+        ];
+        $conta = 0; 
+        foreach($temporales as $temp)
+        {
+            //busque si ya existe la parte con esa caracteristica 
+            //si no existe toca crearla 
+            $conRam = $this->parteModel->traerParteConIdSubtipoyCapacidad($temp['idSubtipo'],$temp['capacidad']);
+            //     echo '<pre>';
+            //  print_r($conRam); 
+            //  echo '</pre>';
+            //  die();
+            if($conRam['filas']>0)
+            {
+                //el id de la parte 
+                $idParteRam = $conRam['info']['id'];     
+            }else{
+                // die('entro aca '); 
+                //se debe crear la parte con estas caracteristicas
+                $this->parteModel->grabarParteGeneral($temp['idSubtipo'],$temp['capacidad'],'se crea al dividir memoria');
+                $idParteRam = $this->parteModel->traerUltimoIdPartes();
+            }  
+            //ahora asignarle ese idParte a las 4 ram del hardware     
+            $sql = "update hardware set ".$memorias[$conta]." =   '".$idParteRam."'  where id = '".$idHardware."'    ";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            // die ('<br>'.$sql);  
+            $conta++; 
+        }
+        
+    }
+    
+    public function inactivarBotonDividir($idHardware)
+    {
+        $sql = "update hardware set  ramdividida = '1' where id = '".$idHardware."'  ";    
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    
+    public function limpiarTablaDivisionRam($idHardware)
+    {
+        $sql ="delete from 	tablaTemporalDividirMemoria	 where idHardware = '".$idHardware."'  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+
+
+
+
+
+
+
+
+
+
     public function desligarRamDeEquipo($request)
     {
         $sql = "update hardware set  idRam = 0  where  id= '".$request['idHardware']."'   ";

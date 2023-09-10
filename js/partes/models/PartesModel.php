@@ -15,20 +15,10 @@ class PartesModel extends Conexion
     //esta la cree cuando se suben muchos hardware desde un archivo de excell
     public function grabarParte($idSubTipo,$capacidad)
     {
+      
         $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador') ";
-        $consulta = mysql_query($sql,$this->connectMysql());
-    }
-    public function grabarParteDesdeCargarArchivo($idSubTipo,$capacidad)
-    {
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$idSubTipo."','".$capacidad."','la ram relacionada en el archivo') ";
-        $consulta = mysql_query($sql,$this->connectMysql());
-    }
-    public function grabarParteGeneral($idSubTipo,$capacidad,$comentario)
-    {
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$idSubTipo."','".$capacidad."','".$comentario."') ";
+                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador')
+        ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
 
@@ -99,31 +89,20 @@ class PartesModel extends Conexion
         $discos = $this->get_table_assoc($consulta);
         return $discos;  
     }
-    //aqui busca en la tabla de partes si existe un producto 
-    //que tenga el mismo idSubtipo y la misma capacidad 
-    //para evitar crear el mismo producto 
+    
     public function traerParteConIdSubtipoyCapacidad($idSubtipo,$capacidad)
     {
         $sql = "select * from partes 
         where idSubtipoParte = '".$idSubtipo."'    
         and capacidad = '".$capacidad."' 
         order by id asc limit 1  "; 
-        // die($sql); 
+        die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
         $filas = mysql_num_rows($consulta); 
         $arrParte = mysql_fetch_assoc($consulta); 
         $respu['filas'] = $filas;
         $respu['info'] = $arrParte; 
         return $respu ; 
-    }
-
-    public function traerUltimoIdPartes()
-    {
-        $sql = "select max(id) as maximo from partes ";
-        $consulta = mysql_query($sql,$this->connectMysql());
-        $arrParte = mysql_fetch_assoc($consulta); 
-        $maximo = $arrParte['maximo']; 
-        return $maximo;
     }
 
     public function desligarParteDeHardware($idDisco)

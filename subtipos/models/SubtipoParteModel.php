@@ -16,6 +16,10 @@ class SubtipoParteModel extends Conexion
         return $subTipoParte;
     }
 
+
+    //esta trae todas las subpartes del id parte indicado 
+    //por ejemplo ram = 4
+    //discos = 3
     public function traerSubTipoParteIdParte($idParte)
     {
         $sql = "select * from subtipoParte where idParte = '".$idParte."'  ";
@@ -23,7 +27,7 @@ class SubtipoParteModel extends Conexion
         $subTiposParte = $this->get_table_assoc($consulta);
         return $subTiposParte;
     }
-    
+    //esta trae los subtipos de acuerdo  a la descripcion de la parte 
     public function traerSubtiposPartesConDescriptParte($decriParte)
     {
         $sql = "select s.id as id ,s.descripcion from subtipoParte s

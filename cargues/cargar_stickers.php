@@ -2,6 +2,10 @@
 session_start();
 include('../valotablapc.php');
 date_default_timezone_set('America/Bogota');
+$raiz =dirname(dirname(__file__));
+// die('rutacargar archivo '.$raiz);
+require_once($raiz.'/partes/models/PartesModel.php'); 
+require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
 ?>
 <!DOCTYPE html>
 <html >
@@ -184,33 +188,59 @@ function traerUltimoIdPartes($conexion){
                                     //echo 'ultima forma'.$fecha_php.'<br>';
                                     //primero debe grabar la ram en partes 
                                   
-                                    $sql_grabar_parte_ram = "insert into partes (idSubtipoParte,capacidad,comentarios) 
-                                    values(
-                                        '".trim($am['L'])."'
-                                        , '".trim($am['M'])."'
-                                        ,'Ram insertada al cargar un hardware'
-                                    )";
-                                    // die($sql_grabar_parte_ram); 
-                                    $consulta_grabar_parte_ram = mysql_query($sql_grabar_parte_ram,$conexion);
+                                    // $sql_grabar_parte_ram = "insert into partes (idSubtipoParte,capacidad,comentarios) 
+                                    // values(
+                                    //     '".trim($am['L'])."'
+                                    //     , '".trim($am['M'])."'
+                                    //     ,'Ram insertada al cargar un hardware'
+                                    // )";
+
+                                    // $consulta_grabar_parte_ram = mysql_query($sql_grabar_parte_ram,$conexion);
                                     //el id de esta ram recien grabada
-                                    $ultimoIdRam = traerUltimoIdPartes($conexion);
+                                    // $ultimoIdRam = traerUltimoIdPartes($conexion);
                                     
                                     //luego grabar el disco en partes 
-                                    $sql_grabar_parte_disco = "insert into partes (idSubtipoParte,capacidad,comentarios) 
-                                    values(
-                                        '".trim($am['N'])."'
-                                        , '".trim($am['O'])."'
-                                        ,'Disco insertado al cargar un hardware'
-                                        )";
+                                    // $sql_grabar_parte_disco = "insert into partes (idSubtipoParte,capacidad,comentarios) 
+                                    // values(
+                                    //     '".trim($am['N'])."'
+                                    //     , '".trim($am['O'])."'
+                                    //     ,'Disco insertado al cargar un hardware'
+                                    //     )";
                                         // echo '<br>consulta<br>'.$sql_grabar_parte_disco;
-                                        $consulta_grabar_parte_disco = mysql_query($sql_grabar_parte_disco,$conexion);
+                                    // $consulta_grabar_parte_disco = mysql_query($sql_grabar_parte_disco,$conexion);
                                         //el id de este disco
-                                        $ultimoIdDisco = traerUltimoIdPartes($conexion);
+                                        // $ultimoIdDisco = traerUltimoIdPartes($conexion);
                                         
-                                        
-                                	
-									$sql_grabar_filas = "insert into hardware (idImportacion,lote,serial,idMarca,idTipoInv,idSubInv,
-                                    chasis,modelo,pulgadas,procesador,generacion,idRam,IdDisco,idArchivoCargue)
+                                      ////////lo nuevo entonces la parte sera crada 
+                                      ///////se buscara   si existe una parte de estas caracteristicas o si no pues se creara 
+                                      //con la respectiva anotaciom que asi venia del excel 
+
+                                      //buscar si ya existe esta parte con el tipo de ram indicado y la capacidad indicada 
+                                	  // sino pues lo crea y ya 
+                                      $ParteModel  = new PartesModel(); 
+                                    //   $am['M'] = '20';
+                                      $conRam = $ParteModel->traerParteConIdSubtipoyCapacidad(trim($am['L']),trim($am['M'])); 
+                                    //   echo '<pre>';
+                                    //     print_r($conRam); 
+                                    //     echo '</pre>';
+                                    //     die();
+                                      if($conRam['filas']>0)
+                                      {
+                                        //el id de la parte 
+                                         $idParteRam = $conRam['info']['id'];     
+                                        //  die('idparterrrrrrrrrrrrrrrrrrrrrrrrrrr'.$idParteRam);
+                                      }else{
+                                        //se debe crear la parte con estas caracteristicas
+                                        // die('entro acaccccccccccccccccccccccccccc');
+                                        $ParteModel->grabarParteDesdeCargarArchivo(trim($am['L']),trim($am['M']));
+                                        $idParteRam = $ParteModel->traerUltimoIdPartes();
+                                      }  
+
+                                    //   die('idParteRam'.$idParteRam);
+									$sql_grabar_filas = "insert into hardware (idImportacion,lote,serial,idMarca,idTipoInv,
+                                    idSubInv,chasis,modelo,pulgadas,procesador,generacion,idArchivoCargue
+                                    ,tipoRamCargue,capacidadRamCargue,tipoDiscoCargue,	capacidadDiscoCargue,idRam1
+                                    )
                                     values (
                                         '".trim($am['B'])."'
                                         , '".trim($am['C'])."'
@@ -223,12 +253,15 @@ function traerUltimoIdPartes($conexion){
                                         , '".trim($am['I'])."'
                                         , '".trim($am['J'])."'
                                         , '".trim($am['K'])."'
-                                        , '".$ultimoIdRam."'
-                                        , '".$ultimoIdDisco."'
                                         , '".$maximo_id."'
-
+                                        , '".$am['L']."'
+                                        , '".$am['M']."'
+                                        , '".$am['N']."'
+                                        , '".$am['O']."'
+                                        , '".$idParteRam."'
                                         )";
                                     // echo '<br>consulta<br>'.$sql_grabar_filas;
+                                    // die();
                                     $consulta_grabar_detalle = mysql_query($sql_grabar_filas,$conexion);
                                        //echo '<br>'.$sql_grabar_filas; 
 

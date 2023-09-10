@@ -39,6 +39,13 @@ class TipoParteModel extends Conexion
         return $tipopartes;
     }
     
+    public function traerTipoParteId($idTipoParte)
+    {
+        $sql = "select * from tipoparte where id = '".$idTipoParte."'  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrTipo = mysql_fetch_assoc($consulta); 
+        return $arrTipo; 
+    }
 
 
 }

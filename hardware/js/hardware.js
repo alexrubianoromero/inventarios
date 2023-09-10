@@ -234,6 +234,90 @@ function formuAgregarDisco(idHardware)
         );
     
 }
+function formuDividirRam(idHardware)
+{
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyDividirRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=formuDividirRam'
+        +'&idHardware='+idHardware
+        );
+        
+    }
+    
+function agregarTemporalDividirMemoria(idHardware)
+{
+    // alert('tempoiral');
+    var valida = validarCamposAgregarRam();
+    if(valida)
+    {
+        var idSubTipoRamHardware = document.getElementById('idSubTipoRamHardware').value;
+        var capacidadRamHardware = document.getElementById('capacidadRamHardware').value;
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_resultados_dividir_ram").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=agregarTemporalDividirMemoria'
+        +'&idHardware='+idHardware
+        +'&idSubTipoRamHardware='+idSubTipoRamHardware
+        +'&capacidadRamHardware='+capacidadRamHardware
+        );
+        document.getElementById('idSubTipoRamHardware').value = -1;
+        document.getElementById('capacidadRamHardware').value = '' ;
+    }
+}
+
+    
+
+function validarCamposAgregarRam()
+{
+    if( document.getElementById("idSubTipoRamHardware").value == '-1')
+    {
+        document.getElementById("idSubTipoRamHardware").focus();
+        alert('Por favor escojer tipo de ram');
+        return 0;
+    }
+
+    if( document.getElementById("capacidadRamHardware").value == '')
+    {
+        document.getElementById("capacidadRamHardware").focus();
+        alert('Por favor digitar capacidad');
+        return 0;
+    }
+return 1;
+}   
+
+function registrarRamDividaHardware(idHardware)
+{
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalBodyDividirRam").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=registrarRamDividaHardware'
+    +'&idHardware='+idHardware
+    );
+}
+
+
 
 function formuNuevoHardware()
 {
