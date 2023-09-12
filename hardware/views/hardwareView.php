@@ -434,7 +434,7 @@ class hardwareView extends vista
                                data-bs-toggle="modal" 
                                data-bs-target="#modalAgregarRam"
                                class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam1'].');"
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam1'].',1);"
                                >-</button>';
                        }
                     ?>
@@ -462,7 +462,7 @@ class hardwareView extends vista
                                data-bs-toggle="modal" 
                                data-bs-target="#modalAgregarRam"
                                class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam2'].');"
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam2'].',2);"
                                >-</button>';
        
                        }
@@ -482,7 +482,7 @@ class hardwareView extends vista
                 <div class="col-md-2">
                     <label>Accion </label>
                     <?php
-                       if($producto['idRam1']==0)
+                       if($producto['idRam3']==0)
                        {
                            echo '<button 
                                data-bs-toggle="modal" 
@@ -496,7 +496,7 @@ class hardwareView extends vista
                                data-bs-toggle="modal" 
                                data-bs-target="#modalAgregarRam"
                                class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam3'].');"
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam3'].',3);"
                                >-</button>';
        
                        }
@@ -525,7 +525,7 @@ class hardwareView extends vista
                                data-bs-toggle="modal" 
                                data-bs-target="#modalAgregarRam"
                                class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].');"
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].',4);"
                                >-</button>';
        
                        }
@@ -534,33 +534,42 @@ class hardwareView extends vista
                
              
         </div>
+        
+        <div class="row mt-3">
+          <div class="col-md-4">
+                    <label for="">Disco1 :</label>
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram4[0]['capacidad'].'GB-'.$subTipoRam4[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idDisco1']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarDisco('.$producto['id'].',1);"
+                               >+</button>';
        
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].',4);"
+                               >-</button>';
        
+                       }
+                    ?>
+                </div>
+
+        </div>
+
 
         <!--  botones de quitar ram y disco   -->
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <?php 
-                // if($producto['idRam']==0)
-                // {
-                //     echo '<button 
-                //         data-bs-toggle="modal" 
-                //         data-bs-target="#modalAgregarRam"
-                //         class ="btn btn-success" 
-                //         onclick="formuAgregarRam('.$producto['id'].');"
-                //         >AGREGAR RAM</button>';
-
-                // }else{
-                //     echo '<button 
-                //         data-bs-toggle="modal" 
-                //         data-bs-target="#modalAgregarRam"
-                //         class ="btn btn-primary" 
-                //         onclick="quitarRam('.$producto['id'].','.$producto['idRam'].');"
-                //         >QUITAR RAM</button>';
-
-                // }
-                ?>
-            </div>    
             <div class="col-md-6">
             <?php 
             // if($producto['idDisco']==0)
@@ -609,13 +618,16 @@ class hardwareView extends vista
         echo ' Disco: '.$producto['capacidadDiscoCargue'].'-'.$tipoParte[0]['descripcion'];                            
     }
 
-    public function formuAgregarRam($idHardware)
+    public function formuAgregarRam($request)
     {
+        //listado de la tabla partes con las partes existentes para agregarlas 
         $memorias = $this->partesModel->traerMemoriasDisponibles();
-        echo '<pre>';
-        print_r($memorias); 
-        echo '</pre>';
-        die();
+        // echo '<pre>';
+        // print_r($memorias); 
+        // echo '</pre>';
+        // die();
+        //mostrar las ram disponibles
+
 
        
        ?>
@@ -629,6 +641,7 @@ class hardwareView extends vista
                     <td>Parte</td>
                     <td>Subtipo</td>
                     <td>Capacidad</td>
+                    <td>Cantidad</td>
                     <td>Acciones</td>
 
 
@@ -644,7 +657,8 @@ class hardwareView extends vista
                         echo '<td>'.$memoria['descriParte'].'</td>';
                         echo '<td>'.$memoria['descriSubParte'].'</td>';
                         echo '<td>'.$memoria['capacidad'].'</td>';
-                        echo '<td><button class ="btn btn-primary" onclick ="agregarMemoriaRam('.$idHardware.','.$memoria['id'].');">Agregar</button></td>';
+                        echo '<td>'.$memoria['cantidad'].'</td>';
+                        echo '<td><button class ="btn btn-primary" onclick ="agregarMemoriaRam('.$request['idHardware'].','.$memoria['id'].','.$request['numeroRam'].');">Agregar</button></td>';
                         echo '</tr>';
                     }
                 ?>

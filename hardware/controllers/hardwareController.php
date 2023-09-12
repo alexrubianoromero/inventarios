@@ -142,15 +142,21 @@ class hardwareController
         // echo 'llego a controller y quitar ram '; 
         //desligar la parte del hardware
 
+        $tipoMov = 1; //es una entrada al inventario porque vuelve una parte  
+        $cantidadParaActualizar = 1; 
+        $data = $this->partesModel->sumarDescontarPartes($tipoMov,$request['idRam'],$cantidadParaActualizar);
         $this->model->desligarRamDeEquipo($request);
-        $this->partesModel->desligarRamDeHardware($request);
-        // $infoMov = new stdClass();
-        // $infoMov->idParte = $request['idRam'];
-        // $infoMov->idHardware = $request['idHardware'];
-        // $infoMov->tipoMov = '1';
-        // $this->MovParteModel->grabarMovDesligardeHardware($infoMov);
-        $this->llamarRegistroMovimientoQuitarHardware($request['idHardware'],$request['idRam'],'1');
+        $infoMov = new stdClass();
+        $infoMov->idParte = $request['idRam'];
+        $infoMov->idHardware = $request['idHardware'];
+        $infoMov->tipoMov = $tipoMov;
+        $infoMov->observaciones = 'Se quita memoria ram de Hardware id No '.$request['idHardware'];
+        $infoMov->loquehabia = $data['loquehabia']; 
+        $infoMov->loquequedo = $data['loquequedo']; 
+        $infoMov->query = $data['query'];
+        $infoMov->cantidadQueseAfecto = $data['cantidadQueseAfecto'];
 
+        $this->MovParteModel->grabarMovDesligardeHardware($infoMov);
         echo 'La Ram fue desasociada del hardware';
     }
 
@@ -170,13 +176,51 @@ class hardwareController
     
     public function formuAgregarRam($request)
     {
-        echo '<pre>';
-        print_r($request); 
-        echo '</pre>';
-        die('valoresRam');
-        $this->view->formuAgregarRam($request['idHardware'],$request['ram']);
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('valoresRam');
+        // $this->view->formuAgregarRam($request['idHardware'],$request['ram']);
+        $this->view->formuAgregarRam($request);
 
-        $this->llamarRegistroMovimientoQuitarHardware($request['idHardware'],$request['idRam'],'1');
+        // $this->llamarRegistroMovimientoQuitarHardware($request['idHardware'],$request['idRam'],'1');
+    }
+
+    
+    //recibe el requesr con 3 parametros
+    //idHArdware
+    //idRam
+    //numeroRam
+    public function agregarMemoriaRam($request)
+    {
+        //ya no hay que hacer asociaciones solamente se suma o se resta  a la cantidad que tenga la parte 
+        // $this->model->asociarParteRamEnTablaHardware($request);
+        // $this->partesModel->asociarRamHardwareEnTablaPartes($request);
+        
+        //hay que hacer la suma o la resta del inventario 
+        //deberia ser una funcion de Partes
+        //tipoMov 1 Entrada 2 salida 
+        //registrar el movimiento 
+
+
+        $tipoMov = 2; //es salida porque se saca un parte para agregarla a un hardware
+        $cantidadParaActualizar = 1; 
+        $data = $this->partesModel->sumarDescontarPartes($tipoMov,$request['idRam'],$cantidadParaActualizar);
+
+        $infoMov = new stdClass();
+        $infoMov->idParte = $request['idRam'];
+        $infoMov->idHardware = $request['idHardware'];
+        $infoMov->tipoMov = $tipoMov;
+        $infoMov->observaciones = 'Se agrega parte a Hardware id No '.$request['idHardware'];
+        $infoMov->loquehabia = $data['loquehabia']; 
+        $infoMov->loquequedo = $data['loquequedo']; 
+        $infoMov->query = $data['query'];
+        $infoMov->cantidadQueseAfecto = $data['cantidadQueseAfecto'];
+        $this->MovParteModel->registrarAgregarParteAHardware($infoMov);
+
+        $this->partesModel->asociarParteAHardware($request['idHardware'],$request['idRam'],$request['numeroRam']);
+
+        echo 'Memoria Agregado!!';
     }
 
     public function formuAgregarDisco($request)
@@ -184,28 +228,12 @@ class hardwareController
         $this->view->formuAgregarDisco($request['idHardware']);
     }
 
-    public function agregarMemoriaRam($request)
-    {
-        // echo '<pre>';
-        // print_r($request); 
-        // echo '</pre>';
-        // die();
-        $this->model->asociarParteRamEnTablaHardware($request);
-        $this->partesModel->asociarRamHardwareEnTablaPartes($request);
-        
-        //registrar el movimiento agregar parte al hardware
-        $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idRam'],'2',$request['opcion']);
-        // $this->partesModel->cambiarEstadodePArte($request['idRam'],);//pendiente
-
-
-        echo 'Memoria Agregado!!';
-    }
     public function agregarDisco($request)
     {
-        $this->model->asociarParteEnTablaHardware($request);
-        $this->partesModel->asociarHardwareEnTablaPartes($request);
-        $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idDisco'],'2',$request['opcion']);
-        echo 'Disco Agregado!!';
+        // $this->model->asociarParteEnTablaHardware($request);
+        // $this->partesModel->asociarHardwareEnTablaPartes($request);
+        // $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idDisco'],'2',$request['opcion']);
+        // echo 'Disco Agregado!!';
     }
     
     public function formuNuevoHardware()

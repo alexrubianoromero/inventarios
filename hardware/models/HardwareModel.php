@@ -128,9 +128,14 @@ class HardwareModel extends Conexion
 
     public function desligarRamDeEquipo($request)
     {
-        $sql = "update hardware set  idRam = 0  where  id= '".$request['idHardware']."'   ";
+        $slots= ['','idRam1','idRam2','idRam3','idRam4'];
+        // $ram = $slots[$request['numeroRam']]; 
+        $sql = "update hardware set  ".$slots[$request['numeroRam']]." = 0  where  id= '".$request['idHardware']."'   ";
+        // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+
+
     public function desligarDiscoDeEquipo($request)
     {
         $sql = "update hardware set  idDisco = 0  where  id= '".$request['idHardware']."'   ";
@@ -150,7 +155,7 @@ class HardwareModel extends Conexion
     public function grabarNuevoHardware($request)
     {
         $sql = "insert into hardware(idImportacion,lote,serial,idMarca,idTipoInv,idSubInv,
-        chasis,modelo,pulgadas,procesador,generacion)
+        chasis,modelo,pulgadas,procesador,generacion,ramdividida)
         values ( '".$request['idImportacion']."'
         ,'".$request['lote']."'
         ,'".$request['serial']."'
@@ -162,6 +167,7 @@ class HardwareModel extends Conexion
         ,'".$request['pulgadas']."'
         ,'".$request['procesador']."'
         ,'".$request['generacion']."'
+        ,'1'
         )";
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());

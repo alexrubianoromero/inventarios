@@ -19,12 +19,14 @@ class PartesModel extends Conexion
                 values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador') ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+
     public function grabarParteDesdeCargarArchivo($idSubTipo,$capacidad)
     {
         $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
                 values('".$idSubTipo."','".$capacidad."','la ram relacionada en el archivo') ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+
     public function grabarParteGeneral($idSubTipo,$capacidad,$comentario)
     {
         $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
@@ -35,7 +37,6 @@ class PartesModel extends Conexion
     //esta es para cuando se crean las partes independientes 
     public function grabarParteIndividual($request)
     {
-      
         $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
                 values('".$request['isubtipo']."','".$request['capacidad']."','Creacion desde Modulo')
         ";
@@ -57,16 +58,16 @@ class PartesModel extends Conexion
         $partes = $this->get_table_assoc($consulta);
         return $partes;
     }
+
+    //trae todas las ram que esten disponibles osea en estado 0 
     public function traerMemoriasDisponibles()
     {
         $sql = "select id from tipoparte where descripcion = 'Ram' ";
         $consulta = mysql_query($sql,$this->connectMysql());
         $ArridTipoParte = mysql_fetch_assoc($consulta);
         $idTipoParteRam = $ArridTipoParte['id'];
-
-
-
-        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad  from  partes p
+        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad ,p.cantidad 
+        from  partes p
         inner join subtipoParte s on (s.id = p.idSubtipoParte )
         inner join tipoparte t on (t.id = s.idParte)
         where t.descripcion = 'Ram'    
@@ -84,9 +85,6 @@ class PartesModel extends Conexion
         $consulta = mysql_query($sql,$this->connectMysql());
         $ArridTipoParte = mysql_fetch_assoc($consulta);
         $idTipoParteDisco = $ArridTipoParte['id'];
-
-
-
         $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad  from  partes p
         inner join subtipoParte s on (s.id = p.idSubtipoParte )
         inner join tipoparte t on (t.id = s.idParte)
@@ -132,27 +130,74 @@ class PartesModel extends Conexion
         $consulta = mysql_query($sql,$this->connectMysql());
     }
     
-    public function asociarHardwareEnTablaPartes($request)
-    {
-        $sql = "update partes set  idHardware = '".$request['idHardware']."'      where id=  '".$request['idDisco']."'  "; 
-        $consulta = mysql_query($sql,$this->connectMysql());
-    }
-    public function asociarRamHardwareEnTablaPartes($request)
-    {
-        $sql = "update partes set  idHardware = '".$request['idHardware']."'      where id=  '".$request['idRam']."'  "; 
-        $consulta = mysql_query($sql,$this->connectMysql());
-    }
-    public function desligarRamDeHardware($request)
-    {
-        $sql = "update partes set  idHardware = 0      where id=  '".$request['idRam']."'  "; 
-        $consulta = mysql_query($sql,$this->connectMysql());
+    // public function asociarHardwareEnTablaPartes($request)
+    // {
+    //     $sql = "update partes set  idHardware = '".$request['idHardware']."'      where id=  '".$request['idDisco']."'  "; 
+    //     $consulta = mysql_query($sql,$this->connectMysql());
+    // }
+    // public function asociarRamHardwareEnTablaPartes($request)
+    // {
+    //     $sql = "update partes set  idHardware = '".$request['idHardware']."'      where id=  '".$request['idRam']."'  "; 
+    //     $consulta = mysql_query($sql,$this->connectMysql());
+    // }
+    // public function desligarRamDeHardware($request)
+    // {
+    //     $sql = "update partes set  idHardware = 0      where id=  '".$request['idRam']."'  "; 
+    //     $consulta = mysql_query($sql,$this->connectMysql());
+        
+    // }
+    // public function cambiarEstadodePArte($idParte,$estado)
+    // {
+        //     $sql = "update partes set estado = '".$estado."'  where idParte = '".$idParte."' ";
+        //     $consulta = mysql_query($sql,$this->connectMysql());
+        // }
+        
+        //debemos conocer el tipo de movimiento  para saber si suma o resta 
+        //se reciben estos parametros 
+        //tipo  movimiento 1 entrada  suma   2 salida resta  
+        //id de la parte 
+        //si se asocia a un hardware se puede indicar en el movimiento no en esta parte 
+        //colocar la parte al hardware 
+        public function sumarDescontarPartes($tipoMov,$idParte,$cantidadParaActualizar)
+        {
+
+            //colocar un control que no se pueda descontar cuando el saldo quede negativo 
+            $infoParte = $this->traerParte($idParte);
+        //          echo '<pre>';
+        // print_r($infoParte); 
+        // echo '</pre>';
+        // die();
+            $nuevoSaldo = 0;
+            $saldoActual = $infoParte[0]['cantidad']; 
+            if($tipoMov == 1)
+            { // si entra aca es porque es entrada y hay que sumar al inventario  
+                // die('entro a 1');
+                $nuevoSaldo = $saldoActual + $cantidadParaActualizar; 
+            }else{
+                // echo '<br>saldoActual '.$saldoActual;
+                // echo '<br>cantidadParaActualizar'.$cantidadParaActualizar;
+                // echo '<br>nuevoSaldo '.$nuevoSaldo;
+                // die();
+                $nuevoSaldo = $saldoActual - $cantidadParaActualizar; 
+                if($nuevoSaldo < 0){
+                    die('Saldo Menor que cero operacion no permitida '); 
+                }
+            }
+            $sql = "update partes set cantidad = '".$nuevoSaldo."'   where id = '".$idParte."'   "; 
+            // die($sql ); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $respu['query'] = $sql; 
+            $respu['loquehabia'] =  $infoParte[0]['cantidad']; 
+            $respu['loquequedo'] =  $nuevoSaldo;
+            $respu['cantidadQueseAfecto'] =  $cantidadParaActualizar;
+            return $respu; 
+        }
+        
+        public function asociarParteAHardware($idHardware,$idParte,$numeroRam)
+        {
+            $arr = ['','idRam1','idRam2','idRam3','idRam4']; 
+            $sql = "update hardware set ".$arr[$numeroRam]." = '".$idParte."'  where id = '".$idHardware."'    ";  
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
         
     }
-    public function cambiarEstadodePArte($idParte,$estado)
-    {
-        $sql = "update partes set estado = '".$estado."'  where idParte = '".$idParte."' ";
-        $consulta = mysql_query($sql,$this->connectMysql());
-
-    }
-
-}

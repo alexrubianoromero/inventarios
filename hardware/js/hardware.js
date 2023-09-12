@@ -82,7 +82,7 @@ function verHardware(id)
                 );
 }
 
-function quitarRam(idHardware,idRam)
+function quitarRam(idHardware,idRam,numeroRam)
 {
      let response = confirm("Esta seguro que desea quitar la ram de este hardware");
     // alert(response);
@@ -102,6 +102,7 @@ function quitarRam(idHardware,idRam)
         http.send('opcion=quitarRam'
                   +'&idHardware='+idHardware
                   +'&idRam='+idRam
+                  +'&numeroRam='+numeroRam
         );
     }
 
@@ -173,7 +174,7 @@ function formuAgregarRam(idHardware,numeroRam)
         );
     
 }
-function agregarMemoriaRam(idHardware,idRam)
+function agregarMemoriaRam(idHardware,idRam,numeroRam)
 {
     let response = confirm("Esta seguro que desea agregar esta parte?");
     if(response == 1)
@@ -191,6 +192,7 @@ function agregarMemoriaRam(idHardware,idRam)
         http.send('opcion=agregarMemoriaRam'
                   +'&idHardware='+idHardware
                   +'&idRam='+idRam
+                  +'&numeroRam='+numeroRam
         );
     }
 }

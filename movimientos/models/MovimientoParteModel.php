@@ -17,16 +17,31 @@ class MovimientoParteModel extends Conexion
 
     public function grabarMovDesligardeHardware($infoMov)
     {
-            $sql = "insert into movimientosPartes  (idParte,tipoMov,observaciones,idHardware,fecha,idUsuario)
-                    values('".$infoMov->idParte."','".$infoMov->tipoMov."',
-                    'Se desligo de Hardware con id =".$infoMov->idHardware." ',
-                    '".$infoMov->idHardware."',now(),'".$_SESSION['idUsuario']."' )"; 
+        $querySinComillas = addslashes ( $infoMov->query);
+            $sql = "insert into movimientosPartes  
+                    (idParte,tipoMov,observaciones,idHardware,fecha,idUsuario
+                    ,loquehabia,loquequedo,cantidadQueseAfecto,query	
+                    )
+                    values('".$infoMov->idParte."'
+                    ,'".$infoMov->tipoMov."'
+                    ,'Se desligo de Hardware con id =".$infoMov->idHardware." '
+                    ,'".$infoMov->idHardware."'
+                    ,now()
+                    ,'".$_SESSION['idUsuario']."' 
+                    ,'".$infoMov->loquehabia."'
+                    ,'".$infoMov->loquequedo."'
+                    ,'".$infoMov->cantidadQueseAfecto."'
+                    ,'".$querySinComillas."'
+                    )"; 
                     $consulta = mysql_query($sql,$this->connectMysql());
+                    // die($sql );
                 }
                 
-                public function registrarAgregarParteAHardware($infoMov)
-                {
-        $sql = "insert into movimientosPartes (idParte,tipoMov,observaciones,idHardware,fecha,idUsuario)   
+    public function registrarAgregarParteAHardware($infoMov)
+    {
+        $querySinComillas = addslashes ( $infoMov->query);
+        $sql = "insert into movimientosPartes (idParte,tipoMov,observaciones,idHardware,fecha,idUsuario
+        ,loquehabia,loquequedo,query,cantidadQueseAfecto )   
                 values(
                     '".$infoMov->idParte."'
                     ,'".$infoMov->tipoMov."'
@@ -34,8 +49,12 @@ class MovimientoParteModel extends Conexion
                     ,'".$infoMov->idHardware."'
                     ,now()
                     ,'".$infoMov->idUsuario."'
+                    ,'".$infoMov->loquehabia."'
+                    ,'".$infoMov->loquequedo."'
+                    ,'".$querySinComillas ."'
+                    ,'".$infoMov->cantidadQueseAfecto."'
                     )"; 
-                    // die($sql); 
+                    // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
     }
 
