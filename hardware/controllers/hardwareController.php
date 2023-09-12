@@ -162,6 +162,10 @@ class hardwareController
 
     public function quitarDisco($request)
     {
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('');
         $tipoMov = 1; //es una entrada al inventario porque vuelve una parte  
         $cantidadParaActualizar = 1; 
         $data = $this->partesModel->sumarDescontarPartes($tipoMov,$request['idDisco'],$cantidadParaActualizar);

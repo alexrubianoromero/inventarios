@@ -138,13 +138,17 @@ class HardwareModel extends Conexion
 
     public function desligarDiscoDeEquipo($request)
     {
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('');
         $slots= ['','idDisco1','idDisco2'];
         $sql = "update hardware set  ".$slots[$request['numeroDisco']]." = 0  where  id= '".$request['idHardware']."'   ";
-        // die($sql); 
+        //  die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
 
-    
+
     public function asociarParteEnTablaHardware($request)
     {
         $sql = "update hardware set idDisco = '".$request['idDisco']."'      where id =   '".$request['idHardware']."'   "; 
