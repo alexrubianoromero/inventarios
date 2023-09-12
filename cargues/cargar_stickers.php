@@ -237,9 +237,28 @@ function traerUltimoIdPartes($conexion){
                                       }  
 
                                     //   die('idParteRam'.$idParteRam);
+
+                                    //ahora viene lo de grabar el disco1 con lo que trae el archivo de excel 
+                                    $conDisco = $ParteModel->traerParteConIdSubtipoyCapacidad(trim($am['N']),trim($am['O']));
+                                        // echo '<pre>';
+                                        // print_r($conRam); 
+                                        // echo '</pre>';
+                                        // die();
+                                        if($conDisco['filas']>0)
+                                        {
+                                          //el id de la parte 
+                                           $idParteDisco = $conDisco['info']['id'];     
+                                          //  die('idparterrrrrrrrrrrrrrrrrrrrrrrrrrr'.$idParteRam);
+                                        }else{
+                                          //se debe crear la parte con estas caracteristicas
+                                          // die('entro acaccccccccccccccccccccccccccc');
+                                          $ParteModel->grabarParteDesdeCargarArchivo(trim($am['N']),trim($am['O']));
+                                          $idParteDisco = $ParteModel->traerUltimoIdPartes();
+                                        }     
+
 									$sql_grabar_filas = "insert into hardware (idImportacion,lote,serial,idMarca,idTipoInv,
                                     idSubInv,chasis,modelo,pulgadas,procesador,generacion,idArchivoCargue
-                                    ,tipoRamCargue,capacidadRamCargue,tipoDiscoCargue,	capacidadDiscoCargue,idRam1
+                                    ,tipoRamCargue,capacidadRamCargue,tipoDiscoCargue,	capacidadDiscoCargue,idRam1,idDisco1
                                     )
                                     values (
                                         '".trim($am['B'])."'
@@ -259,6 +278,7 @@ function traerUltimoIdPartes($conexion){
                                         , '".$am['N']."'
                                         , '".$am['O']."'
                                         , '".$idParteRam."'
+                                        , '".$idParteDisco."'
                                         )";
                                     // echo '<br>consulta<br>'.$sql_grabar_filas;
                                     // die();

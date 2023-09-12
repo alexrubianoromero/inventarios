@@ -24,7 +24,7 @@ class MovimientoParteModel extends Conexion
                     )
                     values('".$infoMov->idParte."'
                     ,'".$infoMov->tipoMov."'
-                    ,'Se desligo de Hardware con id =".$infoMov->idHardware." '
+                    ,'Se desligo Parte de Hardware con id =".$infoMov->idHardware." '
                     ,'".$infoMov->idHardware."'
                     ,now()
                     ,'".$_SESSION['idUsuario']."' 

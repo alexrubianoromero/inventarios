@@ -322,8 +322,10 @@ class hardwareView extends vista
     public function verHardware($producto)
     {
         $marca = $this->MarcaModel->traerMarcaId($producto['idMarca']);
-        $disco = $this->partesModel->traerParte($producto['idDisco']);
-        $subTipoDisco = $this->SubtipoParteModel->traerSubTipoParte($disco[0]['idSubtipoParte']);
+        $disco1 = $this->partesModel->traerParte($producto['idDisco1']);
+        $subTipoDisco1 = $this->SubtipoParteModel->traerSubTipoParte($disco1[0]['idSubtipoParte']);
+        $disco2 = $this->partesModel->traerParte($producto['idDisco2']);
+        $subTipoDisco2 = $this->SubtipoParteModel->traerSubTipoParte($disco2[0]['idSubtipoParte']);
         $ram1 = $this->partesModel->traerParte($producto['idRam1']);
         $subTipoRam1 = $this->SubtipoParteModel->traerSubTipoParte($ram1[0]['idSubtipoParte']);
         $ram2 = $this->partesModel->traerParte($producto['idRam2']);
@@ -332,6 +334,8 @@ class hardwareView extends vista
         $subTipoRam3 = $this->SubtipoParteModel->traerSubTipoParte($ram3[0]['idSubtipoParte']);
         $ram4 = $this->partesModel->traerParte($producto['idRam4']);
         $subTipoRam4 = $this->SubtipoParteModel->traerSubTipoParte($ram4[0]['idSubtipoParte']);
+
+
 
 
 
@@ -536,10 +540,10 @@ class hardwareView extends vista
         </div>
         
         <div class="row mt-3">
-          <div class="col-md-4">
+                <div class="col-md-4">
                     <label for="">Disco1 :</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $ram4[0]['capacidad'].'GB-'.$subTipoRam4[0]['descripcion']  ?>"
+                    value ="<?php  echo $disco1[0]['capacidad'].'GB-'.$subTipoDisco1[0]['descripcion']  ?>"
                     >   
                 </div>
                 <div class="col-md-2">
@@ -559,7 +563,36 @@ class hardwareView extends vista
                                data-bs-toggle="modal" 
                                data-bs-target="#modalAgregarRam"
                                class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].',4);"
+                               onclick="quitarDisco('.$producto['id'].','.$producto['idDisco1'].',1);"
+                               >-</button>';
+       
+                       }
+                    ?>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Disco2 :</label>
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $disco2[0]['capacidad'].'GB-'.$subTipoDisco2[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idDisco2']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarDisco('.$producto['id'].',2);"
+                               >+</button>';
+       
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarDisco('.$producto['id'].','.$producto['idDisco2'].',2);"
                                >-</button>';
        
                        }
@@ -670,7 +703,7 @@ class hardwareView extends vista
     }
 
 
-    public function formuAgregarDisco($idHardware)
+    public function formuAgregarDisco($request)
     {
         $discos = $this->partesModel->traerDiscosDisponibles();
         // echo '<pre>';
@@ -690,6 +723,7 @@ class hardwareView extends vista
                     <td>Parte</td>
                     <td>Subtipo</td>
                     <td>Capacidad</td>
+                    <td>Cantidad</td>
                     <td>Acciones</td>
 
 
@@ -705,7 +739,8 @@ class hardwareView extends vista
                         echo '<td>'.$disco['descriParte'].'</td>';
                         echo '<td>'.$disco['descriSubParte'].'</td>';
                         echo '<td>'.$disco['capacidad'].'</td>';
-                        echo '<td><button class ="btn btn-primary" onclick ="agregarDisco('.$idHardware.','.$disco['id'].');">Agregar</button></td>';
+                        echo '<td>'.$disco['cantidad'].'</td>';
+                        echo '<td><button class ="btn btn-primary" onclick ="agregarDisco('.$request['idHardware'].','.$disco['id'].','.$request['numeroDisco'].' );">Agregar</button></td>';
                         echo '</tr>';
                     }
                 ?>

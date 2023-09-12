@@ -1,2 +1,3 @@
+truncate movimientosPartes;
 truncate hardware;
 truncate partes;

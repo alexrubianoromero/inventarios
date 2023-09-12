@@ -23,7 +23,7 @@ class PartesModel extends Conexion
     public function grabarParteDesdeCargarArchivo($idSubTipo,$capacidad)
     {
         $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$idSubTipo."','".$capacidad."','la ram relacionada en el archivo') ";
+                values('".$idSubTipo."','".$capacidad."','la ram / disco relacionada en el archivo exxel cargado') ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
 
@@ -85,7 +85,8 @@ class PartesModel extends Conexion
         $consulta = mysql_query($sql,$this->connectMysql());
         $ArridTipoParte = mysql_fetch_assoc($consulta);
         $idTipoParteDisco = $ArridTipoParte['id'];
-        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad  from  partes p
+        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad,p.cantidad  
+        from  partes p
         inner join subtipoParte s on (s.id = p.idSubtipoParte )
         inner join tipoparte t on (t.id = s.idParte)
         where t.descripcion = 'Disco'    
@@ -193,10 +194,12 @@ class PartesModel extends Conexion
             return $respu; 
         }
         
-        public function asociarParteAHardware($idHardware,$idParte,$numeroRam)
+        public function asociarParteAHardware($idHardware,$idParte,$numeroRam,$ramODisco)
         {
-            $arr = ['','idRam1','idRam2','idRam3','idRam4']; 
+            if($ramODisco == 'r'){$arr = ['','idRam1','idRam2','idRam3','idRam4']; }
+            if($ramODisco == 'd'){$arr = ['','idDisco1','idDisco2']; }
             $sql = "update hardware set ".$arr[$numeroRam]." = '".$idParte."'  where id = '".$idHardware."'    ";  
+            // die($sql ); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         

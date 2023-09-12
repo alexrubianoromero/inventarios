@@ -131,7 +131,7 @@ function agregarRam(idHardware)
 
 }
 
-function quitarDisco(idHardware,idDisco)
+function quitarDisco(idHardware,idDisco,numeroDisco)
 {
     // alert(idDisco);
     let response = confirm("Esta seguro que desea quitar el disco de este hardware");
@@ -152,6 +152,7 @@ function quitarDisco(idHardware,idDisco)
         http.send('opcion=quitarDisco'
                   +'&idHardware='+idHardware
                   +'&idDisco='+idDisco
+                  +'&numeroDisco='+numeroDisco
         );
     }
 }
@@ -196,7 +197,7 @@ function agregarMemoriaRam(idHardware,idRam,numeroRam)
         );
     }
 }
-function agregarDisco(idHardware,idDisco)
+function agregarDisco(idHardware,idDisco,numeroDisco)
 {
     let response = confirm("Esta seguro que desea  agregar esta parte?");
     if(response == 1)
@@ -214,12 +215,13 @@ function agregarDisco(idHardware,idDisco)
         http.send('opcion=agregarDisco'
                   +'&idHardware='+idHardware
                   +'&idDisco='+idDisco
+                  +'&numeroDisco='+numeroDisco
         );
     }
 }
 
 
-function formuAgregarDisco(idHardware)
+function formuAgregarDisco(idHardware,numeroDisco)
 {
    
         const http=new XMLHttpRequest();
@@ -234,6 +236,7 @@ function formuAgregarDisco(idHardware)
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.send('opcion=formuAgregarDisco'
                   +'&idHardware='+idHardware
+                  +'&numeroDisco='+numeroDisco
         );
     
 }
