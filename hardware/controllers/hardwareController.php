@@ -170,7 +170,12 @@ class hardwareController
     
     public function formuAgregarRam($request)
     {
-        $this->view->formuAgregarRam($request['idHardware']);
+        echo '<pre>';
+        print_r($request); 
+        echo '</pre>';
+        die('valoresRam');
+        $this->view->formuAgregarRam($request['idHardware'],$request['ram']);
+
         $this->llamarRegistroMovimientoQuitarHardware($request['idHardware'],$request['idRam'],'1');
     }
 

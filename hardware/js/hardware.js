@@ -154,9 +154,9 @@ function quitarDisco(idHardware,idDisco)
         );
     }
 }
-function formuAgregarRam(idHardware)
+function formuAgregarRam(idHardware,numeroRam)
 {
-   
+        // alert(idHardware);
         const http=new XMLHttpRequest();
         const url = 'hardware/hardware.php';
         http.onreadystatechange = function(){
@@ -169,6 +169,7 @@ function formuAgregarRam(idHardware)
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.send('opcion=formuAgregarRam'
                   +'&idHardware='+idHardware
+                  +'&numeroRam='+numeroRam
         );
     
 }

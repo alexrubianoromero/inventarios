@@ -324,8 +324,17 @@ class hardwareView extends vista
         $marca = $this->MarcaModel->traerMarcaId($producto['idMarca']);
         $disco = $this->partesModel->traerParte($producto['idDisco']);
         $subTipoDisco = $this->SubtipoParteModel->traerSubTipoParte($disco[0]['idSubtipoParte']);
-        $ram = $this->partesModel->traerParte($producto['idRam1']);
-        $subTipoRam = $this->SubtipoParteModel->traerSubTipoParte($ram[0]['idSubtipoParte']);
+        $ram1 = $this->partesModel->traerParte($producto['idRam1']);
+        $subTipoRam1 = $this->SubtipoParteModel->traerSubTipoParte($ram1[0]['idSubtipoParte']);
+        $ram2 = $this->partesModel->traerParte($producto['idRam2']);
+        $subTipoRam2 = $this->SubtipoParteModel->traerSubTipoParte($ram2[0]['idSubtipoParte']);
+        $ram3 = $this->partesModel->traerParte($producto['idRam3']);
+        $subTipoRam3 = $this->SubtipoParteModel->traerSubTipoParte($ram3[0]['idSubtipoParte']);
+        $ram4 = $this->partesModel->traerParte($producto['idRam4']);
+        $subTipoRam4 = $this->SubtipoParteModel->traerSubTipoParte($ram4[0]['idSubtipoParte']);
+
+
+
         $tipoParte  = $this->tipoParteModel->traerTipoParteId($producto['idTipoInv']);  
         ?>
         <div class="row" >
@@ -402,94 +411,175 @@ class hardwareView extends vista
         </div>
    
         <div class="row mt-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="">Ram 1:</label>
-
                     <input class ="form-control" type="text" onfocus="blur();" 
-                        value ="<?php  echo $ram[0]['capacidad'].'GB-'.$subTipoRam[0]['descripcion']  ?>"
+                    value ="<?php  echo $ram1[0]['capacidad'].'GB-'.$subTipoRam1[0]['descripcion']  ?>"
                     >   
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idRam1']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarRam('.$producto['id'].',1);"
+                               >+1</button>';
+       
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam1'].');"
+                               >-</button>';
+                       }
+                    ?>
+                </div>
+                <div class="col-md-4">
                     <label for="">Ram 2:</label>
-                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php    ?>">   
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram2[0]['capacidad'].'GB-'.$subTipoRam2[0]['descripcion']  ?>"
+                    >   
                 </div>
-    
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idRam2']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarRam('.$producto['id'].',2);"
+                               >+</button>';
+       
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam2'].');"
+                               >-</button>';
+       
+                       }
+                    ?>
+                </div>
+               
+             
         </div>
+   
         <div class="row mt-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="">Ram 3:</label>
-
-                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php   ?>">   
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram3[0]['capacidad'].'GB-'.$subTipoRam3[0]['descripcion']  ?>"
+                    >   
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idRam1']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarRam('.$producto['id'].',3);"
+                               >+</button>';
+       
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam3'].');"
+                               >-</button>';
+       
+                       }
+                    ?>
+                </div>
+                <div class="col-md-4">
                     <label for="">Ram 4:</label>
-                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php     ?>">   
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram4[0]['capacidad'].'GB-'.$subTipoRam4[0]['descripcion']  ?>"
+                    >   
                 </div>
-    
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idRam4']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarRam('.$producto['id'].',4);"
+                               >+</button>';
+       
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].');"
+                               >-</button>';
+       
+                       }
+                    ?>
+                </div>
+               
+             
         </div>
-        <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="">Ram Tipo:</label>
-                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $subTipoRam[0]['descripcion']  ?>">   
-                </div>
-                <div class="col-md-3">
-                    <label for="">Ram (GB):</label>
-                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $ram[0]['capacidad']    ?>">   
-                </div>
-                <div class="col-md-3">
-                    <label for="">Disco TIpo:</label>
-                    <input class ="form-control" type="text" onfocus="blur();" value ="<?php  echo $subTipoDisco[0]['descripcion']   ?>">  
-                    
-                </div>
-                <div class="col-md-3">
-                    <label for="">Disco (GB):</label>
-                      <input class ="form-control" type="text"  onfocus="blur();"value ="<?php  echo $disco[0]['capacidad'] ?>">          
-                </div>
-        </div>
+       
+       
 
         <!--  botones de quitar ram y disco   -->
         <div class="row mt-3">
             <div class="col-md-6">
                 <?php 
-                if($producto['idRam']==0)
-                {
-                    echo '<button 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalAgregarRam"
-                        class ="btn btn-success" 
-                        onclick="formuAgregarRam('.$producto['id'].');"
-                        >AGREGAR RAM</button>';
+                // if($producto['idRam']==0)
+                // {
+                //     echo '<button 
+                //         data-bs-toggle="modal" 
+                //         data-bs-target="#modalAgregarRam"
+                //         class ="btn btn-success" 
+                //         onclick="formuAgregarRam('.$producto['id'].');"
+                //         >AGREGAR RAM</button>';
 
-                }else{
-                    echo '<button 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalAgregarRam"
-                        class ="btn btn-primary" 
-                        onclick="quitarRam('.$producto['id'].','.$producto['idRam'].');"
-                        >QUITAR RAM</button>';
+                // }else{
+                //     echo '<button 
+                //         data-bs-toggle="modal" 
+                //         data-bs-target="#modalAgregarRam"
+                //         class ="btn btn-primary" 
+                //         onclick="quitarRam('.$producto['id'].','.$producto['idRam'].');"
+                //         >QUITAR RAM</button>';
 
-                }
+                // }
                 ?>
             </div>    
             <div class="col-md-6">
             <?php 
-            if($producto['idDisco']==0)
-                {
-                    echo '<button 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#modalAgregarRam"
-                            class ="btn btn-success" 
-                            onclick="formuAgregarDisco('.$producto['id'].');"
-                            >AGREGAR DISCO</button>';
+            // if($producto['idDisco']==0)
+            //     {
+            //         echo '<button 
+            //                 data-bs-toggle="modal" 
+            //                 data-bs-target="#modalAgregarRam"
+            //                 class ="btn btn-success" 
+            //                 onclick="formuAgregarDisco('.$producto['id'].');"
+            //                 >AGREGAR DISCO</button>';
 
-                }else{
-                    echo '<button 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#modalAgregarRam"
-                            class ="btn btn-primary" 
-                            onclick="quitarDisco('.$producto['id'].','.$producto['idDisco'].');"
-                            >QUITAR DISCO</button>';
-                }
+            //     }else{
+            //         echo '<button 
+            //                 data-bs-toggle="modal" 
+            //                 data-bs-target="#modalAgregarRam"
+            //                 class ="btn btn-primary" 
+            //                 onclick="quitarDisco('.$producto['id'].','.$producto['idDisco'].');"
+            //                 >QUITAR DISCO</button>';
+            //     }
              ?>       
             </div>    
         </div>
@@ -522,10 +612,10 @@ class hardwareView extends vista
     public function formuAgregarRam($idHardware)
     {
         $memorias = $this->partesModel->traerMemoriasDisponibles();
-        // echo '<pre>';
-        // print_r($memorias); 
-        // echo '</pre>';
-        // die();
+        echo '<pre>';
+        print_r($memorias); 
+        echo '</pre>';
+        die();
 
        
        ?>
