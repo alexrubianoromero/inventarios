@@ -334,6 +334,8 @@ class hardwareView extends vista
         $subTipoRam3 = $this->SubtipoParteModel->traerSubTipoParte($ram3[0]['idSubtipoParte']);
         $ram4 = $this->partesModel->traerParte($producto['idRam4']);
         $subTipoRam4 = $this->SubtipoParteModel->traerSubTipoParte($ram4[0]['idSubtipoParte']);
+        $cargador = $this->partesModel->traerParte($producto['idCargador']);
+        $subTipoCargador = $this->SubtipoParteModel->traerSubTipoParte($cargador[0]['idSubtipoParte']);
 
 
 
@@ -600,6 +602,39 @@ class hardwareView extends vista
                 </div>
 
         </div>
+        
+        <div class="row mt-3">
+                <div class="col-md-10">
+                    <label for="">Cargador :</label>
+                    <input class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $cargador[0]['capacidad'].''.$subTipoCargador[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                       if($producto['idCargador']==0)
+                       {
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-success" 
+                               onclick="formuAgregarCargador('.$producto['id'].');"
+                               >+</button>';
+       
+                       }else{
+                           echo '<button 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modalAgregarRam"
+                               class ="btn btn-primary" 
+                               onclick="quitarCargador('.$producto['id'].','.$producto['idCargador'].');"
+                               >-</button>';
+       
+                       }
+                    ?>
+                </div>
+               
+        </div>
 
 
         <!--  botones de quitar ram y disco   -->
@@ -741,6 +776,54 @@ class hardwareView extends vista
                         echo '<td>'.$disco['capacidad'].'</td>';
                         echo '<td>'.$disco['cantidad'].'</td>';
                         echo '<td><button class ="btn btn-primary" onclick ="agregarDisco('.$request['idHardware'].','.$disco['id'].','.$request['numeroDisco'].' );">Agregar</button></td>';
+                        echo '</tr>';
+                    }
+                ?>
+            </tbody>
+          </table>
+            
+       </div>
+       <?php
+    }
+
+    public function formuAgregarCargador($request)
+    {
+        $cargadores = $this->partesModel->traerCargadoresDisponibles();
+        // echo '<pre>';
+        // print_r($discos); 
+        // echo '</pre>';
+        // die();
+
+       
+       ?>
+       <div>
+          <h3>Escoja el cargador </h3>
+          <table class="table">
+            <thead>
+
+                <tr>
+                    <td>Id</td>
+                    <td>Parte</td>
+                    <td>Subtipo</td>
+                    <td>Capacidad</td>
+                    <td>Cantidad</td>
+                    <td>Acciones</td>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <?php
+                    foreach($cargadores as $cargador)
+                    {
+                        echo '<tr>'; 
+                        echo '<td>'.$cargador['id'].'</td>';
+                        echo '<td>'.$cargador['descriParte'].'</td>';
+                        echo '<td>'.$cargador['descriSubParte'].'</td>';
+                        echo '<td>'.$cargador['capacidad'].'</td>';
+                        echo '<td>'.$cargador['cantidad'].'</td>';
+                        echo '<td><button class ="btn btn-primary" onclick ="agregarCargador('.$request['idHardware'].','.$cargador['id'].');">Agregar</button></td>';
                         echo '</tr>';
                     }
                 ?>

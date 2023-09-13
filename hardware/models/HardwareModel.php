@@ -147,6 +147,16 @@ class HardwareModel extends Conexion
         //  die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    public function desligarCargadorDeEquipo($request)
+    {
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('');
+        $sql = "update hardware set  idCargador = 0  where  id= '".$request['idHardware']."'   ";
+        //  die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
 
 
     public function asociarParteEnTablaHardware($request)

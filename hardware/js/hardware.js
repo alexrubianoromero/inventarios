@@ -156,6 +156,30 @@ function quitarDisco(idHardware,idDisco,numeroDisco)
         );
     }
 }
+function quitarCargador(idHardware,idCargador)
+{
+    // alert(idDisco);
+    let response = confirm("Esta seguro que desea quitar el disco de este hardware");
+    // alert(response);
+    // alert(idHardware + idRam);
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=quitarCargador'
+                  +'&idHardware='+idHardware
+                  +'&idCargador='+idCargador
+        );
+    }
+}
 function formuAgregarRam(idHardware,numeroRam)
 {
         // alert(idHardware);
@@ -219,6 +243,27 @@ function agregarDisco(idHardware,idDisco,numeroDisco)
         );
     }
 }
+function agregarCargador(idHardware,idCargador)
+{
+    let response = confirm("Esta seguro que desea  agregar esta parte?");
+    if(response == 1)
+    {
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=agregarCargador'
+                  +'&idHardware='+idHardware
+                  +'&idCargador='+idCargador
+        );
+    }
+}
 
 
 function formuAgregarDisco(idHardware,numeroDisco)
@@ -240,6 +285,29 @@ function formuAgregarDisco(idHardware,numeroDisco)
         );
     
 }
+
+function formuAgregarCargador(idHardware)
+{
+   
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+    
+            if(this.readyState == 4 && this.status ==200){
+                   document.getElementById("modalBodyAgregarRam").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=formuAgregarCargador'
+                  +'&idHardware='+idHardware
+                //   +'&numeroDisco='+numeroDisco
+        );
+    
+}
+
+
+
 function formuDividirRam(idHardware)
 {
         const http=new XMLHttpRequest();

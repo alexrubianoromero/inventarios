@@ -44,6 +44,10 @@ class hardwareController
         {
             $this->quitarDisco($_REQUEST);
         }
+        if($_REQUEST['opcion']=='quitarCargador')
+        {
+            $this->quitarCargador($_REQUEST);
+        }
         if($_REQUEST['opcion']=='formuAgregarRam')
         {
             $this->formuAgregarRam($_REQUEST);
@@ -56,9 +60,17 @@ class hardwareController
         {
             $this->formuAgregarDisco($_REQUEST);
         }
+        if($_REQUEST['opcion']=='formuAgregarCargador')
+        {
+            $this->formuAgregarCargador($_REQUEST);
+        }
         if($_REQUEST['opcion']=='agregarDisco')
         {
             $this->agregarDisco($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='agregarCargador')
+        {
+            $this->agregarCargador($_REQUEST);
         }
         if($_REQUEST['opcion']=='formuNuevoHardware')
         {
@@ -196,6 +208,42 @@ class hardwareController
         //ahora deberia crear el movimiento 
     }
     
+    public function quitarCargador($request)
+    {
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('');
+        $tipoMov = 1; //es una entrada al inventario porque vuelve una parte  
+        $cantidadParaActualizar = 1; 
+        $data = $this->partesModel->sumarDescontarPartes($tipoMov,$request['idCargador'],$cantidadParaActualizar);
+        $this->model->desligarCargadorDeEquipo($request);
+        $infoMov = new stdClass();
+        $infoMov->idParte = $request['idCargador'];
+        $infoMov->idHardware = $request['idHardware'];
+        $infoMov->tipoMov = $tipoMov;
+        $infoMov->observaciones = 'Se quita disco de Hardware id No '.$request['idHardware'];
+        $infoMov->loquehabia = $data['loquehabia']; 
+        $infoMov->loquequedo = $data['loquequedo']; 
+        $infoMov->query = $data['query'];
+        $infoMov->cantidadQueseAfecto = $data['cantidadQueseAfecto'];
+
+        $this->MovParteModel->grabarMovDesligardeHardware($infoMov);
+
+        echo 'Se ha desligado esta parte '; 
+
+
+        // echo 'llego a controller y quitar Disco '; 
+        //desligar la parte del hardware
+        // $this->model->desligarDiscoDeEquipo($request);
+        // $this->partesModel->desligarParteDeHardware($request['idDisco']);
+        // $this->llamarRegistroMovimientoQuitarHardware($request['idHardware'],$request['idDisco'],'1');
+       
+
+        
+        //ahora deberia crear el movimiento 
+    }
+    
     public function formuAgregarRam($request)
     {
         // echo '<pre>';
@@ -248,6 +296,10 @@ class hardwareController
     {
         $this->view->formuAgregarDisco($request);
     }
+    public function formuAgregarCargador($request)
+    {
+        $this->view->formuAgregarCargador($request);
+    }
 
     public function agregarDisco($request)
     {
@@ -278,6 +330,41 @@ class hardwareController
         $this->partesModel->asociarParteAHardware($request['idHardware'],$request['idDisco'],$request['numeroDisco'],$ramODisco);
 
         echo 'Disco Agregado!!';
+        // $this->model->asociarParteEnTablaHardware($request);
+        // $this->partesModel->asociarHardwareEnTablaPartes($request);
+        // $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idDisco'],'2',$request['opcion']);
+        // echo 'Disco Agregado!!';
+    }
+
+    public function agregarCargador($request)
+    {
+        
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('valores que llegan al controlador');
+        $tipoMov = 2; //es salida porque se saca un parte para agregarla a un hardware
+        $cantidadParaActualizar = 1; 
+        $data = $this->partesModel->sumarDescontarPartes($tipoMov,$request['idCargador'],$cantidadParaActualizar);
+
+        $infoMov = new stdClass();
+        $infoMov->idParte = $request['idCargador'];
+        $infoMov->idHardware = $request['idHardware'];
+        $infoMov->tipoMov = $tipoMov;
+        $infoMov->observaciones = 'Se agrega parte a Hardware id No '.$request['idHardware'];
+        $infoMov->loquehabia = $data['loquehabia']; 
+        $infoMov->loquequedo = $data['loquequedo']; 
+        $infoMov->query = $data['query'];
+        $infoMov->cantidadQueseAfecto = $data['cantidadQueseAfecto'];
+        //         echo '<pre>';
+        // print_r($infoMov); 
+        // echo '</pre>';
+        // die('antes de movimiento ');
+        $this->MovParteModel->registrarAgregarParteAHardware($infoMov);
+        $ramODisco = 'c'; //porque es un cargador
+        $this->partesModel->asociarParteAHardware($request['idHardware'],$request['idCargador'],'idCargador',$ramODisco);
+
+        echo ' Agregado!!';
         // $this->model->asociarParteEnTablaHardware($request);
         // $this->partesModel->asociarHardwareEnTablaPartes($request);
         // $this->llamarRegistroMovimientoPonerHardware($request['idHardware'],$request['idDisco'],'2',$request['opcion']);

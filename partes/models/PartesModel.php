@@ -98,6 +98,25 @@ class PartesModel extends Conexion
         $discos = $this->get_table_assoc($consulta);
         return $discos;  
     }
+    public function traerCargadoresDisponibles()
+    {
+        $sql = "select id from tipoparte where descripcion = 'Cargador' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $ArridTipoParte = mysql_fetch_assoc($consulta);
+        $idTipoParteDisco = $ArridTipoParte['id'];
+        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad,p.cantidad  
+        from  partes p
+        inner join subtipoParte s on (s.id = p.idSubtipoParte )
+        inner join tipoparte t on (t.id = s.idParte)
+        where s.descripcion = 'CARGADOR'    
+        and p.idHardware = 0
+        and p.idEstadoParte = 0
+        ";
+        //  die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $cargadores = $this->get_table_assoc($consulta);
+        return $cargadores;  
+    }
     //aqui busca en la tabla de partes si existe un producto 
     //que tenga el mismo idSubtipo y la misma capacidad 
     //para evitar crear el mismo producto 
@@ -193,12 +212,15 @@ class PartesModel extends Conexion
             $respu['cantidadQueseAfecto'] =  $cantidadParaActualizar;
             return $respu; 
         }
-        
+        // r es ram
+        // d es disco 
+        // c es cargador  
         public function asociarParteAHardware($idHardware,$idParte,$numeroRam,$ramODisco)
         {
             if($ramODisco == 'r'){$arr = ['','idRam1','idRam2','idRam3','idRam4']; }
             if($ramODisco == 'd'){$arr = ['','idDisco1','idDisco2']; }
-            $sql = "update hardware set ".$arr[$numeroRam]." = '".$idParte."'  where id = '".$idHardware."'    ";  
+            if($ramODisco == 'c'){$arr = ['','idCargador']; }
+            $sql = "update hardware set ".$numeroRam." = '".$idParte."'  where id = '".$idHardware."'    ";  
             // die($sql ); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
