@@ -97,13 +97,12 @@ class hardwareView extends vista
                           echo '<td>'.$hard['serial'].'</td>';
                           echo '<td>'.$hard['pulgadas'].'</td>';
                           echo '<td>'.$hard['procesador'].'</td>';
-                          echo '<td>'. $totalRam.'</td>';
                           //   echo '<td>'.$hard['idRam'].'</td>';
                           //aqui depende de la info lo que se muestra
                           //si idRam = 0 entonces muestra info de los campos del cargue para ram 
                           echo '<td>'.$hard['generacion'].'</td>';
+                          echo '<td>'. $totalRam.'</td>';
                           
-                         $totalRam = $this->hardwareModel->totalizarRamHardwareId($idHardware);
                         // if($hard['idRam1'] == '0' && $hard['idRam2']=='0' && $hard['idRam3']=='0' && $hard['idRam4']=='0')
                         // {
                         //     // die('entro al condicional');

@@ -191,6 +191,7 @@ class HardwareModel extends Conexion
         $consulta = mysql_query($sql,$this->connectMysql());
         
     }
+    
 
 
 

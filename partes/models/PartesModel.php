@@ -221,9 +221,17 @@ class PartesModel extends Conexion
             if($ramODisco == 'r'){$arr = ['','idRam1','idRam2','idRam3','idRam4']; }
             if($ramODisco == 'd'){$arr = ['','idDisco1','idDisco2']; }
             if($ramODisco == 'c'){$arr = ['','idCargador']; }
-            $sql = "update hardware set ".$numeroRam." = '".$idParte."'  where id = '".$idHardware."'    ";  
+            
+            if($ramODisco == 'r' || $ramODisco == 'd'){
+                $sql = "update hardware set ".$arr[$numeroRam]." = '".$idParte."'  where id = '".$idHardware."'    ";  
+            }
+            if($ramODisco == 'c'){
+                $sql = "update hardware set ".$numeroRam." = '".$idParte."'  where id = '".$idHardware."'    ";  
+            }
             // die($sql ); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+
+    
         
     }

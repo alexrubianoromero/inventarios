@@ -271,6 +271,10 @@ class hardwareController
         //tipoMov 1 Entrada 2 salida 
         //registrar el movimiento 
 
+        // echo '<pre>';
+        // print_r($request); 
+        // echo '</pre>';
+        // die('funcion agregar memoria ram ');
 
         $tipoMov = 2; //es salida porque se saca un parte para agregarla a un hardware
         $cantidadParaActualizar = 1; 
