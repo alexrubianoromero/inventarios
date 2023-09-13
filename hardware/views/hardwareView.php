@@ -72,7 +72,7 @@ class hardwareView extends vista
                         <th>Procesador</th>
                         <th>Generacion</th>
                         <!-- <th>Id Ram</th> -->
-                        <th>Ram</th>
+                        <th>TotalRam</th>
                         <!-- <th>Id Disco</th> -->
                         <th>Tipo Disco</th>
                         <th>Cap.Disco</th>
@@ -84,6 +84,7 @@ class hardwareView extends vista
                         <?php
                       foreach($hardware as $hard)
                       {
+                        $totalRam = $this->hardwareModel->totalizarRamHardwareId($hard['id']);
                         $ram =  $this->partesModel->traerParte($hard['idRam']);
                         $subTipoRam = $this->SubtipoParteModel->traerSubTipoParte($ram[0]['idSubtipoParte']);
                         // echo '<pre>'; print_r($ram); echo '</pre>'; die();
@@ -96,22 +97,25 @@ class hardwareView extends vista
                           echo '<td>'.$hard['serial'].'</td>';
                           echo '<td>'.$hard['pulgadas'].'</td>';
                           echo '<td>'.$hard['procesador'].'</td>';
+                          echo '<td>'. $totalRam.'</td>';
+                          //   echo '<td>'.$hard['idRam'].'</td>';
+                          //aqui depende de la info lo que se muestra
+                          //si idRam = 0 entonces muestra info de los campos del cargue para ram 
                           echo '<td>'.$hard['generacion'].'</td>';
-                        //   echo '<td>'.$hard['idRam'].'</td>';
-                        //aqui depende de la info lo que se muestra
-                        //si idRam = 0 entonces muestra info de los campos del cargue para ram 
-                        if($hard['idRam1'] == '0' && $hard['idRam2']=='0' && $hard['idRam3']=='0' && $hard['idRam4']=='0')
-                        {
-                            // die('entro al condicional');
-                            $subTipoRamCargue = $this->SubtipoParteModel->traerSubTipoParte($hard['tipoRamCargue']);
+                          
+                         $totalRam = $this->hardwareModel->totalizarRamHardwareId($idHardware);
+                        // if($hard['idRam1'] == '0' && $hard['idRam2']=='0' && $hard['idRam3']=='0' && $hard['idRam4']=='0')
+                        // {
+                        //     // die('entro al condicional');
+                        //     $subTipoRamCargue = $this->SubtipoParteModel->traerSubTipoParte($hard['tipoRamCargue']);
 
-                            echo '<td>'.$hard['capacidadRamCargue'].'GB-'.$subTipoRamCargue[0]['descripcion'].'</td>';
-                        }
-                        else{
-                            $totalRam = $this->hardwareModel->totalizarRamHardwareId($hard['id']);
-                            echo '<td>'.$totalRam.'GB</td>';
+                        //     echo '<td>'.$hard['capacidadRamCargue'].'GB-'.$subTipoRamCargue[0]['descripcion'].'</td>';
+                        // }
+                        // else{
+                        //     $totalRam = $this->hardwareModel->totalizarRamHardwareId($hard['id']);
+                        //     echo '<td>'.$totalRam.'GB</td>';
                             
-                        }
+                        // }
                         //ahora los discos 
                         if($hard['idDisco1'] == '0' && $hard['idDisco2']=='0')
                         {

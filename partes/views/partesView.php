@@ -97,7 +97,7 @@ class partesView extends vista
                                 class="btn btn-success btn-sm " 
                                 onclick="formuAdicionarRestarCantidadParte('.$parte['id'].',1);"
                                 >+
-                                </button>';
+                                </button> ';
                           echo '<button 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#modalCargarDescargarInventario"
@@ -235,7 +235,7 @@ class partesView extends vista
     // print_r($infoSubTipo); 
     // echo '</pre>';
     // die('');
-    
+
         
         if($request['tipoMov']==1){$aviso = 'Entrada Inventario'; }
         if($request['tipoMov']==2){$aviso = 'Salida Inventario'; }
