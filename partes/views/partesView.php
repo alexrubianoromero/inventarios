@@ -47,6 +47,7 @@ class partesView extends vista
                 <?php  
             $this->modalVerMovimientos();  
             $this->modalCreacionParte();  
+            $this->modalCargarDescargarInventario();  
         
             ?>
             
@@ -66,6 +67,7 @@ class partesView extends vista
                         <th>Capacidad</th>
                         <th>Cantidad</th>
                         <th>Movimientos</th>
+                        <th>Acciones</th>
                     </thead>
                 <tbody>
                     <?php
@@ -88,6 +90,22 @@ class partesView extends vista
                                     class="btn btn-primary btn-sm " 
                                     onclick="verMovimientosParte('.$parte['id'].');"
                                     >Mov</button></td>';
+                          echo '<td>';
+                          echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalCargarDescargarInventario"
+                                class="btn btn-success btn-sm " 
+                                onclick="formuAdicionarRestarCantidadParte('.$parte['id'].',1);"
+                                >+
+                                </button>';
+                          echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalCargarDescargarInventario"
+                                class="btn btn-primary btn-sm " 
+                                onclick="formuAdicionarRestarCantidadParte('.$parte['id'].',2);"
+                                >-
+                                </button>';
+                          echo '</td>';          
                           echo '</tr>';  
                         }
                         ?>
@@ -113,6 +131,30 @@ class partesView extends vista
                 </div>
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="" >Cerrar</button>
+                    <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="" >SubirArchivo++</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+    public function modalCargarDescargarInventario()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalCargarDescargarInventario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Inventario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyCargarDescargarInventario">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="partesMenu();" >Cerrar</button>
                     <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="" >SubirArchivo++</button> -->
                 </div>
                 </div>
@@ -168,6 +210,10 @@ class partesView extends vista
                     <label for="">Capacidad</label>
                       <input class ="form-control" type="text" id="capacidad" value ="<?php  echo $producto['capacidad'] ?>">          
                 </div>
+                <div class="col-md-3">
+                    <label for="">Cantidad </label>
+                      <input class ="form-control" type="text" id="cantidad" value ="<?php  echo $producto['cantidad'] ?>">          
+                </div>
             
         </div>
         <div class="row">
@@ -179,6 +225,45 @@ class partesView extends vista
             </button>
        </div>
         <?php
+    }
+
+    public function formuAdicionarRestarCantidadParte($request)
+    {
+        $infoParte = $this->partesModel->traerParte($request['idParte']);  
+        $infoSubTipo = $this->SubtipoParteModel->traerSubTipoParte($infoParte[0]['idSubtipoParte']);
+    //     echo '<pre>';
+    // print_r($infoSubTipo); 
+    // echo '</pre>';
+    // die('');
+        
+        if($request['tipoMov']==1){$aviso = 'Entrada Inventario'; }
+        if($request['tipoMov']==2){$aviso = 'Salida Inventario'; }
+        ?>
+
+        <div class="row">
+            <h2><?php  echo $aviso;   ?></h2>
+             
+           
+               <div class="col-md-3">
+                   <label for="">Subtipo</label>
+                   <br>
+                <label><?php echo $infoSubTipo[0]['descripcion']; ?></label>        
+               </div>
+               <div class="col-md-3">
+                   <label for="">Cantidad </label>
+                     <input class ="form-control" type="text" id="cantidad" value ="<?php  echo $producto['cantidad'] ?>">          
+               </div>
+           
+       </div>
+       <div class="row">
+               <button type="button" 
+               class="btn btn-primary  float-right mt-3" 
+               onclick="AdicionarRstarExisatenciasParte(<?php  echo $request['idParte'] ?>,<?php echo $request['tipoMov']   ?>)"
+               >
+               Grabar
+           </button>
+      </div>
+       <?php
     }
 
 }

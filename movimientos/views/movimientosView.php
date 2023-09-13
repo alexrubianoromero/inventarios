@@ -13,22 +13,25 @@ class movimientosView
         //       echo '<pre>';
         // print_r($movimientos); 
         // echo '</pre>';
-        // die();
-        echo '<table class="table">'; 
-        echo '<tr>';
-        echo '<th>Fecha</th>';
-        echo '<th>Observaciones</th>';
-        echo '</tr>';
-        foreach($movimientos as $mov)
-        {
-            echo '<tr>';
-            echo '<td>'.$mov['fecha'].'</td>';
-            echo '<td>'.$mov['observaciones'].'</td>';
-            echo '</tr>';
-            
-        }
-        echo '</table>';
+      
+  
 
+            echo '<table class="table">'; 
+            echo '<tr>';
+            echo '<th>Fecha.</th>';
+            echo '<th>Observaciones</th>';
+            echo '</tr>';
+            foreach($movimientos as $mov)
+            {
+                echo '<tr>';
+                echo '<td>'.$mov['fecha'].'</td>';
+                echo '<td>'.$mov['observaciones'].'</td>';
+                echo '</tr>';
+                
+            }
+            echo '</table>';
+        
+        
         // echo 'movimientos '.$idParte; 
     }
 

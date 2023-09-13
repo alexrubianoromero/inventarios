@@ -37,9 +37,11 @@ class PartesModel extends Conexion
     //esta es para cuando se crean las partes independientes 
     public function grabarParteIndividual($request)
     {
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$request['isubtipo']."','".$request['capacidad']."','Creacion desde Modulo')
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios,cantidad)
+                values('".$request['isubtipo']."','".$request['capacidad']."'
+                ,'Creacion desde Modulo','".$request['cantidad']."')
         ";
+        // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
    
@@ -178,9 +180,8 @@ class PartesModel extends Conexion
         //id de la parte 
         //si se asocia a un hardware se puede indicar en el movimiento no en esta parte 
         //colocar la parte al hardware 
-        public function sumarDescontarPartes($tipoMov,$idParte,$cantidadParaActualizar)
-        {
-
+    public function sumarDescontarPartes($tipoMov,$idParte,$cantidadParaActualizar)
+    {
             //colocar un control que no se pueda descontar cuando el saldo quede negativo 
             $infoParte = $this->traerParte($idParte);
         //          echo '<pre>';
@@ -211,7 +212,7 @@ class PartesModel extends Conexion
             $respu['loquequedo'] =  $nuevoSaldo;
             $respu['cantidadQueseAfecto'] =  $cantidadParaActualizar;
             return $respu; 
-        }
+    }
         // r es ram
         // d es disco 
         // c es cargador  

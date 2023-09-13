@@ -10,6 +10,7 @@ class MovimientoParteModel extends Conexion
     public function traerMovimientosParte($idParte)
     {
         $sql = "select * from movimientosPartes  where idParte = '".$idParte."' "; 
+        // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $movParte = $this->get_table_assoc($consulta ); 
         return $movParte; 
