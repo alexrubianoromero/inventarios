@@ -235,6 +235,7 @@ class partesView extends vista
     // print_r($infoSubTipo); 
     // echo '</pre>';
     // die('');
+    
         
         if($request['tipoMov']==1){$aviso = 'Entrada Inventario'; }
         if($request['tipoMov']==2){$aviso = 'Salida Inventario'; }
