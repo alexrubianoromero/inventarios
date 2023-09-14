@@ -39,7 +39,7 @@ class ItemInicioPedidoModel extends Conexion
             $sql = "update  itemsInicioPedido set anulado = 1  where id = '".$id."'"; 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
-
+        
         public function traerItemInicioPedidoId($id)
         {
             $sql = "select  * from itemsInicioPedido   where id = '".$id."'  and anulado = 0"; 
@@ -50,6 +50,18 @@ class ItemInicioPedidoModel extends Conexion
             // echo '</pre>';
             // die(); 
             return $infoItemInicio;   
+        }
+        
+        public function sumaItemsInicioPedidoIdPedido($idPedido)
+        {
+            $sql = "select sum(precio) as suma from itemsInicioPedido
+            where idPedido = '".$idPedido."' 
+            and anulado = 0
+            ";
+            // die($sql);
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $arrSuma = mysql_fetch_assoc($consulta);
+            return $arrSuma['suma'];
         }
 
 

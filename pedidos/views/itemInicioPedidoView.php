@@ -109,32 +109,8 @@ class iteminicioPedidoView
             echo '</tr>';
             $subTotal = $subTotal + $item['precio'];
         }
-        echo '<tr>'; 
-        echo '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>'; 
-        echo '<td>Subtotal</td><td align="right">'.number_format($subTotal,0,",",".").'</td>'; 
-        echo '</tr>';
-        if($infoPedido['r']==1)
-        {
-            $valorR = ($subTotal * 2.5)/100;
-        }    
-            echo '<tr>'; 
-            echo '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>'; 
-            echo '<td>ValorR</td><td align="right">'.number_format($valorR,0,",",".").'</td>'; 
-            echo '</tr>';
-        
-        if($infoPedido['i']==1)
-        {
-            $valorI = ($subTotal * 11.04)/1000;
-        }
-            echo '<tr>'; 
-            echo '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>'; 
-            echo '<td>ValorI</td><td align="right">'.number_format($valorI,0,",",".").'</td>'; 
-            echo '</tr>';
-            $total = $subTotal - $valorR - $valorI;    
-            echo '<tr>'; 
-            echo '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>'; 
-            echo '<td>Total</td><td align="right">'.number_format($total,0,",",".").'</td>'; 
-            echo '</tr>';
+
+       
         
         
         echo '</table>';
@@ -145,12 +121,47 @@ class iteminicioPedidoView
         </html>
         <?php
     }
+    public function calculoValorespedido($idPedido)
+    {
+        $infoPedido = $this->pedidoModel->traerPedidoId($idPedido); 
+        $subTotal = $this->itemIniciopedidoModel->sumaItemsInicioPedidoIdPedido($idPedido); 
+        echo '<table class="table table-striped">'; 
+        echo '<tr>'; 
+        echo '<td>Subtotal</td><td align="right">'.number_format($subTotal,0,",",".").'</td>'; 
+        echo '</tr>';
+        if($infoPedido['r']==1)
+        {
+            $valorR = ($subTotal * 2.5)/100;
+        }    
+        echo '<tr>'; 
+      
+        echo '<td>ValorR</td><td align="right">'.number_format($valorR,0,",",".").'</td>'; 
+        echo '</tr>';
+        
+        if($infoPedido['i']==1)
+        {
+            $valorI = ($subTotal * 11.04)/1000;
+        }
+        echo '<tr>'; 
+      
+        echo '<td>ValorI</td><td align="right">'.number_format($valorI,0,",",".").'</td>'; 
+        echo '</tr>';
+            $total = $subTotal - $valorR - $valorI;    
+            echo '<tr>'; 
+          
+            echo '<td>Total</td><td align="right">'.number_format($total,0,",",".").'</td>'; 
+            echo '</tr>';
+        echo '</table>';
+    }
+        
+
+
     public function modalPedidoAsignartecnico()
     {
-        ?>
+            ?>
             <!-- Modal -->
             <div class="modal fade" id="modalPedidoAsignartecnico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+                <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar Item Pedido a tecnico</h1>

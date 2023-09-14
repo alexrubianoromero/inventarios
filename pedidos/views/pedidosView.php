@@ -265,7 +265,7 @@ class pedidosView
                 </div>
                 <div class="col-lg-6">
                     <?php
-                        echo '<button class="btn btn-success" onclick="asignarTecnicoAPedido('.$idPedido.');"> Asignar Pedido</button>';
+                        // echo '<button class="btn btn-success" onclick="asignarTecnicoAPedido('.$idPedido.');"> Asignar Pedido</button>';
                     ?>
                     </div>
                 
@@ -314,7 +314,7 @@ class pedidosView
                 ?>     
             </div>
             <div class="row">
-                <textarea id="comentarios" placeholder = "Comentarios"></textarea>
+                
             </div>
             <div class="row" >
                 <table class="table">
@@ -378,7 +378,24 @@ class pedidosView
                 </table>
                     <div id="div_items_solicitados_pedido">
                           <?php   $this->itemInicioPedidoView->mostrarItemsInicioPedido($idPedido);  ?>
-                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <!-- aqui iran los comentarios        -->
+                                <textarea 
+                                    class="form-control" 
+                                    id="comentarios" 
+                                    placeholder = "Comentarios" 
+                                    rows = "7"
+                                    >
+                                    
+                                </textarea>
+                            </div>            
+                                <div class="col-lg-4">
+                                <!-- aqui ira la parte de los calculos totales del pedido  -->
+                                <?php   $this->itemInicioPedidoView->calculoValorespedido($idPedido);  ?>
+                        </div>            
+                   </div> 
             </div>
         </div>
    <?php
