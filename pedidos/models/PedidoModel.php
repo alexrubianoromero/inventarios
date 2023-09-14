@@ -67,6 +67,15 @@ class PedidoModel extends Conexion
             $sql = "update pedidos set i = '".$request['valor']."'   where idPedido = '".$request['idPedido']."'    "; 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+        
+        public function realizarAsignacionTecnicoAItem($request)
+        {
+            $sql = "update itemsInicioPedido  
+            set idPrioridad = '".$request['idPrioridad']."' , idTecnico = '".$request['idTecnico']."' , asignado = '1'  
+            where id= '".$request['idItemPedido']."'  ";
+            // die($sql );         
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
 
         
         

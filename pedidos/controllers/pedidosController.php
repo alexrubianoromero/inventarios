@@ -56,6 +56,14 @@ class pedidosController
         {
             $this->asignarTecnicoAPedido($_REQUEST);
         }
+        if($_REQUEST['opcion']=='formuAsignarItemPedidoATecnico')
+        {
+            $this->formuAsignarItemPedidoATecnico($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='realizarAsignacionTecnicoAItem')
+        {
+            $this->realizarAsignacionTecnicoAItem($_REQUEST);
+        }
 
     }   
 
@@ -105,10 +113,20 @@ class pedidosController
     {
         $this->model->actulizarIPedido($request);
     }
+    public function realizarAsignacionTecnicoAItem($request)
+    {
+        $this->model->realizarAsignacionTecnicoAItem($request);
+        echo 'Asignacion Realizada ';
+    }
     // public function asignarTecnicoAPedido($request)
     // {
     //     $this->asignacionModel->registrarAsignacionTecnicoAPedido($request);
     //     $this->view->siguientePantallaPedido($request['idPedido']);
     // }
+    public function formuAsignarItemPedidoATecnico($request)
+    {
+        // $this->asignacionModel->registrarAsignacionTecnicoAPedido($request);
+        $this->view->formuAsignarItemPedidoATecnico($request);
+    }
 
 }

@@ -86,6 +86,7 @@ class pedidosView
                 
                 <?php  
             $this->modalPedido();  
+            $this->modalPedidoAsignartecnico();  
         
             ?>
             
@@ -112,6 +113,30 @@ class pedidosView
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
                     <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+    public function modalPedidoAsignartecnico()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalPedidoAsignartecnico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Pedido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyPedidoAsignartecnico">
+                    
+                </div>
+                <div class="modal-footer">
+                    <!-- <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
+                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
                 </div>
                 </div>
             </div>
@@ -280,28 +305,6 @@ class pedidosView
                 </div>
                 <div class="col-lg-6">
 
-                      <label >Urgencia:</label>
-                      <select id="idPrioridad">
-                      <option value = ''>Seleccione...</option>
-                      <?php
-                            foreach($prioridades as $prioridad)
-                            {
-                                echo '<option value = "'.$prioridad['id'].'">'.$prioridad['descripcion'].'</option>';    
-                            }
-                                    
-                        ?>
-                      </select>  
-                      <label for="">Tecnico</label>
-                      <select id="idTecnico">
-                      <option value = ''>Seleccione...</option>
-                      <?php
-                            foreach($tecnicos as $tecnico)
-                            {
-                                echo '<option value = "'.$tecnico['id_usuario'].'">'.$tecnico['nombre'].'</option>';    
-                            }
-                                    
-                        ?>
-                      </select>  
                       
                 </div>
             </div>
@@ -380,5 +383,54 @@ class pedidosView
         </div>
    <?php
     } 
+
+
+    public function formuAsignarItemPedidoATecnico($request)
+    {
+        $prioridades   =  $this->prioridadModel->traerPrioridades();
+        $tecnicos      = $this->usuarioModel->traerTecnicos();
+      ?>
+        <div class="row">
+               <div class="col-md-3">
+                    <label >Urgencia:</label>
+                    <select id="idPrioridad" class="form-control">
+                        <option value = ''>Seleccione...</option>
+                            <?php
+                                    foreach($prioridades as $prioridad)
+                                    {
+                                        echo '<option value = "'.$prioridad['id'].'">'.$prioridad['descripcion'].'</option>';    
+                                    }
+                                            
+                                ?>
+                    </select>         
+               </div>
+
+               <div class="col-md-3">
+                    <label for="">Tecnico</label>
+                      <select id="idTecnico" class="form-control">
+                        <option value = ''>Seleccione...</option>
+                        <?php
+                                foreach($tecnicos as $tecnico)
+                                {
+                                    echo '<option value = "'.$tecnico['id_usuario'].'">'.$tecnico['nombre'].'</option>';    
+                                }
+                                        
+                            ?>
+                      </select>        
+               </div>
+           
+       </div>
+       <div class="row">
+               <button type="button" 
+               class="btn btn-primary  float-right mt-3" 
+               onclick="realizarAsignacionTecnicoAItem(<?php echo $request['idItemPedido']  ?>); ";
+               >
+               Asignar  Tecnico a Item 
+           </button>
+      </div>
+      
+
+      <?php
+    }
 
 }

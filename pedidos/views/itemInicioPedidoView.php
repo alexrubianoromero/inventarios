@@ -4,6 +4,8 @@ require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php');
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
+require_once($raiz.'/login/models/UsuarioModel.php');  
+require_once($raiz.'/prioridades/models/PrioridadModel.php');  
 
 class iteminicioPedidoView
 {
@@ -11,6 +13,8 @@ class iteminicioPedidoView
     protected $estadoInicioPedidoModel;
     protected $pedidoModel;
     protected $tipoParteModel;
+    protected $usuarioModel;
+    protected $prioridadModel;
 
 
     public function __construct()
@@ -19,11 +23,24 @@ class iteminicioPedidoView
         $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
         $this->pedidoModel = new PedidoModel();
         $this->tipoParteModel = new TipoParteModel();
-      
+        $this->usuarioModel = new UsuarioModel();
+        $this->prioridadModel = new PrioridadModel();
     }
 
     public function mostrarItemsInicioPedido($idPedido)
     {
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            
+      
+        <?php
         $itemsInicioPedido = $this->itemIniciopedidoModel->traerItemInicioPedido($idPedido); 
         $infoPedido = $this->pedidoModel->traerPedidoId($idPedido);  
         $tiposPartes =   $this->tipoParteModel->traerTodasLosTipoPartes();
@@ -45,6 +62,7 @@ class iteminicioPedidoView
         echo '<th>Estado</th>';
         echo '<th>Precio</th>';
         echo '<th>Eliminar</th>';
+        echo '<th>Asginado</th>';
         echo '</tr>';
         $subTotal = 0; 
         $valorR = 0;
@@ -69,6 +87,25 @@ class iteminicioPedidoView
             echo '<td>'.$infoEstado['descripcion'].'</td>'; 
             echo '<td align="right">'.number_format($item['precio'],0,",",".").'</td>'; 
             echo '<td><button class="btn btn-primary" onclick="eliminarItemInicialPedido('.$item['id'].');">Eliminar</button></td>'; 
+            echo '<td>'; 
+            if($item['asignado']== 0)
+            {
+                echo '<button 
+                class="btn btn-success" 
+                data-bs-toggle="modal" 
+                data-bs-target="#modalPedidoAsignartecnico"
+                onclick="formuAsignarItemPedidoATecnico('.$item['id'].');"
+                > Asignar Item
+                </button>';
+            }else{
+                $infoTecnico =  $this->usuarioModel->traerInfoId($item['idTecnico']);
+                $infoPrioridad = $this->prioridadModel->traerPrioridadId($item['idPrioridad']);
+                echo $infoPrioridad['descripcion'];
+                echo '<br>';
+                echo $infoTecnico['nombre'];
+            }
+            
+            echo '</td>';
             echo '</tr>';
             $subTotal = $subTotal + $item['precio'];
         }
@@ -102,6 +139,35 @@ class iteminicioPedidoView
         
         echo '</table>';
         echo '</div>';
+        ?>
+          </body>
+              <?php    $this->modalPedidoAsignartecnico();    ?>
+        </html>
+        <?php
+    }
+    public function modalPedidoAsignartecnico()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalPedidoAsignartecnico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar Item Pedido a tecnico</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyPedidoAsignartecnico">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidos();" >Cerrar</button>
+                    <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
     }
 
 }    

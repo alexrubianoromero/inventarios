@@ -21,5 +21,14 @@ class PrioridadModel extends Conexion
         // die();
         return $prioridades;
     }
+    public function traerPrioridadId($idPrioridad)
+    {
+        $sql = "select * from prioridades where id = '".$idPrioridad."' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $prioridad = mysql_fetch_assoc($consulta);
+        return $prioridad;
+    }
+
+
 
 }

@@ -1,3 +1,5 @@
 truncate movimientosPartes;
 truncate hardware;
 truncate partes;
+
+update itemsInicioPedido set asignado = 0;

@@ -160,9 +160,33 @@ function actulizarIPedido(idPedido)
 
 
 
-function asignarTecnicoAPedido(idPedido)
+function formuAsignarItemPedidoATecnico(idItemPedido)
 {
-    // alert('funcion javascript');
+    // alert('idpedido '+ idPedido +' idItem '+ idItemPedido);
+    // var valida = validarInfoTecnico();
+    // if(valida==1)
+    // {
+        // var idPrioridad = document.getElementById('idPrioridad').value;
+        // var idTecnico = document.getElementById('idTecnico').value;
+        const http=new XMLHttpRequest();
+        const url = 'pedidos/pedidos.php';
+        http.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("modalBodyPedidoAsignartecnico").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=formuAsignarItemPedidoATecnico'
+        +'&idItemPedido='+idItemPedido
+        );
+//    }
+
+}
+function realizarAsignacionTecnicoAItem(idItemPedido)
+{
+    //  alert(' idItem '+ idItemPedido);
     var valida = validarInfoTecnico();
     if(valida==1)
     {
@@ -173,18 +197,18 @@ function asignarTecnicoAPedido(idPedido)
         http.onreadystatechange = function(){
 
             if(this.readyState == 4 && this.status ==200){
-                document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
+                document.getElementById("modalBodyPedidoAsignartecnico").innerHTML  = this.responseText;
             }
         };
         http.open("POST",url);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send('opcion=asignarTecnicoAPedido'
-        +'&idPedido='+idPedido
+        http.send('opcion=realizarAsignacionTecnicoAItem'
+        +'&idItemPedido='+idItemPedido
         +'&idPrioridad='+idPrioridad
         +'&idTecnico='+idTecnico
-    );
+        );
    }
-
+//    pedidos();
 }
 
 function validarInfoTecnico()

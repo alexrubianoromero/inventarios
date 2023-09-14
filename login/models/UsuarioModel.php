@@ -92,6 +92,14 @@ class UsuarioModel extends Conexion
         // die($sql);   
     }
     
+    public function traerInfoId($idUsuario)
+    {
+        $sql = "select * from usuarios where id_usuario = '".$idUsuario."'  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrUsu = mysql_fetch_assoc($consulta);
+        return $arrUsu;
+    }
+    
 }
 
 ?>
