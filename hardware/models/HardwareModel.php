@@ -192,6 +192,15 @@ class HardwareModel extends Conexion
         
     }
     
+    
+    public function traerImportacion($campo)
+    {
+        $sql = "select distinct(".$campo.") from hardware group by ".$campo ;
+        die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrIdImport = $this->get_table_assoc($consulta); 
+        return $arrIdImport;
+    }
 
 
 

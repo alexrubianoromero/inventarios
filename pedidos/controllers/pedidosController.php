@@ -64,6 +64,14 @@ class pedidosController
         {
             $this->realizarAsignacionTecnicoAItem($_REQUEST);
         }
+        if($_REQUEST['opcion']=='mostrarTipoItem')
+        {
+            $this->mostrarTipoItem($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='actualizarPedido')
+        {
+            $this->actualizarPedido($_REQUEST);
+        }
 
     }   
 
@@ -128,5 +136,18 @@ class pedidosController
         // $this->asignacionModel->registrarAsignacionTecnicoAPedido($request);
         $this->view->formuAsignarItemPedidoATecnico($request);
     }
-
+    public function mostrarTipoItem($request)
+    {
+        if($request['tipoItem']==1)
+        {  $this->view->tipoItemHardware($request['tipoItem']); }
+        if($request['tipoItem']==2)
+        {  $this->view->tipoItemParte($request['tipoItem']); }
+        
+    }
+    public function actualizarPedido($request)
+    {
+        $this->model->actualizarPedido($request);
+        echo 'Pedido Actualizado';
+    }
+    
 }

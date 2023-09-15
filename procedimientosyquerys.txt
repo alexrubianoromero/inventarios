@@ -3,3 +3,5 @@ truncate hardware;
 truncate partes;
 
 update itemsInicioPedido set asignado = 0;
+
+truncate itemsInicioPedido;

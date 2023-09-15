@@ -1,4 +1,4 @@
-function agregarItemInicialPedido()
+function agregarItemInicialPedido(tipoItem)
 {
     // alert('funcion javascript');
     
@@ -16,6 +16,9 @@ function agregarItemInicialPedido()
     var idisco = document.getElementById('idisco').value;
     var idEstadoInicio = document.getElementById('idEstadoInicio').value;
     var iprecio = document.getElementById('iprecio').value;
+    var iobservaciones = document.getElementById('iobservaciones').value;
+    var tipoItem = document.getElementById('tipoItem').value;
+    var isubtipo = document.getElementById('isubtipo').value;
     const http=new XMLHttpRequest();
     const url = 'pedidos/itemInicioPedido.php';
     http.onreadystatechange = function(){
@@ -38,6 +41,9 @@ function agregarItemInicialPedido()
     +'&idisco='+idisco
     +'&idEstadoInicio='+idEstadoInicio
     +'&iprecio='+iprecio
+    +'&iobservaciones='+iobservaciones
+    +'&tipoItem='+tipoItem
+    +'&isubtipo='+isubtipo
     );
     limpiarCampos();
     } //fin de valida
@@ -110,6 +116,11 @@ function validaInfoNuevoItem()
     if( document.getElementById('iprecio').value == ''){
         alert('Por favor digitar iprecio');
         document.getElementById('iprecio').focus();
+        return 0;
+    }
+    if( document.getElementById('iobservaciones').value == ''){
+        alert('Por favor digitar observaciones');
+        document.getElementById('iobservaciones').focus();
         return 0;
     }
     return 1;

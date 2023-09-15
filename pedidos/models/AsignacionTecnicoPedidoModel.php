@@ -14,4 +14,6 @@ class AsisgnacionTecnicoPedidoModel extends Conexion
 
     public function traerTecnicosAsignadosApedidos()
     {}
+
+    
 }

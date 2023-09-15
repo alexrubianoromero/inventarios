@@ -68,6 +68,13 @@ class PedidoModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         
+        public function actualizarPedido($request)
+        {
+            $sql = "update pedidos set observaciones = '".$request['comentarios']."'   where idPedido = '".$request['idPedido']."'    "; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
+        
         public function realizarAsignacionTecnicoAItem($request)
         {
             $sql = "update itemsInicioPedido  

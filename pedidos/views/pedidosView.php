@@ -87,6 +87,7 @@ class pedidosView
                 <?php  
             $this->modalPedido();  
             $this->modalPedidoAsignartecnico();  
+            $this->modalPedidoActualizar();  
         
             ?>
             
@@ -113,6 +114,30 @@ class pedidosView
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
                     <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+    public function modalPedidoActualizar()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalPedidoActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Pedido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyPedidoActualizar">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidos();" >Cerrar</button>
+                    <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
                 </div>
                 </div>
             </div>
@@ -303,79 +328,29 @@ class pedidosView
                     ?>
                     
                 </div>
-                <div class="col-lg-6">
-
-                      
-                </div>
+             
             </div>
-            <div class="row" id = "tecnicoAsignado">
-                <?php
-
-                ?>     
-            </div>
+           
             <div class="row">
-                
-            </div>
-            <div class="row" >
-                <table class="table">
-                   <thead >
-                       
-                       <tr>
-                           <th>Cantidad</th>
-                           <th>Tipo</th>
-                           <th>Subtipo</th>
-                           <th>Modelo</th>
-                           <th>Pulgadas</th>
-                           <th>Procesador</th>
-                           <th>Generacion</th>
-                           <th>Ram</th>
-                           <th>Disco</th>
-                           <th>Estado</th>
-                           <th>Precio</th>
-                           <th>Accion</th>
-                        </tr>
-                    </thead> 
-                    <tbody>
+                 <div class="col-lg-3">
+                    Tipo de item Agregar:
+                </div>   
+                <div class="col-lg-3">
+                     <select class="form-control" id = "tipoItem" onchange="mostrarTipoItem();">
+                         <option value = "-1">Seleccione</option>
+                         <option value = "1">Hardware</option>
+                         <option value = "2">Parte</option>
+                     </select>
 
-                        <tr>
-                            <th><input type="text" id="icantidad" size="1px"></th>
-                            <!-- <th><input type="text" id="itipo" size="1px"></th> -->
-                            <th>
-                                <select id="itipo"  size="1px" onchange="buscarSuptiposParaSelect();">
-                                    <option value=''>...</option>
-                                    <?php
-                                    foreach($tiposPartes as $tipoParte)
-                                    {
-                                        echo '<option value = "'.$tipoParte['id'].'">'.$tipoParte['descripcion'].'</option>';    
-                                    }
-                                    
-                                    ?>
-                                </select>
-                            </th>
-                            <th><select id="isubtipo">222</select> </th>
-                            <th><input type="text" id="imodelo" size="1px"></th>
-                            <th><input type="text" id="ipulgadas" size="1px"></th>
-                            <th><input type="text" id="iprocesador" size="1px"></th>
-                            <th><input type="text" id="igeneracion" size="1px"></th>
-                            <th><input type="text" id="iram" size="1px"></th>
-                            <th><input type="text" id="idisco" size="1px"></th>
-                            <th>
-                                <select id="idEstadoInicio"  size="1px" >
-                                <option value="">Seleccione...</option>
-                                <?php
-                                    foreach($estadosInicio as $estadoInicio)
-                                    {
-                                        echo '<option value = "'.$estadoInicio['id'].'">'.$estadoInicio['descripcion'].'</option>';    
-                                    }
-                                    
-                                    ?>
-                            </select> 
-                        </th>
-                        <th><input type="text" id="iprecio" size="5px"></th>
-                        <th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedido();">+</button></th>
-                    </tr>
-                </tbody>
-                </table>
+                 </div>   
+                 <div class="col-lg-3"></div>   
+                 <div class="col-lg-3"></div>   
+            </div>
+
+            <div class="row" >
+                    <div id= "divTipoItemPedido">
+
+                    </div>    
                     <div id="div_items_solicitados_pedido">
                           <?php   $this->itemInicioPedidoView->mostrarItemsInicioPedido($idPedido);  ?>
                         </div>
@@ -388,16 +363,31 @@ class pedidosView
                                     placeholder = "Comentarios" 
                                     rows = "7"
                                     >
-                                    
+                                    <?php   echo $infoPedido['observaciones'] ?>
                                 </textarea>
-                            </div>            
+                             </div>            
                                 <div class="col-lg-4">
-                                <!-- aqui ira la parte de los calculos totales del pedido  -->
-                                <?php   $this->itemInicioPedidoView->calculoValorespedido($idPedido);  ?>
-                        </div>            
-                   </div> 
+                                    <!-- aqui ira la parte de los calculos totales del pedido  -->
+                                    <?php   $this->itemInicioPedidoView->calculoValorespedido($idPedido);  ?>
+                                </div>            
+                        </div> 
+                    </div>
+                <div class="row">
+                 <?php           
+                  echo '<button 
+                        class="btn btn-primary" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalPedidoActualizar"
+                        onclick = "actualizarPedido('.$idPedido.');"
+                        >Actualizar Pedido
+                        </button>';
+                ?>
+                </div>
+
             </div>
-        </div>
+
+            <?php   $this->modalPedidoActualizar();  ?>
+          
    <?php
     } 
 
@@ -450,4 +440,145 @@ class pedidosView
       <?php
     }
 
+    
+    public function tipoItemHardware($tipoItem)
+    {
+        $tiposPartes   =   $this->tipoParteModel->traerTipoParteHardware($tipoItem);
+        $estadosInicio = $this->estIniPedModel->traerEstadosInicioPedido(); 
+        ?>
+        <input type="hidden"  id="iobservaciones" value =".">
+        <table class="table">
+               <thead >
+                   
+                   <tr>
+                       <th>Cantidad</th>
+                       <th>Tipo</th>
+                       <th>Subtipo</th>
+                       <th>Modelo</th>
+                       <th>Pulgadas</th>
+                       <th>Procesador</th>
+                       <th>Generacion</th>
+                       <th>Ram</th>
+                       <th>Disco</th>
+                       <th>Estado</th>
+                       <th>Precio</th>
+                       <th>Accion</th>
+                    </tr>
+                </thead> 
+                <tbody>
+
+                    <tr>
+                        <th><input type="text" id="icantidad" size="1px"></th>
+                        <!-- <th><input type="text" id="itipo" size="1px"></th> -->
+                        <th>
+                            <select id="itipo"  size="1px" onchange="buscarSuptiposParaSelect();">
+                                <option value=''>...</option>
+                                <?php
+                                foreach($tiposPartes as $tipoParte)
+                                {
+                                    echo '<option value = "'.$tipoParte['id'].'">'.$tipoParte['descripcion'].'</option>';    
+                                }
+                                
+                                ?>
+                            </select>
+                        </th>
+                        <th><select id="isubtipo">222</select> </th>
+                        <!-- <th colspan ="6"><input id="iobservaciones" class="form-control"> </th> -->
+
+                            <th><input type="text" id="imodelo" size="1px"></th>
+                            <th><input type="text" id="ipulgadas" size="1px"></th>
+                            <th><input type="text" id="iprocesador" size="1px"></th>
+                            <th><input type="text" id="igeneracion" size="1px"></th>
+                            <th><input type="text" id="iram" size="1px"></th>
+                            <th><input type="text" id="idisco" size="1px"></th>
+
+                        <th>
+                            <select id="idEstadoInicio"  size="1px" >
+                            <option value="">Seleccione...</option>
+                            <?php
+                                foreach($estadosInicio as $estadoInicio)
+                                {
+                                    echo '<option value = "'.$estadoInicio['id'].'">'.$estadoInicio['descripcion'].'</option>';    
+                                }
+                                
+                                ?>
+                        </select> 
+                    </th>
+                    <th><input type="text" id="iprecio" size="5px"></th>
+                    <?php
+                    echo '<th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedido('.$tipoItem.');">+</button></th>';
+                     ?>           
+                    </tr>
+            </tbody>
+            </table>  
+
+    <?php
+
+    }
+
+    
+    public function tipoItemParte($tipoItem)
+    {
+        $tiposPartes   =   $this->tipoParteModel->traerTipoParteHardware($tipoItem);
+        $estadosInicio = $this->estIniPedModel->traerEstadosInicioPedido(); 
+        echo '<input type="hidden"  id="imodelo" value="." >';
+        echo '<input type="hidden"  id="ipulgadas"  value="." >';
+        echo '<input type="hidden"  id="iprocesador"  value="." >';
+        echo '<input type="hidden"  id="igeneracion"  value="." >';
+        echo '<input type="hidden"  id="iram"  value="." >';
+        echo '<input type="hidden"  id="idisco"  value="." >';
+        ?>
+        <table class="table">
+               <thead >
+                   
+                   <tr>
+                       <th>Cantidad</th>
+                       <th>Tipo</th>
+                       <th>Subtipo</th>
+                       <th>Observaciones</th>
+                       <th>Estado</th>
+                       <th>Precio</th>
+                       <th>Accion</th>
+                    </tr>
+                </thead> 
+                <tbody>
+
+                    <tr>
+                        <th><input type="text" id="icantidad" size="1px"></th>
+                        <!-- <th><input type="text" id="itipo" size="1px"></th> -->
+                        <th>
+                            <select id="itipo"  size="1px" onchange="buscarSuptiposParaSelect();">
+                                <option value=''>...</option>
+                                <?php
+                                foreach($tiposPartes as $tipoParte)
+                                {
+                                    echo '<option value = "'.$tipoParte['id'].'">'.$tipoParte['descripcion'].'</option>';    
+                                }
+                                
+                                ?>
+                            </select>
+                        </th>
+                        <th><select id="isubtipo"></select> </th>
+                        <th><input type="text" id="iobservaciones" ></th>
+                        <th>
+                            <select id="idEstadoInicio"  size="1px" >
+                            <option value="">Seleccione...</option>
+                            <?php
+                                foreach($estadosInicio as $estadoInicio)
+                                {
+                                    echo '<option value = "'.$estadoInicio['id'].'">'.$estadoInicio['descripcion'].'</option>';    
+                                }
+                                
+                                ?>
+                        </select> 
+                    </th>
+                    <th><input type="text" id="iprecio" size="5px"></th>
+                    echo '<th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedido('.$tipoItem.');">+</button></th>';
+                </tr>
+            </tbody>
+            </table>  
+
+    <?php
+
+    }
 }

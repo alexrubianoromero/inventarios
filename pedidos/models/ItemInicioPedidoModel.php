@@ -22,12 +22,19 @@ class ItemInicioPedidoModel extends Conexion
             // print_r($request); 
             // echo '</pre>';
             // die(); 
-            $sql = "insert into itemsInicioPedido(idPedido,cantidad,tipo,modelo,pulgadas,
-            procesador,generacion,ram,disco,estado,fecha,precio) 
-            values ('".$request['idPedido']."','".$request['icantidad']."','".$request['itipo']."','".$request['imodelo']."'
+            $total = $request['icantidad'] * $request['iprecio'];
+
+            $sql = "insert into itemsInicioPedido(idPedido,cantidad,tipo,subtipo,modelo,pulgadas,
+            procesador,generacion,ram,disco,estado,fecha,precio,total,observaciones,tipoItem) 
+            values ('".$request['idPedido']."','".$request['icantidad']."','".$request['itipo']."'
+            ,'".$request['isubtipo']."'
+            ,'".$request['imodelo']."'
             ,'".$request['ipulgadas']."','".$request['iprocesador']."','".$request['igeneracion']."'
             ,'".$request['iram']."','".$request['idisco']."','".$request['idEstadoInicio']."',now()
             ,'".$request['iprecio']."'
+            ,'".$total."'
+            ,'".$request['iobservaciones']."'
+            ,'".$request['tipoItem']."'
             )";   
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
@@ -54,7 +61,7 @@ class ItemInicioPedidoModel extends Conexion
         
         public function sumaItemsInicioPedidoIdPedido($idPedido)
         {
-            $sql = "select sum(precio) as suma from itemsInicioPedido
+            $sql = "select sum(total) as suma from itemsInicioPedido
             where idPedido = '".$idPedido."' 
             and anulado = 0
             ";

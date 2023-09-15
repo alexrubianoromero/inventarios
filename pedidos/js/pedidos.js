@@ -225,3 +225,43 @@ function validarInfoTecnico()
     }
     return 1;
 }
+
+function mostrarTipoItem()
+{
+    // alert('cambio de opcion ');
+    var tipoItem = document.getElementById('tipoItem').value;
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/pedidos.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divTipoItemPedido").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=mostrarTipoItem'
+    +'&tipoItem='+tipoItem
+    );
+}
+
+function actualizarPedido(idPedido)
+{
+    
+    var comentarios = document.getElementById('comentarios').value;
+    // alert(comentarios);
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/pedidos.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalBodyPedidoActualizar").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=actualizarPedido'
+    +'&idPedido='+idPedido
+    +'&comentarios='+comentarios
+    );
+}

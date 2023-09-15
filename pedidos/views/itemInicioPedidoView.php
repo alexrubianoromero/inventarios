@@ -6,6 +6,7 @@ require_once($raiz.'/pedidos/models/PedidoModel.php');
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/login/models/UsuarioModel.php');  
 require_once($raiz.'/prioridades/models/PrioridadModel.php');  
+require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 
 class iteminicioPedidoView
 {
@@ -15,6 +16,7 @@ class iteminicioPedidoView
     protected $tipoParteModel;
     protected $usuarioModel;
     protected $prioridadModel;
+    protected $subtipoParteModel;
 
 
     public function __construct()
@@ -25,6 +27,7 @@ class iteminicioPedidoView
         $this->tipoParteModel = new TipoParteModel();
         $this->usuarioModel = new UsuarioModel();
         $this->prioridadModel = new PrioridadModel();
+        $this->subtipoParteModel = new SubtipoParteModel();
     }
 
     public function mostrarItemsInicioPedido($idPedido)
@@ -44,6 +47,7 @@ class iteminicioPedidoView
         $itemsInicioPedido = $this->itemIniciopedidoModel->traerItemInicioPedido($idPedido); 
         $infoPedido = $this->pedidoModel->traerPedidoId($idPedido);  
         $tiposPartes =   $this->tipoParteModel->traerTodasLosTipoPartes();
+
         // echo 'wrwer<pre>'; 
         // print_r($itemsInicioPedido); 
         // echo '</pre>';
@@ -53,6 +57,7 @@ class iteminicioPedidoView
         echo '<tr>'; 
         echo '<th>Cantidad</th>';
         echo '<th>Tipo</th>';
+        echo '<th>Subtipo</th>';
         echo '<th>Modelo</th>';
         echo '<th>Pulgadas</th>';
         echo '<th>Procesador</th>';
@@ -60,7 +65,7 @@ class iteminicioPedidoView
         echo '<th>Ram</th>';
         echo '<th>Disco</th>';
         echo '<th>Estado</th>';
-        echo '<th>Precio</th>';
+        echo '<th>Total</th>';
         echo '<th>Eliminar</th>';
         echo '<th>Asginado</th>';
         echo '</tr>';
@@ -71,21 +76,35 @@ class iteminicioPedidoView
         foreach($itemsInicioPedido as $item)
         {
             $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($item['estado']); 
+            $infoTipo = $this->tipoParteModel->traerTipoParteConId($item['tipo']);
+            $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($item['subtipo']);
             // echo 'wrwer<pre>'; 
             // print_r($infoEstado); 
             // echo '</pre>';
             // die(); 
             echo '<tr>'; 
             echo '<td>'.$item['cantidad'].'</td>'; 
-            echo '<td>'.$item['tipo'].'</td>'; 
-            echo '<td>'.$item['modelo'].'</td>'; 
-            echo '<td>'.$item['pulgadas'].'</td>'; 
-            echo '<td>'.$item['procesador'].'</td>'; 
-            echo '<td>'.$item['generacion'].'</td>'; 
-            echo '<td>'.$item['ram'].'</td>'; 
-            echo '<td>'.$item['disco'].'</td>'; 
+            // echo '<td>'.$item['tipo'].'</td>'; 
+            echo '<td>'.$infoTipo[0]['descripcion'].'</td>'; 
+            // echo '<td>'.$item['modelo'].'</td>'; 
+            echo '<td>'.$infoSubtipo[0]['descripcion'].'</td>'; 
+            if($item['tipoItem'] == 1)
+            {
+                echo '<td>'.$item['modelo'].'</td>'; 
+                echo '<td>'.$item['pulgadas'].'</td>'; 
+                echo '<td>'.$item['procesador'].'</td>'; 
+                echo '<td>'.$item['generacion'].'</td>'; 
+                echo '<td>'.$item['ram'].'</td>'; 
+                echo '<td>'.$item['disco'].'</td>'; 
+            }
+            if($item['tipoItem'] == 2)
+            {
+                echo '<td colspan ="6">'.$item['observaciones'].'</td>';
+            }
+           
+           
             echo '<td>'.$infoEstado['descripcion'].'</td>'; 
-            echo '<td align="right">'.number_format($item['precio'],0,",",".").'</td>'; 
+            echo '<td align="right">'.number_format($item['total'],0,",",".").'</td>'; 
             echo '<td><button class="btn btn-primary" onclick="eliminarItemInicialPedido('.$item['id'].');">Eliminar</button></td>'; 
             echo '<td>'; 
             if($item['asignado']== 0)
@@ -107,7 +126,7 @@ class iteminicioPedidoView
             
             echo '</td>';
             echo '</tr>';
-            $subTotal = $subTotal + $item['precio'];
+            $subTotal = $subTotal + $item['total'];
         }
 
        
