@@ -193,15 +193,25 @@ class HardwareModel extends Conexion
     }
     
     
-    public function traerImportacion($campo)
+    //este funcion trae la informacion de la tabla hardware
+    //y se soloca el nombre del campo de la tabla hardware 
+    public function traerInfoCampoTablaHardware($campo)
     {
-        $sql = "select distinct(".$campo.") from hardware group by ".$campo ;
-        die($sql); 
+        $sql = "select distinct(".$campo.") as id from hardware group by ".$campo ;
+        // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
         $arrIdImport = $this->get_table_assoc($consulta); 
         return $arrIdImport;
     }
-
-
+    
+    public function traerInfoCampoTabla($campo)
+    {
+        $sql = "select distinct(".$campo.") as id from ".$campo." group by ".$campo ;
+        //  die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrIdImport = $this->get_table_assoc($consulta); 
+        return $arrIdImport;
+    }
+    
 
 }

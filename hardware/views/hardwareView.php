@@ -849,6 +849,12 @@ class hardwareView extends vista
         // $ram = $this->partesModel->traerParte($producto['idRam']);
         $subTiposRam = $this->SubtipoParteModel->traerSubtiposPartesConDescriptParte('ram');
         $marcas = $this->MarcaModel->traerTodasLasMarcas();
+        $idImportaciones =  $this->hardwareModel->traerInfoCampoTablaHardware('idImportacion');
+        $lotes =  $this->hardwareModel->traerInfoCampoTablaHardware('lote');
+        $chasis =  $this->hardwareModel->traerInfoCampoTablaHardware('chasis');
+        $pulgadas =  $this->hardwareModel->traerInfoCampoTabla('pulgadas');
+        $procesadores =  $this->hardwareModel->traerInfoCampoTabla('procesador');
+        $generaciones =  $this->hardwareModel->traerInfoCampoTabla('generacion');
         // die('llego a la vista 123');
         ?>
         <div class="row">
@@ -869,11 +875,15 @@ class hardwareView extends vista
         <div class="row">
                 <div class="col-md-3">
                     <label for="">Importacion #:</label>
-                      <input class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
+                    <select class ="form-control"  id="idImportacion" >
+                        <?php  $this->colocarSelectCampo($idImportaciones);  ?>
+                    </select>
                 </div>
                 <div class="col-md-3">
                     <label for="">Lote:</label>
-                      <input class ="form-control" type="text" id="lote" value ="<?php  echo $producto['lote'] ?>">          
+                    <select class ="form-control"  id="lote" >
+                        <?php  $this->colocarSelectCampo($lotes);  ?>
+                    </select>         
                 </div>
                 <div class="col-md-3">
                     <label for="">Serial:</label>
@@ -889,7 +899,9 @@ class hardwareView extends vista
         <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="">Chasis:</label>
-                      <input class ="form-control" type="text" id="chasis" value ="<?php  echo $producto['chasis'] ?>">          
+                    <select class ="form-control"  id="chasis" >
+                        <?php  $this->colocarSelectCampo($chasis);  ?>
+                    </select>               
                 </div>
                 <div class="col-md-3">
                     <label for="">Modelo:</label>
@@ -897,17 +909,23 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-3">
                     <label for="">Pulgadas:</label>
-                      <input class ="form-control" type="text" id="pulgadas" value ="<?php  echo $producto['pulgadas'] ?>">          
+                    <select class ="form-control"  id="pulgadas" >
+                        <?php  $this->colocarSelectCampo($pulgadas);  ?>
+                    </select>  
                 </div>
         </div>
         <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="">Procesador:</label>
-                      <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+                    <select class ="form-control"  id="procesador" >
+                        <?php  $this->colocarSelectCampo($procesadores);  ?>
+                    </select>  
                 </div>
                 <div class="col-md-3">
                     <label for="">Generacion:</label>
-                      <input class ="form-control" type="text" id="generacion" value ="<?php  echo $producto['generacion'] ?>">          
+                    <select class ="form-control"  id="generacion" >
+                        <?php  $this->colocarSelectCampo($generaciones);  ?>
+                    </select>  
                 </div>
             
         </div>
