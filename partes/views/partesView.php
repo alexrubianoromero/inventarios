@@ -64,7 +64,7 @@ class partesView extends vista
                         <th>Id.</th>
                         <th>Parte</th>
                         <th>Tipo</th>
-                        <th>Capacidad</th>
+                        <th>Caracteristicas</th>
                         <th>Cantidad</th>
                         <th>Movimientos</th>
                         <th>Acciones</th>
@@ -197,7 +197,7 @@ class partesView extends vista
                 <div class="col-md-3">
                     <!-- computador monitor impresora -->
                     <label for="">Tipo:</label>
-                    <select class ="form-control"  id="itipo" onchange="buscarSuptiposParaSelect();">
+                    <select class ="form-control"  id="itipo" onchange="buscarSuptiposParaSelectDesdeCrearParte();">
                             <?php  $this->colocarSelect($tipopartes);  ?>
                     </select>
                 </div>
@@ -207,7 +207,7 @@ class partesView extends vista
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="">Capacidad</label>
+                    <label id="campovariable">Caracteristicas</label>
                       <input class ="form-control" type="text" id="capacidad" value ="<?php  echo $producto['capacidad'] ?>">          
                 </div>
                 <div class="col-md-3">
