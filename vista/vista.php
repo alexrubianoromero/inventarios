@@ -47,7 +47,7 @@ class vista
     }            
     public function colocarSelectCampo($valores)
     {
-        echo '<option value="-1">Seleccione...</option>';
+        echo '<option value="-1">Sel.</option>';
         
             foreach($valores as $valor)
             {

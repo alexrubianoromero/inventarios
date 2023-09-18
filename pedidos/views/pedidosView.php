@@ -8,10 +8,12 @@ require_once($raiz.'/pedidos/models/PedidoModel.php');
 require_once($raiz.'/pedidos/views/itemInicioPedidoView.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/prioridades/models/PrioridadModel.php'); 
+require_once($raiz.'/hardware/models/HardwareModel.php'); 
+require_once($raiz.'/vista/vista.php'); 
 
 // require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
 
-class pedidosView
+class pedidosView extends vista
 {
     protected $pedidoModel;
     protected $prioridadModel;
@@ -20,6 +22,7 @@ class pedidosView
     protected $estIniPedModel;
     protected $itemInicioPedidoView;
     protected $tipoParteModel;
+    protected $hardwareModel;
 
     public function __construct()
     {
@@ -30,6 +33,7 @@ class pedidosView
         $this->estIniPedModel = new EstadoInicioPedidoModel();
         $this->itemInicioPedidoView = new iteminicioPedidoView();
         $this->tipoParteModel = new TipoParteModel();
+        $this->hardwareModel = new HardwareModel();
     }
     
 
@@ -445,6 +449,12 @@ class pedidosView
     {
         $tiposPartes   =   $this->tipoParteModel->traerTipoParteHardware($tipoItem);
         $estadosInicio = $this->estIniPedModel->traerEstadosInicioPedido(); 
+        $pulgadas =  $this->hardwareModel->traerInfoCampoTabla('pulgadas');
+        $procesadores =  $this->hardwareModel->traerInfoCampoTabla('procesador');
+        $generaciones =  $this->hardwareModel->traerInfoCampoTabla('generacion');
+        $generaciones =  $this->hardwareModel->traerInfoCampoTabla('generacion');
+        $capacidadram =  $this->hardwareModel->traerInfoCampoTabla('capacidadram');
+        $capacidaddisco =  $this->hardwareModel->traerInfoCampoTabla('capacidaddisco');
         ?>
         <input type="hidden"  id="iobservaciones" value =".">
         <table class="table">
@@ -458,8 +468,10 @@ class pedidosView
                        <th>Pulgadas</th>
                        <th>Procesador</th>
                        <th>Generacion</th>
-                       <th>Ram</th>
-                       <th>Disco</th>
+                       <th>Ram Tipo</th>
+                       <th>Disco Tipo</th>
+                       <th>Ram GB</th>
+                       <th>Disco GB</th>
                        <th>Estado</th>
                        <th>Precio</th>
                        <th>Accion</th>
@@ -486,11 +498,48 @@ class pedidosView
                         <!-- <th colspan ="6"><input id="iobservaciones" class="form-control"> </th> -->
 
                             <th><input type="text" id="imodelo" size="1px"></th>
-                            <th><input type="text" id="ipulgadas" size="1px"></th>
-                            <th><input type="text" id="iprocesador" size="1px"></th>
-                            <th><input type="text" id="igeneracion" size="1px"></th>
-                            <th><input type="text" id="iram" size="1px"></th>
-                            <th><input type="text" id="idisco" size="1px"></th>
+                            <th>
+                                <!-- <input type="text" id="ipulgadas" size="1px"> -->
+                                <select class ="form-control"  id="ipulgadas" size="1px">
+                                    <?php  $this->colocarSelectCampo($pulgadas);  ?>
+                                </select>  
+                            </th>
+                            <th>
+                            <select class ="form-control"  id="iprocesador" size="1px">
+                                    <?php  $this->colocarSelectCampo($procesadores);  ?>
+                                </select>  
+                                <!-- <input type="text" id="iprocesador" size="1px"> -->
+                            </th>
+                            <th>   <select class ="form-control"  id="igeneracion"  size="1px">
+                                        <?php  $this->colocarSelectCampo($generaciones);  ?>
+                                    </select>  
+                            </th>
+                            <th>
+                                <select class ="form-control"  id="iram" size="1px" >
+                                    <option value ="-1">Sel..</option>
+                                    <option value ="DDR2">DDR2</option>
+                                    <option value ="DDR3">DDR3</option>
+                                    <option value ="DDR4">DDR4</option>
+                                </select>  
+                            </th>
+                            <th>
+                                <select class ="form-control"  id="idisco" size="1px" >
+                                    <option value ="-1">Sel..</option>
+                                    <option value ="Solido">Solido</option>
+                                    <option value ="Mecanico">Mecanico</option>
+                                </select>  
+                                
+                            </th>
+                            <th>
+                                <select class ="form-control"  id="icapacidadram"  size="1px">
+                                    <?php  $this->colocarSelectCampo($capacidadram);  ?>
+                                </select>  
+                            </th>
+                            <th>
+                            <select class ="form-control"  id="icapacidaddisco"  size="1px">
+                                    <?php  $this->colocarSelectCampo($capacidaddisco);  ?>
+                                </select>  
+                            </th>
 
                         <th>
                             <select id="idEstadoInicio"  size="1px" >
