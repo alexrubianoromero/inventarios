@@ -142,6 +142,7 @@ class iteminicioPedidoView
     }
     public function calculoValorespedido($idPedido)
     {
+
         $infoPedido = $this->pedidoModel->traerPedidoId($idPedido); 
         $subTotal = $this->itemIniciopedidoModel->sumaItemsInicioPedidoIdPedido($idPedido); 
         echo '<table class="table table-striped">'; 
@@ -150,7 +151,7 @@ class iteminicioPedidoView
         echo '</tr>';
         if($infoPedido['r']==1)
         {
-            $valorR = ($subTotal * 2.5)/100;
+            $valorR = ($subTotal * $infoPedido['porcenretefuente'])/100;
         }    
         echo '<tr>'; 
       
@@ -159,7 +160,7 @@ class iteminicioPedidoView
         
         if($infoPedido['i']==1)
         {
-            $valorI = ($subTotal * 11.04)/1000;
+            $valorI = ($subTotal * $infoPedido['porcenreteica'])/1000;
         }
         echo '<tr>'; 
       

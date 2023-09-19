@@ -183,5 +183,22 @@ function clientes()
     http.send('opcion=clientesMenu');
 
 }
+function hojasdevida()
+{
+    // alert('buenas ');
+    const http=new XMLHttpRequest();
+    const url = './hojasdevida/hojasdevida.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_content_wrapper").innerHTML  = this.responseText;
+
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=hojasdevidaMenu');
+
+}
 
 

@@ -2,12 +2,18 @@
 
 $raiz =dirname(dirname(dirname(__file__)));
 //  die('rutamodel '.$raiz);
+require_once($raiz.'/impuestos/models/ImpuestoModel.php'); 
 
 require_once($raiz.'/conexion/Conexion.php');
 
 class PedidoModel extends Conexion
 {
+    protected $impuestoModel;
 
+        public function __construct()
+        {
+            $this->impuestoModel = new ImpuestoModel();
+        }
         public function traerPedidos()
         {
             $sql = "select * from pedidos ";
@@ -28,12 +34,14 @@ class PedidoModel extends Conexion
             return $pedido;
         }
 
-
+        
         
         public function grabarEncabezadoPedido($request)
         {
-            $sql = "insert into pedidos (idCliente,fecha)   
-                values ('".$request['idEmpresaCliente']."',now())";
+            $impuestos = $this->impuestoModel->traerImpuestos();
+
+            $sql = "insert into pedidos (idCliente,fecha,porcenretefuente,porcenreteica)   
+                values ('".$request['idEmpresaCliente']."',now(),'".$impuestos['porcenretefuente']."','".$impuestos['porcenreteica']."')";
                 $consulta = mysql_query($sql,$this->connectMysql());
                 //  die($sql); 
             $ultimoId =  $this->obtenerUltimoIdPedidos();   
@@ -70,7 +78,10 @@ class PedidoModel extends Conexion
         
         public function actualizarPedido($request)
         {
-            $sql = "update pedidos set observaciones = '".$request['comentarios']."'   where idPedido = '".$request['idPedido']."'    "; 
+            $sql = "update pedidos set observaciones = '".$request['comentarios']."'   
+                    ,porcenretefuente = '".$request['porcenretefuente']."'   
+                     ,porcenreteica = '".$request['porcenreteica']."'   
+                    where idPedido = '".$request['idPedido']."'    "; 
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }

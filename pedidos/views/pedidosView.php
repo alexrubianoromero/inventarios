@@ -9,6 +9,7 @@ require_once($raiz.'/pedidos/views/itemInicioPedidoView.php');
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/prioridades/models/PrioridadModel.php'); 
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
+require_once($raiz.'/impuestos/models/ImpuestoModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 // require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
@@ -23,6 +24,7 @@ class pedidosView extends vista
     protected $itemInicioPedidoView;
     protected $tipoParteModel;
     protected $hardwareModel;
+    protected $impuestoModel;
 
     public function __construct()
     {
@@ -34,6 +36,7 @@ class pedidosView extends vista
         $this->itemInicioPedidoView = new iteminicioPedidoView();
         $this->tipoParteModel = new TipoParteModel();
         $this->hardwareModel = new HardwareModel();
+        $this->impuestoModel = new ImpuestoModel();
     }
     
 
@@ -275,6 +278,7 @@ class pedidosView extends vista
         $tiposPartes   =   $this->tipoParteModel->traerTodasLosTipoPartes();
         $prioridades   =  $this->prioridadModel->traerPrioridades();
         $tecnicos      = $this->usuarioModel->traerTecnicos();
+        $impuestos    = $this->impuestoModel->traerImpuestos();
 
         //    echo '<pre>'; 
         //     print_r($infoCliente); 
@@ -292,11 +296,27 @@ class pedidosView extends vista
                     <label>OC:</label>
                     <span class="col-lg-2"><?php  echo $infoPedido['idPedido'];  ?></span>
                 </div>
-                <div class="col-lg-6">
-                    <?php
-                        // echo '<button class="btn btn-success" onclick="asignarTecnicoAPedido('.$idPedido.');"> Asignar Pedido</button>';
-                    ?>
+                <div class=" row col-lg-4">
+                    <div class="col-lg-3">% Retefuen
+                        <input id="porcenretefuente" value = "<?php  echo $infoPedido['porcenretefuente']; ?>" size="4" >
                     </div>
+                    <div class="col-lg-3">% ReteIca
+                        <input id="porcenreteica" value = "<?php  echo $infoPedido['porcenreteica'];  ?>" size="4" >
+
+                    </div>
+                  
+                </div>
+                <div class =" row col-lg-2">
+                <?php           
+                  echo '<button 
+                        class="btn btn-success" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalPedidoActualizar"
+                        onclick = "actualizarPedido('.$idPedido.');"
+                        >Actualizar Pedido
+                        </button>';
+                ?>
+                </div>
                 
             </div>
         
@@ -378,13 +398,13 @@ class pedidosView extends vista
                     </div>
                 <div class="row">
                  <?php           
-                  echo '<button 
-                        class="btn btn-primary" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalPedidoActualizar"
-                        onclick = "actualizarPedido('.$idPedido.');"
-                        >Actualizar Pedido
-                        </button>';
+                //   echo '<button 
+                //         class="btn btn-primary" 
+                //         data-bs-toggle="modal" 
+                //         data-bs-target="#modalPedidoActualizar"
+                //         onclick = "actualizarPedido('.$idPedido.');"
+                //         >Actualizar Pedido
+                //         </button>';
                 ?>
                 </div>
 

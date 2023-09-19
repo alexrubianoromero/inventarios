@@ -249,6 +249,8 @@ function actualizarPedido(idPedido)
 {
     
     var comentarios = document.getElementById('comentarios').value;
+    var porcenretefuente = document.getElementById('porcenretefuente').value;
+    var porcenreteica = document.getElementById('porcenreteica').value;
     // alert(comentarios);
     const http=new XMLHttpRequest();
     const url = 'pedidos/pedidos.php';
@@ -263,5 +265,7 @@ function actualizarPedido(idPedido)
     http.send('opcion=actualizarPedido'
     +'&idPedido='+idPedido
     +'&comentarios='+comentarios
+    +'&porcenretefuente='+porcenretefuente
+    +'&porcenreteica='+porcenreteica
     );
 }

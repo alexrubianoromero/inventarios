@@ -101,6 +101,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                    <a style="cursor:pointer;" class="nav-link" onclick="hojasdevida();">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Hojas de Vida
+                            </p>
+                        </a>
+                    </li>
                     <!-- <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="CargarContenido('vistas/compras.php','content-wrapper');">
                             <i class="nav-icon fas fa-th"></i>
