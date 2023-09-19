@@ -213,5 +213,13 @@ class HardwareModel extends Conexion
         return $arrIdImport;
     }
     
+    public function traerInfoCampoTablaId($id,$tabla)
+    {
+        $sql = "select ".$tabla." from ".$tabla." where id = '".$id."'    " ;
+        //  die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrIdImport = mysql_fetch_assoc($consulta); 
+        return $arrIdImport[$tabla];
+    }
 
 }

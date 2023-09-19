@@ -13,12 +13,15 @@ function agregarItemInicialPedido(tipoItem)
     var iprocesador = document.getElementById('iprocesador').value;
     var igeneracion = document.getElementById('igeneracion').value;
     var iram = document.getElementById('iram').value;
+    var icapacidadram = document.getElementById('icapacidadram').value;
     var idisco = document.getElementById('idisco').value;
+    var icapacidaddisco = document.getElementById('icapacidaddisco').value;
     var idEstadoInicio = document.getElementById('idEstadoInicio').value;
     var iprecio = document.getElementById('iprecio').value;
     var iobservaciones = document.getElementById('iobservaciones').value;
     var tipoItem = document.getElementById('tipoItem').value;
     var isubtipo = document.getElementById('isubtipo').value;
+
     const http=new XMLHttpRequest();
     const url = 'pedidos/itemInicioPedido.php';
     http.onreadystatechange = function(){
@@ -38,7 +41,9 @@ function agregarItemInicialPedido(tipoItem)
     +'&iprocesador='+iprocesador
     +'&igeneracion='+igeneracion
     +'&iram='+iram
+    +'&icapacidadram='+icapacidadram
     +'&idisco='+idisco
+    +'&icapacidaddisco='+icapacidaddisco
     +'&idEstadoInicio='+idEstadoInicio
     +'&iprecio='+iprecio
     +'&iobservaciones='+iobservaciones

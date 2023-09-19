@@ -7,6 +7,7 @@ require_once($raiz.'/tipoParte/models/TipoParteModel.php');
 require_once($raiz.'/login/models/UsuarioModel.php');  
 require_once($raiz.'/prioridades/models/PrioridadModel.php');  
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
+require_once($raiz.'/hardware/models/HardwareModel.php');  
 
 class iteminicioPedidoView
 {
@@ -17,6 +18,7 @@ class iteminicioPedidoView
     protected $usuarioModel;
     protected $prioridadModel;
     protected $subtipoParteModel;
+    protected $hardwareModel;
 
 
     public function __construct()
@@ -28,6 +30,7 @@ class iteminicioPedidoView
         $this->usuarioModel = new UsuarioModel();
         $this->prioridadModel = new PrioridadModel();
         $this->subtipoParteModel = new SubtipoParteModel();
+        $this->hardwareModel = new HardwareModel();
     }
 
     public function mostrarItemsInicioPedido($idPedido)
@@ -75,6 +78,11 @@ class iteminicioPedidoView
         
         foreach($itemsInicioPedido as $item)
         {
+        //        echo 'wrwer<pre>'; 
+        // print_r($item); 
+        // echo '</pre>';
+        // die(); 
+
             $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($item['estado']); 
             $infoTipo = $this->tipoParteModel->traerTipoParteConId($item['tipo']);
             $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($item['subtipo']);
@@ -92,10 +100,10 @@ class iteminicioPedidoView
             {
                 echo '<td>'.$item['modelo'].'</td>'; 
                 echo '<td>'.$item['pulgadas'].'</td>'; 
-                echo '<td>'.$item['procesador'].'</td>'; 
+                echo '<td>'.$item ['procesador'].'</td>'; 
                 echo '<td>'.$item['generacion'].'</td>'; 
-                echo '<td>'.$item['ram'].'</td>'; 
-                echo '<td>'.$item['disco'].'</td>'; 
+                echo '<td>'.$item['ram'].'-'.$item['capacidadRam'].'</td>'; 
+                echo '<td>'.$item['disco'].'-'.$item['capacidadDisco'].'</td>'; 
             }
             if($item['tipoItem'] == 2)
             {
@@ -114,7 +122,7 @@ class iteminicioPedidoView
                 data-bs-toggle="modal" 
                 data-bs-target="#modalPedidoAsignartecnico"
                 onclick="formuAsignarItemPedidoATecnico('.$item['id'].');"
-                > Asignar Item
+                > Asignar
                 </button>';
             }else{
                 $infoTecnico =  $this->usuarioModel->traerInfoId($item['idTecnico']);
