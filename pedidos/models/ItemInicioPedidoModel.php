@@ -74,6 +74,33 @@ class ItemInicioPedidoModel extends Conexion
         }
 
 
+        public function traerItemInicioPedidoIdTecnico($id,$idTecnicoAsignado)
+        {
+            $sql = "select  * from itemsInicioPedido   
+                    where id = '".$id."'  
+                    and anulado = 0
+                    and idasignarA = '".$idTecnicoAsignado."'   "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $infoItemInicio =  mysql_fetch_assoc($consulta);
+            // echo '<pre>'; 
+            // print_r($infoItemInicio); 
+            // echo '</pre>';
+            // die(); 
+            return $infoItemInicio;   
+        }
+
+        public function traerItemsAsignadosATecnico($idTecnico)
+        {
+            $sql = "select * from itemsInicioPedido  
+            where  idTecnico = '".$idTecnico."'   "; 
+            // die($sql);
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $itemsInicioPedido = $this->get_table_assoc($consulta);
+            return $itemsInicioPedido;
+        }
+        
+
+
         
 }
 

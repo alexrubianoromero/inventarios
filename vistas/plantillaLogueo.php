@@ -73,6 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="subtipos/js/subtipos.js"></script>  
         <script src="partes/js/partes.js"></script>  
         <script src="hojasdevida/js/hojasdevida.js"></script>  
+        <script src="tablerotecnicos/js/tablerotecnicos.js"></script>  
         <script>
         function CargarContenido(pagina_php,contenedor)
         {

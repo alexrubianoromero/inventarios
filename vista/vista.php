@@ -54,7 +54,15 @@ class vista
                 echo ' <option value="'.$valor['id'].'">'.$valor['id'].'</option>';
             }
     
-    }            
+    }           
+    
+    public function printR($arreglo)
+    {
+        echo '<pre>';
+        print_r($arreglo); 
+        echo '</pre>';
+        die(); 
+    }
 
 }
 

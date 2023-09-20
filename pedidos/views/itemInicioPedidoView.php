@@ -209,5 +209,42 @@ class iteminicioPedidoView
         <?php
     }
 
+    public function verItemsAsignadosTecnico($itemsAsignadosTecnico)
+    {
+    ?>
+         <table class="table table-striped hover-hover">
+                    <thead>
+                        <th>IdPedido</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </thead>
+                <tbody>
+                    <?php
+                      foreach($itemsAsignadosTecnico as $item)
+                      {
+                        // $subTipoParte = $this->SubtipoParteModel->traerSubTipoParte($parte['idSubtipoParte']);
+                        // $tipoParte =  $this->TipoParteModel->traerTipoParteConId($subTipoParte[0]['idParte']); 
+                          // $infoSucursal = $this->sucursalModel->traerSucursalId($user['idSucursal']); 
+                          // $infoPerfil = $this->perfilModel->traerPerfilId($user['id_perfil']); 
+                        //   $tipoParte = $this->tipoParteModel->traerTipoParteId($inventario['idTipoParte']); 
+                          echo '<tr>'; 
+                          echo '<td>'.$item['idPedido'].'</td>';
+                          echo '<td>'.$item['precio'].'</td>';
+                          echo '<td><button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalVerMovimientos"
+                                    class="btn btn-primary btn-sm " 
+                                    onclick="buscarInventario('.$item['id'].');"
+                                    >Gestionar</button></td>';
+                          echo '<td>';
+                          echo '</tr>';  
+                        }
+                        ?>
+                    </tbody>
+                </table> 
+
+    <?php
+    }
+
 }    
     

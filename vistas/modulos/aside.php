@@ -109,6 +109,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                    <a style="cursor:pointer;" class="nav-link" onclick="tablerotecnicos();">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Tecnicos
+                            </p>
+                        </a>
+                    </li>
                     <!-- <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="CargarContenido('vistas/compras.php','content-wrapper');">
                             <i class="nav-icon fas fa-th"></i>

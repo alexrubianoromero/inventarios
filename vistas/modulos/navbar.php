@@ -56,6 +56,10 @@
             <a style="cursor:pointer;" class="nav-link" onclick="hojasdevida();">
             Hojas de Vida</a>
             </li>
+            <li class="nav-item d-none d-sm-inline-block">
+            <a style="cursor:pointer;" class="nav-link" onclick="tablerotecnicos();">
+            tecnicos</a>
+            </li>
             <!-- <li class="nav-item d-none d-sm-inline-block">
             <a style="cursor:pointer;" class="nav-link active" onclick="CargarContenido('vistas/compras.php','content-wrapper');">
 

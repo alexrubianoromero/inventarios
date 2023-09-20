@@ -24,6 +24,10 @@ class itemInicioPedidoController
         {
             $this->eliminarItemInicialPedido($_REQUEST);
         }
+        if($_REQUEST['opcion']=='verItemsAsignadosTecnico')
+        {
+            $this->verItemsAsignadosTecnico($_REQUEST);
+        }
     }
 
     
@@ -32,7 +36,8 @@ class itemInicioPedidoController
          $this->model->agregarItemInicialPedido($request);   
          $this->itemInicioview->mostrarItemsInicioPedido($request['idPedido']); 
     }
-
+    
+    
     public function eliminarItemInicialPedido($request)
     {
         $infoItem = $this->model->traerItemInicioPedidoId($request['id']);
@@ -41,8 +46,14 @@ class itemInicioPedidoController
         // echo '</pre>';
         // die();  
         $this->model->eliminarItemInicialPedido($request['id']);  
-         $this->itemInicioview->mostrarItemsInicioPedido($infoItem['idPedido']); 
+        $this->itemInicioview->mostrarItemsInicioPedido($infoItem['idPedido']); 
     }
-
+    
+    public function verItemsAsignadosTecnico($request)
+    {
+        // die('passoooo2');
+         $itemsAsignados = $this->model->traerItemsAsignadosATecnico($request['id']);   
+         $this->itemInicioview->verItemsAsignadosTecnico($itemsAsignados); 
+    }
     
 }    

@@ -94,7 +94,22 @@ class PedidoModel extends Conexion
             // die($sql );         
             $consulta = mysql_query($sql,$this->connectMysql());
         }
-
         
+        public function traerLosTecnicosConAsginacion()
+        {
+            $sql = "select  DISTINCT ( i.idTecnico ) as idTecnico 
+            from  itemsInicioPedido i 
+            where 1=1 
+            and i.idEstadoItem = 0
+            and i.asignado = 1
+            group by i.idTecnico
+            "; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $idTecnicos = $this->get_table_assoc($consulta);
+            return $idTecnicos; 
+        }       
+        
+  
         
 }
