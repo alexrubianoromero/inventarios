@@ -395,51 +395,51 @@ function registrarRamDividaHardware(idHardware)
 
 function formuNuevoHardware()
 {
-//    alert('buenas ');
-        const http=new XMLHttpRequest();
-        const url = 'hardware/hardware.php';
-        http.onreadystatechange = function(){
-    
-            if(this.readyState == 4 && this.status ==200){
-                   document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
-            }
-        };
-        http.open("POST",url);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send('opcion=formuNuevoHardware'
+    //    alert('buenas ');
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=formuNuevoHardware'
                 //   +'&idHardware='+idHardware
         );
-    
- }
-
-function grabarNuevoHardware()
-{
-    // alert('grabar');
-    var valida = validacionCamposNuevoHardware();
-    if(valida)
-    {
-
-        var itipo = document.getElementById('itipo').value;
-        var isubtipo = document.getElementById('isubtipo').value;
-        var idImportacion = document.getElementById('idImportacion').value;
-        var lote = document.getElementById('lote').value;
-        var serial = document.getElementById('serial').value;
-        var marca = document.getElementById('marca').value;
-        var chasis = document.getElementById('chasis').value;
-        var modelo = document.getElementById('modelo').value;
-        var pulgadas = document.getElementById('pulgadas').value;
-        var procesador = document.getElementById('procesador').value;
-        var generacion = document.getElementById('generacion').value;
         
-        const http=new XMLHttpRequest();
-        const url = 'hardware/hardware.php';
-        http.onreadystatechange = function(){
+    }
+    
+    function grabarNuevoHardware()
+    {
+        // alert('grabar');
+        var valida = validacionCamposNuevoHardware();
+        if(valida)
+        {
             
-            if(this.readyState == 4 && this.status ==200){
-                document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
-            }
-        };
-        http.open("POST",url);
+            var itipo = document.getElementById('itipo').value;
+            var isubtipo = document.getElementById('isubtipo').value;
+            var idImportacion = document.getElementById('idImportacion').value;
+            var lote = document.getElementById('lote').value;
+            var serial = document.getElementById('serial').value;
+            var marca = document.getElementById('marca').value;
+            var chasis = document.getElementById('chasis').value;
+            var modelo = document.getElementById('modelo').value;
+            var pulgadas = document.getElementById('pulgadas').value;
+            var procesador = document.getElementById('procesador').value;
+            var generacion = document.getElementById('generacion').value;
+            
+            const http=new XMLHttpRequest();
+            const url = 'hardware/hardware.php';
+            http.onreadystatechange = function(){
+                
+                if(this.readyState == 4 && this.status ==200){
+                    document.getElementById("modalBodyNuevoHardware").innerHTML  = this.responseText;
+                }
+            };
+            http.open("POST",url);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.send('opcion=grabarNuevoHardware'
         +'&itipo='+itipo
@@ -455,8 +455,8 @@ function grabarNuevoHardware()
         +'&generacion='+generacion
         );
     }
-        
- }
+    
+}
 
 
 function validacionCamposNuevoHardware()
@@ -467,7 +467,7 @@ function validacionCamposNuevoHardware()
         alert('Por favor escojer tipo');
         return 0;
     }
-
+    
     if( document.getElementById("isubtipo").value == '-1' || document.getElementById("isubtipo").value == '')
     {
         document.getElementById("isubtipo").focus();
@@ -486,21 +486,21 @@ function validacionCamposNuevoHardware()
         alert('Por favor digitar lote');
         return 0;
     }
-  
+    
     if( document.getElementById("serial").value == '')
     {
         document.getElementById("serial").focus();
         alert('Por favor digitar serial');
         return 0;
     }
-  
+    
     if( document.getElementById("marca").value == '-1')
     {
         document.getElementById("marca").focus();
         alert('Por favor escoja la  marca');
         return 0;
     }
-  
+    
     if( document.getElementById("chasis").value == '-1')
     {
         document.getElementById("chasis").focus();
@@ -514,7 +514,24 @@ function validacionCamposNuevoHardware()
         alert('Por favor digitar modelo');
         return 0;
     }
-  
+    
     return 1;
+    
+}
 
+function buscarInventarioHardware(idItem)
+{
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalTraerInventario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=buscarInventarioHardware'
+    +'&idItem='+idItem
+    );
 }

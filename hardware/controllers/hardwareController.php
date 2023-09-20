@@ -98,6 +98,10 @@ class hardwareController
         {
             $this->registrarRamDividaHardware($_REQUEST);
         }
+        if($_REQUEST['opcion']=='buscarInventarioHardware')
+        {
+            $this->view->buscarInventarioHardware($_REQUEST);
+        }
         
 
     }

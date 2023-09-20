@@ -1002,5 +1002,33 @@ class hardwareView extends vista
         echo '</div>'; 
     }
 
+    public function buscarInventarioHardware($request)
+    {
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <div >
+                <div id="div_arrriva"></div>
+                <div id="div_resultados_inventario_hardware">
+                       <?php  $this->traerHardwareDisponibles();  ?> 
+                </div>
+
+            </div>
+        </body>
+        </html>
+        <?php
+    }
+
+    public function traerHardwareDisponibles()
+    {
+
+    }
+
 }
 ?>

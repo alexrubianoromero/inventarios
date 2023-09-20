@@ -230,13 +230,29 @@ class iteminicioPedidoView
                           echo '<tr>'; 
                           echo '<td>'.$item['idPedido'].'</td>';
                           echo '<td>'.$item['precio'].'</td>';
-                          echo '<td><button 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#modalVerMovimientos"
-                                    class="btn btn-primary btn-sm " 
-                                    onclick="buscarInventario('.$item['id'].');"
-                                    >Gestionar</button></td>';
+
                           echo '<td>';
+                          if($item['tipoItem']==1)
+                          {
+                              echo '<button 
+                                      data-bs-toggle="modal" 
+                                      data-bs-target="#modalTraerInventario"
+                                      class="btn btn-primary btn-sm " 
+                                      onclick="buscarInventarioHardware('.$item['id'].');"
+                                      >Gestionar</button>';
+
+                          }
+                          if($item['tipoItem']==2)
+                          {
+                              echo '<button 
+                                      data-bs-toggle="modal" 
+                                      data-bs-target="#modalTraerInventario"
+                                      class="btn btn-primary btn-sm " 
+                                      onclick="buscarInventarioParte('.$item['id'].');"
+                                      >Gestionar</button>';
+
+                          }
+                            echo '</td>';
                           echo '</tr>';  
                         }
                         ?>

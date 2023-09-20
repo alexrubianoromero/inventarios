@@ -32,18 +32,54 @@ class tableroTecnicosView extends vista
     public function tablerotecnicosMenu()
     {
       ?>
-       <div style="padding:10px;"  id="div_general_tablero_tecnicos">
-        <div id="div_botonesyfiltros">
-              
-            </div>
-            <div id="div_resultados_tableros_tecnicos">
-                <?php  $this->mostrarTableroTecnico();  ?>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+      </head>
+      <body>
+          <div style="padding:10px;"  id="div_general_tablero_tecnicos">
+           <div id="div_botonesyfiltros">
+                 
+               </div>
+               <div id="div_resultados_tableros_tecnicos">
+                   <?php  $this->mostrarTableroTecnico();  ?>
+    
+               </div>
+          </div>
+            <?php  $this->modalTraerInventario();   ?>
+      </body>
+      </html>
 
-            </div>
-       </div>
       <?php
     }
 
+    public function modalTraerInventario()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalTraerInventario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Traer Inventario Hardware</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalTraerInventario">
+                    
+                </div>
+                <div class="modal-footer">
+                    <!-- <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
+                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >SubirArchivo++</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
     public function mostrarTableroTecnico()
     {
         // echo 'pasooo 1 '; 
