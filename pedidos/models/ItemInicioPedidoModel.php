@@ -98,6 +98,16 @@ class ItemInicioPedidoModel extends Conexion
             $itemsInicioPedido = $this->get_table_assoc($consulta);
             return $itemsInicioPedido;
         }
+        public function traerItemsAsignadosATecnicoDeUnPedido($idPedido,$idTecnico)
+        {
+            $sql = "select * from itemsInicioPedido  
+            where  idTecnico = '".$idTecnico."'   
+            and idPedido = '".$idPedido."'    "; 
+            // die($sql);
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $itemsInicioPedido = $this->get_table_assoc($consulta);
+            return $itemsInicioPedido;
+        }
         
 
 

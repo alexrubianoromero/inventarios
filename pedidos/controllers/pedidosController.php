@@ -72,6 +72,13 @@ class pedidosController
         {
             $this->actualizarPedido($_REQUEST);
         }
+        if($_REQUEST['opcion']=='pedidosPorCompletar')
+        {
+            // die('pasooo 2 '); 
+            $pedidosPorCompletar = $this->model->traerPedidosPendientes();
+
+            $this->view->pedidosPorCompletar($pedidosPorCompletar);
+        }
 
     }   
 

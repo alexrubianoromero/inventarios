@@ -43,10 +43,20 @@ class pedidosView extends vista
     public function pedidosMenu($pedidos)
     {
         ?>
-        <div style="padding:10px;"  id="div_general_pedidos">
+        <div style="padding:10px;"  id="div_general_pedidos" class="row">
 
-            <div id="botones" class="">
+            <div id="botones">
                 <!-- Button trigger modal -->
+
+
+                 <button type="button" 
+                 class="btn btn-primary  float-left" 
+                 onclick="pedidosPorCompletar();"
+                 >
+                 <!-- data-bs-toggle="modal" 
+                 data-bs-target="#modalPedido" -->
+                PEDIDOS POR COMPLETAR
+                </button> 
                  <button type="button" 
                  class="btn btn-primary  float-right" 
                  onclick="pedirInfoNuevoPedido();"
@@ -54,10 +64,10 @@ class pedidosView extends vista
                  <!-- data-bs-toggle="modal" 
                  data-bs-target="#modalPedido" -->
                 NUEVO PEDIDO
-            </button> 
+                 </button> 
             </div>
             <br>
-            <div id="divResultadosPedidos">
+            <div id="divResultadosPedidos" class="row mt-3">
                 <table class="table table-striped hover-hover">
                     <thead>
                         <th>IdPedido.</th>
@@ -95,6 +105,7 @@ class pedidosView extends vista
             $this->modalPedido();  
             $this->modalPedidoAsignartecnico();  
             $this->modalPedidoActualizar();  
+            $this->modalPedidoVerItemTecnico();  
         
             ?>
             
@@ -121,6 +132,30 @@ class pedidosView extends vista
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
                     <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+    public function modalPedidoVerItemTecnico()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalPedidoVerItemTecnico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ver Item Asignado </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyPedidoVerItemTecnico">
+                    
+                </div>
+                <div class="modal-footer">
+                    <!-- <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
+                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
                 </div>
                 </div>
             </div>
@@ -649,5 +684,41 @@ class pedidosView extends vista
 
     <?php
 
+    }
+
+    public function pedidosPorCompletar($pedidosPorCompletar)
+    {
+        // $this->printR($pedidosPorCompletar);
+        echo '<div class="row">'; 
+        foreach($pedidosPorCompletar as $pedido)
+        {
+            $tecnicos = $this->pedidoModel->traerLosTecnicosConAsginacionIdPedido($pedido['idPedido']);
+            // $this->printR($tecnicos); 
+            ?>
+                <div style="width:150px; height:150px; border:1px solid; display:inline;margin:5px;padding:10px;">
+                    <div class="row">
+                        OC <?php echo $pedido['idPedido'] ?>
+                    </div>
+                    <div class="row" style="padding:2px;">
+                        <?php 
+                            foreach($tecnicos as $tecnico)
+                            {
+                                $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
+                                echo '<br>';
+                                echo '<button 
+                                        onclick="mostrarItemsInicioPedidoTecnico('.$pedido['idPedido'].','.$tecnico['idTecnico'].')"; 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#modalPedidoVerItemTecnico"
+                                        class="btn btn-primary btn-sm" 
+                                        style="margin-bottom:3px"
+                                        >'.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
+                                     '</button>';
+                            }
+                        ?>    
+                    </div>
+                </div>
+            <?php       
+        }
+        echo '</div>'; 
     }
 }

@@ -1027,7 +1027,7 @@ class hardwareView extends vista
 
     public function traerHardwareDisponibles()
     {
-
+            
     }
 
 }

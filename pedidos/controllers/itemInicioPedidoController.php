@@ -28,6 +28,10 @@ class itemInicioPedidoController
         {
             $this->verItemsAsignadosTecnico($_REQUEST);
         }
+        if($_REQUEST['opcion']=='mostrarItemsInicioPedidoTecnico')
+        {
+            $this->itemInicioview->mostrarItemsInicioPedidoTecnico($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
+        }
     }
 
     

@@ -36,6 +36,10 @@ class partesController
         {
             $this->AdicionarRstarExisatenciasParte($_REQUEST);
         }
+        if($_REQUEST['opcion']=='buscarParteOSerial')
+        {
+            $this->view->buscarParteOSerial($_REQUEST);
+        }
 
     }
 

@@ -269,3 +269,32 @@ function actualizarPedido(idPedido)
     +'&porcenreteica='+porcenreteica
     );
 }
+
+
+function pedidosPorCompletar()
+{
+    
+    // var comentarios = document.getElementById('comentarios').value;
+    // var porcenretefuente = document.getElementById('porcenretefuente').value;
+    // var porcenreteica = document.getElementById('porcenreteica').value;
+    // alert(comentarios);
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/pedidos.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosPedidos").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=pedidosPorCompletar'
+    // +'&idPedido='+idPedido
+    // +'&comentarios='+comentarios
+    // +'&porcenretefuente='+porcenretefuente
+    // +'&porcenreteica='+porcenreteica
+    );
+}
+
+
+

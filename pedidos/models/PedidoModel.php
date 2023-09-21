@@ -95,6 +95,8 @@ class PedidoModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         
+        //esta funcion trae todos los tecnicos que tengan una asignacion
+        //idenpendiente del pedido los trae todos los que figuren como asignadoa a algun item inicio
         public function traerLosTecnicosConAsginacion()
         {
             $sql = "select  DISTINCT ( i.idTecnico ) as idTecnico 
@@ -109,7 +111,36 @@ class PedidoModel extends Conexion
             $idTecnicos = $this->get_table_assoc($consulta);
             return $idTecnicos; 
         }       
+
+        //esta funcion trae los tecnicos asignados a los items de un pedido 
+
+        public function traerLosTecnicosConAsginacionIdPedido($idPedido)
+        {
+            $sql = "select  DISTINCT ( i.idTecnico ) as idTecnico 
+            from  itemsInicioPedido i 
+            where 1=1 
+            and i.idEstadoItem = 0
+            and i.asignado = 1
+            and i.idPedido = '".$idPedido."'
+            group by i.idTecnico
+            "; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $idTecnicos = $this->get_table_assoc($consulta);
+            return $idTecnicos; 
+        }       
         
+        public function traerPedidosPendientes()
+        {
+            //definir el estado de los pedidos pendientes 
+            //pues los que no esten finalizados 
+            //estados de un pedido 
+            $sql = "select * from pedidos where idestadoPedido = 0"; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidos = $this->get_table_assoc($consulta);
+            // die($sql); 
+            return $pedidos; 
+        }
   
         
 }

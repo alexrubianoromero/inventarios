@@ -267,6 +267,18 @@ class partesView extends vista
        <?php
     }
 
+
+    public function  buscarParteOSerial($request)
+    {
+        ?>
+        <div class="row">
+            Buscar Serial
+            <input class="form-control">
+        </div>
+
+        <?php
+    }
+
 }
 
 ?>
