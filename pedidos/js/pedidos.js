@@ -58,6 +58,12 @@ function continuarAItemsPedido()
     );
 
 }
+
+function llamarSiguientePantallaPedido()
+{
+    var idPedidoActualizar = document.getElementById('idPedidoActualizar').value;
+    siguientePantallaPedido(idPedidoActualizar);
+}
 function siguientePantallaPedido(idPedido)
 {
     const http=new XMLHttpRequest();
@@ -247,7 +253,6 @@ function mostrarTipoItem()
 
 function actualizarPedido(idPedido)
 {
-    
     var comentarios = document.getElementById('comentarios').value;
     var porcenretefuente = document.getElementById('porcenretefuente').value;
     var porcenreteica = document.getElementById('porcenreteica').value;
@@ -258,6 +263,7 @@ function actualizarPedido(idPedido)
 
         if(this.readyState == 4 && this.status ==200){
             document.getElementById("modalBodyPedidoActualizar").innerHTML  = this.responseText;
+            document.getElementById("idPedidoActualizar").value= idPedido;
         }
     };
     http.open("POST",url);

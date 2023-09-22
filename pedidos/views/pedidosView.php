@@ -4,7 +4,9 @@ require_once($raiz.'/prioridades/models/PrioridadModel.php');
 require_once($raiz.'/login/models/UsuarioModel.php'); 
 require_once($raiz.'/clientes/models/ClienteModel.php'); 
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
+require_once($raiz.'/pedidos/models/EstadoProcesoItemModel.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 require_once($raiz.'/pedidos/views/itemInicioPedidoView.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/prioridades/models/PrioridadModel.php'); 
@@ -25,6 +27,8 @@ class pedidosView extends vista
     protected $tipoParteModel;
     protected $hardwareModel;
     protected $impuestoModel;
+    protected $estadoProcesoItemModel;
+    protected $itemInicioPedidoModel;
 
     public function __construct()
     {
@@ -37,6 +41,8 @@ class pedidosView extends vista
         $this->tipoParteModel = new TipoParteModel();
         $this->hardwareModel = new HardwareModel();
         $this->impuestoModel = new ImpuestoModel();
+        $this->estadoProcesoItemModel = new EstadoProcesoItemModel();
+        $this->itemInicioPedidoModel = new ItemInicioPedidoModel();
     }
     
 
@@ -174,11 +180,16 @@ class pedidosView extends vista
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Pedido</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <input id="idPedidoActualizar">
                 <div class="modal-body" id="modalBodyPedidoActualizar">
-                    
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidos();" >Cerrar</button>
+                    <button  
+                    type="button" 
+                    class="btn btn-secondary" 
+                    data-bs-dismiss="modal"
+                     onclick="llamarSiguientePantallaPedido();" 
+                     >Cerrar</button>
                     <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
                 </div>
                 </div>
@@ -704,12 +715,19 @@ class pedidosView extends vista
                             foreach($tecnicos as $tecnico)
                             {
                                 $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
+                                $estadoProcesoItem = $this->itemInicioPedidoModel->traerEstadoItemInicioPedidoIdTecnico($pedido['idPedido'],$tecnico['idTecnico']);
+                                // $this->printR($estadoProcesoItem);
+                                if($estadoProcesoItem == 0){$claseBoton = 'btn-primary'; }
+                                if($estadoProcesoItem == 1){$claseBoton = 'btn-warning'; }
+                                if($estadoProcesoItem == 2){$claseBoton = 'btn-success'; }
+                            //    die($claseBoton); 
+                                // if($pedido)
                                 echo '<br>';
                                 echo '<button 
                                         onclick="mostrarItemsInicioPedidoTecnico('.$pedido['idPedido'].','.$tecnico['idTecnico'].')"; 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#modalPedidoVerItemTecnico"
-                                        class="btn btn-primary btn-sm" 
+                                        class="btn '.$claseBoton.' btn-sm" 
                                         style="margin-bottom:3px"
                                         >'.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
                                      '</button>';

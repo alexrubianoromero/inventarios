@@ -8,6 +8,7 @@ require_once($raiz.'/login/models/UsuarioModel.php');
 require_once($raiz.'/prioridades/models/PrioridadModel.php');  
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 require_once($raiz.'/hardware/models/HardwareModel.php');  
+require_once($raiz.'/clientes/models/ClienteModel.php');  
 
 class iteminicioPedidoView
 {
@@ -19,6 +20,7 @@ class iteminicioPedidoView
     protected $prioridadModel;
     protected $subtipoParteModel;
     protected $hardwareModel;
+    protected $clienteModel;
 
 
     public function __construct()
@@ -31,6 +33,7 @@ class iteminicioPedidoView
         $this->prioridadModel = new PrioridadModel();
         $this->subtipoParteModel = new SubtipoParteModel();
         $this->hardwareModel = new HardwareModel();
+        $this->clienteModel = new ClienteModel();
     }
 
     public function mostrarItemsInicioPedido($idPedido,$idTecnico=0)
@@ -173,12 +176,19 @@ class iteminicioPedidoView
         
         $infoPedido = $this->pedidoModel->traerPedidoId($idPedido);  
         $tiposPartes =   $this->tipoParteModel->traerTodasLosTipoPartes();
-
+        $infoCliente =  $this->clienteModel->traerClienteId($infoPedido['idCliente']); 
         // echo 'wrwer<pre>'; 
-        // print_r($itemsInicioPedido); 
+        // print_r($infoCliente); 
         // echo '</pre>';
         // die(); 
-        echo '<div style="padding:10px;">';
+
+        
+        echo '<div class="row" style="font-size:25px; color:blue;">'; 
+        echo ' Cliente: ';
+        echo  $infoCliente[0]['nombre']; 
+        echo ' </div>';
+        
+        echo '<div class="row" style="padding:10px;">';
         echo '<table class="table table-striped">'; 
         echo '<tr>'; 
         echo '<th>Cantidad</th>';
@@ -237,7 +247,7 @@ class iteminicioPedidoView
                 echo '<th>Ram</th>';
                 echo '<th>Disco</th>';
                 echo '<th>Estado</th>';
-                echo '<th>Total</th>';
+                // echo '<th>Total</th>';
                 // echo '<th>Eliminar</th>';
                 // echo '<th>Asginado</th>';
                 echo '</tr>';
@@ -253,7 +263,7 @@ class iteminicioPedidoView
            
            
             echo '<td>'.$infoEstado['descripcion'].'</td>'; 
-            echo '<td align="right">'.number_format($item['total'],0,",",".").'</td>'; 
+            // echo '<td align="right">'.number_format($item['total'],0,",",".").'</td>'; 
             // echo '<td><button class="btn btn-primary" onclick="eliminarItemInicialPedido('.$item['id'].');">Eliminar</button></td>'; 
             echo '<td>'; 
           
@@ -285,7 +295,7 @@ class iteminicioPedidoView
                 </select>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <?php
              if($item['tipoItem'] == 1)
              {
