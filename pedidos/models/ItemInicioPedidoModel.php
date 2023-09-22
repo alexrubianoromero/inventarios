@@ -72,14 +72,14 @@ class ItemInicioPedidoModel extends Conexion
             $arrSuma = mysql_fetch_assoc($consulta);
             return $arrSuma['suma'];
         }
-
-
+        
+        
         public function traerItemInicioPedidoIdTecnico($id,$idTecnicoAsignado)
         {
             $sql = "select  * from itemsInicioPedido   
-                    where id = '".$id."'  
-                    and anulado = 0
-                    and idasignarA = '".$idTecnicoAsignado."'   "; 
+            where id = '".$id."'  
+            and anulado = 0
+            and idasignarA = '".$idTecnicoAsignado."'   "; 
             $consulta = mysql_query($sql,$this->connectMysql());
             $infoItemInicio =  mysql_fetch_assoc($consulta);
             // echo '<pre>'; 
@@ -88,14 +88,14 @@ class ItemInicioPedidoModel extends Conexion
             // die(); 
             return $infoItemInicio;   
         }
-
+        
         public function traerEstadoItemInicioPedidoIdTecnico($idPedido,$idTecnicoAsignado)
         {
             $sql = "select  idEstadoProcesoItem from itemsInicioPedido   
-                    where idPedido = '".$idPedido."'  
-                    and anulado = 0
-                    and idTecnico = '".$idTecnicoAsignado."'   limit 1 "; 
-                    // die($sql); 
+            where idPedido = '".$idPedido."'  
+            and anulado = 0
+            and idTecnico = '".$idTecnicoAsignado."'   limit 1 "; 
+            // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
             $infoItemInicio =  mysql_fetch_assoc($consulta);
             // echo '<pre>'; 
@@ -104,8 +104,8 @@ class ItemInicioPedidoModel extends Conexion
             // die(); 
             return $infoItemInicio['idEstadoProcesoItem'];   
         }
-
-
+        
+        
         public function traerItemsAsignadosATecnico($idTecnico)
         {
             $sql = "select * from itemsInicioPedido  
@@ -126,11 +126,18 @@ class ItemInicioPedidoModel extends Conexion
             return $itemsInicioPedido;
         }
         
-
-
+        public function relacionarHardwareAItemPedido($request)
+        {
+            // $sql = "delete  from itemsInicioPedido   where id = '".$id."'"; 
+            $sql = "update  itemsInicioPedido set  idHardwareOParte =  '".$request['idHardware']."'     where id = '".$request['idItemAgregar']."'"; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
         
-}
-
-
-
-?>
+        
+        
+    }
+    
+    
+    
+    ?>

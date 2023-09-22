@@ -1051,15 +1051,17 @@ class hardwareView extends vista
         $hardwarsDisponibles = $this->hardwareModel->traerHardwareDisponibles();
         // $this->printR($hardwarsDisponibles);
         ?>
-        <div class="row">
-            <input type="text" id="idItemAgregar"  value = "<?php  echo $request['idItem']?>"  >
-            <label class="col-lg-3">Buscar Serial.</label>
-            <div class="col-lg-9">
-                <input id="serialABuscar" class="form-control" onkeyup="filtrarHardwarePorSerial();">
+        <div id="div_buscar_hardwareOparte">
+            <div class="row">
+                <input type="hidden" id="idItemAgregar"  value = "<?php  echo $request['idItem']?>"  >
+                <label class="col-lg-3">Buscar Serial.</label>
+                <div class="col-lg-9">
+                    <input id="serialABuscar" class="form-control" onkeyup="filtrarHardwarePorSerial();">
+                </div>
             </div>
-        </div>
-        <div class="row" id="resultadosBuscarSeriales">
-            <?php  $this->traerHardwareDisponibles($hardwarsDisponibles);     ?>
+            <div class="row" id="resultadosBuscarSeriales">
+                <?php  $this->traerHardwareDisponibles($hardwarsDisponibles);     ?>
+            </div>
         </div>
 
         <?php

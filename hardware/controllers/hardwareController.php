@@ -5,6 +5,7 @@ require_once($raiz.'/hardware/views/hardwareView.php');
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 
 class hardwareController
 {
@@ -12,6 +13,7 @@ class hardwareController
     protected $model;
     protected $partesModel;
     protected $MovParteModel;
+    protected $itemInicioModel;
 
     public function __construct()
     {
@@ -19,6 +21,7 @@ class hardwareController
         $this->model = new HardwareModel();
         $this->partesModel = new PartesModel();
         $this->MovParteModel = new MovimientoParteModel();
+        $this->itemInicioModel = new ItemInicioPedidoModel();
 
         if($_REQUEST['opcion']=='hardwareMenu')
         {
@@ -106,7 +109,7 @@ class hardwareController
         {
             $this->model->actualizarCondicionHardware($_REQUEST);
         }
-        
+
         if($_REQUEST['opcion']=='buscarHardwareAgregarItemPedido')
         {
             $this->view->buscarHardwareAgregarItemPedido($_REQUEST);
@@ -116,6 +119,13 @@ class hardwareController
         {
             $hardwareSerial  = $this->model->traerHardwareDisponiblesFiltradosSerial($_REQUEST);
             $this->view->traerHardwareDisponibles($hardwareSerial);
+
+        }
+        if($_REQUEST['opcion']=='relacionarHardwareAItemPedido')
+        {
+            $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
+            echo 'Relacionado de forma correcta '; 
+            // $this->view->traerHardwareDisponibles($hardwareSerial);
 
         }
         

@@ -589,14 +589,14 @@ function filtrarHardwarePorSerial()
 }
 function relacionarHardwareAItemPedido(idHardware)
 {
-    // alert('buenas')
     var idItemAgregar = document.getElementById('idItemAgregar').value;
+    // alert('idhardware '+ idHardware +' idItem '+ idItemAgregar );
     const http=new XMLHttpRequest();
     const url = 'hardware/hardware.php';
     http.onreadystatechange = function(){
         
         if(this.readyState == 4 && this.status ==200){
-            document.getElementById("resultadosBuscarSeriales").innerHTML  = this.responseText;
+            document.getElementById("div_buscar_hardwareOparte").innerHTML  = this.responseText;
         }
     };
     http.open("POST",url);
