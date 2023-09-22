@@ -102,6 +102,10 @@ class hardwareController
         {
             $this->view->buscarInventarioHardware($_REQUEST);
         }
+        if($_REQUEST['opcion']=='actualizarCondicionHardware')
+        {
+            $this->model->actualizarCondicionHardware($_REQUEST);
+        }
         
 
     }

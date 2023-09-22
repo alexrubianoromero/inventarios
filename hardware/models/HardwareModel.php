@@ -203,11 +203,22 @@ class HardwareModel extends Conexion
         $arrIdImport = $this->get_table_assoc($consulta); 
         return $arrIdImport;
     }
-    
+
+    //esta funcion trae el campo tal cual osea graba el valor de la descripcion 
+    //esto para evitar despues tener que buscar el id 
+    //entonces simplmente se pone el valor y ya 
     public function traerInfoCampoTabla($campo)
     {
         $sql = "select distinct(".$campo.") as id from ".$campo." group by ".$campo ;
         //  die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrIdImport = $this->get_table_assoc($consulta); 
+        return $arrIdImport;
+    }
+    public function traerInfoTablaParaColocarenSelect($campo)
+    {
+        $sql = "select id , ".$campo."  as descripcion from ".$campo ;
+        // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
         $arrIdImport = $this->get_table_assoc($consulta); 
         return $arrIdImport;
@@ -220,6 +231,12 @@ class HardwareModel extends Conexion
         $consulta = mysql_query($sql,$this->connectMysql());
         $arrIdImport = mysql_fetch_assoc($consulta); 
         return $arrIdImport[$tabla];
+    }
+    public function actualizarCondicionHardware($request)
+    {
+        $sql = "update hardware set idCondicion = '".$request['idCondicion']."'  where id='".$request['idHardware']."'"; 
+        //  die($sql ); 
+        $consulta = mysql_query($sql,$this->connectMysql());
     }
 
 }

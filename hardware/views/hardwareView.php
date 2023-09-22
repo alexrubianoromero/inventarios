@@ -669,8 +669,24 @@ class hardwareView extends vista
                     
                       <textarea class="form-control" id="comentarios" rows="4" placeholder="Comentarios"><?php  echo $producto['comentarios']  ?></textarea>     
                 </div>
-             
-               
+        </div>
+        <div class="row">
+            <label>Condicion: </label>
+             <?php
+                     $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                    //  $this->printR($condiciones);
+                     echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
+                      $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
+                    // foreach($condiciones as $condicion)
+                    // {
+                    //     if($condicion['iid']== )
+                    //     echo '<option value = '.$condicion['id'].'>'.$condicion['descripcion'].'</option>';  
+                    // }   
+                    echo '</select>';
+             ?>
+        </div>
+        <div class="row mt-3">
+            <!-- <button ></button> -->
         </div>
        
         
