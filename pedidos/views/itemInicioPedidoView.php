@@ -300,11 +300,11 @@ class iteminicioPedidoView
              if($item['tipoItem'] == 1)
              {
                  echo '<button 
-                        onclick = "buscarParteOSerial('.$item['tipoItem'].')"
+                        onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
                         class="btn btn-primary "
                         data-bs-toggle="modal" 
                         data-bs-target="#modalPedidoBuscarParteOSerial"
-                        > BUSCAR SERIAL </button>';
+                        > BUSCAR SERIAL. </button>';
              }
              if($item['tipoItem'] == 2)
              {
@@ -316,7 +316,7 @@ class iteminicioPedidoView
           </body>
               <?php    
                 $this->modalPedidoAsignartecnico();    
-                $this->modalPedidoBuscarParteOSerial();    
+                // $this->modalPedidoBuscarParteOSerial();    
               ?>
         </html>
         <?php
@@ -384,30 +384,7 @@ class iteminicioPedidoView
 
         <?php
     }
-    public function modalPedidoBuscarParteOSerial()
-    {
-            ?>
-            <!-- Modal -->
-            <div class="modal fade" id="modalPedidoBuscarParteOSerial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar Item Pedido a tecnico</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalBodyPedidoBuscarParteOSerial">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidos();" >Cerrar</button>
-                    <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
-                </div>
-                </div>
-            </div>
-            </div>
-
-        <?php
-    }
+  
 
     public function verItemsAsignadosTecnico($itemsAsignadosTecnico)
     {

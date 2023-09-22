@@ -107,6 +107,18 @@ class hardwareController
             $this->model->actualizarCondicionHardware($_REQUEST);
         }
         
+        if($_REQUEST['opcion']=='buscarHardwareAgregarItemPedido')
+        {
+            $this->view->buscarHardwareAgregarItemPedido($_REQUEST);
+        }
+
+        if($_REQUEST['opcion']=='filtrarHardwarePorSerial')
+        {
+            $hardwareSerial  = $this->model->traerHardwareDisponiblesFiltradosSerial($_REQUEST);
+            $this->view->traerHardwareDisponibles($hardwareSerial);
+
+        }
+        
 
     }
 

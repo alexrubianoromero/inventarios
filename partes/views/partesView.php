@@ -275,6 +275,9 @@ class partesView extends vista
             Buscar Serial
             <input class="form-control">
         </div>
+        <div class="row">
+            
+        </div>
 
         <?php
     }

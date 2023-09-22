@@ -238,5 +238,20 @@ class HardwareModel extends Conexion
         //  die($sql ); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    
+    public function traerHardwareDisponibles()
+    {
+        $sql =  "select * from hardware where 1=1 	and  idEstadoInventario = 0  and anulado = 0"; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrInfo = $this->get_table_assoc($consulta); 
+        return $arrInfo;
+    }
+    public function traerHardwareDisponiblesFiltradosSerial($request)
+    {
+        $sql =  "select * from hardware where 1=1 	and  serial = '".$request['serialABuscar']."' and   idEstadoInventario = 0  and anulado = 0"; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrInfo = $this->get_table_assoc($consulta); 
+        return $arrInfo;
+    }
 
 }

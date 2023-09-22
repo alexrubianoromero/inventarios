@@ -117,7 +117,7 @@ function AdicionarRstarExisatenciasParte(idParte,tipoMov)
 }
 function buscarParteOSerial(tipoItem)
 {
-        alert('aqui '); 
+        // alert('aqui '); 
         const http=new XMLHttpRequest();
         const url = 'partes/partes.php';
         http.onreadystatechange = function(){

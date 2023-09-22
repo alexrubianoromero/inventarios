@@ -1041,10 +1041,57 @@ class hardwareView extends vista
         <?php
     }
 
-    public function traerHardwareDisponibles()
-    {
+    // public function traerHardwareDisponibles()
+    // {
             
+    // }
+
+    public function buscarHardwareAgregarItemPedido($request)
+    {
+        $hardwarsDisponibles = $this->hardwareModel->traerHardwareDisponibles();
+        // $this->printR($hardwarsDisponibles);
+        ?>
+        <div class="row">
+            <input type="text" id="idItemAgregar"  value = "<?php  echo $request['idItem']?>"  >
+            <label class="col-lg-3">Buscar Serial.</label>
+            <div class="col-lg-9">
+                <input id="serialABuscar" class="form-control" onkeyup="filtrarHardwarePorSerial();">
+            </div>
+        </div>
+        <div class="row" id="resultadosBuscarSeriales">
+            <?php  $this->traerHardwareDisponibles($hardwarsDisponibles);     ?>
+        </div>
+
+        <?php
     }
+
+    public function traerHardwareDisponibles($hardwarsDisponibles)
+    {
+        echo '<table class="table">'; 
+        echo '<tr>';
+        echo '<td>Serial</td>';  
+        echo '<td>Importacion</td>';  
+        echo '<td>Lote</td>';  
+        echo '<td>Relacionar</td></td>';  
+        echo '</tr>';    
+        foreach($hardwarsDisponibles as $hardware)
+        {
+            echo '<tr>';
+            echo '<td>'.$hardware['serial'].'</td>';  
+            echo '<td>'.$hardware['idImportacion'].'</td>';  
+            echo '<td>'.$hardware['lote'].'</td>';  
+            echo '<td>'; 
+            echo ' <button 
+            class="btn btn-primary  btn-sm " 
+            onclick="relacionarHardwareAItemPedido('.$hardware['id'].')"
+            >
+            +
+            </button>';
+            echo '</td>';  
+            echo '</tr>';    
+        }
+        echo '</table>';
+    } 
 
 }
 ?>

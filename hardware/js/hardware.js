@@ -519,7 +519,23 @@ function validacionCamposNuevoHardware()
     
 }
 
-function buscarInventarioHardware(idItem)
+function buscarHardwareAgregarItemPedido(idItem)
+{
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalBodyPedidoBuscarParteOSerial").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=buscarHardwareAgregarItemPedido'
+    +'&idItem='+idItem
+    );
+}
+function buscarSerialHardware(idItem)
 {
     const http=new XMLHttpRequest();
     const url = 'hardware/hardware.php';
@@ -551,5 +567,42 @@ function actualizarCondicionHardware(idHardware)
     http.send('opcion=actualizarCondicionHardware'
     +'&idHardware='+idHardware
     +'&idCondicion='+idCondicion
+    );
+}
+function filtrarHardwarePorSerial()
+{
+    // alert('buenas')
+    var serialABuscar = document.getElementById('serialABuscar').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("resultadosBuscarSeriales").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=filtrarHardwarePorSerial'
+    +'&serialABuscar='+serialABuscar
+    );
+}
+function relacionarHardwareAItemPedido(idHardware)
+{
+    // alert('buenas')
+    var idItemAgregar = document.getElementById('idItemAgregar').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("resultadosBuscarSeriales").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=relacionarHardwareAItemPedido'
+    +'&idHardware='+idHardware
+    +'&idItemAgregar='+idItemAgregar
     );
 }
