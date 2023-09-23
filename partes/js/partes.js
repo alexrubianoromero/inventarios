@@ -115,6 +115,7 @@ function AdicionarRstarExisatenciasParte(idParte,tipoMov)
                   +'&cantidad='+cantidad
         );
 }
+
 function buscarParteOSerial(tipoItem)
 {
         // alert('aqui '); 
@@ -135,6 +136,7 @@ function buscarParteOSerial(tipoItem)
 
 function buscarParteAgregarItemPedido(idItem)
 {
+    // alert('idItem')+ idItem; 
     const http=new XMLHttpRequest();
     const url = 'partes/partes.php';
     http.onreadystatechange = function(){
@@ -147,6 +149,44 @@ function buscarParteAgregarItemPedido(idItem)
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send('opcion=buscarParteAgregarItemPedido'
     +'&idItem='+idItem
+    );
+}
+function relacionarparteAItemPedido(idParte)
+{
+    var idItemAgregar = document.getElementById('idItemAgregar').value;
+    // alert('idhardware '+ idHardware +' idItem '+ idItemAgregar );
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_buscar_hardwareOparte").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=relacionarparteAItemPedido'
+    +'&idParte='+idParte
+    +'&idItemAgregar='+idItemAgregar
+    );
+}
+
+function filtrarBusquedaParteTipoParte()
+{
+    var idTipoParteFiltro = document.getElementById('idTipoParteFiltro').value;
+    // alert('idhardware '+ idHardware +' idItem '+ idItemAgregar );
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("resultadosBuscarSeriales").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=filtrarBusquedaParteTipoParte'
+    +'&idTipoParteFiltro='+idTipoParteFiltro
     );
 }
 

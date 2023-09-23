@@ -133,6 +133,14 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+        public function relacionarparteAItemPedido($request)
+        {
+            // $sql = "delete  from itemsInicioPedido   where id = '".$id."'"; 
+            $sql = "update  itemsInicioPedido set  idHardwareOParte =  '".$request['idParte']."'     where id = '".$request['idItemAgregar']."'"; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
+        
         public function actulizarEstadoProcesoItem($request)
         {
             // $sql = "delete  from itemsInicioPedido   where id = '".$id."'"; 
@@ -140,7 +148,8 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
-        
+
+
         
         
     }

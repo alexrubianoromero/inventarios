@@ -25,7 +25,10 @@ class TipoParteModel extends Conexion
     }
     
     /*
-    trae todos los tipos de parte que sean hardware osea hardwareoparte = 1
+    trae todos los tipos de parte que sean hardware 
+    // hardeare = hardwareoparte = 1
+    // parte = hardwaroparte = 2
+    //
     */
     public function traerTipoParteHardware($hardwareoparte)
     {

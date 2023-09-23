@@ -55,6 +55,16 @@ class vista
             }
     
     }           
+    public function colocarSelectArreglo($valores)
+    {
+        echo '<option value="-1">Sel.</option>';
+        
+            foreach($valores as $valor)
+            {
+                    echo ' <option value="'.$valor['id'].'">'.$valor['descripcion'].'</option>';
+            }
+    
+    }           
     public function colocarSelectCampoConOpcionSeleccionada($valores,$condicion)
     {
         echo '<option value="-1">Sel.</option>';

@@ -282,6 +282,65 @@ class partesView extends vista
         <?php
     }
 
+
+    
+    public function buscarParteAgregarItemPedido($request)
+    {
+        $partesDisponibles = $this->partesModel->traerTodasLasPartesDisponibles();
+        $tiposPartes = $this->TipoParteModel->traerTipoParteHardware(2);
+        // $this->printR($partesDisponibles);
+        ?>
+        <div id="div_buscar_hardwareOparte">
+            <div class="row">
+                <input type="hidden" id="idItemAgregar"  value = "<?php  echo $request['idItem']?>"  >
+                <label class="col-lg-3">Buscar Parte</label>
+                <div class="col-lg-9">
+                    <!-- <input id="serialABuscar" class="form-control" onkeyup="filtrarHardwarePorSerial();"> -->
+                    <select id="idTipoParteFiltro"  onchange="filtrarBusquedaParteTipoParte(); ">
+                        <?php $this->colocarSelectArreglo($tiposPartes)?>    
+                    </select>
+                </div>
+            </div>
+            <div class="row" id="resultadosBuscarSeriales">
+                <?php  $this->traerPartesDisponibles($partesDisponibles);     ?>
+            </div>
+        </div>
+        
+        <?php
+    }
+    
+    public function traerPartesDisponibles($partesDisponibles)
+    {
+        echo '<table class="table">'; 
+        echo '<tr>';
+        echo '<td>Subtipo</td>';  
+        echo '<td>Caract.</td>';  
+        echo '<td>Cantidad</td>';  
+        echo '<td>Accion</td></td>';  
+        echo '</tr>';    
+        foreach($partesDisponibles as $parte)
+        {
+            $infoSubtipo =  $this->SubtipoParteModel->traerSubTipoParte($parte['idSubtipoParte']);
+            // $this->printR($infoSubtipo);
+            echo '<tr>';
+            echo '<td>'.$infoSubtipo[0]['descripcion'].'</td>';  
+            echo '<td>'.$parte['capacidad'].'</td>';  
+          
+            echo '<td>'.$parte['cantidad'].'</td>';  
+            echo '<td>'; 
+            echo ' <button 
+            class="btn btn-primary  btn-sm " 
+            onclick="relacionarparteAItemPedido('.$parte['id'].')"
+            >
+            +
+            </button>';
+            echo '</td>';  
+            echo '</tr>';    
+        }
+        echo '</table>';
+    } 
+
 }
+
 
 ?>

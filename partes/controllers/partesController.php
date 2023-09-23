@@ -3,18 +3,21 @@ $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/partes/views/partesView.php'); 
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 
 class partesController
 {
     protected $view;
     protected $model;
     protected $MovParteModel;
+    protected $itemInicioModel;
 
     public function __construct()
     {
         $this->view = new partesView();
         $this->model = new PartesModel();
         $this->MovParteModel = new MovimientoParteModel();
+        $this->itemInicioModel = new ItemInicioPedidoModel();
 
         if($_REQUEST['opcion']=='partesMenu')
         {
@@ -39,6 +42,25 @@ class partesController
         if($_REQUEST['opcion']=='buscarParteOSerial')
         {
             $this->view->buscarParteOSerial($_REQUEST);
+        }
+        
+        if($_REQUEST['opcion']=='buscarParteAgregarItemPedido')
+        {
+            // die('llego aca'); 
+            $this->view->buscarParteAgregarItemPedido($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='relacionarparteAItemPedido')
+        {
+            // die('llego acapartes conteoller'); 
+            $this->itemInicioModel->relacionarparteAItemPedido($_REQUEST);
+            echo 'Relacionado de forma correcta. '; 
+        }
+        
+        if($_REQUEST['opcion']=='filtrarBusquedaParteTipoParte')
+        {
+            $partesDisponibles = $this->model->filtrarBusquedaParteTipoParte($_REQUEST['idTipoParteFiltro']);
+            $this->view->traerPartesDisponibles($partesDisponibles);
+
         }
 
     }

@@ -232,6 +232,29 @@ class PartesModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
 
+        public function traerTodasLasPartesDisponibles()
+        {
+            $sql = "select * from partes  where idEstadoParte =  0  order by id asc";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $partes = $this->get_table_assoc($consulta);
+            return $partes;
+        }
+        public function filtrarBusquedaParteTipoParte($idTipoParte)
+        {
+            $sql = "select p.* from partes p 
+            inner join subtipoParte s on ( s.id = p.idSubtipoParte)
+            inner join tipoparte t on (t.id = s.idParte)
+            where p.idEstadoParte =  0  
+            and  t.id = '".$idTipoParte."'
+            order by id asc";
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $partes = $this->get_table_assoc($consulta);
+            return $partes;
+
+        }
+        
+   
     
         
     }
