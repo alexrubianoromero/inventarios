@@ -296,12 +296,21 @@ class iteminicioPedidoView extends vista
             <label class="col-lg-3">Estado</label>
             <div class="col-lg-9">
                 <select id="idEstadoProcesoItem" class="form-control" onchange="actulizarEstadoProcesoItem(<?php echo $item['id'] ?> );">
-                    <!-- <option value = "-1">Escoger</option>
-                    <option value = "1">Sin Empezar</option>
-                    <option value = "2">En proceso</option>
-                    <option value = "2">Entregado</option> -->
                     <?php
-                          $this->colocarSelectCampoConOpcionSeleccionada($estadosProcesoItem,$item['idEstadoProcesoItem']); 
+                        //   $this->colocarSelectCampoConOpcionSeleccionada($estadosProcesoItem,$item['idEstadoProcesoItem']); 
+                        echo '<option value ="-1" >Seleccione</option>';    
+                        foreach($estadosProcesoItem as $estado)
+                        {
+
+                            if($estado['idEstadoProceso']== $item['idEstadoProcesoItem'])
+                            {
+                                echo '<option selected value ="'.$estado['idEstadoProceso'].'" >'.$estado['descripcion'].'</option>';    
+
+                            }else{
+                                echo '<option value ="'.$estado['idEstadoProceso'].'" >'.$estado['descripcion'].'</option>';    
+
+                            }
+                        }
                     ?>
                 </select>
             </div>
@@ -322,27 +331,35 @@ class iteminicioPedidoView extends vista
             ?>
         </div>
         <div class="row mt-3">
-            <?php
-             if($item['tipoItem'] == 1)
-             {
+            <div class="row col-lg-6">
+                
+                <?php
+                if($item['tipoItem'] == 1)
+                {
                  echo '<button 
-                        onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
-                        class="btn btn-primary "
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalPedidoBuscarParteOSerial"
-                        > BUSCAR SERIAL. </button>';
-             }
-             if($item['tipoItem'] == 2)
-             {
-                echo '<button 
-                onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
-                class="btn btn-primary "
-                data-bs-toggle="modal" 
-                data-bs-target="#modalPedidoBuscarParteOSerial"
-                > BUSCAR PARTE. </button>';
-             }
-        ?>
-        
+                 style="margin:3px;"
+                 onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
+                 class="btn btn-primary "
+                 data-bs-toggle="modal" 
+                 data-bs-target="#modalPedidoBuscarParteOSerial"
+                 > BUSCAR SERIAL. </button>';
+                }
+                if($item['tipoItem'] == 2)
+                {
+                    echo '<button 
+                    style="margin:3px;"
+                    onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
+                    class="btn btn-primary "
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalPedidoBuscarParteOSerial"
+                    > BUSCAR PARTE. </button>';
+                }
+                ?>
+            </div>
+            <div class="row col-lg-6">
+                <button style="margin:3px;" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidosPorCompletar();" >Cerrar</button>
+            </div>
+            
         </div>
           </body>
               <?php    

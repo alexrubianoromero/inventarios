@@ -15,9 +15,10 @@ class EstadoProcesoItemModel extends Conexion
         $estado = $this->get_table_assoc($consulta);
         return $estado;
     }
+
     public function traerEstadosProcesoItem()
     {
-        $sql = "select  from estadoProcesoItem  ";
+        $sql = "select * from estadoProcesoItem  ";
         $consulta = mysql_query($sql,$this->connectMysql());
         $estados = $this->get_table_assoc($consulta);
         return $estados;
