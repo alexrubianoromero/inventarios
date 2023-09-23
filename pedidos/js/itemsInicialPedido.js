@@ -169,6 +169,7 @@ function verItemsAsignadosTecnico(id)
     );
 
 }
+
 function mostrarItemsInicioPedidoTecnico(idPedido,idTecnico)
 {
     //  alert('funcion javascript');
@@ -185,6 +186,26 @@ function mostrarItemsInicioPedidoTecnico(idPedido,idTecnico)
     http.send('opcion=mostrarItemsInicioPedidoTecnico'
     +'&idPedido='+idPedido
     +'&idTecnico='+idTecnico
+    );
+
+}
+function actulizarEstadoProcesoItem(idItem)
+{
+    //  alert('funcion javascript');
+    var idEstadoProcesoItem = document.getElementById('idEstadoProcesoItem').value;
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/itemInicioPedido.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            //    document.getElementById("modalBodyPedidoVerItemTecnico").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=actulizarEstadoProcesoItem'
+    +'&idItem='+idItem
+    +'&idEstadoProcesoItem='+idEstadoProcesoItem
     );
 
 }

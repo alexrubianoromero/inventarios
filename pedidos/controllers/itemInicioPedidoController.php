@@ -32,6 +32,10 @@ class itemInicioPedidoController
         {
             $this->itemInicioview->mostrarItemsInicioPedidoTecnico($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
         }
+        if($_REQUEST['opcion']=='actulizarEstadoProcesoItem')
+        {
+            $this->model->actulizarEstadoProcesoItem($_REQUEST);
+        }
     }
 
     

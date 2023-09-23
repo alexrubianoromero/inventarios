@@ -133,6 +133,13 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+        public function actulizarEstadoProcesoItem($request)
+        {
+            // $sql = "delete  from itemsInicioPedido   where id = '".$id."'"; 
+            $sql = "update  itemsInicioPedido set  idEstadoProcesoItem =  '".$request['idEstadoProcesoItem']."'     where id = '".$request['idItem']."'"; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
         
         
         

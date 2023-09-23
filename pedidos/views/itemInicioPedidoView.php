@@ -3,14 +3,16 @@ $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
+require_once($raiz.'/pedidos/models/EstadoProcesoItemModel.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/login/models/UsuarioModel.php');  
 require_once($raiz.'/prioridades/models/PrioridadModel.php');  
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 require_once($raiz.'/hardware/models/HardwareModel.php');  
 require_once($raiz.'/clientes/models/ClienteModel.php');  
+require_once($raiz.'/vista/vista.php'); 
 
-class iteminicioPedidoView
+class iteminicioPedidoView extends vista
 {
     protected $itemIniciopedidoModel;
     protected $estadoInicioPedidoModel;
@@ -21,6 +23,7 @@ class iteminicioPedidoView
     protected $subtipoParteModel;
     protected $hardwareModel;
     protected $clienteModel;
+    protected $estadoProcesoItemModel;
 
 
     public function __construct()
@@ -34,6 +37,7 @@ class iteminicioPedidoView
         $this->subtipoParteModel = new SubtipoParteModel();
         $this->hardwareModel = new HardwareModel();
         $this->clienteModel = new ClienteModel();
+        $this->estadoProcesoItemModel = new EstadoProcesoItemModel();
     }
 
     public function mostrarItemsInicioPedido($idPedido,$idTecnico=0)
@@ -284,16 +288,38 @@ class iteminicioPedidoView
         
         ?>
         <div class="row">
+            <?php
+                 $estadosProcesoItem =  $this->estadoProcesoItemModel->traerEstadosProcesoItem();
+                //  $this->printR($estadosProcesoItem);
+            ?>
        
             <label class="col-lg-3">Estado</label>
             <div class="col-lg-9">
-                <select id="estado" class="form-control">
-                    <option value = "-1">Escoger</option>
+                <select id="idEstadoProcesoItem" class="form-control" onchange="actulizarEstadoProcesoItem(<?php echo $item['id'] ?> );">
+                    <!-- <option value = "-1">Escoger</option>
                     <option value = "1">Sin Empezar</option>
                     <option value = "2">En proceso</option>
-                    <option value = "2">Entregado</option>
+                    <option value = "2">Entregado</option> -->
+                    <?php
+                          $this->colocarSelectCampoConOpcionSeleccionada($estadosProcesoItem,$item['idEstadoProcesoItem']); 
+                    ?>
                 </select>
             </div>
+        </div>
+        <div class="row mt-3">
+            <!-- aqui mostrar el serial que quedo asociado -->
+            <?php
+            echo '<label style="color:green ">SERIAL O PARTE RELACIONADA</label> ';
+            $infoHardware = $this->hardwareModel->verHardware($item['idHardwareOParte']);
+            echo '<div>';
+                echo 'serial:  <label style="color:blue;">'.$infoHardware['serial'].'</label>' ; 
+            echo '</div>';
+                // if()
+                // {
+
+                // }
+
+            ?>
         </div>
         <div class="row mt-3">
             <?php
@@ -308,7 +334,12 @@ class iteminicioPedidoView
              }
              if($item['tipoItem'] == 2)
              {
-                 echo '<button class="btn btn-primary "> BUSCAR PARTE </button>';
+                echo '<button 
+                onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
+                class="btn btn-primary "
+                data-bs-toggle="modal" 
+                data-bs-target="#modalPedidoBuscarParteOSerial"
+                > BUSCAR PARTE. </button>';
              }
         ?>
         

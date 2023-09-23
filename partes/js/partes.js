@@ -133,4 +133,20 @@ function buscarParteOSerial(tipoItem)
         );
 }
 
+function buscarParteAgregarItemPedido(idItem)
+{
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalBodyPedidoBuscarParteOSerial").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=buscarParteAgregarItemPedido'
+    +'&idItem='+idItem
+    );
+}
 
