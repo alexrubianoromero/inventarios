@@ -296,12 +296,12 @@ class partesView extends vista
                 <label class="col-lg-3">Buscar Parte</label>
                 <div class="col-lg-9">
                     <!-- <input id="serialABuscar" class="form-control" onkeyup="filtrarHardwarePorSerial();"> -->
-                    <select id="idTipoParteFiltro"  onchange="filtrarBusquedaParteTipoParte(); ">
+                    <select class ="form-control"  id="idTipoParteFiltro"  onchange="filtrarBusquedaParteTipoParte(); ">
                         <?php $this->colocarSelectArreglo($tiposPartes)?>    
                     </select>
                 </div>
             </div>
-            <div class="row" id="resultadosBuscarSeriales">
+            <div class="row mt-3" id="resultadosBuscarSeriales">
                 <?php  $this->traerPartesDisponibles($partesDisponibles);     ?>
             </div>
         </div>
