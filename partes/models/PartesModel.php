@@ -53,6 +53,7 @@ class PartesModel extends Conexion
         return $parte;
     }
     
+    
     public function traerTodasLasPartes()
     {
         $sql = "select * from partes  order by id desc";

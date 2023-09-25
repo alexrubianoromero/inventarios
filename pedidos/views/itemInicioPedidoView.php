@@ -5,6 +5,7 @@ require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php');
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/pedidos/models/EstadoProcesoItemModel.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
+require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/login/models/UsuarioModel.php');  
 require_once($raiz.'/prioridades/models/PrioridadModel.php');  
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
@@ -24,6 +25,7 @@ class iteminicioPedidoView extends vista
     protected $hardwareModel;
     protected $clienteModel;
     protected $estadoProcesoItemModel;
+    protected $partesModel;
 
 
     public function __construct()
@@ -38,6 +40,7 @@ class iteminicioPedidoView extends vista
         $this->hardwareModel = new HardwareModel();
         $this->clienteModel = new ClienteModel();
         $this->estadoProcesoItemModel = new EstadoProcesoItemModel();
+        $this->partesModel = new PartesModel();
     }
 
     public function mostrarItemsInicioPedido($idPedido,$idTecnico=0)
@@ -318,15 +321,26 @@ class iteminicioPedidoView extends vista
         <div class="row mt-3">
             <!-- aqui mostrar el serial que quedo asociado -->
             <?php
-            echo '<label style="color:green ">SERIAL O PARTE RELACIONADA</label> ';
-            $infoHardware = $this->hardwareModel->verHardware($item['idHardwareOParte']);
-            echo '<div>';
-                echo 'serial:  <label style="color:blue;">'.$infoHardware['serial'].'</label>' ; 
-            echo '</div>';
-                // if()
-                // {
+            if($item['tipoItem']== 1)
+            {
+                echo '<label style="color:green ">SERIAL RELACIONADA</label> ';
+                $infoHardware = $this->hardwareModel->verHardware($item['idHardwareOParte']);
+                echo '<div>';
+                    echo 'serial:  <label style="color:blue;">'.$infoHardware['serial'].'</label>' ; 
+                echo '</div>';
+            }
+            if($item['tipoItem']== 2)
+            {
+                echo '<label style="color:green ">PARTE RELACIONADA</label> ';
+                $infoParte =  $this->partesModel->traerParte($item['idHardwareOParte']);
+                $subtipoInfo =   $this->subtipoParteModel->traerSubTipoParte($infoParte[0]['idSubtipoParte']);                
+                // $this->printR($infoParte);
+                echo '<div>';
+                    echo '<label style="color:blue;">'.$subtipoInfo[0]['descripcion'].'</label>' ; 
+                    echo ' <label style="color:blue;">'.$infoParte[0]['capacidad'].'</label>' ; 
+                echo '</div>';
+            }
 
-                // }
 
             ?>
         </div>
@@ -339,7 +353,7 @@ class iteminicioPedidoView extends vista
                  echo '<button 
                  style="margin:3px;"
                  onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
-                 class="btn btn-primary "
+                 class="btn btn-primary btn-sm "
                  data-bs-toggle="modal" 
                  data-bs-target="#modalPedidoBuscarParteOSerial"
                  > BUSCAR SERIAL. </button>';
@@ -349,7 +363,7 @@ class iteminicioPedidoView extends vista
                     echo '<button 
                     style="margin:3px;"
                     onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
-                    class="btn btn-primary "
+                    class="btn btn-primary btn-sm "
                     data-bs-toggle="modal" 
                     data-bs-target="#modalPedidoBuscarParteOSerial"
                     > BUSCAR PARTE. </button>';
@@ -357,7 +371,7 @@ class iteminicioPedidoView extends vista
                 ?>
             </div>
             <div class="row col-lg-6">
-                <button style="margin:3px;" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidosPorCompletar();" >Cerrar</button>
+                <button style="margin:3px;" type="button" class="btn btn-secondary btn-sm "  data-bs-dismiss="modal" onclick="pedidosPorCompletar();" >Cerrar</button>
             </div>
             
         </div>
