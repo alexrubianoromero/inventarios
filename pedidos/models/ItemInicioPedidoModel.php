@@ -15,6 +15,16 @@ class ItemInicioPedidoModel extends Conexion
             $itemsInicioPedido = $this->get_table_assoc($consulta);
             return $itemsInicioPedido;
         }
+        public function traerSumaItemInicioPedido($idPedido)
+        {
+            $sql = "select sum(total) as total from itemsInicioPedido  
+                    where idPedido = '".$idPedido."' 
+                    and anulado = 0 
+                    order by id asc ";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $arrSuma = mysql_fetch_assoc($consulta);
+            return $arrSuma['total'];
+        }
         
         public function agregarItemInicialPedido($request)
         {

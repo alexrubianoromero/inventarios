@@ -12,6 +12,7 @@ require_once($raiz.'/tipoParte/models/TipoParteModel.php');
 require_once($raiz.'/prioridades/models/PrioridadModel.php'); 
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
 require_once($raiz.'/impuestos/models/ImpuestoModel.php'); 
+require_once($raiz.'/pagos/models/PagoModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 // require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
@@ -29,6 +30,7 @@ class pedidosView extends vista
     protected $impuestoModel;
     protected $estadoProcesoItemModel;
     protected $itemInicioPedidoModel;
+    protected $pagoModel;
 
     public function __construct()
     {
@@ -43,6 +45,7 @@ class pedidosView extends vista
         $this->impuestoModel = new ImpuestoModel();
         $this->estadoProcesoItemModel = new EstadoProcesoItemModel();
         $this->itemInicioPedidoModel = new ItemInicioPedidoModel();
+        $this->pagoModel = new PagoModel();
     }
     
 
@@ -113,6 +116,7 @@ class pedidosView extends vista
             $this->modalPedidoActualizar();  
             $this->modalPedidoVerItemTecnico();  
             $this->modalPedidoBuscarParteOSerial(); 
+            $this->modalPedidoActualizar2();  
         
             ?>
             
@@ -195,6 +199,7 @@ class pedidosView extends vista
 
         <?php
     }
+
     public function modalPedidoActualizar()
     {
         ?>
@@ -203,10 +208,10 @@ class pedidosView extends vista
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Pedido</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Pedido</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <input id="idPedidoActualizar">
+                <input id="idPedidoActualizar" type="hidden">
                 <div class="modal-body" id="modalBodyPedidoActualizar">
                 </div>
                 <div class="modal-footer">
@@ -224,6 +229,8 @@ class pedidosView extends vista
 
         <?php
     }
+  
+   
     public function modalPedidoAsignartecnico()
     {
         ?>
@@ -380,6 +387,7 @@ class pedidosView extends vista
                 </div>
                 <div class =" row col-lg-2">
                 <?php           
+                  $saldo =   $this->pedidoModel->traerSaldoPedido($idPedido);                   
                   echo '<button 
                         class="btn btn-success" 
                         data-bs-toggle="modal" 
@@ -387,7 +395,17 @@ class pedidosView extends vista
                         onclick = "actualizarPedido('.$idPedido.');"
                         >Actualizar Pedido
                         </button>';
-                ?>
+                  echo '<button 
+                        class="btn btn-warning mt-3" 
+                        onclick = "verPagosPedido('.$idPedido.');"
+                        > Saldo: '.number_format($saldo,0,",",".").'
+                        </button>';
+                        
+                        // data-bs-toggle="modal" 
+                        // data-bs-target="#modalPedidoActualizar"
+               
+                        
+                        ?>
                 </div>
                 
             </div>
@@ -764,6 +782,46 @@ class pedidosView extends vista
             <?php       
         }
         echo '</div>'; 
+    }
+
+    public function verPagosPedido($idPedido,$pagos)
+    {
+        $saldo =   $this->pedidoModel->traerSaldoPedido($idPedido);
+        echo '<table class ="table table-striped">'; 
+        echo '<tr>'; 
+        echo '<td>Fecha</td>';
+        echo '<td>Observaciones</td>';
+        echo '<td>Valor</td>'; 
+        echo '<td>Aplicar</td>'; 
+        echo '</tr>';
+        
+        foreach($pagos as $pago)
+        {
+        
+            echo '<tr>'; 
+            if($pago['valor']==0)
+            {
+                echo '<td><input class ="form-control" type="date" id="date_'.$pago['id'].'"></td>'; 
+                echo '<td><textarea  class ="form-control" id="obse_'.$pago['id'].'"></textarea></td>'; 
+                echo '<td><input size="6px" type="text"  class ="form-control"id="valor_'.$pago['id'].'"></td>'; 
+                echo '<td><button class="btn btn-primary" onclick="aplicarPagosPedido('.$pago['id'].')">Aplicar</button></td>'; 
+                
+            }
+            else {
+                echo '<td>'.$pago['fecha'].'</td>'; 
+                echo '<td>'.$pago['observaciones'].'</td>'; 
+                echo '<td align="right">'.number_format($pago['valor'],0,",",".").'</td>'; 
+            }
+            
+            echo '</tr>';
+        
+        }
+        echo '<tr>'; 
+        echo '<td></td>';
+        echo '<td>Saldo: </td>';
+        echo '<td align="right">'.number_format($saldo,0,",",".").'</td>';
+        echo '</tr>';
+        echo '</table>';
     }
 
 

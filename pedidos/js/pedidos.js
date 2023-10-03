@@ -275,6 +275,55 @@ function actualizarPedido(idPedido)
     +'&porcenreteica='+porcenreteica
     );
 }
+function verPagosPedido(idPedido)
+{
+    // var comentarios = document.getElementById('comentarios').value;
+    // var porcenretefuente = document.getElementById('porcenretefuente').value;
+    // var porcenreteica = document.getElementById('porcenreteica').value;
+    // alert(comentarios);
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/pedidos.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
+            // document.getElementById("idPedidoActualizar").value= idPedido;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=verPagosPedido'
+    +'&idPedido='+idPedido
+    // +'&comentarios='+comentarios
+    // +'&porcenretefuente='+porcenretefuente
+    // +'&porcenreteica='+porcenreteica
+    );
+}
+function aplicarPagosPedido(idPago)
+{
+     var fecha = document.getElementById('date_'+idPago).value;
+     var obse = document.getElementById('obse_'+idPago).value;
+     var valor = document.getElementById('valor_'+idPago).value;
+    //  alert(fecha + ' '+ obse+ ' '+valor);
+
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/pedidos.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
+            // document.getElementById("idPedidoActualizar").value= idPedido;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=aplicarPagosPedido'
+    +'&idPago='+idPago
+    +'&fecha='+fecha
+    +'&obse='+obse
+    +'&valor='+valor
+    );
+}
 
 
 function pedidosPorCompletar()

@@ -3,20 +3,26 @@
 $raiz =dirname(dirname(dirname(__file__)));
 //  die('rutamodel '.$raiz);
 require_once($raiz.'/impuestos/models/ImpuestoModel.php'); 
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/pagos/models/PagoModel.php'); 
 
 require_once($raiz.'/conexion/Conexion.php');
 
 class PedidoModel extends Conexion
 {
     protected $impuestoModel;
+    protected $itemPedidoModel;
+    protected $pagoModel;
 
         public function __construct()
         {
             $this->impuestoModel = new ImpuestoModel();
+            $this->itemPedidoModel = new ItemInicioPedidoModel();
+            $this->pagoModel = new PagoModel();
         }
         public function traerPedidos()
         {
-            $sql = "select * from pedidos ";
+            $sql = "select * from pedidos order by idPedido desc";
             $consulta = mysql_query($sql,$this->connectMysql());
             $pedidos = $this->get_table_assoc($consulta);
             return $pedidos;
@@ -140,6 +146,14 @@ class PedidoModel extends Conexion
             $pedidos = $this->get_table_assoc($consulta);
             // die($sql); 
             return $pedidos; 
+        }
+
+        public function traerSaldoPedido($idPedido)
+        {
+            $sumaItems = $this->itemPedidoModel->traerSumaItemInicioPedido($idPedido);
+            $sumaPagos = $this->pagoModel->traerSumaPagosPedido($idPedido);
+            $saldo = $sumaItems - $sumaPagos; 
+            return $saldo;   
         }
   
         

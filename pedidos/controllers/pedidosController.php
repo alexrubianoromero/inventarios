@@ -2,6 +2,7 @@
 $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/pedidos/views/pedidosView.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
+require_once($raiz.'/pagos/models/PagoModel.php'); 
 require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
 // die('controller'.$raiz);
 // die('control123'.$raiz);
@@ -10,14 +11,14 @@ class pedidosController
 {
     protected $view; 
     protected $model ; 
-    // protected $asignacionModel ; 
+    protected $pagoModel ; 
 
     public function __construct()
     {
         // die('desde controlador') ;
         $this->view = new pedidosView();
         $this->model = new pedidoModel();
-        // $this->asignacionModel = new AsisgnacionTecnicoPedidoModel();
+        $this->pagoModel = new PagoModel();
 
         if($_REQUEST['opcion']=='pedidosMenu')
         {
@@ -79,6 +80,21 @@ class pedidosController
 
             $this->view->pedidosPorCompletar($pedidosPorCompletar);
         }
+        if($_REQUEST['opcion']=='verPagosPedido')
+        {
+            // die('llego a controlador'); 
+            $pagosPedido = $this->pagoModel->traerPagosPedido($_REQUEST['idPedido']); 
+            $this->view->verPagosPedido($_REQUEST['idPedido'],$pagosPedido );
+        }
+        if($_REQUEST['opcion']=='aplicarPagosPedido')
+        {
+            // die('llego a controlador'); 
+            $pagosPedido = $this->pagoModel->aplicarPagosPedido($_REQUEST); 
+            $idPedido = $this->pagoModel->traerpedidoIdPago($_REQUEST['idPago']);
+            // die('idPedido  '.$idPedido);
+            $pagosPedido = $this->pagoModel->traerPagosPedido($idPedido); 
+            $this->view->verPagosPedido($idPedido,$pagosPedido );
+        }
 
     }   
 
@@ -100,6 +116,8 @@ class pedidosController
     public function continuarAItemsPedido($request)
     {
         $ultimoIdPedido = $this->model->grabarEncabezadoPedido($request);
+        $this->pagoModel->crearRegistrosPagosPedido($ultimoIdPedido);
+
         // echo '<pre>'; 
         // print_r($ultimoIdPedido); 
         // echo '</pre>';
