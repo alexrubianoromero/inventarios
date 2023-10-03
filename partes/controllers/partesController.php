@@ -51,8 +51,29 @@ class partesController
         }
         if($_REQUEST['opcion']=='relacionarparteAItemPedido')
         {
+            $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+            // echo '<pre>';
+            // print_r($_REQUEST); 
+            // echo '</pre>';
+            // die('antes de movimiento ');
             // die('llego acapartes conteoller'); 
             $this->itemInicioModel->relacionarparteAItemPedido($_REQUEST);
+            $tipoMov = 2;    //osea salida de inventario 
+            $cantidadParaActualizar  = 1; //voy a dejarla en 1 por defecto 
+            $data = $this->model->sumarDescontarPartes($tipoMov,$_REQUEST['idParte'],$cantidadParaActualizar);
+            ///////////////
+            //aqui hay que crear el movimiento respectivo de parte
+            $infoMov = new stdClass();
+            $infoMov->observaciones = 'Se reduce existencias se agrega a Id Pedido '.$infoItem['idPedido'].' id Item '.$_REQUEST['idItemAgregar'].' ';
+            $infoMov->idParte = $_REQUEST['idParte'];
+            $infoMov->idHardware = $_REQUEST['idItemAgregar'];
+            $infoMov->tipoMov = $tipoMov;
+            $infoMov->loquehabia = $data['loquehabia']; 
+            $infoMov->loquequedo = $data['loquequedo']; 
+            $infoMov->query = $data['query'];
+            $infoMov->cantidadQueseAfecto = $cantidadParaActualizar;
+            $this->MovParteModel->registrarAgregarParteAItemInicio($infoMov);
+            //////////////////
             echo 'Relacionado de forma correcta. '; 
         }
         

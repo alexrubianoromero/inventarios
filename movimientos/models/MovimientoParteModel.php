@@ -37,6 +37,9 @@ class MovimientoParteModel extends Conexion
                     $consulta = mysql_query($sql,$this->connectMysql());
                     // die($sql );
                 }
+
+
+                
                 
     public function registrarAgregarParteAHardware($infoMov)
     {
@@ -58,5 +61,28 @@ class MovimientoParteModel extends Conexion
                     // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+
+
+    public function registrarAgregarParteAItemInicio($infoMov)
+    {
+        $querySinComillas = addslashes ( $infoMov->query);
+        $sql = "insert into movimientosPartes (idParte,tipoMov,observaciones,idHardware,fecha,idUsuario
+        ,loquehabia,loquequedo,query,cantidadQueseAfecto )   
+                values(
+                    '".$infoMov->idParte."'
+                    ,'".$infoMov->tipoMov."'
+                    ,'".$infoMov->observaciones."'
+                    ,'".$infoMov->idHardware."'
+                    ,now()
+                    ,'".$infoMov->idUsuario."'
+                    ,'".$infoMov->loquehabia."'
+                    ,'".$infoMov->loquequedo."'
+                    ,'".$querySinComillas ."'
+                    ,'".$infoMov->cantidadQueseAfecto."'
+                    )"; 
+                    // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+
 
 }

@@ -5,3 +5,6 @@ truncate partes;
 update itemsInicioPedido set asignado = 0;
 
 truncate itemsInicioPedido;
+
+
+update itemsInicioPedido set idHardwareOParte = 0 ; 
