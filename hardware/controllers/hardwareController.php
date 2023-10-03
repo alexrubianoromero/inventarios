@@ -5,6 +5,7 @@ require_once($raiz.'/hardware/views/hardwareView.php');
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
+require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 
 class hardwareController
@@ -14,6 +15,7 @@ class hardwareController
     protected $partesModel;
     protected $MovParteModel;
     protected $itemInicioModel;
+    protected $MovHardwareModel;
 
     public function __construct()
     {
@@ -22,6 +24,7 @@ class hardwareController
         $this->partesModel = new PartesModel();
         $this->MovParteModel = new MovimientoParteModel();
         $this->itemInicioModel = new ItemInicioPedidoModel();
+        $this->MovHardwareModel = new MovimientoHardwareModel();
 
         if($_REQUEST['opcion']=='hardwareMenu')
         {
@@ -123,7 +126,19 @@ class hardwareController
         }
         if($_REQUEST['opcion']=='relacionarHardwareAItemPedido')
         {
+            //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
+            //falta crear el movimiento historico 
+            $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+            $tipoMov = 2 ; //sale del inventario;
+            $infoMov = new stdClass();
+            $infoMov->idTipoMov = $tipoMov ;  
+            $infoMov->idItemInicio = $_REQUEST['idItemAgregar'] ;  
+            $infoMov->observaciones = 'Se agrega Hardware  a Pedido '.$infoItem['idPedido'].' id Item '.$_REQUEST['idItemAgregar'].' ';
+            $infoMov->idHardware = $_REQUEST['idHardware'];  
+            $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+            
             $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
+
             echo 'Relacionado de forma correcta '; 
             // $this->view->traerHardwareDisponibles($hardwareSerial);
 

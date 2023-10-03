@@ -253,6 +253,11 @@ class HardwareModel extends Conexion
         $arrInfo = $this->get_table_assoc($consulta); 
         return $arrInfo;
     }
+
+    public function cambiarEstadoHArdwareId()
+    {
+        
+    }
     
  
 }
