@@ -1,7 +1,5 @@
 function agregarItemInicialPedido(tipoItem)
 {
-    // alert('funcion javascript');
-    
     var valida = validaInfoNuevoItem();
     if(valida == 1)
     {
@@ -44,6 +42,44 @@ function agregarItemInicialPedido(tipoItem)
     +'&icapacidadram='+icapacidadram
     +'&idisco='+idisco
     +'&icapacidaddisco='+icapacidaddisco
+    +'&idEstadoInicio='+idEstadoInicio
+    +'&iprecio='+iprecio
+    +'&iobservaciones='+iobservaciones
+    +'&tipoItem='+tipoItem
+    +'&isubtipo='+isubtipo
+    );
+    limpiarCampos();
+    } //fin de valida
+}
+
+function agregarItemInicialPedidoParte(tipoItem)
+{
+    var valida = validaInfoNuevoItemParte();
+    if(valida == 1)
+    {
+    var idPedido = document.getElementById('idPedido').value;
+    var icantidad = document.getElementById('icantidad').value;
+    var itipo = document.getElementById('itipo').value;
+    var idEstadoInicio = document.getElementById('idEstadoInicio').value;
+    var iprecio = document.getElementById('iprecio').value;
+    var iobservaciones = document.getElementById('iobservaciones').value;
+    var tipoItem = document.getElementById('tipoItem').value;
+    var isubtipo = document.getElementById('isubtipo').value;
+
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/itemInicioPedido.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_items_solicitados_pedido").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=agregarItemInicialPedido'
+    +'&idPedido='+idPedido
+    +'&icantidad='+icantidad
+    +'&itipo='+itipo
     +'&idEstadoInicio='+idEstadoInicio
     +'&iprecio='+iprecio
     +'&iobservaciones='+iobservaciones
@@ -113,6 +149,37 @@ function validaInfoNuevoItem()
         document.getElementById('idisco').focus();
         return 0;
     }
+    if( document.getElementById('idEstadoInicio').value == ''){
+        alert('Por favor digitar idEstadoInicio');
+        document.getElementById('idEstadoInicio').focus();
+        return 0;
+    }
+    if( document.getElementById('iprecio').value == ''){
+        alert('Por favor digitar iprecio');
+        document.getElementById('iprecio').focus();
+        return 0;
+    }
+    if( document.getElementById('iobservaciones').value == ''){
+        alert('Por favor digitar observaciones');
+        document.getElementById('iobservaciones').focus();
+        return 0;
+    }
+    return 1;
+}
+function validaInfoNuevoItemParte()
+{
+    
+    if( document.getElementById('icantidad').value == ''){
+        alert('Por favor digitar cantidad');
+        document.getElementById('icantidad').focus();
+        return 0;
+    }
+    if( document.getElementById('itipo').value == ''){
+        alert('Por favor digitar itipo');
+        document.getElementById('itipo').focus();
+        return 0;
+    }
+  
     if( document.getElementById('idEstadoInicio').value == ''){
         alert('Por favor digitar idEstadoInicio');
         document.getElementById('idEstadoInicio').focus();

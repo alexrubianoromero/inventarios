@@ -17,7 +17,15 @@ class itemInicioPedidoController
 
         if($_REQUEST['opcion']=='agregarItemInicialPedido')
         {
-            $this->agregarItemInicialPedido($_REQUEST);
+            if($_REQUEST['tipoItem']==1)
+            {
+                $this->agregarItemInicialPedido($_REQUEST);
+            }
+            if($_REQUEST['tipoItem']==2)
+            {
+                $this->agregarItemInicialPedidoParte($_REQUEST);
+            }
+
         }
 
         if($_REQUEST['opcion']=='eliminarItemInicialPedido')
@@ -42,6 +50,11 @@ class itemInicioPedidoController
     public function agregarItemInicialPedido($request)
     {
          $this->model->agregarItemInicialPedido($request);   
+         $this->itemInicioview->mostrarItemsInicioPedido($request['idPedido']); 
+    }
+    public function agregarItemInicialPedidoParte($request)
+    {
+         $this->model->agregarItemInicialPedidoParte($request);   
          $this->itemInicioview->mostrarItemsInicioPedido($request['idPedido']); 
     }
     

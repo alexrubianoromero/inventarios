@@ -51,6 +51,27 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+        public function agregarItemInicialPedidoParte($request)
+        {
+            // echo '<pre>'; 
+            // print_r($request); 
+            // echo '</pre>';
+            // die(); 
+            $total = $request['icantidad'] * $request['iprecio'];
+
+            $sql = "insert into itemsInicioPedido(idPedido,cantidad,tipo,subtipo
+           ,estado,fecha,precio,total,observaciones,tipoItem,capacidadRam) 
+            values ('".$request['idPedido']."','".$request['icantidad']."','".$request['itipo']."'
+            ,'".$request['isubtipo']."'
+           ,'".$request['idEstadoInicio']."',now()
+            ,'".$request['iprecio']."'
+            ,'".$total."'
+            ,'".$request['iobservaciones']."'
+            ,'".$request['tipoItem']."'
+            ,'".$request['icapacidadram']."'
+            )";   
+            $consulta = mysql_query($sql,$this->connectMysql());
+        }
         
         public function eliminarItemInicialPedido($id)
         {

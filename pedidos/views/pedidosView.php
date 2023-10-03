@@ -732,8 +732,10 @@ class pedidosView extends vista
                         </select> 
                     </th>
                     <th><input type="text" id="iprecio" size="5px"></th>
-                    echo '<th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedido('.$tipoItem.');">+</button></th>';
-                </tr>
+                    <?php
+                        echo '<th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedidoParte('.$tipoItem.');">+</button></th>';
+                     ?>           
+                    </tr>
             </tbody>
             </table>  
 
