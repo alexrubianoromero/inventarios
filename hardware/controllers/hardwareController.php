@@ -7,6 +7,7 @@ require_once($raiz.'/partes/models/PartesModel.php');
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/hojasdevida/views/hojasdeVidaView.php'); 
 
 class hardwareController
 {
@@ -16,6 +17,7 @@ class hardwareController
     protected $MovParteModel;
     protected $itemInicioModel;
     protected $MovHardwareModel;
+    protected $hojasdeVidaView;
 
     public function __construct()
     {
@@ -25,6 +27,7 @@ class hardwareController
         $this->MovParteModel = new MovimientoParteModel();
         $this->itemInicioModel = new ItemInicioPedidoModel();
         $this->MovHardwareModel = new MovimientoHardwareModel();
+        $this->hojasdeVidaView = new hojasdeVidaView();
 
         if($_REQUEST['opcion']=='hardwareMenu')
         {
@@ -116,6 +119,15 @@ class hardwareController
         if($_REQUEST['opcion']=='buscarHardwareAgregarItemPedido')
         {
             $this->view->buscarHardwareAgregarItemPedido($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='verMovimientosHardware')
+        {
+            $this->view->verMovimientosHardware($_REQUEST['idHardware']);
+        }
+        if($_REQUEST['opcion']=='fitrarHardware')
+        {
+            // $this->view->fitrarHardware($_REQUEST['inputBuscarHardware']);
+            $this->hojasdeVidaView->traerHardwareFiltrado($_REQUEST['inputBuscarHardware']);
         }
 
         if($_REQUEST['opcion']=='filtrarHardwarePorSerial')

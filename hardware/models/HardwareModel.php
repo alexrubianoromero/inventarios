@@ -20,6 +20,20 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    public function traerHardwareFiltro($traerHardwareFiltro)
+    {
+        $sql = "select * from hardware where serial like '%".$traerHardwareFiltro."%'order by id asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+    public function traerHardwareId($idHarware)
+    {
+        $sql = "select * from hardware where id= '".$idHarware."' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = mysql_fetch_assoc($consulta);
+        return $hardware;
+    }
 
     public function verHardware($id)
     {

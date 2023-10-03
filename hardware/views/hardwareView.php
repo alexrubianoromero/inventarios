@@ -5,6 +5,7 @@ require_once($raiz.'/partes/models/PartesModel.php');
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
 require_once($raiz.'/marcas/models/MarcaModel.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
+require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 class hardwareView extends vista
@@ -14,6 +15,7 @@ class hardwareView extends vista
     protected $SubtipoParteModel;
     protected $MarcaModel;
     protected $tipoParteModel;
+    protected $movimientoHardwareModel;
 
     public function __construct()
     {
@@ -22,6 +24,7 @@ class hardwareView extends vista
         $this->SubtipoParteModel = new SubtipoParteModel();
         $this->MarcaModel = new MarcaModel();
         $this->tipoParteModel = new TipoParteModel();
+        $this->movimientoHardwareModel = new MovimientoHardwareModel();
     }
     public function hardwareMenu($hardware)
     {
@@ -1094,6 +1097,48 @@ class hardwareView extends vista
         }
         echo '</table>';
     } 
+
+    public function verMovimientosHardware($idHardware)
+    {
+        $infoHardware =   $this->hardwareModel->traerHardwareId($idHardware); 
+        $movimientos =  $this->movimientoHardwareModel->traerMovimientosHardwareId($idHardware); 
+        ?>
+          <table class="table table-striped hover-hover">
+                  <thead>
+                      <th>Serial</th>
+                      <th>Fecha</th>
+                      <th>TipoMov</th>
+                      <th>Observaciones</th>
+                    
+                      <th>Ver</th>
+                  </thead>
+              <tbody>
+                  <?php
+                    foreach($movimientos as $movimiento)
+                    {
+            
+                         echo '<tr>'; 
+                        echo '<td>'.$infoHardware['serial'].'</td>';
+                        echo '<td>'.$movimiento['fecha'].'</td>';
+                        echo '<td>'.$movimiento['idTipoMov'].'</td>';
+                        echo '<td>'.$movimiento['observaciones'].'</td>';
+                        //  echo '<td><button 
+                        //            class="btn btn-primary btn-sm " 
+                        //            onclick="verMovimientosHardware('.$movimiento['id'].');"
+                        //            >Ver</button></td>';
+                         echo '</tr>';  
+                      }
+                      ?>
+                  </tbody>
+              </table> 
+        
+
+        <?php
+    }
+    public function fitrarHardware()
+    {
+        
+    }
 
 }
 ?>
