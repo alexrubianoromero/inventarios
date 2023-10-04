@@ -85,6 +85,7 @@ class pedidosView extends vista
                         <th>Observaciones</th>
                         <th>Estado</th>
                         <th>Ver</th>
+                        <th>Imprimir</th>
                     </thead>
                 <tbody>
                     <?php
@@ -101,6 +102,9 @@ class pedidosView extends vista
                                      class="btn btn-primary btn-sm " 
                                      onclick="siguientePantallaPedido('.$pedido['idPedido'].');"
                                      >Ver</button></td>';
+                           echo '<td>';
+                           echo '<a href="pedidos/pdf/ordenPdf3.php?idPedido='.$pedido['idPedido'].'" target="_blank" >PDF</a>'; 
+                           echo '</td>';
                            echo '</tr>';  
                         }
                         ?>

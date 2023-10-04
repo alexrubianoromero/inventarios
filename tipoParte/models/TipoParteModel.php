@@ -11,6 +11,7 @@ class TipoParteModel extends Conexion
     public function traerTipoParteConId($id)
     {
         $sql = "select * from tipoparte where id = '".$id."'  ";
+        // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $tipoparte = $this->get_table_assoc($consulta);
         return $tipoparte;

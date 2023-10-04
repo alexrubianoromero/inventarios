@@ -1,126 +1,151 @@
 <?php
 
-$raiz= $_SERVER['DOCUMENT_ROOT'];
+// $raiz= $_SERVER['DOCUMENT_ROOT'];
 date_default_timezone_set('America/Bogota');
-die($raiz);
-require_once($raiz.'/fpdf/fpdf.php');
+// die($raiz);
 $ruta = dirname(dirname(dirname(__FILE__)));
-require_once($ruta .'/orden/modelo/OrdenesModelo.class.php');
-require_once($ruta .'/inventario_codigos/modelo/CodigosInventarioModelo.php');
+// die('ruta'.$ruta); 
+require_once($ruta.'/fpdf/fpdf.php');
+require_once($ruta .'/pedidos/models/PedidoModel.php');
+require_once($ruta .'/clientes/models/ClienteModel.php');
+require_once($ruta .'/pedidos/models/ItemInicioPedidoModel.php');
+require_once($ruta .'/tipoParte/models/TipoParteModel.php');
+require_once($ruta .'/subtipos/models/SubtipoParteModel.php');
+require_once($ruta .'/pedidos/models/EstadoInicioPedidoModel.php');
+
+$pedidoModel = new PedidoModel();
+$clienteModel = new ClienteModel();
+$itemInicioModel = new ItemInicioPedidoModel();
+$tipoParteModel = new TipoParteModel();
+$subTipoParteModel = new SubtipoParteModel();
+$estadoInicioPedidoModel = new EstadoInicioPedidoModel();
+
+$infoPedido = $pedidoModel->traerPedidoId($_REQUEST['idPedido']); 
+$infoCliente = $clienteModel->traerClienteId($infoPedido['idCliente']); 
+$itemsPedido = $itemInicioModel->traerItemInicioPedido($_REQUEST['idPedido']);
+        //   echo '<pre>';
+        //     print_r($itemsPedido); 
+        //     echo '</pre>';
+        //     die('antes de movimiento ');
+
+// require_once($ruta .'/orden/modelo/OrdenesModelo.class.php');
+// require_once($ruta .'/inventario_codigos/modelo/CodigosInventarioModelo.php');
 // die($ruta);
 // require_once($ruta .'/vehiculos/modelo/VehiculosModelo.php');
 
-$orden = new OrdenesModelo();
-$infoCode = new CodigosInventarioModelo();
+// $orden = new OrdenesModelo();
+// $infoCode = new CodigosInventarioModelo();
 // $vehiculo = new VehiculosModelo(); 
-$datoOrden = $orden->traerOrdenId($_REQUEST['idOrden']);
-$datosCarro = $orden->traerDatosCarroConPlaca($datoOrden['placa']);
-$datosCliente = $orden->traerDatosPropietarioConPlaca($datosCarro['propietario']); 
-$datosItems = $orden->traerItemsAsociadosOrdenPorIdOrden($_REQUEST['idOrden']); 
+// $datoOrden = $orden->traerOrdenId($_REQUEST['idOrden']);
+// $datosCarro = $orden->traerDatosCarroConPlaca($datoOrden['placa']);
+// $datosCliente = $orden->traerDatosPropietarioConPlaca($datosCarro['propietario']); 
+// $datosItems = $orden->traerItemsAsociadosOrdenPorIdOrden($_REQUEST['idOrden']); 
 
 
 
 $pdf=new FPDF();
 
 $pdf->AddPage();
-    $pdf->Ln(5);
-    $pdf->Ln(5);
-    $pdf->Ln(5);
-    $pdf->Ln(5);
-    $pdf->Image('../../logos/logokaymo.png',15,20,50);
+    $pdf->Ln(10);
 
-    $pdf->SetFont('Arial','B',15);
+    // $pdf->Image('../../logos/logokaymo.png',15,20,50);
+
+    $pdf->SetFont('Arial','',12);
     // Movernos a la derecha
-    $pdf->Cell(80);
+    // $pdf->Cell(80);
     // T�tulo
-    $pdf->Cell(70,10,'ORDEN DE SERVICIO No ',1,0,'');
-    $pdf->Cell(19,10,$datoOrden['orden'],1,1,'');
-
+    $pdf->Cell(25,10,'FECHA:',0,0,'');
+    $pdf->Cell(40,10,$infoPedido['fecha'],0,0,'');
+    $pdf->Cell(30);
+    $pdf->Cell(25,10,'OC:',0,0,'R');
+    $pdf->Cell(40,10,$infoPedido['idPedido'],0,1,'');
     
-    $pdf->SetFont('Arial','',10);
+    
     $pdf->Ln(5);
-$pdf->Cell(80);
-
-$pdf->Cell(40,6,'Cliente',1,0,'C');
-$pdf->Cell(25,6,'Identificacion',1,0,'C');
-$pdf->Cell(25,6,'Telefono',1,1,'C');
-
-$pdf->Cell(80);
-$pdf->Cell(40,6,$datosCliente['nombre'],1,0,'C');
-$pdf->Cell(25,6,$datosCliente['identi'],1,0,'C');
-$pdf->Cell(25,6,$datosCliente['telefono'],1,1,'C');
-$pdf->Cell(80);
-$pdf->Cell(90,6,$datosCliente['direccion'],1,1,'C');
-$pdf->Cell(17);
-$pdf->Cell(22,6,'KAYMO SOFTWARE',0,0,'C');
-$pdf->Cell(41);
-$pdf->Cell(90,6,'Dir CLiente',1,1,'C');
-$pdf->Cell(17);
-$pdf->Cell(22,6,'Bogota',0,1,'C');
-$pdf->Cell(17);
-$pdf->Cell(22,6,'Nit:12345678-4',0,1,'C');
-
-
-$kilometraje = $datoOrden['kilometraje'];
-$pdf->Ln(5);
-$pdf->Cell(25);
-$pdf->Cell(22,6,'Fecha',1,0,'C');
-$pdf->Cell(22,6,'Factura',1,0,'C');
-$pdf->Cell(20);
-$pdf->Cell(22,6,'Moto',1,0,'C');
-$pdf->Cell(22,6,'placa',1,0,'C');
-$pdf->Cell(22,6,'Kilometraje',1,1,'C');
-$pdf->Cell(25);
-$pdf->Cell(22,6,$datoOrden['fecha'],1,0,'C');
-$pdf->Cell(22,6,$datoOrden['orden'],1,0,'C');
-$pdf->Cell(20);
-$pdf->Cell(22,6,$datosCarro['marca'],1,0,'C');
-$pdf->Cell(22,6,$datoOrden['placa'],1,0,'C');
-$pdf->Cell(22,6,number_format($kilometraje, 0, ',', '.'),1,1,'C');
-
-
-$pdf->SetFont('Arial','B',9);
-$pdf->Ln(5);
-$pdf->Cell(5);
-$pdf->Cell(50,6,'Referencia',1,0,'C');
-$pdf->Cell(50,6,'Descripcion',1,0,'C');
-$pdf->Cell(22,6,'Vr. Unitario',1,0,'C');
-$pdf->Cell(20,6,'Cantidad',1,0,'C');
-$pdf->Cell(22,6,'Total',1,1,'C');
-$suma = 0;
-$filas = count($datosItems); 
-$pdf->SetFont('Arial','',9);
-    foreach ($datosItems as $datosItem)    
+    // $pdf->SetFont('Arial','',10);
+    // $pdf->Cell(80);
+    
+    $pdf->Cell(25,6,'Cliente:',0,0,'');
+    $pdf->Cell(50,6,$infoCliente[0]['nombre'],0,1,'');
+    $pdf->Ln(5);
+    $pdf->SetFont('Arial','B',10);
+    $pdf->Cell(10,6,'Cant.',1,0,'C');
+    $pdf->Cell(20,6,'Tipo',1,0,'C');
+    $pdf->Cell(16,6,'SubTipo',1,0,'C');
+    $pdf->Cell(16,6,'Modelo',1,0,'C');
+    $pdf->Cell(13,6,'Pulg',1,0,'C');
+    $pdf->Cell(20,6,'Procesad',1,0,'C');
+    $pdf->Cell(17,6,'Genera',1,0,'C');
+    $pdf->Cell(20,6,'Ram',1,0,'C');
+    $pdf->Cell(20,6,'Disco',1,0,'C');
+    $pdf->Cell(16,6,'Estado',1,0,'C');
+    $pdf->Cell(16,6,'Total',1,1,'C');
+    // $pdf->Cell(16,6,'Total',1,0,'');
+    $pdf->SetFont('Arial','',9);
+    
+    $subtotal = 0;        
+    foreach($itemsPedido as $item)
     {
-      $vrUnit =   $datosItem['valor_unitario'];
-      $vrTotal = $datosItem['total_item'];
-    $datosCodigo = $infoCode->verifiqueCodigoSiExiste($datosItem['codigo']);    
-	$pdf->Cell(5);
-	$pdf->Cell(50,6,$datosCodigo['data']['referencia'],1,0,'C');
-	$pdf->Cell(50,6,$datosItem['descripcion'],1,0,'C');
-	$pdf->Cell(22,6,number_format($vrUnit, 0, ',', '.'),1,0,'C');
-	$pdf->Cell(20,6,$datosItem['cantidad'],1,0,'C');
-	$pdf->Cell(22,6,number_format($vrTotal, 0, ',', '.'),1,1,'C');
-    $suma = $suma + $vrTotal;
-}
-$pdf->Cell(5);
-$pdf->Cell(50,6,'',1,0,'C');
-$pdf->Cell(50,6,'',1,0,'C');
-$pdf->Cell(22,6,'',1,0,'C');
-$pdf->Cell(20,6,'Subtotal: ',1,0,'C');
-$pdf->Cell(22,6,number_format($suma, 0, ',', '.'),1,1,'C');
+        $infoparte = $tipoParteModel->traerTipoParteConId($item['tipo']);
+        $infoSubtipo = $subTipoParteModel->traerSubTipoParte($item['subtipo']);
+        $infoEstado = $estadoInicioPedidoModel->traerEstadosInicioPedidoId($item['estado']);
+        if($item['tipoItem']== 1)
+        {
+            $pdf->Cell(10,6,$item['cantidad'],1,0,'C');
+            $pdf->Cell(20,6,$infoparte[0]['descripcion'],1,0,'');
+            $pdf->Cell(16,6,$infoSubtipo[0]['descripcion'],1,0,'');
+            $pdf->Cell(16,6,$item['modelo'],1,0,'C');
+            $pdf->Cell(13,6,$item['pulgadas'],1,0,'C');
+            $pdf->Cell(20,6,$item['procesador'],1,0,'C');
+            $pdf->Cell(17,6,$item['generacion'],1,0,'C');
+            $pdf->Cell(20,6,$item['ram'].'-'.$item['capacidadRam'],1,0,'');
+            $pdf->Cell(20,6,substr($item['disco'],0,2).'-'.$item['capacidadDisco'],1,0,'');
+            $pdf->Cell(16,6,$infoEstado['descripcion'],1,0,'C');
+            $pdf->Cell(16,6,number_format($item['total'],0,",","."),1,1,'R');
+            
+        }
+        
+        if($item['tipoItem']== 2)
+        {
+            $pdf->Cell(10,6,$item['cantidad'],1,0,'C');
+            $pdf->Cell(20,6,$infoparte[0]['descripcion'],1,0,'');
+            $pdf->Cell(16,6,$infoSubtipo[0]['descripcion'],1,0,'');
+            
+            $pdf->Cell(106,6,$item['observaciones'],1,0,'C');
+            
+            $pdf->Cell(16,6,$infoEstado['descripcion'],1,0,'C');
+            $pdf->Cell(16,6,number_format($item['total'],0,",","."),1,1,'R');
+        }    
+        $subtotal = $subtotal + $item['total']; 
+
+    }
+    $vertical =  $pdf->GetY();
+    $valorR = 0; 
+    if($infoPedido['r']==1)
+    { $valorR = ($subtotal *  $infoPedido['porcenretefuente'])/100;  }
+    $valorI = 0; 
+    if($infoPedido['i']==1)
+    { $valorI = ($subtotal *  $infoPedido['porcenreteica'])/100;  }
+   
+     $granTotal = $subtotal + $valorR + $valorI;  
 
 
-$pdf->Ln(5);
-$pdf->Cell(5);
-$pdf->Cell(50,6,'Recibido',0,0,'');
-$pdf->Cell(40,6,'___________________',0,1,'');
-$pdf->Ln(5);
-$pdf->Cell(5);
-$pdf->Cell(50,6,'Observaciones',0,1,'');
-$pdf->SetFont('Arial','',6);
-$pdf->Cell(5);
-$pdf->MultiCell(180,8,'TODA REPARACION DEBE SER CANCELADA ESTRICTAMENTE DE CONTADO. NUESTRO REPUESTO NO CONSTITUYE UNA OBLIGACION DE NUESTRA PARTE YA QUE, YA QUE AL INICIAR LOS TRABAJOS PUEDEN APARECER NUEVAS REPARACIONES QUE NO SON EVIDENTES EN LA PRIMERA INSPECCION',0,1,'');
-$pdf->Output();
+    $pdf->Ln(5);
+    $pdf->MultiCell(150,6,$infoPedido['observaciones'],1,'J','');
+    $pdf->SetY($vertical+5,'');
+    $pdf->Cell(152);
+    $pdf->Cell(16,6,'Subtotal: ',1,0,'C');
+    $pdf->Cell(16,6,number_format($subtotal,0,",","."),1,1,'R');
+    $pdf->Cell(152);
+    $pdf->Cell(16,6,'ValorR: ',1,0,'C');
+    $pdf->Cell(16,6,number_format($valorR,0,",","."),1,1,'R');
+    $pdf->Cell(152);
+    $pdf->Cell(16,6,'ValorI: ',1,0,'C');
+    $pdf->Cell(16,6,number_format($valorI,0,",","."),1,1,'R');
+    $pdf->Cell(152);
+    $pdf->Cell(16,6,'Total: ',1,0,'C');
+    $pdf->Cell(16,6,number_format($granTotal,0,",","."),1,1,'R');
 
-?>
+    $pdf->Output();
+    
+    ?>
