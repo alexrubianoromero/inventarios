@@ -757,10 +757,38 @@ class pedidosView extends vista
         echo '<div class="row">'; 
         foreach($pedidosPorCompletar as $pedido)
         {
+            //con este arreglo traigo cuantos tecnicos estan asignados al pedido
             $tecnicos = $this->pedidoModel->traerLosTecnicosConAsginacionIdPedido($pedido['idPedido']);
-            // $this->printR($tecnicos); 
+            $numeroT=0;
+            foreach($tecnicos as $tecnico)
+            {
+            //    echo '<br>buenas '.$numeroT;   
+               $numeroT++;
+            } 
+            
+
+            if($numeroT==0){
+                $altoFila= 40;
+            }
+            if($numeroT==1){
+                $altoFila= 70*$numeroT;
+            }
+            if($numeroT==2){
+                $altoFila= 55*$numeroT;
+            }
+            if($numeroT==3){
+                $altoFila= 46*$numeroT;
+            }
+            if($numeroT==4){
+                $altoFila= 46*$numeroT;
+            }
+            if($numeroT>4){
+                $altoFila= 40*$numeroT;
+            }
+            // die($numeroT);
+            //  $this->printR($tecnicos); 
             ?>
-                <div style="width:150px; height:150px; border:1px solid; display:inline;margin:5px;padding:10px;">
+                <div style="width:150px; height:<?php echo $altoFila ?>px; border:1px solid; display:inline;margin:5px;padding:10px;">
                     <div class="row">
                         OC <?php echo $pedido['idPedido'] ?>
                     </div>
