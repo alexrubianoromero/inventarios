@@ -130,7 +130,13 @@ class HardwareModel extends Conexion
         $sql ="delete from 	tablaTemporalDividirMemoria	 where idHardware = '".$idHardware."'  ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
-
+    
+    public function actualizarEstadoHardware($idHardware,$estado)
+    {
+        $sql = "update hardware set idEstadoInventario = '0'   where id = '".$idHardware."'     "; 
+        // die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
 
 
 

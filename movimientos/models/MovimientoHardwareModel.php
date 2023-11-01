@@ -25,4 +25,13 @@ class MovimientoHardwareModel extends Conexion
             $arrMov = $this->get_table_assoc($consulta);
             return $arrMov; 
         }
+        
+        public function  traerMovimientoId($idMovimiento)
+        {
+            $sql = "select * from movimientosHardware  where idMovimiento = '".$idMovimiento."' ";
+            $consulta = mysql_query($sql,$this->connectMysql()); 
+            $arrMov = mysql_fetch_assoc($consulta);
+            return $arrMov; 
+        }
+
 }

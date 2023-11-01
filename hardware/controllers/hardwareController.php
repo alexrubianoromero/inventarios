@@ -155,7 +155,41 @@ class hardwareController
             // $this->view->traerHardwareDisponibles($hardwareSerial);
 
         }
+
+        if($_REQUEST['opcion']=='formuDevolucionHardware')
+        {
+            $this->view->formuDevolucionHardware($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='realizarDevolucion')
+        {
+            $this->realizarDevolucion($_REQUEST);
+        }
         
+
+
+
+    }
+
+    public function realizarDevolucion($request)
+    {
+
+          $regresaAInventario = 0;
+          $this->model->actualizarEstadoHardware($request['idHardware'],$regresaAInventario);
+          //generar movimiento de devolucion 
+           //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
+            //falta crear el movimiento historico 
+            // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+
+           $infoMovimiento =  $this->MovHardwareModel->traerMovimientoId($request['idMovimiento']);
+           $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($infoMovimiento['idItemInicio'] );
+
+            $tipoMov = 1 ; //entra al inventario;
+            $infoMov = new stdClass();
+            $infoMov->idTipoMov = $tipoMov ;  
+            $infoMov->idItemInicio = $infoMovimiento['idItemInicio'] ;  
+            $infoMov->observaciones = 'Se realiza devolucion Hardware  de Pedido '.$infoItem['idPedido'].' id Item '.$infoMovimiento['idItemInicio'] .' ';
+            $infoMov->idHardware = $request['idHardware'];  
+            $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
 
     }
 

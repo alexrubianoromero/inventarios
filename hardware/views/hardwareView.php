@@ -6,6 +6,7 @@ require_once($raiz.'/subtipos/models/SubtipoParteModel.php');
 require_once($raiz.'/marcas/models/MarcaModel.php'); 
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 class hardwareView extends vista
@@ -16,6 +17,7 @@ class hardwareView extends vista
     protected $MarcaModel;
     protected $tipoParteModel;
     protected $movimientoHardwareModel;
+    protected $itemInicioPedidoModel;
 
     public function __construct()
     {
@@ -25,6 +27,7 @@ class hardwareView extends vista
         $this->MarcaModel = new MarcaModel();
         $this->tipoParteModel = new TipoParteModel();
         $this->movimientoHardwareModel = new MovimientoHardwareModel();
+        $this->itemInicioPedidoModel = new ItemInicioPedidoModel();
     }
     public function hardwareMenu($hardware)
     {
@@ -1109,23 +1112,22 @@ class hardwareView extends vista
                       <th>Fecha</th>
                       <th>TipoMov</th>
                       <th>Observaciones</th>
-                    
-                      <th>Ver</th>
+                      <th>Devolucion</th>
                   </thead>
               <tbody>
                   <?php
                     foreach($movimientos as $movimiento)
                     {
             
-                         echo '<tr>'; 
+                        echo '<tr>'; 
                         echo '<td>'.$infoHardware['serial'].'</td>';
                         echo '<td>'.$movimiento['fecha'].'</td>';
                         echo '<td>'.$movimiento['idTipoMov'].'</td>';
                         echo '<td>'.$movimiento['observaciones'].'</td>';
-                        //  echo '<td><button 
-                        //            class="btn btn-primary btn-sm " 
-                        //            onclick="verMovimientosHardware('.$movimiento['id'].');"
-                        //            >Ver</button></td>';
+                         echo '<td><button 
+                                   class="btn btn-primary btn-sm " 
+                                   onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
+                                   >Devolucion</button></td>';
                          echo '</tr>';  
                       }
                       ?>
@@ -1140,5 +1142,23 @@ class hardwareView extends vista
         
     }
 
+    public function formuDevolucionHardware($request)
+    {
+        //traer info de movimiento 
+        $infoMovimiento = $this->movimientoHardwareModel->traerMovimientoId($request['idMovimiento']);
+        $infoItemInicio =  $this->itemInicioPedidoModel->traerItemInicioPedidoId($infoMovimiento['idItemInicio']);
+        // $this->printR($infoItemInicio);        
+
+         ?>
+         <div>
+            <span>Devolucion de Hardware</span>
+            <div class="row">
+                Pedido: <?php echo  $infoItemInicio['idPedido'] ?>
+
+            </div>
+            <button class ="btn btn-primary"onclick="realizarDevolucion(<?php  echo  $infoItemInicio['idHardwareOParte']  ?>,<?php  echo  $request['idMovimiento'] ?>)">Realizar Devolucion</button>
+         </div>
+         <?php
+    }
 }
 ?>

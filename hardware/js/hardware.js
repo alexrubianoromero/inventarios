@@ -641,3 +641,41 @@ function fitrarHardware()
     +'&inputBuscarHardware='+inputBuscarHardware
     );
 }
+
+function formuDevolucionHardware(idMovimiento)
+{
+    // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_movimientos_hardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=formuDevolucionHardware'
+    +'&idMovimiento='+idMovimiento
+    );
+}
+
+function realizarDevolucion(idHardware,idMovimiento)
+{
+    // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_movimientos_hardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=realizarDevolucion'
+    +'&idHardware='+idHardware
+    +'&idMovimiento='+idMovimiento
+    );
+}
+
