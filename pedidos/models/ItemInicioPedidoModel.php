@@ -26,6 +26,7 @@ class ItemInicioPedidoModel extends Conexion
             return $arrSuma['total'];
         }
         
+        // esto es para hardware
         public function agregarItemInicialPedido($request)
         {
             // echo '<pre>'; 
@@ -35,7 +36,8 @@ class ItemInicioPedidoModel extends Conexion
             $total = $request['icantidad'] * $request['iprecio'];
 
             $sql = "insert into itemsInicioPedido(idPedido,cantidad,tipo,subtipo,modelo,pulgadas,
-            procesador,generacion,ram,disco,estado,fecha,precio,total,observaciones,tipoItem,capacidadRam,capacidadDisco) 
+            procesador,generacion,ram,disco,estado,fecha,precio,total,observaciones,tipoItem,capacidadRam
+            ,capacidadDisco,idNuevaSucursal) 
             values ('".$request['idPedido']."','".$request['icantidad']."','".$request['itipo']."'
             ,'".$request['isubtipo']."'
             ,'".$request['imodelo']."'
@@ -47,6 +49,7 @@ class ItemInicioPedidoModel extends Conexion
             ,'".$request['tipoItem']."'
             ,'".$request['icapacidadram']."'
             ,'".$request['icapacidaddisco']."'
+            ,'".$request['idNuevaSucursal']."'
             )";   
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());

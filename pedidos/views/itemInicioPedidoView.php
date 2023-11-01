@@ -70,14 +70,14 @@ class iteminicioPedidoView extends vista
         // print_r($itemsInicioPedido); 
         // echo '</pre>';
         // die(); 
-        echo '<div>';
+        echo '<div style="padding:5px;">';
         echo '<table class="table table-striped">'; 
         echo '<tr>'; 
         echo '<th>Cantidad</th>';
         echo '<th>Tipo</th>';
         echo '<th>Subtipo</th>';
         echo '<th>Modelo</th>';
-        echo '<th>Pulgadas</th>';
+        echo '<th>Pulg</th>';
         echo '<th>Procesador</th>';
         echo '<th>Generacion</th>';
         echo '<th>Ram</th>';
@@ -202,7 +202,7 @@ class iteminicioPedidoView extends vista
         echo '<th>Tipo</th>';
         echo '<th>Subtipo</th>';
         echo '<th>Modelo</th>';
-        echo '<th>Pulgadas</th>';
+        echo '<th>Pulg.</th>';
         // echo '<th>Procesador</th>';
 
         ///aqui va la optra parte

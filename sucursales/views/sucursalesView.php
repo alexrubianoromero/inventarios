@@ -1,7 +1,14 @@
 <?php
-
+$raiz = dirname(dirname(dirname(__file__)));
+require_once($raiz.'/sucursales/models/SucursalModel.php'); 
 class sucursalesView
 {
+    protected $model;
+    public function __construct()
+    {
+        $this->model = new SucursalModel();
+    }
+
     public function sucursalesMenu ($sucursales)
     {
         ?>
@@ -107,6 +114,21 @@ class sucursalesView
         </div> -->
 
         <?php
+    }
+
+    public function mostrarSelectSucursales()
+    {
+        $sucursales =  $this->model->traerSucursales();
+        
+        echo '<select id="idNuevaSucursal">';
+        echo ' <option value = "-1">Seleccionar...</option>';
+            foreach($sucursales as $sucursal)
+            {
+                echo '<option value="'.$sucursal['id'].'">'.$sucursal['nombre'].'</option>';
+            }
+        echo '</select>';
+
+        
     }
 
 

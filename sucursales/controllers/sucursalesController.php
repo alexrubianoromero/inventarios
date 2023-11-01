@@ -24,6 +24,10 @@ class sucursalesController
         {
             $this->crearSucursal($_REQUEST);
         }
+        if($_REQUEST['opcion']=='mostrarSelectSucursales')
+        {
+            $this->view->mostrarSelectSucursales();
+        }
 
     }
 

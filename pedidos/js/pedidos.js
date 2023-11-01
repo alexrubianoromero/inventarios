@@ -352,4 +352,32 @@ function pedidosPorCompletar()
 }
 
 
+function verificarSiEsCambioBodega()
+{
+    // alert('cambio de opcion ');
+    var idEstadoInicio = document.getElementById('idEstadoInicio').value;
+    if(idEstadoInicio==3)
+    {
+        // alert('cambio de bodega')
+        const http=new XMLHttpRequest();
+        const url = 'sucursales/sucursales.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                // document.getElementById("div_escoger_bodega").innerHTML  = this.responseText;
+                document.getElementById("div_mostrar_opciones_sucursal").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=mostrarSelectSucursales'
+        // +'&tipoItem='+tipoItem
+        );
+    }else{
+        document.getElementById("div_mostrar_opciones_sucursal").innerHTML  = '';
+
+    }
+}
+
+
 

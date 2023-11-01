@@ -15,6 +15,11 @@ function agregarItemInicialPedido(tipoItem)
     var idisco = document.getElementById('idisco').value;
     var icapacidaddisco = document.getElementById('icapacidaddisco').value;
     var idEstadoInicio = document.getElementById('idEstadoInicio').value;
+    if(idEstadoInicio==3){
+        var idNuevaSucursal = document.getElementById('idNuevaSucursal').value;
+    }else{
+        var idNuevaSucursal =0;
+    }
     var iprecio = document.getElementById('iprecio').value;
     var iobservaciones = document.getElementById('iobservaciones').value;
     var tipoItem = document.getElementById('tipoItem').value;
@@ -43,6 +48,7 @@ function agregarItemInicialPedido(tipoItem)
     +'&idisco='+idisco
     +'&icapacidaddisco='+icapacidaddisco
     +'&idEstadoInicio='+idEstadoInicio
+    +'&idNuevaSucursal='+idNuevaSucursal
     +'&iprecio='+iprecio
     +'&iobservaciones='+iobservaciones
     +'&tipoItem='+tipoItem

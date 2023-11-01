@@ -465,11 +465,12 @@ class pedidosView extends vista
                  <div class="col-lg-3"></div>   
             </div>
 
-            <div class="row" >
-                    <div id= "divTipoItemPedido">
+            <div class="row"   style="padding:2px;">
+                    <div id= "divTipoItemPedido"  style="padding:5px;">
 
                     </div>    
-                    <div id="div_items_solicitados_pedido">
+                    <!-- <div id="div_escoger_bodega"></div> -->
+                    <div id="div_items_solicitados_pedido" >
                           <?php   $this->itemInicioPedidoView->mostrarItemsInicioPedido($idPedido);  ?>
                         </div>
                         <div class="row">
@@ -478,10 +479,9 @@ class pedidosView extends vista
                                 <textarea 
                                     class="form-control" 
                                     id="comentarios" 
-                                    placeholder = "Comentarios" 
                                     rows = "7"
                                     >
-                                    <?php   echo $infoPedido['observaciones'] ?>
+                                    <?php   echo trim($infoPedido['observaciones']); ?>
                                 </textarea>
                              </div>            
                                 <div class="col-lg-4">
@@ -570,16 +570,18 @@ class pedidosView extends vista
         $capacidadram =  $this->hardwareModel->traerInfoCampoTabla('capacidadram');
         $capacidaddisco =  $this->hardwareModel->traerInfoCampoTabla('capacidaddisco');
         ?>
-        <input type="hidden"  id="iobservaciones" value =".">
-        <table class="table">
-               <thead >
-                   
-                   <tr>
+        <div class="row" style="padding:2px;">
+
+            <input type="hidden"  id="iobservaciones" value =".">
+            <table class="table">
+                <thead >
+                    
+                    <tr>
                        <th>Cantidad</th>
                        <th>Tipo</th>
                        <th>Subtipo</th>
                        <th>Modelo</th>
-                       <th>Pulgadas</th>
+                       <th>Pulg.</th>
                        <th>Procesador</th>
                        <th>Generacion</th>
                        <th>Ram Tipo</th>
@@ -592,7 +594,7 @@ class pedidosView extends vista
                     </tr>
                 </thead> 
                 <tbody>
-
+                    
                     <tr>
                         <th><input type="text" id="icantidad" size="1px"></th>
                         <!-- <th><input type="text" id="itipo" size="1px"></th> -->
@@ -610,53 +612,53 @@ class pedidosView extends vista
                         </th>
                         <th><select id="isubtipo">222</select> </th>
                         <!-- <th colspan ="6"><input id="iobservaciones" class="form-control"> </th> -->
-
-                            <th><input type="text" id="imodelo" size="1px"></th>
-                            <th>
-                                <!-- <input type="text" id="ipulgadas" size="1px"> -->
-                                <select class ="form-control"  id="ipulgadas" size="1px">
-                                    <?php  $this->colocarSelectCampo($pulgadas);  ?>
-                                </select>  
-                            </th>
-                            <th>
-                            <select class ="form-control"  id="iprocesador" size="1px">
-                                    <?php  $this->colocarSelectCampo($procesadores);  ?>
-                                </select>  
-                                <!-- <input type="text" id="iprocesador" size="1px"> -->
-                            </th>
-                            <th>   <select class ="form-control"  id="igeneracion"  size="1px">
-                                        <?php  $this->colocarSelectCampo($generaciones);  ?>
-                                    </select>  
-                            </th>
-                            <th>
-                                <select class ="form-control"  id="iram" size="1px" >
-                                    <option value ="-1">Sel..</option>
-                                    <option value ="DDR2">DDR2</option>
-                                    <option value ="DDR3">DDR3</option>
-                                    <option value ="DDR4">DDR4</option>
-                                </select>  
-                            </th>
-                            <th>
-                                <select class ="form-control"  id="idisco" size="1px" >
-                                    <option value ="-1">Sel..</option>
-                                    <option value ="Solido">Solido</option>
-                                    <option value ="Mecanico">Mecanico</option>
-                                </select>  
-                                
-                            </th>
-                            <th>
-                                <select class ="form-control"  id="icapacidadram"  size="1px">
-                                    <?php  $this->colocarSelectCampo($capacidadram);  ?>
-                                </select>  
-                            </th>
-                            <th>
-                            <select class ="form-control"  id="icapacidaddisco"  size="1px">
-                                    <?php  $this->colocarSelectCampo($capacidaddisco);  ?>
-                                </select>  
-                            </th>
-
+                        
+                        <th><input type="text" id="imodelo" size="1px"></th>
                         <th>
-                            <select id="idEstadoInicio"  size="1px" >
+                            <!-- <input type="text" id="ipulgadas" size="1px"> -->
+                            <select class ="form-control"  id="ipulgadas" size="1px">
+                                <?php  $this->colocarSelectCampo($pulgadas);  ?>
+                            </select>  
+                        </th>
+                        <th>
+                            <select class ="form-control"  id="iprocesador" size="1px">
+                                <?php  $this->colocarSelectCampo($procesadores);  ?>
+                            </select>  
+                            <!-- <input type="text" id="iprocesador" size="1px"> -->
+                        </th>
+                        <th>   <select class ="form-control"  id="igeneracion"  size="1px">
+                            <?php  $this->colocarSelectCampo($generaciones);  ?>
+                        </select>  
+                    </th>
+                    <th>
+                        <select class ="form-control"  id="iram" size="1px" >
+                            <option value ="-1">Sel..</option>
+                            <option value ="DDR2">DDR2</option>
+                            <option value ="DDR3">DDR3</option>
+                            <option value ="DDR4">DDR4</option>
+                        </select>  
+                    </th>
+                    <th>
+                        <select class ="form-control"  id="idisco" size="1px" >
+                            <option value ="-1">Sel..</option>
+                            <option value ="Solido">Solido</option>
+                            <option value ="Mecanico">Mecanico</option>
+                        </select>  
+                        
+                    </th>
+                    <th>
+                        <select class ="form-control"  id="icapacidadram"  size="1px">
+                            <?php  $this->colocarSelectCampo($capacidadram);  ?>
+                        </select>  
+                    </th>
+                    <th>
+                        <select class ="form-control"  id="icapacidaddisco"  size="1px">
+                            <?php  $this->colocarSelectCampo($capacidaddisco);  ?>
+                        </select>  
+                    </th>
+                    
+                        <th>
+                            <select id="idEstadoInicio"  size="1px" onchange="verificarSiEsCambioBodega();">
                             <option value="">Seleccione...</option>
                             <?php
                                 foreach($estadosInicio as $estadoInicio)
@@ -666,16 +668,18 @@ class pedidosView extends vista
                                 
                                 ?>
                         </select> 
+                        <div id="div_mostrar_opciones_sucursal"></div>
                     </th>
                     <th><input type="text" id="iprecio" size="5px"></th>
                     <?php
                     echo '<th><button class="btn btn-primary btn-sm" onclick="agregarItemInicialPedido('.$tipoItem.');">+</button></th>';
-                     ?>           
+                    ?>           
                     </tr>
-            </tbody>
+                </tbody>
             </table>  
-
-    <?php
+           </div>
+            
+            <?php
 
     }
 
