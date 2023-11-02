@@ -22,7 +22,7 @@ class PedidoModel extends Conexion
         }
         public function traerPedidos()
         {
-            $sql = "select * from pedidos order by idPedido desc";
+            $sql = "select * from pedidos where 1= 1 and idSucursal = '".$_SESSION['idSucursal']."'  order by idPedido desc";
             $consulta = mysql_query($sql,$this->connectMysql());
             $pedidos = $this->get_table_assoc($consulta);
             return $pedidos;
@@ -46,8 +46,9 @@ class PedidoModel extends Conexion
         {
             $impuestos = $this->impuestoModel->traerImpuestos();
 
-            $sql = "insert into pedidos (idCliente,fecha,porcenretefuente,porcenreteica)   
-                values ('".$request['idEmpresaCliente']."',now(),'".$impuestos['porcenretefuente']."','".$impuestos['porcenreteica']."')";
+            $sql = "insert into pedidos (idCliente,fecha,porcenretefuente,porcenreteica,idSucursal)   
+                values ('".$request['idEmpresaCliente']."',now(),'".$impuestos['porcenretefuente']."'
+                ,'".$impuestos['porcenreteica']."','".$_SESSION['idSucursal']."')";
                 $consulta = mysql_query($sql,$this->connectMysql());
                 //  die($sql); 
             $ultimoId =  $this->obtenerUltimoIdPedidos();   

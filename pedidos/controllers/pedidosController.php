@@ -16,13 +16,13 @@ class pedidosController
     public function __construct()
     {
         // die('desde controlador') ;
+        session_start();
         $this->view = new pedidosView();
         $this->model = new pedidoModel();
         $this->pagoModel = new PagoModel();
 
         if($_REQUEST['opcion']=='pedidosMenu')
         {
-            // echo 'pedidos controlador '; 
             $this->pedidosMenu();
         }
         if($_REQUEST['opcion']=='pedirInfoNuevoPedido')
@@ -101,10 +101,6 @@ class pedidosController
     public function pedidosMenu()
     {
         $pedidos =  $this->model->traerPedidos(); 
-        // echo '<pre>';
-        // print_r($pedidos); 
-        // echo '</pre>';
-        // die();
         $this->view->pedidosMenu($pedidos);
     }
 

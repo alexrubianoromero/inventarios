@@ -37,9 +37,9 @@ class PartesModel extends Conexion
     //esta es para cuando se crean las partes independientes 
     public function grabarParteIndividual($request)
     {
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios,cantidad)
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios,cantidad,idSucursal)
                 values('".$request['isubtipo']."','".$request['capacidad']."'
-                ,'Creacion desde Modulo','".$request['cantidad']."')
+                ,'Creacion desde Modulo','".$request['cantidad']."','".$_SESSION['idSucursal']."')
         ";
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());

@@ -101,7 +101,7 @@ class partesController
     public function grabarNuevaParte($request)
     {
         // echo '<pre>';
-        // print_r($request); 
+        // print_r($_SESSION); 
         // echo '</pre>';
         // die();
         $partes =  $this->model->grabarParteIndividual($request);
