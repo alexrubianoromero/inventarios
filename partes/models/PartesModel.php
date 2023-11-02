@@ -15,8 +15,8 @@ class PartesModel extends Conexion
     //esta la cree cuando se suben muchos hardware desde un archivo de excell
     public function grabarParte($idSubTipo,$capacidad)
     {
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador') ";
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios,idSucursal)
+                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador','".$_SESSION['idSucursal']."') ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
 
@@ -56,7 +56,7 @@ class PartesModel extends Conexion
     
     public function traerTodasLasPartes()
     {
-        $sql = "select * from partes  order by id desc";
+        $sql = "select * from partes  where 1=1 and idSucursal = '".$_SESSION['idSucursal']."'  order by id desc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $partes = $this->get_table_assoc($consulta);
         return $partes;

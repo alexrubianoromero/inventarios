@@ -21,6 +21,7 @@ class hardwareController
 
     public function __construct()
     {
+        session_start();
         $this->view = new hardwareView();
         $this->model = new HardwareModel();
         $this->partesModel = new PartesModel();

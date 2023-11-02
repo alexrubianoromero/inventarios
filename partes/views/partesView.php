@@ -16,6 +16,7 @@ class partesView extends vista
 
     public function __construct()
     {
+        session_start();
         $this->hardwareModel = new HardwareModel();
         $this->partesModel = new PartesModel();
         $this->SubtipoParteModel = new SubtipoParteModel();

@@ -16,8 +16,8 @@ class PartesModel extends Conexion
     public function grabarParte($idSubTipo,$capacidad)
     {
       
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador')
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios,idSucursal)
+                values('".$idSubTipo."','".$capacidad."','Se asocia a conmputador','".$_SESSION['idSucursal']."')
         ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
@@ -26,8 +26,8 @@ class PartesModel extends Conexion
     public function grabarParteIndividual($request)
     {
       
-        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios)
-                values('".$request['isubtipo']."','".$request['capacidad']."','Creacion desde Modulo')
+        $sql = "insert into partes (idSubtipoParte,capacidad,comentarios,idSucursal)
+                values('".$request['isubtipo']."','".$request['capacidad']."','Creacion desde Modulo','".$_SESSION['idSucursal']."')
         ";
         $consulta = mysql_query($sql,$this->connectMysql());
     }
@@ -42,7 +42,7 @@ class PartesModel extends Conexion
     
     public function traerTodasLasPartes()
     {
-        $sql = "select * from partes  order by id desc";
+        $sql = "select * from partes  where 1=1 and idSusursal = '".$_SESSION['idSucursal']."' order by id desc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $partes = $this->get_table_assoc($consulta);
         return $partes;
@@ -56,7 +56,8 @@ class PartesModel extends Conexion
 
 
 
-        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad  from  partes p
+        $sql = "select p.id,t.descripcion as descriParte, s.descripcion as descriSubParte, p.capacidad  
+        from  partes p
         inner join subtipoParte s on (s.id = p.idSubtipoParte )
         inner join tipoparte t on (t.id = s.idParte)
         where t.descripcion = 'Ram'    

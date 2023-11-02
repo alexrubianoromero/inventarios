@@ -14,6 +14,7 @@ class partesController
 
     public function __construct()
     {
+        session_start();
         $this->view = new partesView();
         $this->model = new PartesModel();
         $this->MovParteModel = new MovimientoParteModel();
