@@ -12,6 +12,7 @@ class inventariosController
     
     public function __construct()
     {
+        session_start();
         $this->view = new inventariosView();
         $this->model = new InventariosModel();
 

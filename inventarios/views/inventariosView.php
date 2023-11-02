@@ -2,20 +2,23 @@
 $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/inventarios/models/InventariosModel.php'); 
 require_once($raiz.'/inventarios/models/TipoParteModel.php'); 
+require_once($raiz.'/vista/vista.php'); 
 
-class inventariosView
+class inventariosView extends vista
 {
     protected $model;
     protected $tipoParteModel;
 
     public function __construct()
     {
+      
         $this->model = new InventariosModel();
         $this->tipoParteModel = new TipoParteModel();
     }
     public function inventariosMenu()
     {
-
+        // echo 'valores de sesion '; 
+        // $this->printR($_SESSION);
         ?>
         <!DOCTYPE html>
         <html lang="en">

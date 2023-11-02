@@ -72,6 +72,7 @@ class PlantillaControlador
             $_SESSION['id_usuario'] = $validacion['datos']['id_usuario'];
             $_SESSION['usuario'] = $validacion['datos']['login'];
             $_SESSION['nivel'] = $validacion['datos']['nivel'];
+            $_SESSION['idSucursal'] = $validacion['datos']['idSucursal'];
             // echo '<br>despues de iniciada '.session_status().'<br>';
             // echo '<pre>';
             // print_r($_SESSION);

@@ -10,7 +10,9 @@ class UsuarioModel extends Conexion
     public function verificarCredenciales($request)
     {
         $conexion = $this->connectMysql();
-        $sql = "select u.id_usuario,u.login,u.clave,u.nombre as nombreusuario ,u.id_perfil,p.nombre_perfil,p.nivel from usuarios u 
+        $sql = "select u.id_usuario,u.login,u.clave,u.nombre as nombreusuario ,u.id_perfil
+        ,p.nombre_perfil,p.nivel,u.idSucursal 
+        from usuarios u 
         inner join perfiles p on (p.id_perfil =  u.id_perfil )
         where login = '".$request['user']."'   "; 
         $consulta = mysql_query($sql,$conexion);
