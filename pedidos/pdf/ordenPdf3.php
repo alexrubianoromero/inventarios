@@ -24,7 +24,7 @@ $infoPedido = $pedidoModel->traerPedidoId($_REQUEST['idPedido']);
 $infoCliente = $clienteModel->traerClienteId($infoPedido['idCliente']); 
 $itemsPedido = $itemInicioModel->traerItemInicioPedido($_REQUEST['idPedido']);
         //   echo '<pre>';
-        //     print_r($itemsPedido); 
+        //     print_r($infoPedido); 
         //     echo '</pre>';
         //     die('antes de movimiento ');
 
@@ -81,7 +81,7 @@ $pdf->AddPage();
     $pdf->Cell(16,6,'Estado',1,0,'C');
     $pdf->Cell(16,6,'Total',1,1,'C');
     // $pdf->Cell(16,6,'Total',1,0,'');
-    $pdf->SetFont('Arial','',9);
+    $pdf->SetFont('Arial','',8);
     
     $subtotal = 0;        
     foreach($itemsPedido as $item)
@@ -131,7 +131,7 @@ $pdf->AddPage();
 
 
     $pdf->Ln(5);
-    $pdf->MultiCell(150,6,$infoPedido['observaciones'],1,'J','');
+    $pdf->MultiCell(150,6,$infoPedido['observaciones'],0,'J','');
     $pdf->SetY($vertical+5,'');
     $pdf->Cell(152);
     $pdf->Cell(16,6,'Subtotal: ',1,0,'C');

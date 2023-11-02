@@ -30,7 +30,7 @@ class PedidoModel extends Conexion
         public function traerPedidoId($id)
         {
             $sql = "select * from pedidos where idPedido = '".$id."'   ";
-            // die($sql);
+            //  die($sql);
             $consulta = mysql_query($sql,$this->connectMysql());
             $pedido = mysql_fetch_assoc($consulta);
             // echo '<pre>'; 
