@@ -678,4 +678,48 @@ function realizarDevolucion(idHardware,idMovimiento)
     +'&idMovimiento='+idMovimiento
     );
 }
+function verificarDarDeBaja(idHardware)
+{
+    // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+    confirmar = confirm('Esta seguro de dar de baja este hardware');
+    if(confirmar == 1)
+    {
+
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_movimientos_hardware").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=verificarDarDeBaja'
+        +'&idHardware='+idHardware
+        );
+    }
+}
+function habilitarHardware(idHardware)
+{
+    // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+    confirmar = confirm('Esta seguro de habilitar este hardware');
+    if(confirmar == 1)
+    {
+
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_movimientos_hardware").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=habilitarHardware'
+        +'&idHardware='+idHardware
+        );
+    }
+}
 

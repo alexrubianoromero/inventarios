@@ -7,12 +7,16 @@ require_once($raiz.'/conexion/Conexion.php');
 
 class MovimientoHardwareModel extends Conexion
 {
+        public function __construct()
+        {
+            session_start();
+        }
 
         public function registrarMovimientohardware($infoMov)
         {
             $obseSinComillas = addslashes ($infoMov->observaciones);
-            $sql ="insert into movimientosHardware (fecha,idTipoMov,idHardware,idItemInicio,observaciones )  
-            values (now(),$infoMov->idTipoMov,$infoMov->idHardware,$infoMov->idItemInicio,'".$obseSinComillas."') ";
+            $sql ="insert into movimientosHardware (fecha,idTipoMov,idHardware,idItemInicio,observaciones ,idUsuario)  
+            values (now(),$infoMov->idTipoMov,$infoMov->idHardware,$infoMov->idItemInicio,'".$obseSinComillas."','".$_SESSION['id_usuario']."') ";
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql()); 
         }

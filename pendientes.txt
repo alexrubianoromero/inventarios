@@ -1,0 +1,15 @@
+lo del lote para el precio de las partes 
+lo del precio de la parte cuando se quita un disco 
+boton de quitar serial par desligarlo de un pedido desde la parte del tecnico
+colocar el estado en las hojas de vida 
+boton dado de baja estado 3
+
+pendientes 
+verificar el proceso de cambio de bodega 
+
+cambios realizados 
+
+Se coloca el estado en hojas de vida 
+Se crea funcionalidad para que cuando se agregue un item de hardware a un inventario de una cambie el estado
+al estado del item 1 vendido , 2 rentado y asi quedara en la tabla de hardware 
+

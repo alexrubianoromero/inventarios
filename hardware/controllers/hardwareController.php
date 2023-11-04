@@ -170,12 +170,8 @@ class hardwareController extends controllerClass
                 $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$infoItem['estado']); 
             }
             
-            
-
-
             echo 'Relacionado de forma correcta '; 
             // $this->view->traerHardwareDisponibles($hardwareSerial);
-
         }
 
         if($_REQUEST['opcion']=='formuDevolucionHardware')
@@ -186,9 +182,64 @@ class hardwareController extends controllerClass
         {
             $this->realizarDevolucion($_REQUEST);
         }
+        if($_REQUEST['opcion']=='verificarDarDeBaja')
+        {
+            $this->verificarDarDeBaja($_REQUEST);
+            
+        }
+        if($_REQUEST['opcion']=='habilitarHardware')
+        {
+            $this->habilitarHardware($_REQUEST);
+            
+        }
+
+
         
 
 
+
+    }
+
+    public function habilitarHardware ($request) 
+    {
+        // $this->printR($_SESSION); 
+        // echo 'proceso dar habilitar';
+            //se deba cambiar el estado 
+            $disponible = 0; 
+            $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$disponible); 
+            //dejar registro del movimiento de dar de baja y ya 
+
+            // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+            // $this->printR($infoItem);
+            $tipoMov = 0 ; //habilitar;
+            $infoMov = new stdClass();
+            $infoMov->idTipoMov = $tipoMov ;  
+            $infoMov->idItemInicio = 0;  
+            $infoMov->observaciones = 'Se habilita Este hardware ';
+            $infoMov->idHardware = $_REQUEST['idHardware'];  
+            $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+            echo 'Se ha realizado el proceso de habilitar el hardware'; 
+
+    }
+    public function verificarDarDeBaja ($request) 
+    {
+        // $this->printR($_SESSION); 
+        // echo 'proceso dar de baja ';
+            //se deba cambiar el estado 
+            $darDeBaja = 4; 
+            $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$darDeBaja); 
+            //dejar registro del movimiento de dar de baja y ya 
+
+            // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+            // $this->printR($infoItem);
+            $tipoMov = 4 ; //dado de baja;
+            $infoMov = new stdClass();
+            $infoMov->idTipoMov = $tipoMov ;  
+            $infoMov->idItemInicio = 0;  
+            $infoMov->observaciones = 'Se da de baja Este hardware ';
+            $infoMov->idHardware = $_REQUEST['idHardware'];  
+            $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+            echo 'Se ha realizado el proceso de dar de baja '; 
 
     }
 

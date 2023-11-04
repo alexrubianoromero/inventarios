@@ -41,6 +41,7 @@ class hojasdeVidaView extends vista
                         id="inputBuscarHardware" 
                         onkeyup="fitrarHardware();">
                </div>  
+             
             </div>
             <div id="div_movimientos_hardware">
                 <?php  $this->traerHardware();  ?>
@@ -59,6 +60,8 @@ class hojasdeVidaView extends vista
                 <th>Serial</th>
                 <th>No Importacion</th>
                 <th>Estado</th>
+                <th>Dar Baja</th>
+                
                 
                 <th>Ver</th>
             </thead>
@@ -66,16 +69,33 @@ class hojasdeVidaView extends vista
                 <?php
                     foreach($hardwards as $hardward)
                     {
-                        $estado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);      
+                        $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);      
                         // $this->printR($estado);
+                       $estado =  $hardward['idEstadoInventario'];
                        echo '<tr>'; 
                        echo '<td>'.$hardward['serial'].'</td>';
                        echo '<td>'.$hardward['idImportacion'].'</td>';
-                       echo '<td>'.$estado['descripcion'].'</td>';
+                       echo '<td>'.$infoEstado['descripcion'].'</td>';
+                       $dadodebaja = 4;
+                       if($estado == $dadodebaja)
+                       {
+
+                           echo '<td><button 
+                                       class="btn btn-secondary btn-sm " 
+                                       onclick="habilitarHardware('.$hardward['id'].');"
+                                       >Habilitar</button></td>';
+                       }else{
+                           
+                           echo '<td><button 
+                                       class="btn btn-primary btn-sm " 
+                                       onclick="verificarDarDeBaja('.$hardward['id'].');"
+                                       >Dar Baja</button></td>';
+                       }
+
                        echo '<td><button 
                                    class="btn btn-primary btn-sm " 
                                    onclick="verMovimientosHardware('.$hardward['id'].');"
-                                   >Ver</button></td>';
+                                   >Historial</button></td>';
                        echo '</tr>';  
                       }
                       ?>
