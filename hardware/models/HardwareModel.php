@@ -11,6 +11,7 @@ class HardwareModel extends Conexion
     protected $parteModel; 
     public function __construct()
     {
+        session_start();
         $this->parteModel = new PartesModel();
     }
     public function traerHardware()
@@ -262,14 +263,16 @@ class HardwareModel extends Conexion
     
     public function traerHardwareDisponibles()
     {
-        $sql =  "select * from hardware where 1=1 	and  idEstadoInventario = 0  and anulado = 0"; 
+        $sql =  "select * from hardware where 1=1 	and  idEstadoInventario = 0  and anulado = 0 
+        and idSucursal = '".$_SESSION['idSucursal']."' "; 
         $consulta = mysql_query($sql,$this->connectMysql());
         $arrInfo = $this->get_table_assoc($consulta); 
         return $arrInfo;
     }
     public function traerHardwareDisponiblesFiltradosSerial($request)
     {
-        $sql =  "select * from hardware where 1=1 	and  serial = '".$request['serialABuscar']."' and   idEstadoInventario = 0  and anulado = 0"; 
+        $sql =  "select * from hardware where 1=1 	and  serial = '".$request['serialABuscar']."' 
+        and   idEstadoInventario = 0  and anulado = 0 and idSucursal = '".$_SESSION['idSucursal']."' "; 
         $consulta = mysql_query($sql,$this->connectMysql());
         $arrInfo = $this->get_table_assoc($consulta); 
         return $arrInfo;

@@ -4,22 +4,26 @@ require_once($raiz.'/hojasdevida/models/HojadeVidaModel.php');
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 require_once($raiz.'/hardware/models/HardwareModel.php');  
+require_once($raiz.'/inventarios/models/EstadoInventarioModel.php');  
+require_once($raiz.'/vista/vista.php');  
 
-class hojasdeVidaView
+class hojasdeVidaView extends vista
 {
 
     protected $model ; 
     protected $tipoParteModel ; 
     protected $subTipoParteModel ; 
     protected $HardwareModel ; 
+    protected $estadoInventarioModel ; 
 
     public function __construct()
     {
+        session_start();
         $this->model = new HojadeVidaModel();
         $this->tipoParteModel = new TipoParteModel();
         $this->subTipoParteModel = new SubTipoParteModel();
         $this->HardwareModel = new HardwareModel();
-        
+        $this->estadoInventarioModel = new EstadoInventarioModel();
        
     }
     public function hojasdeVidaMenu()
@@ -51,25 +55,28 @@ class hojasdeVidaView
         $hardwards = $this->HardwareModel->traerHardware(); 
         ?>
         <table class="table table-striped hover-hover">
-                  <thead>
-                      <th>Serial</th>
-                      <th>No Importacion</th>
-                    
-                      <th>Ver</th>
-                  </thead>
-              <tbody>
-                  <?php
+            <thead>
+                <th>Serial</th>
+                <th>No Importacion</th>
+                <th>Estado</th>
+                
+                <th>Ver</th>
+            </thead>
+            <tbody>
+                <?php
                     foreach($hardwards as $hardward)
                     {
-            
-                         echo '<tr>'; 
-                        echo '<td>'.$hardward['serial'].'</td>';
-                        echo '<td>'.$hardward['idImportacion'].'</td>';
-                         echo '<td><button 
+                        $estado = $this->estadoInventarioModel->traerEstadoId($hardward['idEstadoInventario']);      
+                        // $this->printR($estado);
+                       echo '<tr>'; 
+                       echo '<td>'.$hardward['serial'].'</td>';
+                       echo '<td>'.$hardward['idImportacion'].'</td>';
+                       echo '<td>'.$estado['descripcion'].'</td>';
+                       echo '<td><button 
                                    class="btn btn-primary btn-sm " 
                                    onclick="verMovimientosHardware('.$hardward['id'].');"
                                    >Ver</button></td>';
-                         echo '</tr>';  
+                       echo '</tr>';  
                       }
                       ?>
                   </tbody>
