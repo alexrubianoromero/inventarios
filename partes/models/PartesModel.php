@@ -10,6 +10,7 @@ class PartesModel extends Conexion
 
     public function __construct()
     {
+        session_start();
         $this->subTipoModel = new SubtipoParteModel();
     }
     //esta la cree cuando se suben muchos hardware desde un archivo de excell
@@ -76,6 +77,7 @@ class PartesModel extends Conexion
         where t.descripcion = 'Ram'    
         and p.idHardware = 0
         and p.idEstadoParte = 0
+        and p.idSucursal = '".$_SESSION['idSucursal']."'
         ";
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
@@ -95,6 +97,7 @@ class PartesModel extends Conexion
         where t.descripcion = 'Disco'    
         and p.idHardware = 0
         and p.idEstadoParte = 0
+        and p.idSucursal = '".$_SESSION['idSucursal']."'        
         ";
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
@@ -235,7 +238,7 @@ class PartesModel extends Conexion
 
         public function traerTodasLasPartesDisponibles()
         {
-            $sql = "select * from partes  where idEstadoParte =  0  order by id asc";
+            $sql = "select * from partes  where idEstadoParte =  0  and idSucursal = '".$_SESSION['idSucursal']."' order by id asc";
             $consulta = mysql_query($sql,$this->connectMysql());
             $partes = $this->get_table_assoc($consulta);
             return $partes;
@@ -247,6 +250,7 @@ class PartesModel extends Conexion
             inner join tipoparte t on (t.id = s.idParte)
             where p.idEstadoParte =  0  
             and  t.id = '".$idTipoParte."'
+            and p.idSucursal = '".$_SESSION['idSucursal']."'
             order by id asc";
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());

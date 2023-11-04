@@ -10,6 +10,7 @@ class hojasdeVidaController
 
     public function  __construct()
     {
+        session_start();
         $this->model = new HojadeVidaModel();
         $this->view = new hojasdeVidaView();
 
