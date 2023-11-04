@@ -7,6 +7,7 @@ require_once($raiz.'/partes/models/PartesModel.php');
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/hojasdevida/views/hojasdeVidaView.php'); 
 
 class hardwareController
@@ -18,6 +19,7 @@ class hardwareController
     protected $itemInicioModel;
     protected $MovHardwareModel;
     protected $hojasdeVidaView;
+    protected $estadoInicioPedidoModel;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class hardwareController
         $this->itemInicioModel = new ItemInicioPedidoModel();
         $this->MovHardwareModel = new MovimientoHardwareModel();
         $this->hojasdeVidaView = new hojasdeVidaView();
+        $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
 
         if($_REQUEST['opcion']=='hardwareMenu')
         {
@@ -151,6 +154,22 @@ class hardwareController
             $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
             
             $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
+
+            //actualizar la tabla de hardware con estado si es alquilado o vendido
+            //traer el campo estado de la tabla itemInicioPedido osea vendido o rentado 
+            //tener en cuenta que si es cambio de bodega pues solo se cambia el idSucursal y no se actualiza estado de hardware
+            //bueno deberia quedar en disponible 
+            $cambioBodega = 3; //este estado 3 significa que es cambio de bodega 
+            if($infoItem['estado']==$cambioBodega)
+            {
+                //queda disponible y adicional se actualiza el idSucursal 
+            }else{
+                //cambiar el estado 
+                $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$infoItem['estado']); 
+            }
+            
+            
+
 
             echo 'Relacionado de forma correcta '; 
             // $this->view->traerHardwareDisponibles($hardwareSerial);

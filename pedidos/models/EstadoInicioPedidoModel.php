@@ -10,7 +10,7 @@ class EstadoInicioPedidoModel extends Conexion
 
         public function traerEstadosInicioPedido()
         {
-            $sql = "select * from estadosInicioPedido ";
+            $sql = "select * from estadosInicioPedido where 1=1   and 	mostrarEnAgregarItem = '1'	 ";
             $consulta = mysql_query($sql,$this->connectMysql());
             $estadosInicio = $this->get_table_assoc($consulta);
             return $estadosInicio;

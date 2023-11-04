@@ -4,7 +4,7 @@ require_once($raiz.'/hojasdevida/models/HojadeVidaModel.php');
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 require_once($raiz.'/hardware/models/HardwareModel.php');  
-require_once($raiz.'/inventarios/models/EstadoInventarioModel.php');  
+require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php');  
 require_once($raiz.'/vista/vista.php');  
 
 class hojasdeVidaView extends vista
@@ -14,7 +14,7 @@ class hojasdeVidaView extends vista
     protected $tipoParteModel ; 
     protected $subTipoParteModel ; 
     protected $HardwareModel ; 
-    protected $estadoInventarioModel ; 
+    protected $estadoInicioPedidoModel ; 
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class hojasdeVidaView extends vista
         $this->tipoParteModel = new TipoParteModel();
         $this->subTipoParteModel = new SubTipoParteModel();
         $this->HardwareModel = new HardwareModel();
-        $this->estadoInventarioModel = new EstadoInventarioModel();
+        $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
        
     }
     public function hojasdeVidaMenu()
@@ -66,7 +66,7 @@ class hojasdeVidaView extends vista
                 <?php
                     foreach($hardwards as $hardward)
                     {
-                        $estado = $this->estadoInventarioModel->traerEstadoId($hardward['idEstadoInventario']);      
+                        $estado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);      
                         // $this->printR($estado);
                        echo '<tr>'; 
                        echo '<td>'.$hardward['serial'].'</td>';
