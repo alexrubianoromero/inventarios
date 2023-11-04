@@ -9,8 +9,9 @@ require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php');
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/hojasdevida/views/hojasdeVidaView.php'); 
+require_once($raiz.'/controller/controllerClass.php'); 
 
-class hardwareController
+class hardwareController extends controllerClass
 {
     protected $view;
     protected $model;
@@ -145,6 +146,7 @@ class hardwareController
             //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
             //falta crear el movimiento historico 
             $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+            // $this->printR($infoItem);
             $tipoMov = 2 ; //sale del inventario;
             $infoMov = new stdClass();
             $infoMov->idTipoMov = $tipoMov ;  

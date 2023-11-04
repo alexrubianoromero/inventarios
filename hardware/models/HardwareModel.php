@@ -134,11 +134,10 @@ class HardwareModel extends Conexion
     
     public function actualizarEstadoHardware($idHardware,$estado)
     {
-        $sql = "update hardware set idEstadoInventario = '0'   where id = '".$idHardware."'     "; 
+        $sql = "update hardware set idEstadoInventario = '".$estado."'   where id = '".$idHardware."'     "; 
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
-
 
 
 
