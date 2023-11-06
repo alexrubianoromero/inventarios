@@ -184,15 +184,7 @@ class ItemInicioPedidoModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         
-        public function traerUltimoRegistro()
-        {
-            $sql = "select max(idMovimiento) as maxId from movimientosHardware ";
-            $consulta = mysql_query($sql,$this->connectMysql());
-            $arrMax = mysql_fetch_assoc($consulta); 
-            return $arrMax['maxId'];
-        }
-
-        
+   
         
     }
     
