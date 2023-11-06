@@ -142,7 +142,7 @@ class PedidoModel extends Conexion
             //definir el estado de los pedidos pendientes 
             //pues los que no esten finalizados 
             //estados de un pedido 
-            $sql = "select * from pedidos where idestadoPedido = 0"; 
+            $sql = "select * from pedidos where idestadoPedido = 0  and  idSucursal = '".$_SESSION['idSucursal']."' "; 
             $consulta = mysql_query($sql,$this->connectMysql());
             $pedidos = $this->get_table_assoc($consulta);
             // die($sql); 

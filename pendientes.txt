@@ -5,11 +5,15 @@ colocar el estado en las hojas de vida
 boton dado de baja estado 3
 
 pendientes 
-verificar el proceso de cambio de bodega 
+verificar el proceso de cambio de bodega colocar filtro de solo dados de baja 
 
 cambios realizados 
 
 Se coloca el estado en hojas de vida 
 Se crea funcionalidad para que cuando se agregue un item de hardware a un inventario de una cambie el estado
 al estado del item 1 vendido , 2 rentado y asi quedara en la tabla de hardware 
+
+En que momento se debe aplicar el cambio de bodega 
+solo para hardware 
+cuando se realize la asignacion del hardware al item del pedido 
 

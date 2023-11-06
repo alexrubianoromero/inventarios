@@ -71,6 +71,12 @@ function agregarItemInicialPedidoParte(tipoItem)
     var iobservaciones = document.getElementById('iobservaciones').value;
     var tipoItem = document.getElementById('tipoItem').value;
     var isubtipo = document.getElementById('isubtipo').value;
+    cambioBodega = 3; 
+    if(idEstadoInicio== cambioBodega){
+        var idNuevaSucursal = document.getElementById('idNuevaSucursal').value;
+    }else{
+        var idNuevaSucursal = 0;
+    }
 
     const http=new XMLHttpRequest();
     const url = 'pedidos/itemInicioPedido.php';
@@ -91,6 +97,7 @@ function agregarItemInicialPedidoParte(tipoItem)
     +'&iobservaciones='+iobservaciones
     +'&tipoItem='+tipoItem
     +'&isubtipo='+isubtipo
+    +'&idNuevaSucursal='+idNuevaSucursal
     );
     limpiarCampos();
     } //fin de valida

@@ -153,7 +153,7 @@ class hardwareController extends controllerClass
             $infoMov->idItemInicio = $_REQUEST['idItemAgregar'] ;  
             $infoMov->observaciones = 'Se agrega Hardware  a Pedido '.$infoItem['idPedido'].' id Item '.$_REQUEST['idItemAgregar'].' ';
             $infoMov->idHardware = $_REQUEST['idHardware'];  
-            $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+            $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
             
             $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
 
@@ -161,10 +161,16 @@ class hardwareController extends controllerClass
             //traer el campo estado de la tabla itemInicioPedido osea vendido o rentado 
             //tener en cuenta que si es cambio de bodega pues solo se cambia el idSucursal y no se actualiza estado de hardware
             //bueno deberia quedar en disponible 
+            //tambien es importante que quede registrado en el movimiento  de hardware la sucursal que tenia y la final
             $cambioBodega = 3; //este estado 3 significa que es cambio de bodega 
             if($infoItem['estado']==$cambioBodega)
             {
                 //queda disponible y adicional se actualiza el idSucursal 
+                //realizar el cambio de bodega 
+                $infoCambio = $this->model->realizarCambioDeBodega($_REQUEST['idHardware'],$infoItem['idNuevaSucursal']);
+                $this->MovHardwareModel->actualizarMovimientoHardware($idMov,$infoCambio); 
+                // $this->printR($infoCambio); 
+
             }else{
                 //cambiar el estado 
                 $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$infoItem['estado']); 

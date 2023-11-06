@@ -276,10 +276,22 @@ class HardwareModel extends Conexion
         $arrInfo = $this->get_table_assoc($consulta); 
         return $arrInfo;
     }
-
+    
     public function cambiarEstadoHArdwareId()
     {
         
+    }
+    
+    public function realizarCambioDeBodega($idHardware,$idNuevaSucursal)
+    {
+        $infoHardware =  $this->traerHardwareId($idHardware);
+        $idSucursalAnterior = $infoHardware['idSucursal'];
+        $sql = "update hardware set idSucursal = '".$idNuevaSucursal."'  where id =  '".$idHardware."'  ";  
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $respu['idHardware'] = $idHardware;
+        $respu['idSucursalAnterior'] = $idSucursalAnterior;
+        $respu['idNuevaSucursal'] = $idNuevaSucursal;
+        return $respu;
     }
     
  

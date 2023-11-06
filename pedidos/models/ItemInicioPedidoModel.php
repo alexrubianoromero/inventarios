@@ -167,6 +167,7 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+
         public function relacionarparteAItemPedido($request)
         {
             // $sql = "delete  from itemsInicioPedido   where id = '".$id."'"; 
@@ -182,7 +183,14 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
-
+        
+        public function traerUltimoRegistro()
+        {
+            $sql = "select max(idMovimiento) as maxId from movimientosHardware ";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $arrMax = mysql_fetch_assoc($consulta); 
+            return $arrMax['maxId'];
+        }
 
         
         
