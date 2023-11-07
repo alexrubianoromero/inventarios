@@ -411,6 +411,24 @@ function formuNuevoHardware()
         );
         
     }
+function formuFiltrosHardware()
+{
+    //    alert('buenas ');
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("modalBodyModalFiltros").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=formuFiltrosHardware'
+                //   +'&idHardware='+idHardware
+        );
+        
+}
     
     function grabarNuevoHardware()
     {
@@ -639,6 +657,142 @@ function fitrarHardware()
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send('opcion=fitrarHardware'
     +'&inputBuscarHardware='+inputBuscarHardware
+    );
+}
+function fitrarHardwareSerialInventario()
+{
+    var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareSerialInventario'
+    +'&inputBuscarHardware='+inputBuscarHardware
+    );
+}
+function fitrarHardwarePulgadasInventario()
+{
+    var inputBuscarPulgadas = document.getElementById('inputBuscarPulgadas').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwarePulgadasInventario'
+    +'&inputBuscarPulgadas='+inputBuscarPulgadas
+    );
+}
+function fitrarHardwareProcesadorInventario()
+{
+    var inputBuscarProcesador = document.getElementById('inputBuscarProcesador').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareProcesadorInventario'
+    +'&inputBuscarProcesador='+inputBuscarProcesador
+    );
+}
+function fitrarHardwareGeneracionInventario()
+{
+    var inputBuscarGeneracion = document.getElementById('inputBuscarGeneracion').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareGeneracionInventario'
+    +'&inputBuscarGeneracion='+inputBuscarGeneracion
+    );
+}
+function fitrarHardwareImportacionInventario()
+{
+    var inputBuscarImportacion = document.getElementById('inputBuscarImportacion').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareImportacionInventario'
+    +'&inputBuscarImportacion='+inputBuscarImportacion
+    );
+}
+function fitrarHardwareLoteInventario()
+{
+    var inputBuscarLote = document.getElementById('inputBuscarLote').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareLoteInventario'
+    +'&inputBuscarLote='+inputBuscarLote
+    );
+}
+function fitrarHardwareTipoInventario()
+{
+    var inputBuscarTipo = document.getElementById('inputBuscarTipo').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareTipoInventario'
+    +'&inputBuscarTipo='+inputBuscarTipo
+    );
+}
+function fitrarHardwareSubTipoInventario()
+{
+    var inputBuscarSubTipo = document.getElementById('inputBuscarSubTipo').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareSubTipoInventario'
+    +'&inputBuscarSubTipo='+inputBuscarSubTipo
     );
 }
 

@@ -198,6 +198,49 @@ class hardwareController extends controllerClass
             $this->habilitarHardware($_REQUEST);
             
         }
+        if($_REQUEST['opcion']=='formuFiltrosHardware')
+        {
+            $this->view->formuFiltrosHardware($_REQUEST);
+            
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareSerialInventario')
+        {
+            $this->fitrarHardwareSerialInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwarePulgadasInventario')
+        {
+            $this->fitrarHardwarePulgadasInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareProcesadorInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareProcesadorInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareGeneracionInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareGeneracionInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareImportacionInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareImportacionInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareLoteInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareLoteInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareTipoInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareTipoInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareSubTipoInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareSubTipoInventario($_REQUEST);
+        }
 
 
         
@@ -277,6 +320,53 @@ class hardwareController extends controllerClass
         $hardware =  $this->model->traerHardware();
         $this->view->hardwareMenu($hardware);
     }
+
+    public function fitrarHardwareSerialInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareFiltro($request['inputBuscarHardware']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwarePulgadasInventario($request)
+    {
+        $hardware =  $this->model->traerHardwarePulgadasFiltro($request['inputBuscarPulgadas']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareProcesadorInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareProcesadorFiltro($request['inputBuscarProcesador']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareGeneracionInventario($request)
+    {
+        $hardware =  $this->model->traerHardwaregeneracionFiltro($request['inputBuscarGeneracion']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareImportacionInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareImportacionFiltro($request['inputBuscarImportacion']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareLoteInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareLoteFiltro($request['inputBuscarLote']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareTipoInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareTipoFiltro($request['inputBuscarTipo']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareSubTipoInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareSubTipoFiltro($request['inputBuscarSubTipo']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+
 
     public function formularioSubirArchivo()
     {

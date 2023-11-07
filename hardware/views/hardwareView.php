@@ -7,6 +7,8 @@ require_once($raiz.'/marcas/models/MarcaModel.php');
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/hardware/models/ProcesadorModel.php'); 
+require_once($raiz.'/hardware/models/GeneracionModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 class hardwareView extends vista
@@ -18,6 +20,8 @@ class hardwareView extends vista
     protected $tipoParteModel;
     protected $movimientoHardwareModel;
     protected $itemInicioPedidoModel;
+    protected $procesadorModel;
+    protected $generacionModel;
 
     public function __construct()
     {
@@ -28,6 +32,8 @@ class hardwareView extends vista
         $this->tipoParteModel = new TipoParteModel();
         $this->movimientoHardwareModel = new MovimientoHardwareModel();
         $this->itemInicioPedidoModel = new ItemInicioPedidoModel();
+        $this->procesadorModel = new ProcesadorModel();
+        $this->generacionModel = new GeneracionModel();
     }
     public function hardwareMenu($hardware)
     {
@@ -58,6 +64,17 @@ class hardwareView extends vista
                         Subir Archivo
                     </button>
                 </div>
+                <div class="col-lg-2">
+                    <button type="button" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalFiltros"
+                    class="btn btn-primary  float-right" 
+                    onclick="formuFiltrosHardware()"
+                    >
+                        Filtros
+                    </button>
+                </div>
+
             </div>
             <!-- <div id="botones" class="mt-3">
                 <button type="button" 
@@ -70,7 +87,32 @@ class hardwareView extends vista
                 </button>
             </div> -->
             <div id="divResultadosHardware">
-                <table class="table table-striped hover-hover">
+                <?php  
+                        $this->traerHardwareMostrarmenu($hardware)  ?>
+                </div>
+                
+                
+                
+                <?php  
+            // $this->modalInventario();  
+            // $this->modalInventarioMostrar();  
+            $this->modalSubirArchivo();  
+            $this->modalHardwareMostrar();  
+            $this->modalAgregarRam();  
+            $this->modalNuevoHardware();  
+            $this->modalDividirRam();  
+            $this->modalFiltros();  
+            ?>
+
+            
+            
+        </div>
+        <?php
+    }
+    public function traerHardwareMostrarmenu($hardware)
+    {
+        ?>
+             <table class="table table-striped hover-hover">
                     <thead>
                         
                         <th>Serial</th>
@@ -167,26 +209,10 @@ class hardwareView extends vista
                         ?>
                     </tbody>
                 </table> 
-            </div>
-                
-                
-                
-                <?php  
-            // $this->modalInventario();  
-            // $this->modalInventarioMostrar();  
-            $this->modalSubirArchivo();  
-            $this->modalHardwareMostrar();  
-            $this->modalAgregarRam();  
-            $this->modalNuevoHardware();  
-            $this->modalDividirRam();  
-            ?>
 
-            
-            
-        </div>
         <?php
     }
- 
+
     public function modalSubirArchivo()
     {
         ?>
@@ -204,6 +230,31 @@ class hardwareView extends vista
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
                     <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >SubirArchivo++</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+
+    public function modalFiltros()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalFiltros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Subir Archivo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyModalFiltros">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="" >Cerrar</button>
+                    <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >SubirArchivo++</button> -->
                 </div>
                 </div>
             </div>
@@ -1159,6 +1210,80 @@ class hardwareView extends vista
             <button class ="btn btn-primary"onclick="realizarDevolucion(<?php  echo  $infoItemInicio['idHardwareOParte']  ?>,<?php  echo  $request['idMovimiento'] ?>)">Realizar Devolucion</button>
          </div>
          <?php
+    }
+
+    public function formuFiltrosHardware()
+    {
+        $tipopartes = $this->tipoParteModel->traerTipoParteHardware('1');
+        $subtipos = $this->SubtipoParteModel->traerSubtiposHardware();
+        $procesadores = $this->procesadorModel->traerProcesadores();
+        $generaciones =  $this->generacionModel->traerGeneracion();
+        $idImportaciones =  $this->hardwareModel->traerInfoCampoTablaHardware('idImportacion');
+        $lotes =  $this->hardwareModel->traerInfoCampoTablaHardware('lote');
+        // $this->printR($generaciones);
+        ?>
+        <P>FILTROS</P>
+        <div class="row" >
+            <span class="col-lg-4">Serial:</span>
+            <div class="col-lg-8" align="right">
+                <input class="form-control"type="text" id="inputBuscarHardware" onkeyup="fitrarHardwareSerialInventario();">
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Pulgadas:</span>
+            <div class="col-lg-8" align="right">
+                <input class="form-control"type="text" id="inputBuscarPulgadas" onkeyup="fitrarHardwarePulgadasInventario();">
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Procesador:</span>
+            <div class="col-lg-8" align="right">
+                <select class ="form-control"  id="inputBuscarProcesador" onchange="fitrarHardwareProcesadorInventario();" >
+                        <?php  $this->colocarSelecProcesadores($procesadores);  ?>
+                    </select>  
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Generacion:</span>
+            <div class="col-lg-8" align="right">
+                <select class ="form-control"  id="inputBuscarGeneracion" onchange="fitrarHardwareGeneracionInventario();" >
+                        <?php  $this->colocarSelecGeneraciones($generaciones);  ?>
+                    </select>  
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Importacion:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarImportacion" onchange="fitrarHardwareImportacionInventario();" >
+                        <?php  $this->colocarSelectCampo($idImportaciones);  ?>
+                    </select>
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">lote:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarLote" onchange="fitrarHardwareLoteInventario();" >
+                        <?php  $this->colocarSelectCampo($lotes);  ?>
+            </select>
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Tipo:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarTipo" onchange="fitrarHardwareTipoInventario();">
+                            <?php  $this->colocarSelect($tipopartes);  ?>
+                    </select>
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">SubTipo:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarSubTipo" onchange="fitrarHardwareSubTipoInventario();">
+                            <?php  $this->colocarSelect($subtipos);  ?>
+                    </select>
+            </div>
+        </div>
+        <?php
     }
 }
 ?>

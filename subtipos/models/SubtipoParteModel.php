@@ -38,7 +38,18 @@ class SubtipoParteModel extends Conexion
         $subTiposParte = $this->get_table_assoc($consulta);
         return $subTiposParte;
     }
-
+    
+    public function traerSubtiposHardware()
+    {
+        $sql = "select s.id,s.descripcion from subtipoParte  s    
+        inner join tipoparte t on (t.id = s.idParte)
+        where t.hardwareoparte	= 1
+        "; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $subTiposParte = $this->get_table_assoc($consulta);
+        return $subTiposParte;
+    }
+    
     
 
 

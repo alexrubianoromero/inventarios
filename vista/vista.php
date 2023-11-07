@@ -35,6 +35,7 @@ class vista
 
                 
                 }
+
     public function colocarSelect($valores)
     {
         echo '<option value="-1">Seleccione...</option>';
@@ -55,6 +56,16 @@ class vista
             }
     
     }           
+    public function colocarSelectCampoDescripcion($valores)
+    {
+        echo '<option value="-1">Sel.</option>';
+        
+            foreach($valores as $valor)
+            {
+                echo ' <option value="'.$valor['descripcion'].'">'.$valor['descripcion'].'</option>';
+            }
+    
+    }           
     public function colocarSelectArreglo($valores)
     {
         echo '<option value="-1">Sel.</option>';
@@ -65,6 +76,27 @@ class vista
             }
     
     }           
+    public function colocarSelecProcesadores($valores)
+    {
+        echo '<option value="-1">Sel.</option>';
+        
+            foreach($valores as $valor)
+            {
+                    echo ' <option value="'.$valor['procesador'].'">'.$valor['procesador'].'</option>';
+            }
+    
+    }           
+    public function colocarSelecGeneraciones($valores)
+    {
+        echo '<option value="-1">Sel.</option>';
+        
+            foreach($valores as $valor)
+            {
+                    echo ' <option value="'.$valor['generacion'].'">'.$valor['generacion'].'</option>';
+            }
+    
+    }           
+   
     public function colocarSelectCampoConOpcionSeleccionada($valores,$condicion)
     {
         echo '<option value="-1">Sel.</option>';
