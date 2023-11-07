@@ -13,6 +13,8 @@ class PartesModel extends Conexion
         session_start();
         $this->subTipoModel = new SubtipoParteModel();
     }
+
+  
     //esta la cree cuando se suben muchos hardware desde un archivo de excell
     public function grabarParte($idSubTipo,$capacidad)
     {
@@ -58,6 +60,20 @@ class PartesModel extends Conexion
     public function traerTodasLasPartes()
     {
         $sql = "select * from partes  where 1=1 and idSucursal = '".$_SESSION['idSucursal']."'  order by id desc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $partes = $this->get_table_assoc($consulta);
+        return $partes;
+    }
+    public function traerPartesFiltroTipoParte($tipoParte)
+    {
+        $sql = "select * from partes p
+        inner join subtipoParte s on (s.id = p.idSubtipoParte)
+        inner join tipoparte t on  (t.id = s.idParte)
+        where 1=1 
+        and p.idSucursal = '".$_SESSION['idSucursal']."'  
+        and s.idParte = $tipoParte 
+        order by p.id desc";
+        // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $partes = $this->get_table_assoc($consulta);
         return $partes;

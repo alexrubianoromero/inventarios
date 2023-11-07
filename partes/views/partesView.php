@@ -30,14 +30,26 @@ class partesView extends vista
         <div style="padding:10px;">
 
             <div id="botones" >
-                <button type="button" 
-                data-bs-toggle="modal" 
-                data-bs-target="#modalCreacionParte"
-                class="btn btn-primary  float-right" 
-                onclick="formuCreacionParte();"
-                >
-                Crear Parte
-            </button>
+                <div class="col-lg-2">
+                    <button type="button" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalCreacionParte"
+                        class="btn btn-primary  float-left" 
+                        onclick="formuCreacionParte();"
+                        >
+                        Crear Parte
+                    </button>
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalParteFiltro"
+                        class="btn btn-primary  float-left" 
+                        onclick="formuFiltroParte();"
+                        >
+                        Filtros
+                    </button>
+                </div>
             </div>
             <div id="resultadosPartes">
                
@@ -49,6 +61,7 @@ class partesView extends vista
             $this->modalVerMovimientos();  
             $this->modalCreacionParte();  
             $this->modalCargarDescargarInventario();  
+            $this->modalParteFiltro();  
         
             ?>
             
@@ -128,6 +141,30 @@ class partesView extends vista
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBodyVerMovimientos">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="" >Cerrar</button>
+                    <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="" >SubirArchivo++</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+    public function modalParteFiltro()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalParteFiltro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyParteFiltro">
                     
                 </div>
                 <div class="modal-footer">
@@ -340,6 +377,32 @@ class partesView extends vista
         }
         echo '</table>';
     } 
+
+
+    public function formuFiltroParte()
+    {
+        $tiposPartes = $this->TipoParteModel->traerTipoParteHardware(2);
+        ?>
+          <div class="row"  >
+            <span class="col-lg-4">Parte:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarTipoParte" onchange="fitrarParteTipoParte();">
+                            <?php  $this->colocarSelect($tiposPartes);  ?>
+                    </select>
+            </div>
+         </div>
+          <div class="row"  >
+            <span class="col-lg-4">Tipo:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarTipoParte" onchange="fitrarParteTipoParte();">
+                            <?php  $this->colocarSelect($tiposPartes);  ?>
+                    </select>
+            </div>
+         </div>
+
+        <?php
+    }
+
 
 }
 

@@ -15,6 +15,38 @@ function formuCreacionParte()
     );
 
 }
+function formuFiltroParte()
+{
+    // alert('funcion javascript');
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("modalBodyParteFiltro").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=formuFiltroParte'
+    );
+}
+function fitrarParteTipoParte()
+{
+    var inputBuscarTipoParte = document.getElementById('inputBuscarTipoParte').value;
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("resultadosPartes").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarParteTipoParte'
+    +'&inputBuscarTipoParte='+inputBuscarTipoParte
+    );
+}
 
 
 function grabarNuevaParte()

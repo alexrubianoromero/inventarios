@@ -17,4 +17,5 @@ En que momento se debe aplicar el cambio de bodega
 solo para hardware 
 cuando se realize la asignacion del hardware al item del pedido 
 
-estoy en los filtros colocando el filtro de procesador 
+termine los filtros de  hardware 
+ahora voy con los filtros de partes estoy en eso 

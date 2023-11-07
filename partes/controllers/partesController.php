@@ -84,7 +84,21 @@ class partesController
             $this->view->traerPartesDisponibles($partesDisponibles);
 
         }
+        if($_REQUEST['opcion']=='formuFiltroParte')
+        {
+            $this->view->formuFiltroParte();
+        }
+        if($_REQUEST['opcion']=='fitrarParteTipoParte')
+        {
+            $this->fitrarParteTipoParte($_REQUEST);
+        }
 
+    }
+
+    public function fitrarParteTipoParte($request)
+    {
+        $partes =  $this->model->traerPartesFiltroTipoParte($request['inputBuscarTipoParte']);
+        $this->view->traerPartes($partes);
     }
 
     public function partesMenu()
