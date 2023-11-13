@@ -24,8 +24,6 @@ function buscarSuptiposParaSelectDesdeCrearParte()
     var itipo = document.getElementById('itipo').value;
     var itipoSelect = document.getElementById('itipo');
     var selected = itipoSelect.options[itipoSelect.selectedIndex].text;
-    // alert('valor '+ itipo );
-    // alert('texto  '  + selected);
     if(selected == 'Ram')
     {
         document.getElementById("campovariable").innerHTML  = 'Capac/Veloci';
@@ -53,16 +51,6 @@ function buscarSuptiposParaSelectDesdeFiltroParte()
     var itipo = document.getElementById('itipo').value;
     var itipoSelect = document.getElementById('itipo');
     var selected = itipoSelect.options[itipoSelect.selectedIndex].text;
-    // alert('valor '+ itipo );
-    // alert('texto  '  + selected);
-    // if(selected == 'Ram')
-    // {
-    //     document.getElementById("campovariable").innerHTML  = 'Capac/Veloci';
-    // }
-    // else{
-    //     document.getElementById("campovariable").innerHTML  = 'Caracteristicas';
-        
-    // }
     const http=new XMLHttpRequest();
     const url = 'subtipos/subtipos.php';
     http.onreadystatechange = function(){
