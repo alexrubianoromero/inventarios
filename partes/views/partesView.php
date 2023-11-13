@@ -384,19 +384,29 @@ class partesView extends vista
         $tiposPartes = $this->TipoParteModel->traerTipoParteHardware(2);
         ?>
           <div class="row"  >
-            <span class="col-lg-4">Parte:</span>
+            <span class="col-lg-4">Tipo_1:</span>
             <div class="col-lg-8" align="right">
-            <select class ="form-control"  id="inputBuscarTipoParte" onchange="fitrarParteTipoParte();">
+            <!-- <select class ="form-control"  id="inputBuscarTipoParte" onchange="fitrarParteTipoParte();"> -->
+            <select class ="form-control"  id="itipo" name ="itipo" onchange="buscarSuptiposParaSelectDesdeFiltroParte();">
                             <?php  $this->colocarSelect($tiposPartes);  ?>
                     </select>
             </div>
          </div>
           <div class="row"  >
-            <span class="col-lg-4">Tipo:</span>
+            <span class="col-lg-4">Sub Tipo:</span>
             <div class="col-lg-8" align="right">
-            <select class ="form-control"  id="inputBuscarTipoParte" onchange="fitrarParteTipoParte();">
+            <select class ="form-control"  id="isubtipo" name ="isubtipo" onchange="fitrarParteSubtipoTipoParte();">
                             <?php  $this->colocarSelect($tiposPartes);  ?>
                     </select>
+            </div>
+         </div>
+          <div class="row"  >
+            <span class="col-lg-4">Caracteristicas:</span>
+            <div class="col-lg-5" align="right">
+                <input  class="form-control"  id="caracteristicas"  name = "caracteristicas" >
+            </div>
+            <div class="col-lg-3" align="right">
+                <button class="btn btn-success form-control" onclick="filtrarCaracteristicas();">BUSCAR</button>
             </div>
          </div>
 

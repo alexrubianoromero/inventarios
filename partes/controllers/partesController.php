@@ -92,12 +92,30 @@ class partesController
         {
             $this->fitrarParteTipoParte($_REQUEST);
         }
+        if($_REQUEST['opcion']=='fitrarParteSubtipoTipoParte')
+        {
+            $this->fitrarParteSubtipoTipoParte($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='filtrarCaracteristicas')
+        {
+            $this->fitrarCaracteristicasParte($_REQUEST);
+        }
 
     }
 
     public function fitrarParteTipoParte($request)
     {
         $partes =  $this->model->traerPartesFiltroTipoParte($request['inputBuscarTipoParte']);
+        $this->view->traerPartes($partes);
+    }
+    public function fitrarParteSubtipoTipoParte($request)
+    {
+        $partes =  $this->model->traerPartesFiltroSubTipoParte($request['inputBuscarSubTipoParte']);
+        $this->view->traerPartes($partes);
+    }
+    public function fitrarCaracteristicasParte($request)
+    {
+        $partes =  $this->model->traerPartesCaracteristicasParte($request['tipoParte'],$request['subTipoParte'],$request['caracteris']);
         $this->view->traerPartes($partes);
     }
 

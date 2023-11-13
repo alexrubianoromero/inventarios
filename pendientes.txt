@@ -19,3 +19,5 @@ cuando se realize la asignacion del hardware al item del pedido
 
 termine los filtros de  hardware 
 ahora voy con los filtros de partes estoy en eso 
+
+estoy en los filtros de partes en el de caracteristicas o capacidad 

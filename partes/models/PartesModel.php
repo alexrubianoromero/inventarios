@@ -71,8 +71,42 @@ class PartesModel extends Conexion
         inner join tipoparte t on  (t.id = s.idParte)
         where 1=1 
         and p.idSucursal = '".$_SESSION['idSucursal']."'  
-        and s.idParte = $tipoParte 
+        and s.idParte = '".$tipoParte."' 
         order by p.id desc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $partes = $this->get_table_assoc($consulta);
+        return $partes;
+    }
+    public function traerPartesFiltroSubTipoParte($subTipoParte)
+    {
+        $sql = "select * from partes p
+        inner join subtipoParte s on (s.id = p.idSubtipoParte)
+        inner join tipoparte t on  (t.id = s.idParte)
+        where 1=1 
+        and p.idSucursal = '".$_SESSION['idSucursal']."'  
+        and p.idSubtipoParte = '".$subTipoParte."'
+        order by p.id desc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $partes = $this->get_table_assoc($consulta);
+        return $partes;
+    }
+    public function traerPartesCaracteristicasParte($tipo,$subtipo,$caracteristicas)
+    {
+        $sql = "select * from partes p
+        inner join subtipoParte s on (s.id = p.idSubtipoParte)
+        inner join tipoparte t on  (t.id = s.idParte)
+        where 1=1 
+        and p.idSucursal = '".$_SESSION['idSucursal']."'";
+        if($tipo > -1){
+            $sql .= "   and s.idParte = '".$tipo."' ";
+        }   
+        if($subtipo > -1){
+            $sql .= "    and p.idSubtipoParte = '".$subtipo."'";
+        }   
+        $sql .= "and capacidad like '%".$caracteristicas."%' "; 
+        $sql .= " order by p.id desc "; 
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $partes = $this->get_table_assoc($consulta);

@@ -33,7 +33,7 @@ function formuFiltroParte()
 }
 function fitrarParteTipoParte()
 {
-    var inputBuscarTipoParte = document.getElementById('inputBuscarTipoParte').value;
+    var inputBuscarTipoParte = document.getElementById('itipo').value;
     const http=new XMLHttpRequest();
     const url = 'partes/partes.php';
     http.onreadystatechange = function(){
@@ -45,6 +45,42 @@ function fitrarParteTipoParte()
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send('opcion=fitrarParteTipoParte'
     +'&inputBuscarTipoParte='+inputBuscarTipoParte
+    );
+}
+function fitrarParteSubtipoTipoParte()
+{
+    var inputBuscarSubTipoParte = document.getElementById('isubtipo').value;
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("resultadosPartes").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarParteSubtipoTipoParte'
+    +'&inputBuscarSubTipoParte='+inputBuscarSubTipoParte
+    );
+}
+function filtrarCaracteristicas()
+{
+    var tipoParte = document.getElementById('itipo').value;
+    var subTipoParte = document.getElementById('isubtipo').value;
+    var caracteris = document.getElementById('caracteristicas').value;
+    const http=new XMLHttpRequest();
+    const url = 'partes/partes.php';
+    http.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("resultadosPartes").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=filtrarCaracteristicas'
+    +'&tipoParte='+tipoParte
+    +'&subTipoParte='+subTipoParte
+    +'&caracteris='+caracteris
     );
 }
 
