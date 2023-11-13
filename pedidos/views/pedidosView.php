@@ -51,33 +51,76 @@ class pedidosView extends vista
 
     public function pedidosMenu($pedidos)
     {
+        $clientes = $this->clienteModel->traerClientes();
         ?>
         <div style="padding:10px;"  id="div_general_pedidos" class="row">
 
-            <div id="botones">
-                <!-- Button trigger modal -->
+            <div id="botones" class="row">
+                <div class="col-lg-3">
+                    <button type="button" 
+                    class="btn btn-primary " 
+                    onclick="pedidosPorCompletar();"
+                    >
+                    PEDIDOS POR COMPLETAR
+                    </button> 
+                </div>
+                <div class="col-lg-3">
+                    <select id = "idCLiente" onchange="pedidosFiltrados();" class="form-control" >
+                       <option value="-1">SeleccionarCliente</option>
+                       <?php  
+                           foreach($clientes as $cliente)
+                           {
+                               echo '<option value ='.$cliente['idcliente'].'>'.$cliente['nombre'].'</option>'; 
+                           }
+                       ?>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" 
+                    class="btn btn-primary " 
+                    onclick="pedirInfoNuevoPedido();"
+                    >
+                    <!-- data-bs-toggle="modal" 
+                    data-bs-target="#modalPedido" -->
+                   NUEVO PEDIDO
+                    </button> 
+                    
+                </div>
+                <div class="col-lg-3">
+
+                </div>
 
 
-                 <button type="button" 
-                 class="btn btn-primary  float-left" 
-                 onclick="pedidosPorCompletar();"
-                 >
-                 <!-- data-bs-toggle="modal" 
-                 data-bs-target="#modalPedido" -->
-                PEDIDOS POR COMPLETAR
-                </button> 
-                 <button type="button" 
-                 class="btn btn-primary  float-right" 
-                 onclick="pedirInfoNuevoPedido();"
-                 >
-                 <!-- data-bs-toggle="modal" 
-                 data-bs-target="#modalPedido" -->
-                NUEVO PEDIDO
-                 </button> 
+        
+
+                
+
             </div>
             <br>
             <div id="divResultadosPedidos" class="row mt-3">
-                <table class="table table-striped hover-hover">
+                 <?php $this->mostrarPedidos($pedidos); ?>
+                
+            </div>
+                
+                <?php  
+            $this->modalPedido();  
+            $this->modalPedidoAsignartecnico();  
+            $this->modalPedidoActualizar();  
+            $this->modalPedidoVerItemTecnico();  
+            $this->modalPedidoBuscarParteOSerial(); 
+            $this->modalPedidoActualizar2();  
+        
+            ?>
+            
+            
+        </div>
+        <?php
+    }
+
+    public function mostrarPedidos($pedidos)
+    {
+        ?>
+            <table class="table table-striped hover-hover">
                     <thead>
                         <th>IdPedido.</th>
                         <th>Fecha.</th>
@@ -110,26 +153,9 @@ class pedidosView extends vista
                         ?>
                     </tbody>
                 </table> 
-                
-                
-            </div>
-                
-                <?php  
-            $this->modalPedido();  
-            $this->modalPedidoAsignartecnico();  
-            $this->modalPedidoActualizar();  
-            $this->modalPedidoVerItemTecnico();  
-            $this->modalPedidoBuscarParteOSerial(); 
-            $this->modalPedidoActualizar2();  
-        
-            ?>
-            
-            
-        </div>
+               
         <?php
     }
-
-
     public function modalPedidoBuscarParteOSerial()
     {
             ?>

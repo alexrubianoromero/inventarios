@@ -27,6 +27,15 @@ class PedidoModel extends Conexion
             $pedidos = $this->get_table_assoc($consulta);
             return $pedidos;
         }
+        public function pedidosFiltrados($idCliente)
+        {
+            $sql = "select * from pedidos where 1= 1 and idSucursal = '".$_SESSION['idSucursal']."'
+                    and idCliente = '".$idCliente."'  order by idPedido desc";
+                    // die($sql ); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidos = $this->get_table_assoc($consulta);
+            return $pedidos;
+        }
         public function traerPedidoId($id)
         {
             $sql = "select * from pedidos where idPedido = '".$id."'   ";

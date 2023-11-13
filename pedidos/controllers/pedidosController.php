@@ -25,6 +25,10 @@ class pedidosController
         {
             $this->pedidosMenu();
         }
+        if($_REQUEST['opcion']=='pedidosFiltrados')
+        {
+            $this->pedidosFiltrados($_REQUEST);
+        }
         if($_REQUEST['opcion']=='pedirInfoNuevoPedido')
         {
             // echo 'pedidos controlador '; 
@@ -102,6 +106,11 @@ class pedidosController
     {
         $pedidos =  $this->model->traerPedidos(); 
         $this->view->pedidosMenu($pedidos);
+    }
+    public function pedidosFiltrados($request)
+    {
+        $pedidos =  $this->model->pedidosFiltrados($request['idCLiente']); 
+        $this->view->mostrarPedidos($pedidos);
     }
 
     public function pedirInfoNuevoPedido($request)
