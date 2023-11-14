@@ -15,24 +15,35 @@ class clientesView
     $this->model= new ClienteModel(); 
     $this->tipoContriModel= new TipoContribuyenteModel(); 
  }   
- public function clientesMenu()
+ public function clientesMenu($clientes)
  {
     
     ?>
     <div style="padding:5px;">
         <div class="row">
-            <div col-lg-2>
+            <div class="col-lg-3">
                 <button 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalNuevoCliente"
-                        class="btn btn-primary" 
-                        onclick="formuNuevoCliente();"
+                data-bs-toggle="modal" 
+                data-bs-target="#modalNuevoCliente"
+                class="btn btn-primary" 
+                onclick="formuNuevoCliente();"
                 >Nuevo Cliente</button>
-
             </div>
+            <div class="col-lg-3">
+                <select id = "idCliente" name="idCliente" onchange="listarClienteFiltradoDesdeClientes();" class="form-control" >
+                       <option value="-1">SeleccionarCliente</option>
+                       <?php  
+                           foreach($clientes as $cliente)
+                           {
+                               echo '<option value ='.$cliente['idcliente'].'>'.$cliente['nombre'].'</option>'; 
+                           }
+                       ?>
+                </select>
+            </div>
+
         </div>
         <div id="div_resultados_clientes">
-               <?php  $this->mostrarCLientes();   ?>
+               <?php  $this->mostrarCLientes($clientes);   ?>
         </div>
 
         <?php   $this->modalNuevoCliente(); ?>
@@ -40,9 +51,9 @@ class clientesView
     <?php
  }
 
- public function mostrarCLientes()
+ public function mostrarCLientes($clientes)
  {
-    $clientes = $this->model->traerClientes(); 
+    // $clientes = $this->model->traerClientes(); 
     echo '<table class="table table-striped">';
         echo '<tr>'; 
         echo '<th>Nombre/Razon Social</th>';

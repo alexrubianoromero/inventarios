@@ -14,6 +14,20 @@ class ClienteModel extends Conexion
         $clientes = $this->get_table_assoc($consulta);
         return $clientes;
     }
+    public function traerClienteFiltrado($idCliente)
+    {
+        $sql = "select * from cliente0  where idcliente = '".$idCliente."' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $cliente = mysql_fetch_assoc($consulta);
+        return $cliente;
+    }
+    public function traerClienteFiltrado2($idCliente)
+    {
+        $sql = "select * from cliente0  where idcliente = '".$idCliente."' ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $cliente = $this->get_table_assoc($consulta);
+        return $cliente;
+    }
     public function grabarCliente($request)
     {
         $sql = "insert into cliente0  (nombre,identi,telefono,email,direccion,ciudad,idTipoContribuyente,sede)    

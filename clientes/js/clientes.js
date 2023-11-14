@@ -13,8 +13,47 @@ function listarClientes()
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send('opcion=listarClientes'
     );
-
 }
+function listarClienteFiltrado()
+{
+    //  alert('funcion javascript');
+    var idCliente = document.getElementById('idCliente').value;
+    const http=new XMLHttpRequest();
+    const url = 'clientes/clientes.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_resultados_clientes").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=listarClienteFiltrado'
+            +'&idCliente='+idCliente
+
+    );
+}
+function listarClienteFiltradoDesdeClientes()
+{
+    //  alert('funcion javascript');
+    var idCliente = document.getElementById('idCliente').value;
+    const http=new XMLHttpRequest();
+    const url = 'clientes/clientes.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_resultados_clientes").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=listarClienteFiltradoDesdeClientes'
+            +'&idCliente='+idCliente
+
+    );
+}
+
+
 function formuNuevoCliente()
 {
     //  alert('funcion javascript');
