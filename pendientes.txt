@@ -21,3 +21,7 @@ termine los filtros de  hardware
 ahora voy con los filtros de partes estoy en eso 
 
 estoy en los filtros de partes en el de caracteristicas o capacidad 
+ realize el filtro por cliente en pedidos y filtro por cliente en clientes 
+
+ pendiente por revisar las observaciones del pedido 
+ inicio los reportes 

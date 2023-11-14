@@ -55,7 +55,7 @@
                     </li> -->
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="sucursales();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Sucursales
                             </p>
@@ -63,7 +63,7 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="users();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Usuarios
                             </p>
@@ -71,7 +71,7 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="perfiles();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Perfiles
                             </p>
@@ -79,7 +79,7 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="inventarios();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Inventario
                             </p>
@@ -87,7 +87,7 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="pedidos();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Pedidos
                             </p>
@@ -95,7 +95,7 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="clientes();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Clientes
                             </p>
@@ -103,7 +103,7 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="hojasdevida();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Hojas de Vida
                             </p>
@@ -111,9 +111,17 @@
                     </li>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="tablerotecnicos();">
-                            <i class="nav-icon fas fa-th"></i>
+                           
                             <p>
                                 Tecnicos
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                    <a style="cursor:pointer;" class="nav-link" onclick="reportes();">
+                       
+                            <p>
+                                Reportes
                             </p>
                         </a>
                     </li>
@@ -143,7 +151,7 @@
                     </li> -->
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="salir();">
-                            <i class="nav-icon fas fa-th"></i>
+                            <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Salir
                             </p>

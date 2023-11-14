@@ -16,6 +16,7 @@ class PedidoModel extends Conexion
 
         public function __construct()
         {
+            session_start();
             $this->impuestoModel = new ImpuestoModel();
             $this->itemPedidoModel = new ItemInicioPedidoModel();
             $this->pagoModel = new PagoModel();
@@ -23,6 +24,40 @@ class PedidoModel extends Conexion
         public function traerPedidos()
         {
             $sql = "select * from pedidos where 1= 1 and idSucursal = '".$_SESSION['idSucursal']."'  order by idPedido desc";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidos = $this->get_table_assoc($consulta);
+            return $pedidos;
+        }
+        public function traerPedidosFechas($request)
+        {
+            $sql = "select * from pedidos p
+                    where 1= 1 
+                    and p.idSucursal = '".$_SESSION['idSucursal']."' ";
+            if($request['fechaIn'] != '')
+            {  $sql .= " and p.fecha >= '".$request['fechaIn']."'   "; }        
+            if($request['fechaFn'] != '')
+            { $sql .= " and p.fecha <= '".$request['fechaFin']."'   "; }        
+            $sql .= "order by p.idPedido desc";
+            die($sql ); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidos = $this->get_table_assoc($consulta);
+            return $pedidos;
+        }
+        public function traerItemsPedidoFechas($request)
+        {
+            $sql = "select p.idPedido,p.fecha,p.idCliente,
+                    i.id,i.tipoItem,i.idHardwareOParte,i.total 
+                    from pedidos p
+                    inner join itemsInicioPedido i on (i.idPedido = p.idPedido)
+                    where 1= 1 
+                    and i.estado = 1
+                    and p.idSucursal = '".$_SESSION['idSucursal']."' ";
+            if($request['fechaIn'] != '')
+            {  $sql .= " and p.fecha >= '".$request['fechaIn']."'   "; }        
+            if($request['fechaFn'] != '')
+            { $sql .= " and p.fecha <= '".$request['fechaFin']."'   "; }        
+            $sql .= "order by p.idPedido desc";
+            // die($sql ); 
             $consulta = mysql_query($sql,$this->connectMysql());
             $pedidos = $this->get_table_assoc($consulta);
             return $pedidos;
