@@ -43,7 +43,7 @@ class hojasdeVidaView extends vista
                </div>  
              
             </div>
-            <div id="div_movimientos_hardware">
+            <div id="div_movimientos_hardware" class="mt-3">
                 <?php  $this->traerHardware();  ?>
             </div>
        </div>

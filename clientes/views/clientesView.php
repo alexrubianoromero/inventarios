@@ -42,7 +42,7 @@ class clientesView
             </div>
 
         </div>
-        <div id="div_resultados_clientes">
+        <div id="div_resultados_clientes" class="mt-3">
                <?php  $this->mostrarCLientes($clientes);   ?>
         </div>
 

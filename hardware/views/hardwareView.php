@@ -39,16 +39,16 @@ class hardwareView extends vista
     {
         ?>
         <div  style="padding:5px;">
+            <!-- <div class="col-lg-2"></div>
             <div class="col-lg-2"></div>
             <div class="col-lg-2"></div>
-            <div class="col-lg-2"></div>
-            <div class="col-lg-2"></div>
-            <div  class="row" id="botones" class="mt-3 float-right" >
+            <div class="col-lg-2"></div> -->
+            <div  class="row" id="botones" class="mt-3 " >
                 <div class="col-lg-2">
                     <button type="button" 
                     data-bs-toggle="modal" 
                     data-bs-target="#modalNuevoHardware"
-                    class="btn btn-primary  float-right" 
+                    class="btn btn-primary " 
                     onclick="formuNuevoHardware()"
                     >
                     Nuevo Hardware
@@ -86,7 +86,7 @@ class hardwareView extends vista
                     Crear Computador/Monitor
                 </button>
             </div> -->
-            <div id="divResultadosHardware">
+            <div id="divResultadosHardware" class="mt-3">
                 <?php  
                         $this->traerHardwareMostrarmenu($hardware)  ?>
                 </div>

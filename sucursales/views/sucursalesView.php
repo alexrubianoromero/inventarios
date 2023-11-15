@@ -14,7 +14,7 @@ class sucursalesView
         ?>
         <div class="row" style="padding:10px;" >
             <h3>Sucursales</h3>
-            <div id="botones">
+            <div id="botones" >
                 <!-- Button trigger modal -->
                 <button type="button" 
                     data-bs-toggle="modal" 
@@ -25,11 +25,11 @@ class sucursalesView
                     Crear Sucursal
                 </button>
             </div>
-            <div id="resultados">
+            <div id="resultados" class ="mt-3">
                 <table class="table table-striped hover-hover">
                     <thead>
-                        <th>Id</th>
-                        <th>Nombre_Sucursal</th>
+                        <!-- <th>Id</th> -->
+                        <th>Sucursal</th>
                         <th>Direccion</th>
                         <th>Ciudad</th>
                     </thead>
@@ -39,7 +39,7 @@ class sucursalesView
                       foreach($sucursales as $sucursal)
                       {
                           echo '<tr>'; 
-                          echo '<td>'.$sucursal['id']. '</td>';
+                        //   echo '<td>'.$sucursal['id']. '</td>';
                           echo '<td>'.$sucursal['nombre']. '</td>';
                           echo '<td>'.$sucursal['direccion'].'</td>';
                           echo '<td>'.$sucursal['ciudad'].'</td>';

@@ -27,31 +27,31 @@ class partesView extends vista
     public function partesMenu($partes)
     {
         ?>
-        <div style="padding:10px;">
+        <div style="padding:5px;" >
 
-            <div id="botones" >
+            <div id="botones" class="row">
                 <div class="col-lg-2">
                     <button type="button" 
                         data-bs-toggle="modal" 
                         data-bs-target="#modalCreacionParte"
-                        class="btn btn-primary  float-left" 
+                        class="btn btn-primary " 
                         onclick="formuCreacionParte();"
                         >
                         Crear Parte
                     </button>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <button type="button" 
                         data-bs-toggle="modal" 
                         data-bs-target="#modalParteFiltro"
-                        class="btn btn-primary  float-left" 
+                        class="btn btn-primary  " 
                         onclick="formuFiltroParte();"
                         >
                         Filtros
                     </button>
                 </div>
             </div>
-            <div id="resultadosPartes">
+            <div id="resultadosPartes" class="mt-3">
                
                 <?php  $this->traerPartes($partes);  ?>
                 
@@ -75,7 +75,7 @@ class partesView extends vista
     ?>
          <table class="table table-striped hover-hover">
                     <thead>
-                        <th>Id.</th>
+                        <!-- <th>Id.</th> -->
                         <th>Parte</th>
                         <th>Tipo</th>
                         <th>Caracteristicas</th>
@@ -93,7 +93,7 @@ class partesView extends vista
                           // $infoPerfil = $this->perfilModel->traerPerfilId($user['id_perfil']); 
                         //   $tipoParte = $this->tipoParteModel->traerTipoParteId($inventario['idTipoParte']); 
                           echo '<tr>'; 
-                          echo '<td>'.$parte['id'].'</td>';
+                        //   echo '<td>'.$parte['id'].'</td>';
                           echo '<td>'.$tipoParte[0]['descripcion'].'</td>';
                           echo '<td>'.$subTipoParte[0]['descripcion'].'</td>';
                           echo '<td>'.$parte['capacidad'].'</td>';

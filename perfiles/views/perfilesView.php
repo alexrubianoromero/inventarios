@@ -14,7 +14,7 @@ class perfilesView
             <div id="resultados">
                 <table class="table table-striped hover-hover">
                     <thead>
-                        <th>Id</th>
+                        <!-- <th>Id</th> -->
                         <th>Nombre Perfil</th>
                         <!-- <th>Direccion</th> -->
                     </thead>
@@ -24,7 +24,7 @@ class perfilesView
                       foreach($perfiles as $perfil)
                       {
                           echo '<tr>'; 
-                          echo '<td>'.$perfil['id_perfil']. '</td>';
+                        //   echo '<td>'.$perfil['id_perfil']. '</td>';
                           echo '<td>'.$perfil['nombre_perfil']. '</td>';
                         //   echo '<td>'.$sucursal['direccion'].'</td>';
                           echo '</tr>';  

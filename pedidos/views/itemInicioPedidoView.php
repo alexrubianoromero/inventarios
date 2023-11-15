@@ -190,7 +190,8 @@ class iteminicioPedidoView extends vista
         // die(); 
 
         
-        echo '<div class="row" style="font-size:25px; color:blue;">'; 
+        // echo '<div class="row" style="font-size:25px; color:blue;">'; 
+        echo '<div class="row" style="font-size:25px;">'; 
         echo ' Cliente: ';
         echo  $infoCliente[0]['nombre']; 
         echo ' </div>';
@@ -344,12 +345,12 @@ class iteminicioPedidoView extends vista
 
             ?>
         </div>
-        <div class="row mt-3">
-            <div class="row col-lg-6">
-                
+        <div class=" row mt-3 " >
+            <div class="col-lg-6">
                 <?php
                 if($item['tipoItem'] == 1)
                 {
+                //  echo '<div >'; 
                  echo '<button 
                  style="margin:3px;"
                  onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
@@ -357,9 +358,11 @@ class iteminicioPedidoView extends vista
                  data-bs-toggle="modal" 
                  data-bs-target="#modalPedidoBuscarParteOSerial"
                  > BUSCAR SERIAL. </button>';
+                //  echo '</div>'; 
                 }
                 if($item['tipoItem'] == 2)
                 {
+                    // echo '<div >'; 
                     echo '<button 
                     style="margin:3px;"
                     onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
@@ -367,6 +370,7 @@ class iteminicioPedidoView extends vista
                     data-bs-toggle="modal" 
                     data-bs-target="#modalPedidoBuscarParteOSerial"
                     > BUSCAR PARTE. </button>';
+                    // echo '</div>'; 
                 }
                 ?>
             </div>

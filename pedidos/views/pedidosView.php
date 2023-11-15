@@ -406,7 +406,7 @@ class pedidosView extends vista
                     <span class="col-lg-2"><?php  echo $infoPedido['idPedido'];  ?></span>
                 </div>
                 <div class=" row col-lg-4">
-                    <div class="col-lg-3">% Retefuen
+                    <div class="col-lg-3">% Retef.
                         <input id="porcenretefuente" value = "<?php  echo $infoPedido['porcenretefuente']; ?>" size="4" >
                     </div>
                     <div class="col-lg-3">% ReteIca
@@ -491,7 +491,7 @@ class pedidosView extends vista
                  <div class="col-lg-3"></div>   
             </div>
 
-            <div class="row"   style="padding:2px;">
+            <div class="row"   style="padding:2px;" class="mt-3">
                     <div id= "divTipoItemPedido"  style="padding:5px;">
 
                     </div>    

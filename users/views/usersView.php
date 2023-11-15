@@ -33,7 +33,7 @@ class usersView
       
         <div class="row" style="padding:10px;" id="div_principal_usuarios321">
 
-            <h3 align="right">Usuarios</h3>
+            <!-- <h3 align="right">Usuarios</h3> -->
             <div id="botones">
                 <!-- Button trigger modal -->
                 <button type="button" 
@@ -46,7 +46,7 @@ class usersView
                 </button>
             </div>
             <div id="resultados">
-                <table class="table table-striped hover-hover">
+                <table class="table table-striped hover-hover mt-3">
                     <thead>
                         <th>Nombre</th>
                         <th>Usuario</th>
