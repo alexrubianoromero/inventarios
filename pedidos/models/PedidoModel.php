@@ -90,9 +90,9 @@ class PedidoModel extends Conexion
         {
             $impuestos = $this->impuestoModel->traerImpuestos();
 
-            $sql = "insert into pedidos (idCliente,fecha,porcenretefuente,porcenreteica,idSucursal)   
+            $sql = "insert into pedidos (idCliente,fecha,porcenretefuente,porcenreteica,idSucursal,	idusuarioCreacion)   
                 values ('".$request['idEmpresaCliente']."',now(),'".$impuestos['porcenretefuente']."'
-                ,'".$impuestos['porcenreteica']."','".$_SESSION['idSucursal']."')";
+                ,'".$impuestos['porcenreteica']."','".$_SESSION['idSucursal']."','".$_SESSION['id_usuario']."')";
                 $consulta = mysql_query($sql,$this->connectMysql());
                 //  die($sql); 
             $ultimoId =  $this->obtenerUltimoIdPedidos();   

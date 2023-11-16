@@ -235,7 +235,7 @@ class reportesView extends vista
                         $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);
                         $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($hardward['idSubInv']);  
                         $infoMarca = $this->marcaModel->traerMarcaId($hardward['idMarca']); 
-                        $numeroPedido =   $this->itemInicioPedidoModel->traerItemInicioPedidoId($hardward['idItemPedido']);
+                        $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idItemPedido']);
                         $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido); 
                         $nombreCliente =    $this->itemInicioPedidoModel->traerClientePedido($numeroPedido['pedido']);
                         $gananBase = $hardward['precioMinimoVenta'] - $hardward['costoProducto'];

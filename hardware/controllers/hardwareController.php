@@ -162,7 +162,7 @@ class hardwareController extends controllerClass
             //se comenta el proceso anterior
             // $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
             //la info que debe venir es el idItem y el idHardware  
-            $this->asociadoItemInicio->insertarAsociacionHardwareConItemRegistro($_REQUEST);
+            $idAsociadoItem = $this->asociadoItemInicio->insertarAsociacionHardwareConItemRegistro($_REQUEST);
 
             //actualizar la tabla de hardware con estado si es alquilado o vendido
             //traer el campo estado de la tabla itemInicioPedido osea vendido o rentado 
@@ -181,7 +181,7 @@ class hardwareController extends controllerClass
             }else{
                 //cambiar el estado 
                 $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$infoItem['estado']); 
-                $this->model->actualizarIdItemEnHardware($_REQUEST['idHardware'],$infoItem['id']); 
+                $this->model->actualizarIdAsociacionItemEnHardware($_REQUEST['idHardware'],$idAsociadoItem); 
             }
             
             echo 'Relacionado de forma correcta '; 

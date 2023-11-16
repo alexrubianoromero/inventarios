@@ -16,9 +16,10 @@ class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
             $sql = "insert into asociadoItemInicioPedidoHardwareOparte(idHardwareOParte,idItemInicioPedido,fecha,idUsuario) 
             values ('".$request['idHardware']."','".$request['idItemAgregar']."',now(),'".$_SESSION['id_usuario']."')	 ";
             $consulta = mysql_query($sql,$this->connectMysql());
-            // $estadosInicio = $this->get_table_assoc($consulta);
-            // return $estadosInicio;
+            $maximo = $this->traerMaximoId();
+            return $maximo; 
         }
+
         public function insertarAsociacionParteConItemRegistro($request)
         {
             $sql = "insert into asociadoItemInicioPedidoHardwareOparte(idHardwareOParte,idItemInicioPedido,fecha,idUsuario) 
@@ -34,7 +35,7 @@ class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
             $sql = "select max(id) as maximo from asociadoItemInicioPedidoHardwareOparte ";
             $consulta = mysql_query($sql,$this->connectMysql());
             $arrMaximo= mysql_fetch_assoc($consulta); 
-            return $arrMaximo['macimo'];
+            return $arrMaximo['maximo'];
         }
 
         public function traerAsociadoItemIdAsociado($idAsociado)

@@ -83,14 +83,22 @@ class ItemInicioPedidoModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         
-        public function traerItemInicioPedidoId($idAsociacion)
+        public function traerItemInicioPedidoId($idItem)
+        {
+            $sql = "select  * from itemsInicioPedido   where id = '".$idItem."'  and anulado = 0"; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $infoPedido =  mysql_fetch_assoc($consulta);
+            return $infoPedido;   
+        }
+        
+        public function traerPedidoConIdAsociadoItem($idAsociacion)
         {
             $sql = "select p.idPedido  as pedido
             from asociadoItemInicioPedidoHardwareOparte  a
             inner join  itemsInicioPedido i on (i.id = a.idItemInicioPedido)
             inner join pedidos p on (p.idPedido = i.idPedido)
             where a.id = '".$idAsociacion."'  "; 
-            // echo '<br>'.$sql;
+            echo '<br>'.$sql;
             $consulta = mysql_query($sql,$this->connectMysql());
             $infoPedido =  mysql_fetch_assoc($consulta);
             // echo '<pre>'; 

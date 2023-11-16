@@ -50,3 +50,5 @@ limpiar la base de datos
 en que parte se ingresa el valor al que se vendio un producto
 revisar lo del informe financiero
 revisar como hago para que se actualice el estado en la ventana de estados de pedidos pendientes cuando actualizo el estado 
+
+generar aviso cuando no halla informacion en los informes 
