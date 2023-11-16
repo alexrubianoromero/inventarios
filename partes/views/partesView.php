@@ -80,6 +80,12 @@ class partesView extends vista
                         <th>Tipo</th>
                         <th>Caracteristicas</th>
                         <th>Cantidad</th>
+                        <?php
+                            if($_SESSION['nivel']==3)
+                            {
+                               echo  '<th>Costo</th>';
+                            }   
+                        ?>
                         <th>Movimientos</th>
                         <th>Acciones</th>
                     </thead>
@@ -98,6 +104,10 @@ class partesView extends vista
                           echo '<td>'.$subTipoParte[0]['descripcion'].'</td>';
                           echo '<td>'.$parte['capacidad'].'</td>';
                           echo '<td>'.$parte['cantidad'].'</td>';
+                          if($_SESSION['nivel']==3)
+                          {
+                              echo '<td>'.$parte['costo'].'</td>';
+                          }
                           echo '<td><button 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#modalVerMovimientos"
@@ -251,6 +261,10 @@ class partesView extends vista
                 <div class="col-md-3">
                     <label for="">Cantidad </label>
                       <input class ="form-control" type="text" id="cantidad" value ="<?php  echo $producto['cantidad'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Costo </label>
+                      <input class ="form-control" type="text" id="costo" value ="<?php  echo $producto['costo'] ?>">          
                 </div>
             
         </div>

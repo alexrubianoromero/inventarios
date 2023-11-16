@@ -95,6 +95,7 @@ function grabarNuevaParte()
         var isubtipo = document.getElementById('isubtipo').value;
         var capacidad = document.getElementById('capacidad').value;
         var cantidad = document.getElementById('cantidad').value;
+        var costo = document.getElementById('costo').value;
 
         const http=new XMLHttpRequest();
         const url = 'partes/partes.php';
@@ -110,6 +111,7 @@ function grabarNuevaParte()
         +'&isubtipo='+isubtipo
         +'&capacidad='+capacidad
         +'&cantidad='+cantidad
+        +'&costo='+costo
         );
     }
 }
