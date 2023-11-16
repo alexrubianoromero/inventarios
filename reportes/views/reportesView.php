@@ -44,7 +44,7 @@ class reportesView extends vista
             <div>
                 <button class="btn btn-primary" onclick="formuReporteVentas();">Reporte de Ventas</button>
                 <button class="btn btn-primary" onclick="reporteEstadoEquipo();">Reporte Estado Equipo</button>
-                <button class="btn btn-primary" onclick="verReporteFinanciero();">Reporte de Ventas</button>
+                <button class="btn btn-primary" onclick="verReporteFinanciero();">Reporte Financiero</button>
             </div>
             <div id="div_resultados_reportes">
 
@@ -170,36 +170,39 @@ class reportesView extends vista
                         echo '<td>'.$hardward['serial'].'</td>';
                         echo '<td>'.$hardward['idImportacion'].'</td>';
                         echo '<td>'.$infoEstado['descripcion'].'</td>';
-                        //    $dadodebaja = 4;
-                        //    if($estado == $dadodebaja)
-                        //    {
-                            
-                            //        echo '<td><button 
-                            //                    class="btn btn-secondary btn-sm " 
-                            //                    onclick="habilitarHardware('.$hardward['id'].');"
-                            //                    >Habilitar</button></td>';
-                            //    }else{
-                                
-                                //        echo '<td><button 
-                                //                    class="btn btn-primary btn-sm " 
-                                //                    onclick="verificarDarDeBaja('.$hardward['id'].');"
-                                //                    >Dar Baja</button></td>';
-                                //    }
-                                
-                                //    echo '<td><button 
-                                //                class="btn btn-primary btn-sm " 
-                                //                onclick="verMovimientosHardware('.$hardward['id'].');"
-                                //                >Historial</button></td>';
-                                //    echo '</tr>';  
-                            }
+                    }
                             ?>
                   </tbody>
               </table> 
 
         <?php
     }
-
-
+    
+    public function verReporteFinanciero($hardwards)
+    {
+        // $estados = $this->estadoInicioPedidoModel->traerEstadosInicioPedido();
+        ?>
+        <div class="row mt-3" >
+            <div class="col-lg-3" align="right">
+                Enviar a excel: 
+            </div>
+            <div class="col-lg-6">
+                <select id="idEnviarExcel" class="form-control">
+                    <option value ="-1">Seleccione...</option>
+                    <option value ="1">SI</option>
+                    <option value ="2">NO</option>
+                   
+                </select>
+            </div>
+           
+        </div>
+        <div id="div_mostrar_reporte_financiero">
+                 <?php  $this->verEquiposFinanciero($hardwards);   ?>       
+           
+        </div>
+    <?php
+    }
+    
     public function verEquiposFinanciero($hardwards)
     {
         ?>
@@ -235,7 +238,7 @@ class reportesView extends vista
                         $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);
                         $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($hardward['idSubInv']);  
                         $infoMarca = $this->marcaModel->traerMarcaId($hardward['idMarca']); 
-                        $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idItemPedido']);
+                        $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idAsociacionItem']);
                         $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido); 
                         $nombreCliente =    $this->itemInicioPedidoModel->traerClientePedido($numeroPedido['pedido']);
                         $gananBase = $hardward['precioMinimoVenta'] - $hardward['costoProducto'];
@@ -296,29 +299,5 @@ class reportesView extends vista
 
 
 
-    public function verReporteFinanciero($hardwards)
-    {
-        // $estados = $this->estadoInicioPedidoModel->traerEstadosInicioPedido();
-        ?>
-        <div class="row mt-3" >
-            <div class="col-lg-3" align="right">
-                Enviar a excel: 
-            </div>
-            <div class="col-lg-6">
-                <select id="idEnviarExcel" class="form-control">
-                    <option value ="-1">Seleccione...</option>
-                    <option value ="1">SI</option>
-                    <option value ="2">NO</option>
-                   
-                </select>
-            </div>
-           
-        </div>
-        <div id="div_mostrar_reporte_financiero">
-                 <?php  $this->verEquiposFinanciero($hardwards);   ?>       
-           
-        </div>
-    <?php
-    }
 
 }    

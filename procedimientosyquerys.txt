@@ -13,7 +13,7 @@ truncate pedidos;
 truncate itemsInicioPedido;
 truncate asignacionTecnicoPedido;
 truncate asociadoItemInicioPedidoHardwareOparte;
-update hardware set idEstadoInventario = 0, idItemPedido=0;
+update hardware set idEstadoInventario = 0, idAsociacionItem=0;
 
 
 

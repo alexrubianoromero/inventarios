@@ -85,7 +85,7 @@ class reportesController
     }
     public function verReporteFinanciero($request)
     {
-        $hardwards = $this->HardwareModel->traerHardwareConIdItem(); 
+        $hardwards = $this->HardwareModel->traerHardwareSinDadosDeBaja(); 
         $this->view->verReporteFinanciero($hardwards) ;
     }
 

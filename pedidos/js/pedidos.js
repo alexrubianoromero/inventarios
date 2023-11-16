@@ -187,12 +187,6 @@ function actulizarIPedido(idPedido)
 
 function formuAsignarItemPedidoATecnico(idItemPedido)
 {
-    // alert('idpedido '+ idPedido +' idItem '+ idItemPedido);
-    // var valida = validarInfoTecnico();
-    // if(valida==1)
-    // {
-        // var idPrioridad = document.getElementById('idPrioridad').value;
-        // var idTecnico = document.getElementById('idTecnico').value;
         const http=new XMLHttpRequest();
         const url = 'pedidos/pedidos.php';
         http.onreadystatechange = function(){

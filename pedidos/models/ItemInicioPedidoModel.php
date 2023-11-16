@@ -98,7 +98,7 @@ class ItemInicioPedidoModel extends Conexion
             inner join  itemsInicioPedido i on (i.id = a.idItemInicioPedido)
             inner join pedidos p on (p.idPedido = i.idPedido)
             where a.id = '".$idAsociacion."'  "; 
-            echo '<br>'.$sql;
+            // echo '<br>'.$sql;
             $consulta = mysql_query($sql,$this->connectMysql());
             $infoPedido =  mysql_fetch_assoc($consulta);
             // echo '<pre>'; 

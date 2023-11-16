@@ -205,7 +205,7 @@ class HardwareModel extends Conexion
     }
     public function actualizarIdAsociacionItemEnHardware($idHardware,$idItem)
     {
-        $sql = "update hardware set idItemPedido = '".$idItem."'   where id = '".$idHardware."'     "; 
+        $sql = "update hardware set idAsociacionItem = '".$idItem."'   where id = '".$idHardware."'     "; 
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
 
