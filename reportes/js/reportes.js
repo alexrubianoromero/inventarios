@@ -37,3 +37,56 @@ function generarReporteVentas()
     +'&fechaFin='+fechaFin
     );
 }
+function reporteEstadoEquipo()
+{
+    // var fechaIn = document.getElementById('fechaIn').value;
+    // var fechaFin = document.getElementById('fechaFin').value;
+    const http=new XMLHttpRequest();
+    const url = 'reportes/reportes.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("div_resultados_reportes").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=reporteEstadoEquipo'
+    // +'&fechaIn='+fechaIn
+    // +'&fechaFin='+fechaFin
+    );
+}
+function traerEquiposFiltradoEstado()
+{
+    var idEstadoFiltrar = document.getElementById('idEstadoFiltrar').value;
+    const http=new XMLHttpRequest();
+    const url = 'reportes/reportes.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_mostrar_equipos_filtrados_estado").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=traerEquiposFiltradoEstado'
+    +'&idEstadoFiltrar='+idEstadoFiltrar
+    );
+}
+function verReporteFinanciero()
+{
+    var idEnviarExcel = document.getElementById('idEnviarExcel').value;
+    const http=new XMLHttpRequest();
+    const url = 'reportes/reportes.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_mostrar_equipos_filtrados_estado").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=verReporteFinanciero'
+    +'&idEnviarExcel='+idEnviarExcel
+    );
+}

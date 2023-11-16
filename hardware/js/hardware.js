@@ -796,6 +796,7 @@ function fitrarHardwareSubTipoInventario()
     );
 }
 
+
 function formuDevolucionHardware(idMovimiento)
 {
     // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;

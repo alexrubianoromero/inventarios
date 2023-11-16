@@ -254,6 +254,7 @@ class hardwareController extends controllerClass
             // $this->printR($_REQUEST);
             $this->model->actualizarCostos($_REQUEST);
         }
+ 
 
 
         
@@ -379,7 +380,7 @@ class hardwareController extends controllerClass
 
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }
-
+   
 
     public function formularioSubirArchivo()
     {

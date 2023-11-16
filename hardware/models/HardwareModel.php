@@ -82,6 +82,14 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    public function traerEquiposFiltradoEstado($idEstado)
+    {
+        $sql = "select * from hardware where idEstadoInventario = '".$idEstado."' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
 
 
 

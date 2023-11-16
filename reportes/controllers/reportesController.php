@@ -3,6 +3,7 @@ $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/reportes/views/reportesView.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/hardware/models/HardwareModel.php'); 
 // require_once($raiz.'/pagos/models/PagoModel.php'); 
 // require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
 // die('controller'.$raiz);
@@ -13,6 +14,7 @@ class reportesController
     protected $view; 
     protected $pedidoModel;
     protected $itemInicioModel;
+    protected $HardwareModel;
     // protected $model ; 
     // protected $pagoModel ; 
 
@@ -23,6 +25,7 @@ class reportesController
         $this->view = new reportesView();
         $this->pedidoModel = new PedidoModel();
         $this->itemInicioModel = new ItemInicioPedidoModel();
+        $this->HardwareModel = new HardwareModel();
 
         if($_REQUEST['opcion']=='reportesMenu')
         {
@@ -38,7 +41,24 @@ class reportesController
             // die('llego aca '); 
             $this->generarReporteVentas($_REQUEST);
         }
+        if($_REQUEST['opcion']=='reporteEstadoEquipo')
+        { 
+            $this->reporteEstadoEquipo($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='traerEquiposFiltradoEstado')
+        {
+            // $this->printR($_REQUEST);
+            $this->traerEquiposFiltradoEstado($_REQUEST);
+        }
+        
+        if($_REQUEST['opcion']=='verReporteFinanciero')
+        {
+            // $this->printR($_REQUEST);
+            $this->verReporteFinanciero($_REQUEST);
+        }
+        
     }
+
 
     public function generarReporteVentas($request)
     {
@@ -48,6 +68,29 @@ class reportesController
         //  $traerVentasdePedidos =  $this->itemInicioModel->traerItemsVentas(); 
         $this->view->mostrarReporteVentas($itemsVentasPedidosFechas);
     }
+
+    public function reporteEstadoEquipo($request)
+    {
+        $hardwards = $this->HardwareModel->traerHardware(); 
+        //    echo '<pre>'; print_r($hardwards);  echo '</pre>';
+        //     die('llego aca '); 
+        $this->view->reporteEstadoEquipo($hardwards);
+    }
+
+    public function traerEquiposFiltradoEstado($request)
+    {
+        $hardwarsFiltrados =  $this->HardwareModel->traerEquiposFiltradoEstado($request['idEstadoFiltrar']);
+
+        $this->view->verEquipos($hardwarsFiltrados) ;
+    }
+    public function verReporteFinanciero($request)
+    {
+        $hardwarsFiltrados =  $this->HardwareModel->traerEquiposFiltradoEstado($request['idEstadoFiltrar']);
+
+        $this->view->verEquipos($hardwarsFiltrados) ;
+    }
+
+
     
 
 }   
