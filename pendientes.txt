@@ -25,3 +25,16 @@ estoy en los filtros de partes en el de caracteristicas o capacidad
 
  pendiente por revisar las observaciones del pedido 
  inicio los reportes 
+
+ revisiones pendientes 
+ verificar lo de las observaciones de los pedidos 
+ verificar la forma como se van a agregar el inventario a los items del pedido por ejemplo en el caso que sean varios hardware o partes 
+
+preguntar eso 
+definir bien el proceso del pedido y sus implicaciones 
+verificar que pasa cuando se quita un item si se reestablecen los valores del hardware o parte 
+
+Sigo con la mejora en la parte visual de mostrar los items del tecnico por pedido 
+
+tener encuenta cuando se vende o alquila un item que se transmita a las partes 
+tener en cuenta al quitar un item de un pedido desasociar el hardware del iditem en la tabla de hardware y cambiar el estado 

@@ -608,7 +608,7 @@ function filtrarHardwarePorSerial()
 function relacionarHardwareAItemPedido(idHardware)
 {
     var idItemAgregar = document.getElementById('idItemAgregar').value;
-    // alert('idhardware '+ idHardware +' idItem '+ idItemAgregar );
+    //  alert('idhardware '+ idHardware +' idItem '+ idItemAgregar );
     const http=new XMLHttpRequest();
     const url = 'hardware/hardware.php';
     http.onreadystatechange = function(){

@@ -36,10 +36,21 @@ class itemInicioPedidoController
         {
             $this->verItemsAsignadosTecnico($_REQUEST);
         }
+        
         if($_REQUEST['opcion']=='mostrarItemsInicioPedidoTecnico')
         {
             $this->itemInicioview->mostrarItemsInicioPedidoTecnico($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
         }
+        if($_REQUEST['opcion']=='mostrarItemsInicioPedidoTecnicoNuevo')
+        {
+            $this->itemInicioview->mostrarItemsInicioPedidoTecnicoNuevo($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
+        }
+        if($_REQUEST['opcion']=='modificarItemInicioPedido')
+        {
+            $this->itemInicioview->modificarItemInicioPedido($_REQUEST['idItem']);
+        }
+
+
         if($_REQUEST['opcion']=='actulizarEstadoProcesoItem')
         {
             $this->model->actulizarEstadoProcesoItem($_REQUEST);

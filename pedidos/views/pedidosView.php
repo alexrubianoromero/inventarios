@@ -84,19 +84,13 @@ class pedidosView extends vista
                     data-bs-target="#modalPedido" -->
                    NUEVO PEDIDO
                     </button> 
-                    
                 </div>
                 <div class="col-lg-3">
 
                 </div>
-
-
-        
-
-                
-
             </div>
             <br>
+            <div id="divMostrarItemsPedidoTecnico" style="padding:5px; border:1px solid black;"></div>
             <div id="divResultadosPedidos" class="row mt-3">
                  <?php $this->mostrarPedidos($pedidos); ?>
                 
@@ -109,6 +103,7 @@ class pedidosView extends vista
             $this->modalPedidoVerItemTecnico();  
             $this->modalPedidoBuscarParteOSerial(); 
             $this->modalPedidoActualizar2();  
+       
         
             ?>
             
@@ -116,7 +111,7 @@ class pedidosView extends vista
         </div>
         <?php
     }
-
+    
     public function mostrarPedidos($pedidos)
     {
         ?>
@@ -506,9 +501,7 @@ class pedidosView extends vista
                                     class="form-control" 
                                     id="comentarios" 
                                     rows = "7"
-                                    >
-                                    <?php   echo trim($infoPedido['observaciones']); ?>
-                                </textarea>
+                                    ><?php  echo   $infoPedido['observaciones']; ?></textarea>
                              </div>            
                                 <div class="col-lg-4">
                                     <!-- aqui ira la parte de los calculos totales del pedido  -->
@@ -832,13 +825,13 @@ class pedidosView extends vista
                                 // if($pedido)
                                 echo '<br>';
                                 echo '<button 
-                                        onclick="mostrarItemsInicioPedidoTecnico('.$pedido['idPedido'].','.$tecnico['idTecnico'].')"; 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#modalPedidoVerItemTecnico"
+                                        onclick="mostrarItemsInicioPedidoTecnicoNuevo('.$pedido['idPedido'].','.$tecnico['idTecnico'].')"; 
                                         class="btn '.$claseBoton.' btn-sm" 
                                         style="margin-bottom:3px"
                                         >'.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
-                                     '</button>';
+                                        '</button>';
+                                        // data-bs-toggle="modal" 
+                                        // data-bs-target="#modalPedidoVerItemTecnico"
                             }
                         ?>    
                     </div>

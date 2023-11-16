@@ -10,6 +10,7 @@ require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php');
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/hojasdevida/views/hojasdeVidaView.php'); 
 require_once($raiz.'/controller/controllerClass.php'); 
+require_once($raiz.'/pedidos/models/AsociadoItemInicioPedidoHardwareOparteModel.php'); 
 
 class hardwareController extends controllerClass
 {
@@ -21,6 +22,7 @@ class hardwareController extends controllerClass
     protected $MovHardwareModel;
     protected $hojasdeVidaView;
     protected $estadoInicioPedidoModel;
+    protected $asociadoItemInicio; 
 
     public function __construct()
     {
@@ -33,6 +35,7 @@ class hardwareController extends controllerClass
         $this->MovHardwareModel = new MovimientoHardwareModel();
         $this->hojasdeVidaView = new hojasdeVidaView();
         $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
+        $this->asociadoItemInicio = new AsociadoItemInicioPedidoHardwareOparteModel();
 
         if($_REQUEST['opcion']=='hardwareMenu')
         {
@@ -146,7 +149,7 @@ class hardwareController extends controllerClass
             //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
             //falta crear el movimiento historico 
             $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
-            // $this->printR($infoItem);
+            // $this->printR($_SESSION);
             $tipoMov = 2 ; //sale del inventario;
             $infoMov = new stdClass();
             $infoMov->idTipoMov = $tipoMov ;  
@@ -155,7 +158,11 @@ class hardwareController extends controllerClass
             $infoMov->idHardware = $_REQUEST['idHardware'];  
             $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
             
-            $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
+            //aqui hay que vambiar el modelo para que realice la asociacion a la tabla asociacion respectiva
+            //se comenta el proceso anterior
+            // $this->itemInicioModel->relacionarHardwareAItemPedido($_REQUEST);
+            //la info que debe venir es el idItem y el idHardware  
+            $this->asociadoItemInicio->insertarAsociacionHardwareConItemRegistro($_REQUEST);
 
             //actualizar la tabla de hardware con estado si es alquilado o vendido
             //traer el campo estado de la tabla itemInicioPedido osea vendido o rentado 
@@ -174,6 +181,7 @@ class hardwareController extends controllerClass
             }else{
                 //cambiar el estado 
                 $this->model->actualizarEstadoHardware($_REQUEST['idHardware'],$infoItem['estado']); 
+                $this->model->actualizarIdItemEnHardware($_REQUEST['idHardware'],$infoItem['id']); 
             }
             
             echo 'Relacionado de forma correcta '; 

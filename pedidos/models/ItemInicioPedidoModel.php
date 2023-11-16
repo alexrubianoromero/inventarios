@@ -183,7 +183,16 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
-        
+        public function traerIdHardwarsAsociadosItem($idItem)
+        {
+           $sql ="select h.serial from asociadoItemInicioPedidoHardwareOparte  a
+                  inner join hardware h on (h.id = a.idHardwareOParte)
+                  where a.idItemInicioPedido = '".$idItem."'  
+                  order by a.id asc "; 
+           $consulta = mysql_query($sql,$this->connectMysql());
+           $hardwars = $this->get_table_assoc($consulta);    
+           return $hardwars;
+        }
    
         
     }

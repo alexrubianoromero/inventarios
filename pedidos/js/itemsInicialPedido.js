@@ -269,6 +269,32 @@ function mostrarItemsInicioPedidoTecnico(idPedido,idTecnico)
     );
 
 }
+//esta se crea para mejorar la parte visual cuando se quieren ver los items
+//que tiene un tecnico de forma mas horizontal en un div 
+//no en una ventana modal y de esta manera que se a mas facil ver la info
+function mostrarItemsInicioPedidoTecnicoNuevo(idPedido,idTecnico)
+{
+    //  alert('funcion javascript');
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/itemInicioPedido.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+               document.getElementById("divMostrarItemsPedidoTecnico").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=mostrarItemsInicioPedidoTecnicoNuevo'
+    +'&idPedido='+idPedido
+    +'&idTecnico='+idTecnico
+    );
+
+}
+function limpiarDivItems()
+{
+    document.getElementById("divMostrarItemsPedidoTecnico").innerHTML  = '';
+}
 function actulizarEstadoProcesoItem(idItem)
 {
     //  alert('funcion javascript');
@@ -278,7 +304,7 @@ function actulizarEstadoProcesoItem(idItem)
     http.onreadystatechange = function(){
 
         if(this.readyState == 4 && this.status ==200){
-            //    document.getElementById("modalBodyPedidoVerItemTecnico").innerHTML  = this.responseText;
+            //    document.getElementById("divMostrarItemsPedidoTecnico").innerHTML  = '';
         }
     };
     http.open("POST",url);
@@ -286,6 +312,26 @@ function actulizarEstadoProcesoItem(idItem)
     http.send('opcion=actulizarEstadoProcesoItem'
     +'&idItem='+idItem
     +'&idEstadoProcesoItem='+idEstadoProcesoItem
+    );
+
+}
+function modificarItemInicioPedido(idItem)
+{
+    //  alert('funcion javascript');
+    // var idEstadoProcesoItem = document.getElementById('idEstadoProcesoItem').value;
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/itemInicioPedido.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+                document.getElementById("modalBodyModificarItem").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=modificarItemInicioPedido'
+    +'&idItem='+idItem
+    // +'&idEstadoProcesoItem='+idEstadoProcesoItem
     );
 
 }
