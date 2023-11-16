@@ -573,23 +573,30 @@ class iteminicioPedidoView extends vista
             echo '<label style="color:green ">SERIALES RELACIONADOS</label> ';
             // $infoHardware = $this->hardwareModel->verHardware($item['idHardwareOParte']);
             echo '<div>';
-                // echo 'serial:  <label style="color:blue;">'.$infoHardware['serial'].'</label>' ; 
-                // echo 'Seriales: ';
-                foreach($seriales as $serial)
-                {
-                    echo $serial['serial'].' - ';
-                } 
+            // echo 'serial:  <label style="color:blue;">'.$infoHardware['serial'].'</label>' ; 
+            // echo 'Seriales: ';
+            foreach($seriales as $serial)
+            {
+                echo $serial['serial'].' - ';
+            } 
             echo '</div>';
         }
         if($item['tipoItem']== 2)
         {
-            echo '<label style="color:green ">PARTE RELACIONADA</label> ';
-            $infoParte =  $this->partesModel->traerParte($item['idHardwareOParte']);
-            $subtipoInfo =   $this->subtipoParteModel->traerSubTipoParte($infoParte[0]['idSubtipoParte']);                
+            echo '<label style="color:green ">PARTES RELACIONADAS</label> ';
+            $partes =  $this->itemIniciopedidoModel->traerIdPArtesAsociadasItem($item['id']); 
+            
             // $this->printR($infoParte);
             echo '<div>';
-                echo '<label style="color:blue;">'.$subtipoInfo[0]['descripcion'].'</label>' ; 
-                echo ' <label style="color:blue;">'.$infoParte[0]['capacidad'].'</label>' ; 
+            // echo '<label style="color:blue;">'.$subtipoInfo[0]['descripcion'].'</label>' ; 
+            // echo ' <label style="color:blue;">'.$infoParte[0]['capacidad'].'</label>' ; 
+            foreach($partes as $parte)
+            {
+                $infoParte =  $this->partesModel->traerParte($parte['id']);
+                $subtipoInfo =   $this->subtipoParteModel->traerSubTipoParte($infoParte[0]['idSubtipoParte']);                
+                    // echo $parte['id'].' - ';
+                    echo $subtipoInfo[0]['descripcion'].' - '.$infoParte[0]['capacidad'].'<br>' ;
+                } 
             echo '</div>';
         }
 

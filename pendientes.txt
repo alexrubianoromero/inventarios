@@ -38,3 +38,5 @@ Sigo con la mejora en la parte visual de mostrar los items del tecnico por pedid
 
 tener encuenta cuando se vende o alquila un item que se transmita a las partes 
 tener en cuenta al quitar un item de un pedido desasociar el hardware del iditem en la tabla de hardware y cambiar el estado 
+tener en cuenta que al asoiciar un hardware sus partes tambien deben quedar en el mismo estado 
+y de esta manera reversar cuando se quite el hardware 

@@ -4,6 +4,7 @@ require_once($raiz.'/partes/views/partesView.php');
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoParteModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/pedidos/models/AsociadoItemInicioPedidoHardwareOparteModel.php'); 
 
 class partesController
 {
@@ -11,6 +12,7 @@ class partesController
     protected $model;
     protected $MovParteModel;
     protected $itemInicioModel;
+    protected $asociadoItemInicio; 
 
     public function __construct()
     {
@@ -19,6 +21,7 @@ class partesController
         $this->model = new PartesModel();
         $this->MovParteModel = new MovimientoParteModel();
         $this->itemInicioModel = new ItemInicioPedidoModel();
+        $this->asociadoItemInicio = new AsociadoItemInicioPedidoHardwareOparteModel();
 
         if($_REQUEST['opcion']=='partesMenu')
         {
@@ -58,10 +61,13 @@ class partesController
             // echo '</pre>';
             // die('antes de movimiento ');
             // die('llego acapartes conteoller'); 
-            $this->itemInicioModel->relacionarparteAItemPedido($_REQUEST);
+            // $this->itemInicioModel->relacionarparteAItemPedido($_REQUEST);
+            $this->asociadoItemInicio->insertarAsociacionParteConItemRegistro($_REQUEST);
             $tipoMov = 2;    //osea salida de inventario 
             $cantidadParaActualizar  = 1; //voy a dejarla en 1 por defecto 
             $data = $this->model->sumarDescontarPartes($tipoMov,$_REQUEST['idParte'],$cantidadParaActualizar);
+            //en partes pues se maneja con doigo de la ´parte un codigo bajo varias cantidades 
+            //entonces no hay forma de relacionar el item en una parte 
             ///////////////
             //aqui hay que crear el movimiento respectivo de parte
             $infoMov = new stdClass();
