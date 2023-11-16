@@ -8,3 +8,8 @@ truncate itemsInicioPedido;
 
 
 update itemsInicioPedido set idHardwareOParte = 0 ; 
+
+delete  from pedidos;
+delete from itemsInicioPedido;
+delete from asignacionTecnicoPedido;
+delete from asociadoItemInicioPedidoHardwareOparte;

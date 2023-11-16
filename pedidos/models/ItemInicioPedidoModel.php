@@ -83,16 +83,21 @@ class ItemInicioPedidoModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         
-        public function traerItemInicioPedidoId($id)
+        public function traerItemInicioPedidoId($idAsociacion)
         {
-            $sql = "select  * from itemsInicioPedido   where id = '".$id."'  and anulado = 0"; 
+            $sql = "select p.idPedido  as pedido
+            from asociadoItemInicioPedidoHardwareOparte  a
+            inner join  itemsInicioPedido i on (i.id = a.idItemInicioPedido)
+            inner join pedidos p on (p.idPedido = i.idPedido)
+            where a.id = '".$idAsociacion."'  "; 
+            // echo '<br>'.$sql;
             $consulta = mysql_query($sql,$this->connectMysql());
-            $infoItemInicio =  mysql_fetch_assoc($consulta);
+            $infoPedido =  mysql_fetch_assoc($consulta);
             // echo '<pre>'; 
             // print_r($infoItemInicio); 
             // echo '</pre>';
             // die(); 
-            return $infoItemInicio;   
+            return $infoPedido;   
         }
         
         public function sumaItemsInicioPedidoIdPedido($idPedido)
@@ -205,7 +210,31 @@ class ItemInicioPedidoModel extends Conexion
            $partes = $this->get_table_assoc($consulta);    
            return $partes;
         }
-   
+        
+        // public function traerClienteConIdAsociacion($idItemAsociacion)
+        // {
+            //     $sql ="select c.nombre 
+            //     from asociadoItemInicioPedidoHardwareOparte a
+            //     inner join itemsInicioPedido i on (i.id =  a.idItemInicioPedido) 
+            //     inner join pedidos  p on (p.idPedido = i.idPedido)
+            //     inner join cliente0 c on (c.idcliente = p.idCliente)
+            //     where a.id = '".$idItemAsociacion."' 
+            //     "; 
+            //     // echo $sql .'<br>'; 
+            //     $consulta = mysql_query($sql,$this->connectMysql());
+            //     $arrCliente = mysql_fetch_assoc($consulta);  
+            //     return $arrCliente['nombre'];
+            // }
+            public function traerClientePedido($idPedido)
+        {
+               $sql = "select c.nombre from pedidos p
+               inner join cliente0 c on (c.idcliente = p.idCliente)
+               where idPedido = '".$idPedido."'";
+               $consulta = mysql_query($sql,$this->connectMysql());
+               $arrnombre = mysql_fetch_assoc($consulta);   
+               return $arrnombre['nombre'];
+               
+        }
         
     }
     

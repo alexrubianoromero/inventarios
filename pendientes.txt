@@ -41,5 +41,12 @@ tener en cuenta al quitar un item de un pedido desasociar el hardware del iditem
 tener en cuenta que al asoiciar un hardware sus partes tambien deben quedar en el mismo estado 
 y de esta manera reversar cuando se quite el hardware 
 
+* se debe tgener en cuenta que cuaqndo se agregue un hardware a una parte se grabe el id de la tabla asociacion no el it del item 
+porque puede tener varios hardware asociados 
 
 tener en cuenta la opcion de bodega 
+
+limpiar la base de datos 
+en que parte se ingresa el valor al que se vendio un producto
+revisar lo del informe financiero
+revisar como hago para que se actualice el estado en la ventana de estados de pedidos pendientes cuando actualizo el estado 

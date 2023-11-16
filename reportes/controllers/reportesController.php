@@ -50,13 +50,13 @@ class reportesController
             // $this->printR($_REQUEST);
             $this->traerEquiposFiltradoEstado($_REQUEST);
         }
-        
         if($_REQUEST['opcion']=='verReporteFinanciero')
         {
-            // $this->printR($_REQUEST);
+            // echo '<pre>'; print_r($_REQUEST);  echo '</pre>';
+            // die('llego aca '); 
             $this->verReporteFinanciero($_REQUEST);
         }
-        
+    
     }
 
 
@@ -85,9 +85,8 @@ class reportesController
     }
     public function verReporteFinanciero($request)
     {
-        $hardwarsFiltrados =  $this->HardwareModel->traerEquiposFiltradoEstado($request['idEstadoFiltrar']);
-
-        $this->view->verEquipos($hardwarsFiltrados) ;
+        $hardwards = $this->HardwareModel->traerHardwareConIdItem(); 
+        $this->view->verReporteFinanciero($hardwards) ;
     }
 
 
