@@ -876,4 +876,32 @@ function habilitarHardware(idHardware)
         );
     }
 }
+function actualizarCostos()
+{
+    // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+  
+    var idHardwareCosto = document.getElementById('idHardwareCosto').value;
+    var costoItem = document.getElementById('costoItem').value;
+    var costoImportacion = document.getElementById('costoImportacion').value;
+    var costoProducto = document.getElementById('costoProducto').value;
+    var precioMinimoVenta = document.getElementById('precioMinimoVenta').precioMinimoVenta;
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_movimientos_hardware").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=actualizarCostos'
+        +'&idHardwareCosto='+idHardwareCosto
+        +'&costoItem='+costoItem
+        +'&costoImportacion='+costoImportacion
+        +'&costoProducto='+costoProducto
+        +'&precioMinimoVenta='+precioMinimoVenta
+        );
+
+}
 

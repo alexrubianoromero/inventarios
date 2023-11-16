@@ -377,8 +377,47 @@ class hardwareView extends vista
         <?php
 
     }
+    public function verCostos($idHardware)
+    {
+        $infoHardware = $this->hardwareModel->traerHardwareId($idHardware);
+        // $this->printR($idHardware);
+        ?>
+        <input type="hidden" id ="idHardwareCosto" value="<?php  echo $idHardware  ?>">
+        <div class="row">
+            <div class="form-group" class="col-lg-6">
+                <label class="col-lg-4" for="">Costo Item:</label>
+                <div class="col-lg-4">
+                    <input class="form-control" type="text" id="costoItem"  value ="<?php echo $infoHardware['costoItem'];   ?>" >
+                </div>
 
-    
+            </div>
+            <div class="form-group" class="col-lg-6">
+                <label class="col-lg-4" for="">Costo Importacion:</label>
+                <div class="col-lg-4">
+                    <input class="form-control" type="text" id="costoImportacion"  value ="<?php echo $infoHardware['costoImportacion'];   ?>" >
+                </div>
+
+            </div>
+            <div class="form-group" class="col-lg-6">
+                <label class="col-lg-4" for="">Costo Producto:</label>
+                <div class="col-lg-4">
+                    <input class="form-control" type="text" id="costoProducto"  value ="<?php echo $infoHardware['costoProducto'];   ?>" >
+                </div>
+
+            </div>
+            <div class="form-group" class="col-lg-6">
+                <label class="col-lg-4" for="">Precio Minimo Venta:</label>
+                <div class="col-lg-4">
+                    <input class="form-control" type="text" id="precioMinimoVenta"  value ="<?php echo $infoHardware['precioMinimoVenta'];   ?>" >
+                </div>
+
+            </div>
+            <button class="btn btn-primary" onclick="actualizarCostos(); ">Actualizar Costos</button>    
+        </div>
+
+        <?php
+    }
+    //aqui llega el id del hardware
     public function verHardware($producto)
     {
         $marca = $this->MarcaModel->traerMarcaId($producto['idMarca']);
@@ -742,6 +781,12 @@ class hardwareView extends vista
                     echo '</select>';
              ?>
         </div>
+        <?php
+        if($_SESSION['nivel']==3)
+        {
+            $this->verCostos($producto['id']);
+        }
+        ?>
         <div class="row mt-3">
             <!-- <button ></button> -->
         </div>

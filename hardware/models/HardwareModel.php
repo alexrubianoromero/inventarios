@@ -358,5 +358,19 @@ class HardwareModel extends Conexion
         return $respu;
     }
     
+    public function actualizarCostos($request)
+    {
+        $sql = "update hardware set 
+        costoItem = '".$request['costoItem']."'
+        ,costoImportacion = '".$request['costoImportacion']."'
+        ,costoProducto = '".$request['costoProducto']."'
+        ,precioMinimoVenta = '".$request['precioMinimoVenta']."'
+        
+        where id = '".$request['idHardwareCosto']."'       
+        ";
+        // die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    
  
 }

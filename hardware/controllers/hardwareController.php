@@ -249,6 +249,11 @@ class hardwareController extends controllerClass
             // $this->printR($_REQUEST);
             $this->fitrarHardwareSubTipoInventario($_REQUEST);
         }
+        if($_REQUEST['opcion']=='actualizarCostos')
+        {
+            // $this->printR($_REQUEST);
+            $this->model->actualizarCostos($_REQUEST);
+        }
 
 
         
