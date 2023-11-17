@@ -4,6 +4,7 @@ require_once($raiz.'/pedidos/views/pedidosView.php');
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/pagos/models/PagoModel.php'); 
 require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
+require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
 // die('controller'.$raiz);
 // die('control123'.$raiz);
 
@@ -17,6 +18,15 @@ class pedidosController
     {
         // die('desde controlador') ;
         session_start();
+        if(!isset($_SESSION['id_usuario']))
+        {
+            echo 'la sesion ha caducado';
+            echo '<button class="btn-btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+        }
+    //     echo '<pre>'; 
+    // print_r($_SESSION); 
+    // echo '</pre>';
+    // die(); 
         $this->view = new pedidosView();
         $this->model = new pedidoModel();
         $this->pagoModel = new PagoModel();

@@ -57,6 +57,9 @@ function menuPrincipal(){
     + "&nivel="+ sessionStorage.nivel
     );
 }
+function irPantallaLogueo(){
+    location.href ='http://www.alexrubiano.com/inventarios';
+}
 
 function salir()
 {

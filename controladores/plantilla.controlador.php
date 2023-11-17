@@ -50,7 +50,10 @@ class PlantillaControlador
         include("vistas/plantilla.php");
     }
     
-
+    public function mostrarPlantillaLogueo()
+    {
+        include("vistas/plantillaLogueo.php");
+    }
 
     
     public function verificarCredenciales($request){
