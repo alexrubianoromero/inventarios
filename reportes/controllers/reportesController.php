@@ -56,6 +56,12 @@ class reportesController
             // die('llego aca '); 
             $this->verReporteFinanciero($_REQUEST);
         }
+        if($_REQUEST['opcion']=='reporteItemsAlistados')
+        {
+            // echo '<pre>'; print_r($_REQUEST);  echo '</pre>';
+            // die('llego aca '); 
+            $this->reporteItemsAlistados($_REQUEST);
+        }
     
     }
 
@@ -86,7 +92,16 @@ class reportesController
     public function verReporteFinanciero($request)
     {
         $hardwards = $this->HardwareModel->traerHardwareSinDadosDeBaja(); 
-        $this->view->verReporteFinanciero($hardwards) ;
+            // echo '<pre>'; print_r($hardwards);  echo '</pre>';
+            // die('llego aca '); 
+        $this->view->verReporteFinanciero($hardwards,$request['idEnviarExcel']) ;
+    }
+    public function reporteItemsAlistados($request)
+    {
+        $pedidos = $this->pedidoModel->traerPedidos(); 
+            // echo '<pre>'; print_r($hardwards);  echo '</pre>';
+            // die('llego aca '); 
+        $this->view->reporteItemsAlistados($pedidos) ;
     }
 
 

@@ -25,8 +25,8 @@ class HardwareModel extends Conexion
     {
         $sql = "select * from hardware 
         where 1=1 and idSucursal = '".$_SESSION['idSucursal']."' 
-        and 
         order by id asc";
+        // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;

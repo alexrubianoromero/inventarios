@@ -129,11 +129,11 @@ class pedidosView extends vista
                     <?php
                       foreach($pedidos as $pedido)
                       {
-              
+                        $infoCliente = $this->clienteModel->traerClienteId($pedido['idCliente']); 
                            echo '<tr>'; 
                           echo '<td>'.$pedido['idPedido'].'</td>';
                           echo '<td>'.$pedido['fecha'].'</td>';
-                          echo '<td>'.$pedido['idCliente'].'</td>';
+                          echo '<td>'.$infoCliente[0]['nombre'].'</td>';
                            echo '<td>'.$pedido['observaciones'].'</td>';
                            echo '<td>'.$pedido['idestadoPedido'].'</td>';
                            echo '<td><button 

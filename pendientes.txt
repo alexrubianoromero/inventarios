@@ -52,3 +52,9 @@ revisar lo del informe financiero
 revisar como hago para que se actualice el estado en la ventana de estados de pedidos pendientes cuando actualizo el estado 
 
 generar aviso cuando no halla informacion en los informes 
+
+
+
+
+boton de quitar un serial 
+adicionar al reporte de equipos el tecnico que lo alisto 

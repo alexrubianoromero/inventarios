@@ -4,9 +4,11 @@ require_once($raiz.'/clientes/models/ClienteModel.php');
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php');  
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php');  
+require_once($raiz.'/pedidos/models/EstadoProcesoItemModel.php');  
 require_once($raiz.'/pedidos/models/PedidoModel.php');  
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 require_once($raiz.'/marcas/models/MarcaModel.php');  
+require_once($raiz.'/login/models/UsuarioModel.php');  
 require_once($raiz.'/vista/vista.php'); 
 
 // require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
@@ -17,10 +19,12 @@ class reportesView extends vista
     protected $clienteModel;
     protected $HardwareModel;
     protected $estadoInicioPedidoModel ; 
+    protected $EstadoProcesoItemModel ; 
     protected $itemInicioPedidoModel ; 
     protected $subtipoParteModel ; 
     protected $marcaModel ; 
     protected $pedidoModel ; 
+    protected $usuarioModel ; 
  
 
     public function __construct()
@@ -32,6 +36,8 @@ class reportesView extends vista
         $this->subtipoParteModel = new SubtipoParteModel();
         $this->marcaModel = new MarcaModel();
         $this->pedidoModel = new pedidoModel();
+        $this->usuarioModel = new UsuarioModel();
+        $this->EstadoProcesoItemModel = new EstadoProcesoItemModel();
     }
 
     public function reportesMenu()
@@ -41,10 +47,31 @@ class reportesView extends vista
             <div>
                     <!-- REPORTES -->
             </div>
-            <div>
-                <button class="btn btn-primary" onclick="formuReporteVentas();">Reporte de Ventas</button>
-                <button class="btn btn-primary" onclick="reporteEstadoEquipo();">Reporte Estado Equipo</button>
-                <button class="btn btn-primary" onclick="verReporteFinanciero();">Reporte Financiero</button>
+            <div class="row">
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" onclick="formuReporteVentas();">Reporte de Ventas</button>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" onclick="reporteEstadoEquipo();">Reporte Estado Equipo</button>
+                </div>
+                <div class="col-lg-2">
+                <button class="btn btn-primary" onclick="reporteItemsAlistados();">Items Alistados Tecnico</button>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" onclick="verReporteFinanciero();">Reporte Financiero</button>
+                </div>
+                <div class="col-lg-2">
+                    <select id="idEnviarExcel" class="form-control">
+                        <option value ="-1">Excel...</option>
+                        <option value ="1">SI</option>
+                        <option value ="2">NO</option>
+                    
+                    </select>
+
+                </div>
+                
+              
+
             </div>
             <div id="div_resultados_reportes">
 
@@ -178,33 +205,32 @@ class reportesView extends vista
         <?php
     }
     
-    public function verReporteFinanciero($hardwards)
+    public function verReporteFinanciero($hardwards,$idEnviarExcel)
     {
         // $estados = $this->estadoInicioPedidoModel->traerEstadosInicioPedido();
         ?>
-        <div class="row mt-3" >
-            <div class="col-lg-3" align="right">
-                Enviar a excel: 
-            </div>
-            <div class="col-lg-6">
-                <select id="idEnviarExcel" class="form-control">
-                    <option value ="-1">Seleccione...</option>
-                    <option value ="1">SI</option>
-                    <option value ="2">NO</option>
-                   
-                </select>
-            </div>
-           
-        </div>
+       
         <div id="div_mostrar_reporte_financiero">
-                 <?php  $this->verEquiposFinanciero($hardwards);   ?>       
+                 <?php  $this->verEquiposFinanciero($hardwards,$idEnviarExcel);   ?>       
            
         </div>
     <?php
     }
     
-    public function verEquiposFinanciero($hardwards)
+    public function verEquiposFinanciero($hardwards,$idEnviarExcel)
     {
+        if($idEnviarExcel==1)
+        {
+            echo '<br>se debe enviar a excdl ';
+            // header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+            // header("Content-Disposition: attachment; filename=archivo.xls");
+
+            header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+            header("Content-Disposition: attachment; filename=archivo.xls");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private",false);
+        }
         ?>
          <table class="table table-striped hover-hover mt-3">
                 <thead>
@@ -238,13 +264,26 @@ class reportesView extends vista
                         $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);
                         $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($hardward['idSubInv']);  
                         $infoMarca = $this->marcaModel->traerMarcaId($hardward['idMarca']); 
+                        //$numeroPedido  tambien trae precioVenta de asociado
                         $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idAsociacionItem']);
-                        $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido); 
+                        $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido['pedido']); 
+                        // $this->printR($infoPedido);
                         $nombreCliente =    $this->itemInicioPedidoModel->traerClientePedido($numeroPedido['pedido']);
                         $gananBase = $hardward['precioMinimoVenta'] - $hardward['costoProducto'];
-                        $ganancia = '';
-                        // $this->printR($hardward);
+                        $ganancia = $numeroPedido['precioVenta'] -  $hardward['costoProducto'] ;
+
                         $estado =  $hardward['idEstadoInventario'];
+                        $retefuente=0;
+                        $reteica = 0;
+                        if($infoPedido['wo']==1)
+                        {  
+                            $wo='SI';
+                            $retefuente = ($infoPedido ['porcenretefuente'] * $numeroPedido['precioVenta'])/100;
+                            $reteica = ($infoPedido ['porcenreteica'] * $numeroPedido['precioVenta'])/100;
+                        } 
+                        else{
+                            $wo='NO';
+                        }
                         echo '<tr>'; 
                         echo '<td>'.$hardward['idImportacion'].'</td>';
                         echo '<td>'.$hardward['lote'].'</td>';
@@ -259,15 +298,16 @@ class reportesView extends vista
                         echo '<td>'.$numeroPedido['pedido'] .'</td>';
                         echo '<td>'.$nombreCliente .'</td>';
                         echo '<td>'.$infoEstado['descripcion'].'</td>';
-                        echo '<td>'.$hardward['costoItem'].'</td>';
-                        echo '<td>'.$hardward['costoImportacion'].'</td>';
-                        echo '<td>'.$hardward['costoProducto'].'</td>';
-                        echo '<td>'.$hardward['precioMinimoVenta'].'</td>';
-                        echo '<td>'.$gananBase.'</td>';
-                        echo '<td></td>';
-                        echo '<td>'.$infoPedido['wo'].'</td>';
-                        echo '<td>'.$infoPedido['porcenretefuente'].'</td>';
-                        echo '<td>'.$infoPedido['porcenreteica'].'</td>';
+
+                        echo '<td align="right">'.number_format($hardward['costoItem'],0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($hardward['costoImportacion'],0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($hardward['costoProducto'],0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($hardward['precioMinimoVenta'],0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($gananBase,0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($ganancia,0,",",".").'</td>';
+                        echo '<td>'.$wo.'</td>';
+                        echo '<td align="right">'.number_format($retefuente,0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($reteica,0,",",".").'</td>';
                         //    $dadodebaja = 4;
                         //    if($estado == $dadodebaja)
                         //    {
@@ -297,7 +337,38 @@ class reportesView extends vista
         <?php
     }
 
-
+    public function reporteItemsAlistados($pedidos)
+    {
+        ?>
+        <table class="table">
+            <thead>
+                <th>Pedido</th>
+                <th>Fecha</th>
+                <th>Tecnico</th>
+                <th>Estado</th>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($pedidos as $pedido)
+                    {
+                        $itemsPedido = $this->itemInicioPedidoModel->traerItemInicioPedido($pedido['idPedido']); 
+                        foreach($itemsPedido as $item)
+                        {
+                            $infoTecnico = $this->usuarioModel->traerInfoId($item['idTecnico']);    
+                            $infoEstado =  $this->EstadoProcesoItemModel->traerEstadoProcesoItemId($item['idEstadoProcesoItem']); 
+                            echo '<tr>';
+                            echo '<td>'.$pedido['idPedido'].'</td>';
+                            echo '<td>'.$pedido['fecha'].'</td>';
+                            echo '<td>'.$infoTecnico['nombre'].'</td>';
+                            echo '<td>'.$infoEstado['descripcion'].'</td>';
+                            echo '</tr>';
+                        }   
+                    }
+                ?>
+            </tbody>
+        </table>
+        <?php
+    }
 
 
 }    

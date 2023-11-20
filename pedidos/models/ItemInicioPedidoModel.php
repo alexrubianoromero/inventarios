@@ -93,7 +93,7 @@ class ItemInicioPedidoModel extends Conexion
         
         public function traerPedidoConIdAsociadoItem($idAsociacion)
         {
-            $sql = "select p.idPedido  as pedido
+            $sql = "select p.idPedido  as pedido , a.precioVenta as precioVenta
             from asociadoItemInicioPedidoHardwareOparte  a
             inner join  itemsInicioPedido i on (i.id = a.idItemInicioPedido)
             inner join pedidos p on (p.idPedido = i.idPedido)
