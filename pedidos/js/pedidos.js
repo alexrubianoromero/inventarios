@@ -203,6 +203,8 @@ function formuAsignarItemPedidoATecnico(idItemPedido)
 //    }
 
 }
+
+
 function realizarAsignacionTecnicoAItem(idItemPedido)
 {
     //  alert(' idItem '+ idItemPedido);
@@ -216,7 +218,12 @@ function realizarAsignacionTecnicoAItem(idItemPedido)
         http.onreadystatechange = function(){
 
             if(this.readyState == 4 && this.status ==200){
+                respu = JSON.parse(this.responseText);
+                // alert(respu);
+                idPedido = respu;
                 document.getElementById("modalBodyPedidoAsignartecnico").innerHTML  = this.responseText;
+                //aqui deberia devolver el numero del pedido para enviarserlo
+                //a  la funcion siguientePantallaPedido
             }
         };
         http.open("POST",url);
@@ -226,8 +233,11 @@ function realizarAsignacionTecnicoAItem(idItemPedido)
         +'&idPrioridad='+idPrioridad
         +'&idTecnico='+idTecnico
         );
+    
+        setTimeout(() => {
+            siguientePantallaPedido(idPedido);
+        }, 500);
    }
-//    pedidos();
 }
 
 function validarInfoTecnico()

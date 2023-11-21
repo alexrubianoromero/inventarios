@@ -54,5 +54,7 @@ class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
             return $arrAsociados;
         }
 
+    
+
         
 }

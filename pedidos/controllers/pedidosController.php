@@ -4,7 +4,7 @@ require_once($raiz.'/pedidos/views/pedidosView.php');
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/pagos/models/PagoModel.php'); 
 require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
-require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 // die('controller'.$raiz);
 // die('control123'.$raiz);
 
@@ -13,15 +13,19 @@ class pedidosController
     protected $view; 
     protected $model ; 
     protected $pagoModel ; 
+    protected $itemInicioModel ; 
 
     public function __construct()
     {
+        $this->itemInicioModel = new  ItemInicioPedidoModel();
         // die('desde controlador') ;
         session_start();
+
         if(!isset($_SESSION['id_usuario']))
         {
             echo 'la sesion ha caducado';
-            echo '<button class="btn-btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            die();
         }
     //     echo '<pre>'; 
     // print_r($_SESSION); 
@@ -164,7 +168,9 @@ class pedidosController
     public function realizarAsignacionTecnicoAItem($request)
     {
         $this->model->realizarAsignacionTecnicoAItem($request);
-        echo 'Asignacion Realizada ';
+       
+        $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($request['idItemPedido']);
+        echo json_encode($infoItem['idPedido']);
     }
     // public function asignarTecnicoAPedido($request)
     // {

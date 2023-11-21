@@ -58,3 +58,12 @@ generar aviso cuando no halla informacion en los informes
 
 boton de quitar un serial 
 adicionar al reporte de equipos el tecnico que lo alisto 
+ocultar         
+
+quitar las lineas de los cuadros de oc
+colocar otra casilla de velocidad
+ajustar el reporte de hojas de vida 
+COLOCAR COLUMAN PRECIO DE VENTA EN EL FINANCIERO 
+que el valor de venta que asigne sea el valor unitario que quedo en cada item inicio 
+tener este valor en cuenta cuando se agreguen items para que tome este valor como el precio de venta 
+pendiente  lo llene alla en la tabla de asociadoItemInicioPedidoHardwareOparte en el campo precioVenta 

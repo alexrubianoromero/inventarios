@@ -22,3 +22,7 @@ delete  from pedidos;
 delete from itemsInicioPedido;
 delete from asignacionTecnicoPedido;
 delete from asociadoItemInicioPedidoHardwareOparte;
+
+//quitar la asignacion de un tecnico a un itemInicial Pedido 
+
+update itemsInicioPedido set asignado='0', idTecnico = '0'  where id = '10'

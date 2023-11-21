@@ -90,7 +90,8 @@ class pedidosView extends vista
                 </div>
             </div>
             <br>
-            <div id="divMostrarItemsPedidoTecnico" style="padding:5px; border:1px solid black;"></div>
+            <!-- <div id="divMostrarItemsPedidoTecnico" style="padding:5px; border:1px solid black;"></div> -->
+            <div id="divMostrarItemsPedidoTecnico" style="padding:5px;"></div>
             <div id="divResultadosPedidos" class="row mt-3">
                  <?php $this->mostrarPedidos($pedidos); ?>
                 
@@ -159,7 +160,7 @@ class pedidosView extends vista
                 <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar Item Pedido a tecnico</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Buscar Serial</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBodyPedidoBuscarParteOSerial">
@@ -568,6 +569,7 @@ class pedidosView extends vista
                <button type="button" 
                class="btn btn-primary  float-right mt-3" 
                onclick="realizarAsignacionTecnicoAItem(<?php echo $request['idItemPedido']  ?>); ";
+               data-bs-dismiss="modal"
                >
                Asignar  Tecnico a Item 
            </button>
@@ -807,7 +809,8 @@ class pedidosView extends vista
             // die($numeroT);
             //  $this->printR($tecnicos); 
             ?>
-                <div style="width:150px; height:<?php echo $altoFila ?>px; border:1px solid; display:inline;margin:5px;padding:10px;">
+                <!-- <div style="width:150px; height:<?php echo $altoFila ?>px; border:1px solid; display:inline;margin:5px;padding:10px;"> -->
+                <div style="width:150px; height:<?php echo $altoFila ?>px;  display:inline;margin:5px;padding:10px;">
                     <div class="row">
                         OC <?php echo $pedido['idPedido'] ?>
                     </div>

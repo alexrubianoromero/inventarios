@@ -37,7 +37,7 @@ class ItemInicioPedidoModel extends Conexion
 
             $sql = "insert into itemsInicioPedido(idPedido,cantidad,tipo,subtipo,modelo,pulgadas,
             procesador,generacion,ram,disco,estado,fecha,precio,total,observaciones,tipoItem,capacidadRam
-            ,capacidadDisco,idNuevaSucursal) 
+            ,capacidadDisco,idNuevaSucursal,vrUnitario) 
             values ('".$request['idPedido']."','".$request['icantidad']."','".$request['itipo']."'
             ,'".$request['isubtipo']."'
             ,'".$request['imodelo']."'
@@ -50,6 +50,7 @@ class ItemInicioPedidoModel extends Conexion
             ,'".$request['icapacidadram']."'
             ,'".$request['icapacidaddisco']."'
             ,'".$request['idNuevaSucursal']."'
+            ,'".$request['iprecio']."'
             )";   
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
