@@ -524,6 +524,33 @@ class iteminicioPedidoView extends vista
         <?php
     }
 
+    public function mostrarSerialesAsociados($seriales)
+    {
+        ?>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($seriales as $serial )
+                    {
+                        echo '<tr>';
+                        echo '<td>'.$serial['serial'].'</td>';  
+                        echo '<td><button 
+                                    class="btn btn-primary btn-sm" 
+                                    onclick="eliminarHardwareAsociadoItem('.$serial['idHardwareOParte'].','.$serial['id'].','.$serial['idItemInicioPedido'].')"
+                                    >Eliminar</button></td>';  
+                        echo '</tr>';
+                    }    
+                ?>
+            </tbody>
+        </table>
+        <?php
+    }
 
     public function modificarItemInicioPedido($idItem)
     {
@@ -568,17 +595,18 @@ class iteminicioPedidoView extends vista
         <?php
         if($item['tipoItem']== 1)
         {
-            $seriales =  $this->itemIniciopedidoModel->traerIdHardwarsAsociadosItem($item['id']); 
+            $serialesAsociados =  $this->itemIniciopedidoModel->traerIdHardwarsAsociadosItem($item['id']); 
             // $this->printR($seriales);
             echo '<label style="color:green ">SERIALES RELACIONADOS</label> ';
             // $infoHardware = $this->hardwareModel->verHardware($item['idHardwareOParte']);
             echo '<div>';
             // echo 'serial:  <label style="color:blue;">'.$infoHardware['serial'].'</label>' ; 
             // echo 'Seriales: ';
-            foreach($seriales as $serial)
-            {
-                echo $serial['serial'].' - ';
-            } 
+            // foreach($seriales as $serial)
+            // {
+            //     echo $serial['serial'].' - ';
+            // } 
+            $this->mostrarSerialesAsociados($serialesAsociados);
             echo '</div>';
         }
         if($item['tipoItem']== 2)

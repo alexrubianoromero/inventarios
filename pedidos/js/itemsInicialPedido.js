@@ -315,6 +315,30 @@ function actulizarEstadoProcesoItem(idItem)
     );
 
 }
+function eliminarHardwareAsociadoItem(idHardware,idAsociado,idItemInicio)
+{
+    //  alert(idHardware+' '+idAsociado);
+    // var idEstadoProcesoItem = document.getElementById('idEstadoProcesoItem').value;
+    const http=new XMLHttpRequest();
+    const url = 'pedidos/itemInicioPedido.php';
+    http.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status ==200){
+            //    document.getElementById("divMostrarItemsPedidoTecnico").innerHTML  = '';
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=eliminarHardwareAsociadoItem'
+    +'&idHardware='+idHardware
+    +'&idAsociado='+idAsociado
+    );
+
+    setTimeout(() => {
+        modificarItemInicioPedido(idItemInicio);
+    }, 500);
+
+}
 function modificarItemInicioPedido(idItem)
 {
     //  alert('funcion javascript');

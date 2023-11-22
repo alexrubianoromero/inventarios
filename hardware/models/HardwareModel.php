@@ -213,6 +213,14 @@ class HardwareModel extends Conexion
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    public function  reiniciaridAsociacionItemHardwareId($idHardware)
+    {
+        $sql = "update hardware set idAsociacionItem = '0' where id =  '".$idHardware."'  "; 
+        $consulta = mysql_query($sql,$this->connectMysql());
+
+    }
+
+
     public function actualizarIdAsociacionItemEnHardware($idHardware,$idItem)
     {
         $sql = "update hardware set idAsociacionItem = '".$idItem."'   where id = '".$idHardware."'     "; 

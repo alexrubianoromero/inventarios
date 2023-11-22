@@ -40,7 +40,7 @@ class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
 
         public function traerAsociadoItemIdAsociado($idAsociado)
         {
-            $sql = "select * from asociadoItemInicioPedidoHardwareOparte where id= '".$id."'  ";
+            $sql = "select * from asociadoItemInicioPedidoHardwareOparte where id= '".$idAsociado."'  ";
             $consulta = mysql_query($sql,$this->connectMysql());
             $infoAsociado = mysql_fetch_assoc($consulta); 
             return $infoAsociado;
@@ -52,6 +52,12 @@ class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
             $arrAsociados= mysql_fetch_assoc($consulta); 
             return $arrAsociados;
+        }
+        public function eliminarRegistroAsociadoId($idAsociado)
+        {
+            $sql = "delete from asociadoItemInicioPedidoHardwareOparte where id= '".$idAsociado."' ";   
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
         }
 
     

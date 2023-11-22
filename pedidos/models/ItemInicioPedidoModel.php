@@ -199,7 +199,7 @@ class ItemInicioPedidoModel extends Conexion
         }
         public function traerIdHardwarsAsociadosItem($idItem)
         {
-           $sql ="select h.serial from asociadoItemInicioPedidoHardwareOparte  a
+           $sql ="select h.serial,a.idHardwareOParte,a.id,a.idItemInicioPedido	 from asociadoItemInicioPedidoHardwareOparte  a
                   inner join hardware h on (h.id = a.idHardwareOParte)
                   where a.idItemInicioPedido = '".$idItem."'  
                   order by a.id asc "; 
@@ -243,6 +243,10 @@ class ItemInicioPedidoModel extends Conexion
                $arrnombre = mysql_fetch_assoc($consulta);   
                return $arrnombre['nombre'];
                
+        }
+        public function eliminarRegistroAsociadoId($idAsociado)
+        {
+            
         }
         
     }
