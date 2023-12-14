@@ -6,6 +6,7 @@ require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php');
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php');  
 require_once($raiz.'/pedidos/models/EstadoProcesoItemModel.php');  
 require_once($raiz.'/pedidos/models/PedidoModel.php');  
+require_once($raiz.'/pedidos/models/AsociadoItemInicioPedidoHardwareOparteModel.php');  
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php');  
 require_once($raiz.'/marcas/models/MarcaModel.php');  
 require_once($raiz.'/login/models/UsuarioModel.php');  
@@ -25,6 +26,7 @@ class reportesView extends vista
     protected $marcaModel ; 
     protected $pedidoModel ; 
     protected $usuarioModel ; 
+    protected $asociadoItemModel ; 
  
 
     public function __construct()
@@ -38,6 +40,7 @@ class reportesView extends vista
         $this->pedidoModel = new pedidoModel();
         $this->usuarioModel = new UsuarioModel();
         $this->EstadoProcesoItemModel = new EstadoProcesoItemModel();
+        $this->asociadoItemModel = new AsociadoItemInicioPedidoHardwareOparteModel();
     }
 
     public function reportesMenu()
@@ -54,9 +57,9 @@ class reportesView extends vista
                 <div class="col-lg-2">
                     <button class="btn btn-primary" onclick="reporteEstadoEquipo();">Reporte Estado Equipo</button>
                 </div>
-                <div class="col-lg-2">
+                <!-- <div class="col-lg-2">
                 <button class="btn btn-primary" onclick="reporteItemsAlistados();">Items Alistados Tecnico</button>
-                </div>
+                </div> -->
                 <div class="col-lg-2">
                     <button class="btn btn-primary" onclick="verReporteFinanciero();">Reporte Financiero</button>
                 </div>
@@ -150,24 +153,28 @@ class reportesView extends vista
     
     public function reporteEstadoEquipo($hardwards)
     {
+        // $this->printR($hardwards);
         $estados = $this->estadoInicioPedidoModel->traerEstadosInicioPedido();
+
         ?>
-        <div class="row mt-3" >
-            <div class="col-lg-3" align="right">
-                Escojer el estado: 
+        <div class="row mt-4" >
+            <div class="col-md-4">
+            
+               
+                        <select id="idEstadoFiltrar" class="form-control" onchange="traerEquiposFiltradoEstado()">
+                            <option value ="-1">Seleccione Estado...</option>
+                            <?php
+                            foreach($estados as $estado)
+                            {
+                                echo '<option value ="'.$estado['id'].'">'.$estado['descripcion'].'</option>';     
+                            }
+                            ?>
+                        </select>
+             </div>
+            <div class="col-md-4">
             </div>
-            <div class="col-lg-6">
-                <select id="idEstadoFiltrar" class="form-control" onchange="traerEquiposFiltradoEstado()">
-                    <option value ="-1">Seleccione...</option>
-                    <?php
-                        foreach($estados as $estado)
-                        {
-                            echo '<option value ="'.$estado['id'].'">'.$estado['descripcion'].'</option>';     
-                        }
-                    ?>
-                </select>
+            <div class="col-md-4">
             </div>
-           
         </div>
         <div id="div_mostrar_equipos_filtrados_estado">
                  <?php  $this->verEquipos($hardwards);   ?>       
@@ -185,6 +192,8 @@ class reportesView extends vista
                     <th>Serial</th>
                     <th>No Importacion</th>
                     <th>Estado</th>
+                    <th>Tecnico</th>
+                    <th>Cliente</th>
                 </thead>
                 <tbody>
                     <?php
@@ -197,6 +206,22 @@ class reportesView extends vista
                         echo '<td>'.$hardward['serial'].'</td>';
                         echo '<td>'.$hardward['idImportacion'].'</td>';
                         echo '<td>'.$infoEstado['descripcion'].'</td>';
+                        if($estado == 1 || $estado == 1){
+                            $infoAsociado = $this->asociadoItemModel->traerAsociadoItemIdAsociado($hardward['idAsociacionItem']); 
+                            $infoItemInicio = $this->itemInicioPedidoModel->traerItemInicioPedidoId($infoAsociado['idItemInicioPedido']);
+                            $infoTecnico =  $this->usuarioModel->traerInfoId($infoItemInicio['idTecnico']);
+                            $infoPedido = $this->pedidoModel->traerPedidoId($infoItemInicio['idPedido']);
+                            $infoCliente = $this->clienteModel->traerClienteId($infoPedido['idCliente']); 
+                            // $this->printR($infoCliente);
+                            echo '<td>'.$infoTecnico['nombre'].'</td>';  
+                            echo '<td>'.$infoCliente[0]['nombre'].'</td>';  
+                            
+                        }else{  
+                            echo '<td></td>';
+                            echo '<td></td>';
+                        }
+                        
+                       
                     }
                             ?>
                   </tbody>
