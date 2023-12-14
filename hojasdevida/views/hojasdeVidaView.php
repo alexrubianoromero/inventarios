@@ -33,7 +33,7 @@ class hojasdeVidaView extends vista
             <h2>Hojas de Vida Hardware</h2>
              <div class="row" id="div_botonesyfiltros">
                <label class="col-lg-2">SERIAL:</label>
-               <div class="col-lg-4">
+               <div class="col-lg-4 ">
                    <input 
                         placeholder ="SERIAL"
                         class="form-control" 
@@ -41,7 +41,7 @@ class hojasdeVidaView extends vista
                         id="inputBuscarHardware" 
                         onkeyup="fitrarHardware();">
                </div>  
-             
+             <br>
             </div>
             <div id="div_movimientos_hardware" class="mt-3">
                 <?php  $this->traerHardware();  ?>

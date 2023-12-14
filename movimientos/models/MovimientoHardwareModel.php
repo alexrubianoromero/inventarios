@@ -31,10 +31,20 @@ class MovimientoHardwareModel extends Conexion
         
         public function  traerMovimientosHardwareId($idHardware)
         {
-            $sql = "select * from movimientosHardware  where idHardware = '".$idHardware."' ";
+            $sql = "select * from movimientosHardware  where idHardware = '".$idHardware."' order by idMovimiento desc";
             $consulta = mysql_query($sql,$this->connectMysql()); 
             $arrMov = $this->get_table_assoc($consulta);
             return $arrMov; 
+        }
+
+        public function traerMaxIdMovimientoHardwareId($idHardware)
+        {
+            $sql = "select max(idMovimiento) as max from movimientosHardware  where idHardware = '".$idHardware."' ";
+            // die($sql);
+            $consulta = mysql_query($sql,$this->connectMysql()); 
+            $arrMov = mysql_fetch_assoc($consulta);
+            $max = $arrMov['max'];
+            return $max; 
         }
         
         public function  traerMovimientoId($idMovimiento)

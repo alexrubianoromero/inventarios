@@ -7,8 +7,11 @@ require_once($raiz.'/marcas/models/MarcaModel.php');
 require_once($raiz.'/tipoParte/models/TipoParteModel.php'); 
 require_once($raiz.'/movimientos/models/MovimientoHardwareModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
+require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php'); 
 require_once($raiz.'/hardware/models/ProcesadorModel.php'); 
 require_once($raiz.'/hardware/models/GeneracionModel.php'); 
+require_once($raiz.'/pedidos/models/PedidoModel.php'); 
+require_once($raiz.'/clientes/models/ClienteModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 class hardwareView extends vista
@@ -22,6 +25,9 @@ class hardwareView extends vista
     protected $itemInicioPedidoModel;
     protected $procesadorModel;
     protected $generacionModel;
+    protected $pedidoModel;
+    protected $clienteModel;
+    protected $estadoInicioPedidoModel;
 
     public function __construct()
     {
@@ -34,6 +40,9 @@ class hardwareView extends vista
         $this->itemInicioPedidoModel = new ItemInicioPedidoModel();
         $this->procesadorModel = new ProcesadorModel();
         $this->generacionModel = new GeneracionModel();
+        $this->pedidoModel = new PedidoModel();
+        $this->clienteModel = new ClienteModel();
+        $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
     }
     public function hardwareMenu($hardware)
     {
@@ -1201,12 +1210,18 @@ class hardwareView extends vista
     {
         $infoHardware =   $this->hardwareModel->traerHardwareId($idHardware); 
         $movimientos =  $this->movimientoHardwareModel->traerMovimientosHardwareId($idHardware); 
+        // $this->printR($movimientos);
+        $maxIdMovimientosHardware = $this->movimientoHardwareModel->traerMaxIdMovimientoHardwareId($idHardware);
+        // die('max'.$maxIdMovimientosHardware); 
         ?>
           <table class="table table-striped hover-hover">
                   <thead>
                       <th>Serial</th>
                       <th>Fecha</th>
-                      <th>TipoMov</th>
+                      <th>Cliente</th>
+                      <th># OC</th>
+                      <th>Estado</th>
+                      <!-- <th>TipoMov</th> -->
                       <th>Observaciones</th>
                       <th>Devolucion</th>
                   </thead>
@@ -1214,16 +1229,35 @@ class hardwareView extends vista
                   <?php
                     foreach($movimientos as $movimiento)
                     {
-            
+                        $infoItemInicio =  $this->itemInicioPedidoModel->traerItemInicioPedidoId($movimiento['idItemInicio']); 
+                        $infoEstado =  $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($infoItemInicio['estado']);
+                        // die($infoItemInicio); 
+                        // $this->printR($infoItemInicio); 
+                        $infoPedido =  $this->pedidoModel->traerPedidoId($infoItemInicio['idPedido']); 
+                        $infoCliente =   $this->clienteModel->traerClienteId($infoPedido['idCliente']); 
                         echo '<tr>'; 
                         echo '<td>'.$infoHardware['serial'].'</td>';
                         echo '<td>'.$movimiento['fecha'].'</td>';
-                        echo '<td>'.$movimiento['idTipoMov'].'</td>';
+                        echo '<td>'.$infoCliente[0]['nombre'].'</td>';
+                        echo '<td>'.$infoItemInicio['idPedido'].'</td>';
+
+                        echo '<td>'.$infoEstado['descripcion'].'</td>';
+
+                        // echo '<td>'.$movimiento['idTipoMov'].'</td>';
                         echo '<td>'.$movimiento['observaciones'].'</td>';
-                         echo '<td><button 
-                                   class="btn btn-primary btn-sm " 
-                                   onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
-                                   >Devolucion</button></td>';
+
+                        if($movimiento['idMovimiento'] == $maxIdMovimientosHardware)    
+                        {
+
+                            echo '<td><button 
+                            class="btn btn-primary btn-sm " 
+                            onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
+                            >Devolucion</button></td>';
+                        }else {
+                            echo '<td></td>';
+                        }
+
+
                          echo '</tr>';  
                       }
                       ?>
