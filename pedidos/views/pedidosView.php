@@ -301,8 +301,8 @@ class pedidosView extends vista
                     CLIENTE:
                 </div>
                 <div class="col-lg-9">
-                    <select class="form-control" name="" id="idEmpresaCliente" onchange="buscarSucursal123();">
-                        <option values =''>Seleccione..</option>
+                    <select class="form-control" name="idEmpresaCliente" id="idEmpresaCliente" onchange="buscarSucursal123();">
+                        <option value ='-1'>Seleccione..</option>
                         <?php
                               foreach($clientes as $cliente)       
                               {
@@ -354,8 +354,8 @@ class pedidosView extends vista
                     CLIENTE:
                 </label>
                 <div class="col-lg-3">
-                    <select class="form-control" name="" id="idEmpresaCliente" onchange="buscarSucursal123();">
-                        <option values =''>Seleccione..</option>
+                    <select class="form-control" name="idEmpresaCliente" id="idEmpresaCliente" onchange="buscarSucursal123();">
+                        <option value ='-1'>Seleccione..</option>
                         <?php
                               foreach($clientes as $cliente)       
                               {

@@ -1,18 +1,26 @@
 function pedirInfoNuevoPedido()
 {
     // alert('funcion javascript');
-    const http=new XMLHttpRequest();
-    const url = 'pedidos/pedidos.php';
-    http.onreadystatechange = function(){
-
-        if(this.readyState == 4 && this.status ==200){
-               document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
-        }
-    };
-    http.open("POST",url);
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    http.send('opcion=pedirInfoNuevoPedido'
-    );
+    // var idCliente = document.getElementById("idCLiente").value; 
+    // if(idCliente==-1)
+    // {
+    //     alert('Debe seleccionar un cliente '); 
+    // } 
+    // else
+    // {
+        const http=new XMLHttpRequest();
+        const url = 'pedidos/pedidos.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=pedirInfoNuevoPedido'
+        );
+    // }
 
 }
 function pedidosFiltrados()
@@ -60,21 +68,28 @@ function continuarAItemsPedido()
 {
     // alert('funcion javascript');
     var idEmpresaCliente = document.getElementById('idEmpresaCliente').value;
-    // var idPrioridad = document.getElementById('idPrioridad').value;
-    const http=new XMLHttpRequest();
-    const url = 'pedidos/pedidos.php';
-    http.onreadystatechange = function(){
+    if(idEmpresaCliente == '-1')
+    {
+        alert('Por favor escoja un cliente ')
+    }else{
 
-        if(this.readyState == 4 && this.status ==200){
-               document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
-        }
-    };
-    http.open("POST",url);
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    http.send('opcion=continuarAItemsPedido'
-    +'&idEmpresaCliente='+idEmpresaCliente
-    // +'&idPrioridad='+idPrioridad
-    );
+        
+        // var idPrioridad = document.getElementById('idPrioridad').value;
+        const http=new XMLHttpRequest();
+        const url = 'pedidos/pedidos.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_general_pedidos").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=continuarAItemsPedido'
+        +'&idEmpresaCliente='+idEmpresaCliente
+        // +'&idPrioridad='+idPrioridad
+        );
+    }
 
 }
 
