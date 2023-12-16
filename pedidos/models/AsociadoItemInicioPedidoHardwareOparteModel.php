@@ -4,17 +4,25 @@ $raiz =dirname(dirname(dirname(__file__)));
 //  die('rutamodel '.$raiz);
 
 require_once($raiz.'/conexion/Conexion.php');
+require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 
 class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
 {
-        public function construct()
+    protected $itemInicioModel;
+
+        public function __construct()
         {
           session_start();   
+           
+          $this->itemInicioModel  = new ItemInicioPedidoModel();
+
         }
         public function insertarAsociacionHardwareConItemRegistro($request)
         {
-            $sql = "insert into asociadoItemInicioPedidoHardwareOparte(idHardwareOParte,idItemInicioPedido,fecha,idUsuario) 
-            values ('".$request['idHardware']."','".$request['idItemAgregar']."',now(),'".$_SESSION['id_usuario']."')	 ";
+            $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($request['idItemAgregar']);
+            $sql = "insert into asociadoItemInicioPedidoHardwareOparte(idHardwareOParte,idItemInicioPedido,fecha,idUsuario,precioVenta) 
+            values ('".$request['idHardware']."','".$request['idItemAgregar']."',now(),'".$_SESSION['id_usuario']."','".$infoItem['vrUnitario']."')	 ";
+            // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
             $maximo = $this->traerMaximoId();
             return $maximo; 

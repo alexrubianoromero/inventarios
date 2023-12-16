@@ -94,7 +94,7 @@ class tableroTecnicosView extends vista
         ?>
           <table class="table table-striped hover-hover">
               <thead>
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>Nombre </th>
                   <th>Ver</th>
                 </thead>
@@ -106,7 +106,7 @@ class tableroTecnicosView extends vista
 
                           $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);   
                           echo '<tr>'; 
-                          echo '<td>'.$infoTecnico['id_usuario'].'</td>';
+                        //   echo '<td>'.$infoTecnico['id_usuario'].'</td>';
                           echo '<td>'.$infoTecnico['nombre'].' '.$infoTecnico['apellido'].'</td>';
                       
                            echo '<td><button 
