@@ -276,6 +276,7 @@ class reportesView extends vista
                     <th>Costo Importacion</th>
                     <th>Costo Producto</th>
                     <th>Precio Minimo Venta</th>
+                    <th>Precio Real Venta</th>
                     <th>Ganancia Base</th>
                     <th>Ganancia</th>
                     <th>Wo</th>
@@ -292,6 +293,7 @@ class reportesView extends vista
                         //$numeroPedido  tambien trae precioVenta de asociado
                         $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idAsociacionItem']);
                         $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido['pedido']); 
+                        $infoAsociadoItemInicio = $this->asociadoItemModel->traerAsociadoItemIdAsociado($hardward['idAsociacionItem']); 
                         // $this->printR($infoPedido);
                         $nombreCliente =    $this->itemInicioPedidoModel->traerClientePedido($numeroPedido['pedido']);
                         $gananBase = $hardward['precioMinimoVenta'] - $hardward['costoProducto'];
@@ -328,6 +330,8 @@ class reportesView extends vista
                         echo '<td align="right">'.number_format($hardward['costoImportacion'],0,",",".").'</td>';
                         echo '<td align="right">'.number_format($hardward['costoProducto'],0,",",".").'</td>';
                         echo '<td align="right">'.number_format($hardward['precioMinimoVenta'],0,",",".").'</td>';
+                        echo '<td align="right">'.number_format($infoAsociadoItemInicio['precioVenta'],0,",",".").'</td>';
+
                         echo '<td align="right">'.number_format($gananBase,0,",",".").'</td>';
                         echo '<td align="right">'.number_format($ganancia,0,",",".").'</td>';
                         echo '<td>'.$wo.'</td>';
