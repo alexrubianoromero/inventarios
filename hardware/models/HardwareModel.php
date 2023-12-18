@@ -16,7 +16,11 @@ class HardwareModel extends Conexion
     }
     public function traerHardware()
     {
-        $sql = "select * from hardware where 1=1 and idSucursal = '".$_SESSION['idSucursal']."' order by id asc";
+        $sql = "select * 
+                from hardware where 1=1 
+                and 	idEstadoInventario = 0
+                and idSucursal = '".$_SESSION['idSucursal']."' 
+                order by id asc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
@@ -31,13 +35,20 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    
     public function traerHardwareFiltro($traerHardwareFiltro)
     {
-        $sql = "select * from hardware where serial like '%".$traerHardwareFiltro."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        $sql = "select * 
+                from hardware 
+                where serial like '%".$traerHardwareFiltro."%' 
+                and 	idEstadoInventario = 0
+                and idSucursal = '".$_SESSION['idSucursal']."'  
+                order by id asc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+
     public function traerHardwarePulgadasFiltro($inputBuscarPulgadas)
     {
         $sql = "select * from hardware where pulgadas like '%".$inputBuscarPulgadas."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";

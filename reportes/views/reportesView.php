@@ -86,21 +86,23 @@ class reportesView extends vista
     {
         ?>
         <div style="padding:10px;"  id="div_general_reportes" class="row">
-            <div class="col-lg-6">
-                <label class="col-lg-6"for="">Fecha Inicial: </label>
-                <div class="col-lg-6">
+            <div class="col-lg-4">
+                <!-- <label class="col-lg-3"for="">F.Inicial: </label> -->
+                <div class="col-lg-4">Fecha Inicial :
                     <input type="date" id="fechaIn" class="form-control">
                 </div>
             </div>
             
-            <div class="col-lg-6">
-                <label class="col-lg-6"for="">Fecha Final: </label>
-                <div class="col-lg-6">
+            <div class="col-lg-4">
+                <!-- <label class="col-lg-1"for="">F.Final: </label> -->
+                <div class="col-lg-4">Fecha Final :
                     <input type="date" id="fechaFin" class="form-control">
                 </div>
             </div>
-            <button class="btn btn-primary" onclick="generarReporteVentas();">GENERAR REPORTE</button>
-
+            
+            <div class="col-lg-2">
+                <button class="btn btn-primary" onclick="generarReporteVentas();">GENERAR REPORTE</button>
+            </div>
         </div>
 
         <?php
@@ -108,7 +110,7 @@ class reportesView extends vista
     public function mostrarReporteVentas($itemsVentasPedidosFechas)
     {
         ?>
-            <table class="table table-striped">
+            <table class="table table-striped mt-3">
                 <thead>
                     <tr>
                         <th>Pedido</th>

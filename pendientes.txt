@@ -69,3 +69,5 @@ tener este valor en cuenta cuando se agreguen items para que tome este valor com
 pendiente  lo llene alla en la tabla de asociadoItemInicioPedidoHardwareOparte en el campo precioVenta 
 
 revisar porque no coloco el precio de venta en la tabla de asociacion para el serial 7956
+
+revisar porque no grabo el precio minimo de venta para el hardware
