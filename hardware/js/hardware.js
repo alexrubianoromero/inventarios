@@ -885,7 +885,7 @@ function actualizarCostos()
     var costoItem = document.getElementById('costoItem').value;
     var costoImportacion = document.getElementById('costoImportacion').value;
     var costoProducto = document.getElementById('costoProducto').value;
-    var precioMinimoVenta = document.getElementById('precioMinimoVenta').precioMinimoVenta;
+    var precioMinimoVenta = document.getElementById('precioMinimoVenta').value;
         const http=new XMLHttpRequest();
         const url = 'hardware/hardware.php';
         http.onreadystatechange = function(){
