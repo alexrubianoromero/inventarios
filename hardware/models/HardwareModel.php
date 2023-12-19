@@ -25,6 +25,18 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    
+    public function traerHardwareTodosLosEstados()
+    {
+        $sql = "select * 
+                from hardware where 1=1 
+                and idSucursal = '".$_SESSION['idSucursal']."' 
+                order by id asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+
     public function traerHardwareSinDadosDeBaja()
     {
         $sql = "select * from hardware 

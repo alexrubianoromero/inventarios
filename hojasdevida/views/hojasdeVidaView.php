@@ -53,7 +53,7 @@ class hojasdeVidaView extends vista
 
     public function traerHardware()
     {
-        $hardwards = $this->HardwareModel->traerHardware(); 
+        $hardwards = $this->HardwareModel->traerHardwareTodosLosEstados(); 
         ?>
         <table class="table table-striped hover-hover">
             <thead>

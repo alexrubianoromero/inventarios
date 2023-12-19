@@ -77,7 +77,7 @@ class reportesController
 
     public function reporteEstadoEquipo($request)
     {
-        $hardwards = $this->HardwareModel->traerHardware(); 
+        $hardwards = $this->HardwareModel->traerHardwareTodosLosEstados(); 
         //    echo '<pre>'; print_r($hardwards);  echo '</pre>';
         //     die('llego aca '); 
         $this->view->reporteEstadoEquipo($hardwards);

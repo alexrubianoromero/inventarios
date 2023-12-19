@@ -71,3 +71,11 @@ pendiente  lo llene alla en la tabla de asociadoItemInicioPedidoHardwareOparte e
 revisar porque no coloco el precio de venta en la tabla de asociacion para el serial 7956
 
 revisar porque no grabo el precio minimo de venta para el hardware
+no se elimino el item pedido cuando elimine el pedido revisar 
+coregir el eliminar pedido que lo elimine totalmente 
+revisar porque en el reporte de estado de equipos no muestra correctamente el estado cuando queda en renta y no muestra el tecnico 
+revisar porque cuando elimine el item del pedido no se refleja el cambvio den reporte de equipos 
+al eliminar item debe limpiar el estado del hardware y ademas el idEstado asociado 
+y limpiar todo lo quye este asociado a este iditem en asociado 
+revisar que se cree el movimiento de la eliminacion del itemInicio del pedido 
+ellos digeron que unicamente para venta 

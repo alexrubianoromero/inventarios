@@ -4,9 +4,19 @@ $raiz =dirname(dirname(dirname(__file__)));
 //  die('rutamodel '.$raiz);
 
 require_once($raiz.'/conexion/Conexion.php');
+require_once($raiz.'/hardware/models/HardwareModel.php');
+
 
 class ItemInicioPedidoModel extends Conexion
 {
+    protected $hardwareModel; 
+
+
+        public function __construct()
+        {
+            $this->hardwareModel = new HardwareModel(); 
+     
+        }
 
         public function traerItemInicioPedido($idPedido)
         {
@@ -55,6 +65,7 @@ class ItemInicioPedidoModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+
         public function agregarItemInicialPedidoParte($request)
         {
             // echo '<pre>'; 
@@ -77,12 +88,19 @@ class ItemInicioPedidoModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql());
         }
         
-        public function eliminarItemInicialPedido($id)
+        public function eliminarItemInicialPedido($id,$infoAsociadoItem)
         {
-            // $sql = "delete  from itemsInicioPedido   where id = '".$id."'"; 
-            $sql = "update  itemsInicioPedido set anulado = 1  where id = '".$id."'"; 
+            //desasociar el hardware
+            $sql ="update hardware set  idEstadoInventario =  0 , 	idAsociacionItem = 0  where id = '".$infoAsociadoItem['idHardwareOParte']."'   "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            //limpiar info de asociacionItem
+            $sql = "delete from asociadoItemInicioPedidoHardwareOparte  where idItemInicioPedido = '".$id."'  "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            //eliminar item
+            $sql = "delete from  itemsInicioPedido   where id = '".$id."'"; 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+    
         
         public function traerItemInicioPedidoId($idItem)
         {

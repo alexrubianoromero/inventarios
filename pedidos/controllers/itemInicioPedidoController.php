@@ -117,12 +117,18 @@ class itemInicioPedidoController
     
     public function eliminarItemInicialPedido($request)
     {
+        $infoAsociadoItem =  $this->asociadoModel->traerAsociadoItemIdItem($request['id']);
         $infoItem = $this->model->traerItemInicioPedidoId($request['id']);
-        // echo '<pre>'; 
-        // print_r($infoItem); 
-        // echo '</pre>';
-        // die();  
-        $this->model->eliminarItemInicialPedido($request['id']);  
+        $this->model->eliminarItemInicialPedido($request['id'],$infoAsociadoItem);  
+        //dejar registro en movimiento de la eliminacion del item Inicio Pedido
+        $tipoMov = 1 ; //vuelve al  inventario;
+        $infoMov = new stdClass();
+        $infoMov->idTipoMov = $tipoMov ;  
+        $infoMov->idItemInicio = $request['id'] ;  
+        $infoMov->observaciones = 'Se elimina Item de Pedido '.$infoItem['idPedido'].' id Item '.$infoItem['id'];
+        $infoMov->idHardware = $infoAsociadoItem['idHardwareOParte'];  
+        $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+        ////////
         $this->itemInicioview->mostrarItemsInicioPedido($infoItem['idPedido']); 
     }
     
