@@ -129,7 +129,7 @@ function traerUltimoIdPartes($conexion){
                 for($h=$start_h; ord($h)<=ord($end_h); pp($h)){
                     $cellValue = get_cell($h.$v, $objPHPExcel);
 					//$arreglo_mostrar[$h][$v] = $cellValue; 
-                    $table .= "<td><input type ='text' name = 'loco_".$v."_".$h."' value ='".$cellValue."'";
+                    $table .= "<td>***<input type ='text' name = 'loco_".$v."_".$h."' value ='".$cellValue."'";
 					if($h == 'A'){$arreglo_mostrar[$v]['A'] = $cellValue; }
 					if($h == 'B'){$arreglo_mostrar[$v]['B'] = $cellValue; }
 					if($h == 'C'){$arreglo_mostrar[$v]['C'] = $cellValue; }
@@ -145,6 +145,16 @@ function traerUltimoIdPartes($conexion){
                     if($h == 'M'){$arreglo_mostrar[$v]['M'] = $cellValue; }
                     if($h == 'N'){$arreglo_mostrar[$v]['N'] = $cellValue; }
                     if($h == 'O'){$arreglo_mostrar[$v]['O'] = $cellValue; }
+                    if($h == 'P'){$arreglo_mostrar[$v]['P'] = $cellValue; }
+                    if($h == 'Q'){$arreglo_mostrar[$v]['Q'] = $cellValue; }
+                    if($h == 'R'){$arreglo_mostrar[$v]['R'] = $cellValue; }
+                    if($h == 'S'){$arreglo_mostrar[$v]['S'] = $cellValue; }
+                    if($h == 'T'){$arreglo_mostrar[$v]['T'] = $cellValue; }
+                    if($h == 'U'){$arreglo_mostrar[$v]['U'] = $cellValue; }
+                    if($h == 'V'){$arreglo_mostrar[$v]['V'] = $cellValue; }
+                    if($h == 'W'){$arreglo_mostrar[$v]['W'] = $cellValue; }
+                    if($h == 'X'){$arreglo_mostrar[$v]['X'] = $cellValue; }
+                    if($h == 'Y'){$arreglo_mostrar[$v]['Y'] = $cellValue; }
                     
                    
 					//$arreglo_mostrar[$v][$h] = $cellValue; 
@@ -179,131 +189,27 @@ function traerUltimoIdPartes($conexion){
 					{
 						foreach ($arreglo_mostrar as $am)
 								{
-									
-                                    //$timestamp = PHPExcel_Shared_Date::ExcelToPHP($fecha);    
-                                    //echo 'la fecha '.$am['F'].'<br>';
-                                    $timestamp123 = PHPExcel_Shared_Date::ExcelToPHP($am['F']);
-                                    //echo 'nueva_fecha'.$timestamp.'<br>';
-                                    $fecha_php = date("Y-m-d",$timestamp123);
-                                    //echo 'ultima forma'.$fecha_php.'<br>';
-                                    //primero debe grabar la ram en partes 
-                                  
-                                    // $sql_grabar_parte_ram = "insert into partes (idSubtipoParte,capacidad,comentarios) 
-                                    // values(
-                                    //     '".trim($am['L'])."'
-                                    //     , '".trim($am['M'])."'
-                                    //     ,'Ram insertada al cargar un hardware'
-                                    // )";
+									// echo '<br>'.$am['A'];
 
-                                    // $consulta_grabar_parte_ram = mysql_query($sql_grabar_parte_ram,$conexion);
-                                    //el id de esta ram recien grabada
-                                    // $ultimoIdRam = traerUltimoIdPartes($conexion);
-                                    
-                                    //luego grabar el disco en partes 
-                                    // $sql_grabar_parte_disco = "insert into partes (idSubtipoParte,capacidad,comentarios) 
-                                    // values(
-                                    //     '".trim($am['N'])."'
-                                    //     , '".trim($am['O'])."'
-                                    //     ,'Disco insertado al cargar un hardware'
-                                    //     )";
-                                        // echo '<br>consulta<br>'.$sql_grabar_parte_disco;
-                                    // $consulta_grabar_parte_disco = mysql_query($sql_grabar_parte_disco,$conexion);
-                                        //el id de este disco
-                                        // $ultimoIdDisco = traerUltimoIdPartes($conexion);
-                                        
-                                      ////////lo nuevo entonces la parte sera crada 
-                                      ///////se buscara   si existe una parte de estas caracteristicas o si no pues se creara 
-                                      //con la respectiva anotaciom que asi venia del excel 
-
-                                      //buscar si ya existe esta parte con el tipo de ram indicado y la capacidad indicada 
-                                	  // sino pues lo crea y ya 
-                                      $ParteModel  = new PartesModel(); 
-                                    //   $am['M'] = '20';
-                                      $conRam = $ParteModel->traerParteConIdSubtipoyCapacidad(trim($am['L']),trim($am['M'])); 
-                                    //   echo '<pre>';
-                                    //     print_r($conRam); 
-                                    //     echo '</pre>';
-                                    //     die();
-                                      if($conRam['filas']>0)
-                                      {
-                                        //el id de la parte 
-                                         $idParteRam = $conRam['info']['id'];     
-                                        //  die('idparterrrrrrrrrrrrrrrrrrrrrrrrrrr'.$idParteRam);
-                                      }else{
-                                        //se debe crear la parte con estas caracteristicas
-                                        // die('entro acaccccccccccccccccccccccccccc');
-                                        $ParteModel->grabarParteDesdeCargarArchivo(trim($am['L']),trim($am['M']));
-                                        $idParteRam = $ParteModel->traerUltimoIdPartes();
-                                      }  
-
-                                    //   die('idParteRam'.$idParteRam);
-
-                                    //ahora viene lo de grabar el disco1 con lo que trae el archivo de excel 
-                                    $conDisco = $ParteModel->traerParteConIdSubtipoyCapacidad(trim($am['N']),trim($am['O']));
-                                        // echo '<pre>';
-                                        // print_r($conRam); 
-                                        // echo '</pre>';
-                                        // die();
-                                        if($conDisco['filas']>0)
-                                        {
-                                          //el id de la parte 
-                                           $idParteDisco = $conDisco['info']['id'];     
-                                          //  die('idparterrrrrrrrrrrrrrrrrrrrrrrrrrr'.$idParteRam);
-                                        }else{
-                                          //se debe crear la parte con estas caracteristicas
-                                          // die('entro acaccccccccccccccccccccccccccc');
-                                          $ParteModel->grabarParteDesdeCargarArchivo(trim($am['N']),trim($am['O']));
-                                          $idParteDisco = $ParteModel->traerUltimoIdPartes();
-                                        }     
-
-									$sql_grabar_filas = "insert into hardware (idImportacion,lote,serial,idMarca,idTipoInv,
-                                    idSubInv,chasis,modelo,pulgadas,procesador,generacion,idArchivoCargue
-                                    ,tipoRamCargue,capacidadRamCargue,tipoDiscoCargue,	capacidadDiscoCargue,idRam1,idDisco1
+                                    $sql = "insert into hardware 
+                                    (serial,ubicacion,idImportacion,lote,
+                                    sku,idMarca,idSubInv,chasis,
+                                    modelo,pulgadas,procesador,idRam1,
+                                    idRam2,idRam3,idRam4,idDisco1,
+                                    idDisco2,idCondicion,idCondicion2,comentarios,
+                                    costoItem,costoImportacion,costoProducto,precioMinimoVenta
                                     )
                                     values (
-                                        '".trim($am['B'])."'
-                                        , '".trim($am['C'])."'
-                                        , '".trim($am['D'])."'
-                                        , '".trim($am['E'])."'
-                                        , '".trim($am['A'])."'
-                                        , '".trim($am['F'])."'
-                                        , '".trim($am['G'])."'
-                                        , '".trim($am['H'])."'
-                                        , '".trim($am['I'])."'
-                                        , '".trim($am['J'])."'
-                                        , '".trim($am['K'])."'
-                                        , '".$maximo_id."'
-                                        , '".$am['L']."'
-                                        , '".$am['M']."'
-                                        , '".$am['N']."'
-                                        , '".$am['O']."'
-                                        , '".$idParteRam."'
-                                        , '".$idParteDisco."'
-                                        )";
-                                    // echo '<br>consulta<br>'.$sql_grabar_filas;
-                                    // die();
-                                    $consulta_grabar_detalle = mysql_query($sql_grabar_filas,$conexion);
-                                       //echo '<br>'.$sql_grabar_filas; 
-
-                                    //tomar el id del hardware
-                                    $sqlMaxIdHardware = "select max(id) as maxid from hardware ";
-                                    $conMaxIdHardware = mysql_query($sqlMaxIdHardware,$conexion);
-                                    $arregloMAxId = mysql_fetch_assoc($conMaxIdHardware); 
-                                    $maximoIdHardware = $arregloMAxId['maxid'];
-
-                                    //actualizar la info de la tabla partes con el id del hardware
-                                    $sqlActualizarDisco = "update partes 
-                                                            set idHardware = '".$maximoIdHardware."'  
-                                                            where id =  '".$ultimoIdDisco."'  "; 
-                                    $consultaActualizarDisco =    mysql_query($sqlActualizarDisco,$conexion);  
-
-                                    $sqlActualizarRam = "update partes 
-                                                            set idHardware = '".$maximoIdHardware."'  
-                                                            where id =  '".$ultimoIdRam."'  "; 
-                                    $consultaActualizarRam =    mysql_query($sqlActualizarRam,$conexion);                                 
+                                        '".$am['A']."','".$am['B']."','".$am['C']."','".$am['D']."'
+                                        ,'".$am['E']."','".$am['F']."','".$am['G']."','".$am['H']."'
+                                        ,'".$am['I']."','".$am['J']."','".$am['K']."','".$am['L']."'
+                                        ,'".$am['M']."','".$am['N']."','".$am['O']."','".$am['P']."'
+                                        ,'".$am['Q']."','".$am['R']."','".$am['S']."','".$am['T']."'
+                                        ,'".$am['U']."','".$am['V']."','".$am['W']."','".$am['X']."'
                                     
-                                    
-                                       //exit();  
+                                    )"; 
+                                     die($sql);    
+                                    $consulta = mysql_query($sql,$conexion); 
 									$i++;
 								}
 					 } // parece fin de sizeof
