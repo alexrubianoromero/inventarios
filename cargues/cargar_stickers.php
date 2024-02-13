@@ -1,5 +1,15 @@
 <?php
-session_start();
+ session_start();
+//  echo '<pre>';
+//  print_r($_SESSION);
+//  echo '</pre>';
+//  die();
+ if(!isset($_SESSION['id_usuario']))
+ {
+     echo 'la sesion ha caducado';
+     echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+     die();
+ }
 //hay que evaluar si los datos de la sesion de usuario estan correctas 
 include('../valotablapc.php');
 date_default_timezone_set('America/Bogota');
@@ -10,9 +20,11 @@ require_once($raiz.'/partes/models/PartesModel.php');
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
 require_once($raiz.'/marcas/models/MarcaModel.php'); 
 require_once($raiz.'/marcas/models/MarcaModel.php'); 
+require_once($raiz.'/hardware/models/CondicionModel.php'); 
 
 $marcaModel = new MarcaModel(); 
 $subtipoParteModel = new SubtipoParteModel();
+$condicionModel = new CondicionModel();
 ?>
 <!DOCTYPE html>
 <html >
@@ -210,6 +222,10 @@ function traerUltimoIdPartes($conexion){
 
                                     $infoSubtipoDisco1 = $subtipoParteModel->traerSubTipoParteNombre($am['Q']);
                                     $infoSubtipoDisco2 = $subtipoParteModel->traerSubTipoParteNombre($am['R']);
+
+                                    //hay que traer el id de las condiciones y ese es el que queda eh hardware 
+                                    // $infoCondicion1  = $condicionModel->traerCondicionXCondicion($am['S']);    
+                                    // $idCondicion1 = $infoCondicion1['id'];
                                     //modelo pasa igual que como viene
                                     //pulgasdas consicion pasa igual 
                                     //procesador pasa igual 
@@ -217,7 +233,7 @@ function traerUltimoIdPartes($conexion){
                                     //condicion 1 y condicion 2 vana apsar igual 
 
                                     // echo '<pre>';
-                                    // print_r($infoSubtipoRam1);
+                                    // print_r($idCondicion);
                                     // echo '</pre>';
                                     // die();
                                     
@@ -229,6 +245,7 @@ function traerUltimoIdPartes($conexion){
                                     idDisco1, idDisco2,
                                     idCondicion,idCondicion2,comentarios,
                                     costoItem,costoImportacion,costoProducto,precioMinimoVenta,comodin
+                                    ,idSucursal
                                     )
                                     values (
                                         '".$am['A']."','".$am['B']."','".$am['C']."','".$am['D']."'
@@ -239,6 +256,7 @@ function traerUltimoIdPartes($conexion){
                                         ,'".$am['S']."','".$am['T']."'
                                         ,'".$am['U']."','".$am['V']."','".$am['W']."','".$am['X']."'
                                         ,'".$am['Y']."','".$am['Z']."'
+                                        ,'".$_SESSION['idSucursal']."'
                                     
                                     )"; 
                                     // die($sql); 
@@ -261,6 +279,7 @@ function traerUltimoIdPartes($conexion){
                                     // )"; 
                                     //  die($sql);    
                                     $consulta = mysql_query($sql,$conexion); 
+                                    // die(); 
 									$i++;
 								}
 					 } // parece fin de sizeof

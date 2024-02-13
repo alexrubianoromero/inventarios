@@ -110,6 +110,21 @@ class vista
                     echo ' <option value="'.$valor['id'].'">'.$valor['descripcion'].'</option>';
                 }
             }
+        }
+        
+    public function colocarSelectCampoConOpcionSeleccionadaPorNombre($valores,$condicion)
+    {
+        echo '<option value="-1">Sel.</option>';
+        
+            foreach($valores as $valor)
+            {
+                if($valor['condicion'] == $condicion){
+                    echo ' <option selected value="'.$valor['condicion'].'">'.$valor['descripcion'].'</option>';
+                }
+                else{
+                    echo ' <option value="'.$valor['condicion'].'">'.$valor['descripcion'].'</option>';
+                }
+            }
     
     }           
     

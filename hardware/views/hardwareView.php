@@ -813,10 +813,10 @@ class hardwareView extends vista
         <div class="row mt-3">
             <label>Condicion/Especificaciones: </label>
              <?php
-                    //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
-                    //  echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
-                    //   $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
-                    // echo '</select>';
+                     $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                     echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
+                      $this->colocarSelectCampoConOpcionSeleccionadaPorNombre($condiciones,$producto['idCondicion']); 
+                    echo '</select>';
                     
              ?>
              <input type="text"  id = "idCondicion"  value="<?php   echo $producto['idCondicion']   ?>"  >
