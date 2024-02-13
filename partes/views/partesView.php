@@ -302,9 +302,14 @@ class partesView extends vista
                    <br>
                 <label><?php echo $infoSubTipo[0]['descripcion']; ?></label>        
                </div>
-               <div class="col-md-3">
+               <div class="col-md-2">
                    <label for="">Cantidad </label>
                      <input class ="form-control" type="text" id="cantidad" value ="<?php  echo $producto['cantidad'] ?>">          
+               </div>
+               <div class="col-md-5">
+                   <label for="">Observaciones </label>
+                   <textarea class="form-control" id="observacionesMovimiento"></textarea>
+                     <!-- <input class ="form-control" type="text" id="cantidad" value ="<?php  //echo $producto['cantidad'] ?>">           -->
                </div>
            
        </div>

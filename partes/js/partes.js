@@ -169,6 +169,7 @@ function formuAdicionarRestarCantidadParte(idParte,tipoMov)
 function AdicionarRstarExisatenciasParte(idParte,tipoMov)
 {
     var cantidad = document.getElementById('cantidad').value;
+    var observaciones = document.getElementById('observacionesMovimiento').value;
         const http=new XMLHttpRequest();
         const url = 'partes/partes.php';
         http.onreadystatechange = function(){
@@ -183,6 +184,7 @@ function AdicionarRstarExisatenciasParte(idParte,tipoMov)
                   +'&idParte='+idParte
                   +'&tipoMov='+tipoMov
                   +'&cantidad='+cantidad
+                  +'&observaciones='+observaciones
         );
 }
 
