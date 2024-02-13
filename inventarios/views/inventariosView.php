@@ -54,7 +54,7 @@ class inventariosView extends vista
                     class="btn btn-primary" 
                     onclick="partesMenu();"
                     >
-                    PARTES
+                    COMPONENTES
                     </button> 
                     </div>
             </div>

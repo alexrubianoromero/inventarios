@@ -123,6 +123,7 @@ function crearProducto()
                 
     }
 }
+
 function  validaInfoProducto()
 {
     if( document.getElementById('idImportacion').value == ''){

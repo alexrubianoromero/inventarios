@@ -19,6 +19,7 @@ function formularioSubirArchivo()
 // const inputFile = document.querySelector("#imagen");
 function realizarCargaArchivo()
 {
+    // alert('cargue'); 
     var inputFile = document.getElementById('imagen');
 
     if (inputFile.files.length > 0) {

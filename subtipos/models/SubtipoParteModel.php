@@ -8,6 +8,14 @@ require_once($raiz.'/conexion/Conexion.php');
 class SubtipoParteModel extends Conexion
 {
 
+    public function traerSubTipoParteNombre($nombre)
+    {
+        $sql = "select * from subtipoParte where descripcion = '".$nombre."'  ";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $subTipoParte = mysql_fetch_assoc($consulta);
+        return $subTipoParte;
+    }
+    
     public function traerSubTipoParte($id)
     {
         $sql = "select * from subtipoParte where id = '".$id."'  ";

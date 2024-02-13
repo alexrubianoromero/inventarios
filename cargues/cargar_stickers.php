@@ -1,11 +1,18 @@
 <?php
 session_start();
+//hay que evaluar si los datos de la sesion de usuario estan correctas 
 include('../valotablapc.php');
 date_default_timezone_set('America/Bogota');
 $raiz =dirname(dirname(__file__));
 // die('rutacargar archivo '.$raiz);
+
 require_once($raiz.'/partes/models/PartesModel.php'); 
 require_once($raiz.'/subtipos/models/SubtipoParteModel.php'); 
+require_once($raiz.'/marcas/models/MarcaModel.php'); 
+require_once($raiz.'/marcas/models/MarcaModel.php'); 
+
+$marcaModel = new MarcaModel(); 
+$subtipoParteModel = new SubtipoParteModel();
 ?>
 <!DOCTYPE html>
 <html >
@@ -185,30 +192,74 @@ function traerUltimoIdPartes($conexion){
 		echo '<table border = "1">';
 		
 		$i = 1;
+        // die('amtes de preguntaer si esta vacio');
 		if (sizeof($arreglo_mostrar)> 0);
 					{
+                        // die('entro si encuentra info');
 						foreach ($arreglo_mostrar as $am)
 								{
+                                    // die('entro aa leer el arreglo');
 									// echo '<br>'.$am['A'];
+                                    //aqui comeinzan traduccion de datos 
+                                    $infoMarca =  $marcaModel->traerMarcaXMarca($am['G']);
+                                    $infoSubtipoProducto = $subtipoParteModel->traerSubTipoParteNombre($am['H']);
+                                    $infoSubtipoRam1 = $subtipoParteModel->traerSubTipoParteNombre($am['M']);
+                                    $infoSubtipoRam2 = $subtipoParteModel->traerSubTipoParteNombre($am['N']);
+                                    $infoSubtipoRam3 = $subtipoParteModel->traerSubTipoParteNombre($am['O']);
+                                    $infoSubtipoRam4 = $subtipoParteModel->traerSubTipoParteNombre($am['P']);
 
+                                    $infoSubtipoDisco1 = $subtipoParteModel->traerSubTipoParteNombre($am['Q']);
+                                    $infoSubtipoDisco2 = $subtipoParteModel->traerSubTipoParteNombre($am['R']);
+                                    //modelo pasa igual que como viene
+                                    //pulgasdas consicion pasa igual 
+                                    //procesador pasa igual 
+                                    //la ram si toca trasladar al id
+                                    //condicion 1 y condicion 2 vana apsar igual 
+
+                                    // echo '<pre>';
+                                    // print_r($infoSubtipoRam1);
+                                    // echo '</pre>';
+                                    // die();
+                                    
                                     $sql = "insert into hardware 
-                                    (serial,ubicacion,idImportacion,lote,
+                                    (hardwareoparte,serial,ubicacion,idImportacion,lote,
                                     sku,idMarca,idSubInv,chasis,
-                                    modelo,pulgadas,procesador,idRam1,
-                                    idRam2,idRam3,idRam4,idDisco1,
-                                    idDisco2,idCondicion,idCondicion2,comentarios,
-                                    costoItem,costoImportacion,costoProducto,precioMinimoVenta
+                                    modelo,pulgadas,procesador,
+                                    idRam1,idRam2,idRam3,idRam4,
+                                    idDisco1, idDisco2,
+                                    idCondicion,idCondicion2,comentarios,
+                                    costoItem,costoImportacion,costoProducto,precioMinimoVenta,comodin
                                     )
                                     values (
                                         '".$am['A']."','".$am['B']."','".$am['C']."','".$am['D']."'
-                                        ,'".$am['E']."','".$am['F']."','".$am['G']."','".$am['H']."'
+                                        ,'".$am['E']."','".$am['F']."','".$infoMarca['id']."','".$infoSubtipoProducto['id']."'
                                         ,'".$am['I']."','".$am['J']."','".$am['K']."','".$am['L']."'
-                                        ,'".$am['M']."','".$am['N']."','".$am['O']."','".$am['P']."'
-                                        ,'".$am['Q']."','".$am['R']."','".$am['S']."','".$am['T']."'
+                                        ,'".$infoSubtipoRam1['id']."','".$infoSubtipoRam2['id']."','".$infoSubtipoRam3['id']."','".$infoSubtipoRam4am['id']."'
+                                        ,'".$infoSubtipoDisco1['id']."','".$infoSubtipoDisco2['id']."'
+                                        ,'".$am['S']."','".$am['T']."'
                                         ,'".$am['U']."','".$am['V']."','".$am['W']."','".$am['X']."'
+                                        ,'".$am['Y']."','".$am['Z']."'
                                     
                                     )"; 
-                                     die($sql);    
+                                    // die($sql); 
+                                    // $sql = "insert into hardware 
+                                    // (hardwareoparte,serial,ubicacion,idImportacion,lote,
+                                    // sku,idMarca,idSubInv,chasis,
+                                    // modelo,pulgadas,procesador,idRam1,
+                                    // idRam2,idRam3,idRam4,idDisco1,
+                                    // idDisco2,idCondicion,idCondicion2,comentarios,
+                                    // costoItem,costoImportacion,costoProducto,precioMinimoVenta
+                                    // )
+                                    // values (
+                                    //     '".$am['A']."','".$am['B']."','".$am['C']."','".$am['D']."'
+                                    //     ,'".$am['E']."','".$am['F']."','".$am['G']."','".$am['H']."'
+                                    //     ,'".$am['I']."','".$am['J']."','".$am['K']."','".$am['L']."'
+                                    //     ,'".$am['M']."','".$am['N']."','".$am['O']."','".$am['P']."'
+                                    //     ,'".$am['Q']."','".$am['R']."','".$am['S']."','".$am['T']."'
+                                    //     ,'".$am['U']."','".$am['V']."','".$am['W']."','".$am['X']."'
+                                    
+                                    // )"; 
+                                    //  die($sql);    
                                     $consulta = mysql_query($sql,$conexion); 
 									$i++;
 								}

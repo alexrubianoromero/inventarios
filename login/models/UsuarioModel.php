@@ -15,9 +15,10 @@ class UsuarioModel extends Conexion
         from usuarios u 
         inner join perfiles p on (p.id_perfil =  u.id_perfil )
         where login = '".$request['user']."'   "; 
-        $consulta = mysql_query($sql,$conexion);
+        // $consulta = mysql_query($sql,$conexion);
+        $consulta = mysql_query($sql,$this->connectMysql());
         $filas = mysql_num_rows($consulta);
-        
+        // die('Filas'.$filas); 
         $datosUser  =[];
         if($filas>0)
         {

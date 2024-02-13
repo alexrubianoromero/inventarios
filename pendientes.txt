@@ -79,3 +79,15 @@ al eliminar item debe limpiar el estado del hardware y ademas el idEstado asocia
 y limpiar todo lo quye este asociado a este iditem en asociado 
 revisar que se cree el movimiento de la eliminacion del itemInicio del pedido 
 ellos digeron que unicamente para venta 
+
+revisar el idSucursal con el que queda grabado el cargue
+drop down de ubicacion y procesador con opcion de cambio el resto que queden fijas 
+configurar boton nuevo solo para usuario administrador
+
+en componentes habilitar las dos columnas de texto 
+
+el item debe quedar divido para cada unidad 
+cada serial con sul valor de venta unitario que salga en el reporte financiero en valor real de venta 
+
+
+

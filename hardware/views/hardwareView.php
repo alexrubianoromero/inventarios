@@ -124,15 +124,15 @@ class hardwareView extends vista
              <table class="table table-striped hover-hover">
                     <thead>
                         
+                        <th>H/P</th>
+                        <th>Ubicacion</th>
                         <th>Serial</th>
-                        <th>Pulgadas</th>
+                        <th>Pulg/Cond</th>
                         <th>Procesador</th>
-                        <th>Generacion</th>
-                        <!-- <th>Id Ram</th> -->
+                        <!-- <th>Generacion</th>
                         <th>TotalRam</th>
-                        <!-- <th>Id Disco</th> -->
                         <th>Tipo Disco</th>
-                        <th>Cap.Disco</th>
+                        <th>Cap.Disco</th> -->
                         <th>Acciones</th>
                         
                     </thead>
@@ -141,6 +141,14 @@ class hardwareView extends vista
                         <?php
                       foreach($hardware as $hard)
                       {
+                        if($hard['hardwareoparte']==1)
+                        {
+                            $nombreTipoInven = 'Hardware';
+                        }
+                        if($hard['hardwareoparte']==2)
+                        {
+                            $nombreTipoInven = 'Parte'; 
+                        }
                         $totalRam = $this->hardwareModel->totalizarRamHardwareId($hard['id']);
                         $ram =  $this->partesModel->traerParte($hard['idRam']);
                         $subTipoRam = $this->SubtipoParteModel->traerSubTipoParte($ram[0]['idSubtipoParte']);
@@ -150,15 +158,19 @@ class hardwareView extends vista
                         $subTipoDisco = $this->SubtipoParteModel->traerSubTipoParte($disco[0]['idSubtipoParte']);
                           // $infoSucursal = $this->sucursalModel->traerSucursalId($user['idSucursal']); 
                           // $infoPerfil = $this->perfilModel->traerPerfilId($user['id_perfil']); 
+
                           echo '<tr>'; 
+                          echo '<td>'.$nombreTipoInven.'</td>';
+                          echo '<td>'.$hard['ubicacion'].'</td>';
                           echo '<td>'.$hard['serial'].'</td>';
                           echo '<td>'.$hard['pulgadas'].'</td>';
                           echo '<td>'.$hard['procesador'].'</td>';
                           //   echo '<td>'.$hard['idRam'].'</td>';
                           //aqui depende de la info lo que se muestra
                           //si idRam = 0 entonces muestra info de los campos del cargue para ram 
-                          echo '<td>'.$hard['generacion'].'</td>';
-                          echo '<td>'. $totalRam.'</td>';
+
+                        //   echo '<td>'.$hard['generacion'].'</td>';
+                        //   echo '<td>'. $totalRam.'</td>';
                           
                         // if($hard['idRam1'] == '0' && $hard['idRam2']=='0' && $hard['idRam3']=='0' && $hard['idRam4']=='0')
                         // {
@@ -177,8 +189,8 @@ class hardwareView extends vista
                         {
                             $subTipoDisco = $this->SubtipoParteModel->traerSubTipoParte($hard['tipoDiscoCargue']);
                             
-                            echo '<td>'.$subTipoDisco[0]['descripcion'].'</td>';
-                            echo '<td>'.$hard['capacidadDiscoCargue'].'GB'.'</td>';
+                            // echo '<td>'.$subTipoDisco[0]['descripcion'].'</td>';
+                            // echo '<td>'.$hard['capacidadDiscoCargue'].'GB'.'</td>';
                         }
                         else{
                             
@@ -195,8 +207,8 @@ class hardwareView extends vista
                             
                             $totalDisco = $this->hardwareModel->totalizarDiscoHardwareId($hard['id']);
                             //si son varios tipos de discos?
-                            echo '<td>'.$subTipoDisco1[0]['descripcion'].'/'.$subTipoDisco2[0]['descripcion'].'</td>';
-                            echo '<td>'.$totalDisco.'GB</td>';
+                            // echo '<td>'.$subTipoDisco1[0]['descripcion'].'/'.$subTipoDisco2[0]['descripcion'].'</td>';
+                            // echo '<td>'.$totalDisco.'GB</td>';
                         }
 
                         //   echo '<td>'.$subTipoDisco[0]['descripcion'].'</td>';
@@ -276,7 +288,7 @@ class hardwareView extends vista
         ?>
             <!-- Modal -->
             <div class="modal fade" id="modalHardwareMostrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Info y Edicion Hardware</h1>
@@ -465,12 +477,20 @@ class hardwareView extends vista
         </div>
         <div class="row">
                 <div class="col-md-3">
-                    <label for="">Importacion#:</label>
+                    <label for="">Ubicacion</label>
+                    <input class ="form-control" type="text" id="ubicacion" value ="<?php  echo $producto['ubicacion'] ?>" >          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Importacion/Proveedor</label>
                       <input class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
                 </div>
                 <div class="col-md-3">
-                    <label for="">Lote:</label>
+                    <label for="">Lote/Factura:</label>
                       <input class ="form-control" type="text" id="lote" value ="<?php  echo $producto['lote'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">SKU:</label>
+                      <input class ="form-control" type="text" id="sku" value ="<?php  echo $producto['sku'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Serial:</label>
@@ -488,7 +508,7 @@ class hardwareView extends vista
                       <input class ="form-control" type="text" id="tipoProd" value ="<?php  echo $tipoParte['descripcion'] ?>">          
                 </div>
                 <div class="col-md-3">
-                    <label for="">Chasis:</label>
+                    <label for="">Chasis/Tipo:</label>
                       <input class ="form-control" type="text" id="chasis" value ="<?php  echo $producto['chasis'] ?>">          
                 </div>
                 <div class="col-md-3">
@@ -496,34 +516,46 @@ class hardwareView extends vista
                       <input class ="form-control" type="text" id="modelo" value ="<?php  echo $producto['modelo'] ?>">          
                 </div>
                 <div class="col-md-3">
-                    <label for="">Pulgadas:</label>
+                    <label for="">Pulgadas/Condicion:</label>
                       <input class ="form-control" type="text" id="pulgadas" value ="<?php  echo $producto['pulgadas'] ?>">          
                 </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="">Procesador:</label>
-                <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
-            </div>
-            <div class="col-md-3">
+            <?php
+              if($producto['hardwareoparte']==1)
+              {
+            ?>
+                <div class="col-md-3">
+                    <label for="">Procesador:</label>
+                    <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+                </div>
+
+            <?php 
+            
+              }
+            ?>
+            <!-- <div class="col-md-3">
                 <label for="">Generacion:</label>
                 <input class ="form-control" type="text" id="generacion" value ="<?php  echo $producto['generacion'] ?>">          
-            </div>
+            </div> -->
         </div>
         <div class="mt-3">
             <?php
                if($producto['ramdividida']==0)
                {
-                   echo '<button 
-                            class ="btn btn-success" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#modalDividirRam"
-                            onclick= "formuDividirRam('.$producto['id'].'); "
-                        >DividirRam</button>';
+                //    echo '<button 
+                //             class ="btn btn-success" 
+                //             data-bs-toggle="modal" 
+                //             data-bs-target="#modalDividirRam"
+                //             onclick= "formuDividirRam('.$producto['id'].'); "
+                //         >DividirRam</button>';
                }
             ?>
         </div>
-   
+        <?php  
+         if($producto['hardwareoparte']==1)
+         {
+         ?>        
         <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="">Ram 1:</label>
@@ -582,9 +614,8 @@ class hardwareView extends vista
                        }
                     ?>
                 </div>
-               
-             
         </div>
+       
    
         <div class="row mt-3">
                 <div class="col-md-4">
@@ -648,7 +679,6 @@ class hardwareView extends vista
                
              
         </div>
-        
         <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="">Disco1 :</label>
@@ -670,12 +700,12 @@ class hardwareView extends vista
        
                        }else{
                            echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarDisco('.$producto['id'].','.$producto['idDisco1'].',1);"
-                               >-</button>';
-       
+                           data-bs-toggle="modal" 
+                           data-bs-target="#modalAgregarRam"
+                           class ="btn btn-primary" 
+                           onclick="quitarDisco('.$producto['id'].','.$producto['idDisco1'].',1);"
+                           >-</button>';
+                           
                        }
                     ?>
                 </div>
@@ -691,27 +721,28 @@ class hardwareView extends vista
                        if($producto['idDisco2']==0)
                        {
                            echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarDisco('.$producto['id'].',2);"
-                               >+</button>';
-       
-                       }else{
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarDisco('.$producto['id'].','.$producto['idDisco2'].',2);"
-                               >-</button>';
-       
-                       }
-                    ?>
+                           data-bs-toggle="modal" 
+                           data-bs-target="#modalAgregarRam"
+                           class ="btn btn-success" 
+                           onclick="formuAgregarDisco('.$producto['id'].',2);"
+                           >+</button>';
+                           
+                        }else{
+                            echo '<button 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalAgregarRam"
+                            class ="btn btn-primary" 
+                            onclick="quitarDisco('.$producto['id'].','.$producto['idDisco2'].',2);"
+                            >-</button>';
+                            
+                        }
+                        ?>
                 </div>
 
         </div>
         
         <div class="row mt-3">
+
                 <div class="col-md-10">
                     <label for="">Cargador :</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
@@ -724,26 +755,29 @@ class hardwareView extends vista
                        if($producto['idCargador']==0)
                        {
                            echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarCargador('.$producto['id'].');"
-                               >+</button>';
-       
-                       }else{
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarCargador('.$producto['id'].','.$producto['idCargador'].');"
-                               >-</button>';
-       
-                       }
-                    ?>
+                           data-bs-toggle="modal" 
+                           data-bs-target="#modalAgregarRam"
+                           class ="btn btn-success" 
+                           onclick="formuAgregarCargador('.$producto['id'].');"
+                           >+</button>';
+                           
+                        }else{
+                            echo '<button 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalAgregarRam"
+                            class ="btn btn-primary" 
+                            onclick="quitarCargador('.$producto['id'].','.$producto['idCargador'].');"
+                            >-</button>';
+                            
+                        }
+                        ?>
                 </div>
                
         </div>
-
+        <?php
+        }
+        ?>
+        
 
         <!--  botones de quitar ram y disco   -->
             <div class="col-md-6">
@@ -770,26 +804,36 @@ class hardwareView extends vista
         </div>
         <br>
         <div class="row">
+                <label>Comentarios:</label>
                 <div class="col-md-12 mt-03">
                     
                       <textarea class="form-control" id="comentarios" rows="4" placeholder="Comentarios"><?php  echo $producto['comentarios']  ?></textarea>     
                 </div>
         </div>
-        <div class="row">
-            <label>Condicion: </label>
+        <div class="row mt-3">
+            <label>Condicion/Especificaciones: </label>
              <?php
-                     $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
-                    //  $this->printR($condiciones);
-                     echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
-                      $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
-                    // foreach($condiciones as $condicion)
-                    // {
-                    //     if($condicion['iid']== )
-                    //     echo '<option value = '.$condicion['id'].'>'.$condicion['descripcion'].'</option>';  
-                    // }   
-                    echo '</select>';
+                    //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                    //  echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
+                    //   $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
+                    // echo '</select>';
+                    
              ?>
+             <input type="text"  id = "idCondicion"  value="<?php   echo $producto['idCondicion']   ?>"  >
         </div>
+        <div class="row mt-3">
+            <label>Condicion 2 </label>
+             <?php
+                    //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                    //  echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
+                    //   $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
+                    // echo '</select>';
+                    
+             ?>
+             <input type="text"  id = "idCondicion2"  value="<?php   echo $producto['idCondicion2']   ?>"  >
+        </div>
+
+        <br>
         <?php
         if($_SESSION['nivel']==3)
         {
