@@ -22,6 +22,12 @@ class reportesController
     {
         // die('desde controlador') ;
         session_start();
+        if(!isset($_SESSION['id_usuario']))
+        {
+            echo 'la sesion ha caducado';
+            echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            die();
+        }
         $this->view = new reportesView();
         $this->pedidoModel = new PedidoModel();
         $this->itemInicioModel = new ItemInicioPedidoModel();

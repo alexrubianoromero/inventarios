@@ -85,9 +85,35 @@ drop down de ubicacion y procesador con opcion de cambio el resto que queden fij
 configurar boton nuevo solo para usuario administrador
 
 en componentes habilitar las dos columnas de texto 
+-quital la columna de costo 
+-caracteristicas y especificaciones deben ser dos campos independientes
 
-el item debe quedar divido para cada unidad 
+
+el item debe quedar divido para cada unidad osea cuando se este creando el item de pedido  tomara la cantidad total 
+y lo dividira por el numero de partes o hardwares
 cada serial con sul valor de venta unitario que salga en el reporte financiero en valor real de venta 
+
+cuando se agreguen oreduzcan componenetes  agregar un campo de observacion para mayor informacioon de porque se realizo 
+un movimiento de partes y tambien la cantidad que causo el movimiento
+
+3 niveles de permisos 
+
+permisos esta pendiente 
+
+solo un usuario que va a poder agregar y quirar
+
+revisar el drop down de las condiciones del hardware cuando se consulta 
+ubicacion va con dropdown em hardware
+impotration on oes modificable ni lote factura
+namda es modificabvle excepto
+procesador solo para algunos perfiles y con dropdown
+las condiciones tambien tienen dropdown y ambos vienen de la misma tabla 
+los valores de hardware seran restringidos a ciertos perfiles 
+el modelo cuando se esta creadno del item de inicio pedido solo texto
+cuando se cree 
+
+en consulta de hardware o parte con serial cuando muestra todos los hardware colocar un contador
+ con el numero de las devoluviopnes que se han realizado 
 
 
 
