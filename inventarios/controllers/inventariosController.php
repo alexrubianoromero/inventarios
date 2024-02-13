@@ -13,6 +13,12 @@ class inventariosController
     public function __construct()
     {
         session_start();
+        if(!isset($_SESSION['id_usuario']))
+        {
+            echo 'la sesion ha caducado';
+            echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            die();
+        }
         $this->view = new inventariosView();
         $this->model = new InventariosModel();
 

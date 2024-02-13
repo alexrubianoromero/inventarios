@@ -12,6 +12,13 @@ class usersController
 
     public function __construct()
     {
+        session_start();
+        if(!isset($_SESSION['id_usuario']))
+        {
+            echo 'la sesion ha caducado';
+            echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            die();
+        }
 
         $this->model = new UsuarioModel();  
         $this->view = new usersView();  

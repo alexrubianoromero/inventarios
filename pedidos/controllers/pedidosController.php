@@ -20,7 +20,6 @@ class pedidosController
         $this->itemInicioModel = new  ItemInicioPedidoModel();
         // die('desde controlador') ;
         session_start();
-
         if(!isset($_SESSION['id_usuario']))
         {
             echo 'la sesion ha caducado';
