@@ -1,4 +1,0 @@
-function realizarDevolucionABodega()
-{
-    alert('devoluvion');
-}

@@ -121,3 +121,5 @@ en consulta de hardware o parte con serial cuando muestra todos los hardware col
  --revisar porque el buscador no me trajo los seriales en hojas de vida 
 
 
+agragar tambien el numero que se agrego o se quito en lo movimientos de partes 
+
