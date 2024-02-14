@@ -372,6 +372,12 @@ class HardwareModel extends Conexion
         //  die($sql ); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    public function actualizarCondicion2Hardware($request)
+    {
+        $sql = "update hardware set idCondicion2 = '".$request['idCondicion2']."'  where id='".$request['idHardware']."'"; 
+        //  die($sql ); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
     
     public function traerHardwareDisponibles()
     {

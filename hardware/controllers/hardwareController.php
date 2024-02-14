@@ -130,6 +130,10 @@ class hardwareController extends controllerClass
         {
             $this->model->actualizarCondicionHardware($_REQUEST);
         }
+        if($_REQUEST['opcion']=='actualizarCondicion2Hardware')
+        {
+            $this->model->actualizarCondicion2Hardware($_REQUEST);
+        }
 
         if($_REQUEST['opcion']=='buscarHardwareAgregarItemPedido')
         {

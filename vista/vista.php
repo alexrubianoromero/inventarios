@@ -111,18 +111,18 @@ class vista
                 }
             }
         }
-        
+
     public function colocarSelectCampoConOpcionSeleccionadaPorNombre($valores,$condicion)
     {
         echo '<option value="-1">Sel.</option>';
         
             foreach($valores as $valor)
             {
-                if($valor['condicion'] == $condicion){
-                    echo ' <option selected value="'.$valor['condicion'].'">'.$valor['descripcion'].'</option>';
+                if($valor['descripcion'] == $condicion){
+                    echo ' <option selected value="'.$valor['descripcion'].'">'.$valor['descripcion'].'</option>';
                 }
                 else{
-                    echo ' <option value="'.$valor['condicion'].'">'.$valor['descripcion'].'</option>';
+                    echo ' <option value="'.$valor['descripcion'].'">'.$valor['descripcion'].'</option>';
                 }
             }
     
