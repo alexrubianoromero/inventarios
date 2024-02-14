@@ -588,6 +588,8 @@ function actualizarCondicionHardware(idHardware)
     +'&idCondicion='+idCondicion
     );
 }
+
+
 function actualizarCondicion2Hardware(idHardware)
 {
     var idCondicion2 = document.getElementById('idCondicion2').value;
@@ -606,6 +608,44 @@ function actualizarCondicion2Hardware(idHardware)
     +'&idCondicion2='+idCondicion2
     );
 }
+function actualizarOnchengeUbicacion(idHardware)
+{
+    var ubicacion = document.getElementById('ubicacion').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            // document.getElementById("modalTraerInventario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=actualizarOnchengeUbicacion'
+    +'&idHardware='+idHardware
+    +'&ubicacion='+ubicacion
+    );
+}
+function actualizarOnchangeProcesador(idHardware)
+{
+    var procesador = document.getElementById('procesador').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            // document.getElementById("modalTraerInventario").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=actualizarOnchangeProcesador'
+    +'&idHardware='+idHardware
+    +'&procesador='+procesador
+    );
+}
+
+
 function filtrarHardwarePorSerial()
 {
     // alert('buenas')
@@ -675,6 +715,23 @@ function fitrarHardware()
     http.open("POST",url);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send('opcion=fitrarHardware'
+    +'&inputBuscarHardware='+inputBuscarHardware
+    );
+}
+function fitrarHardwareHojasDeVida()
+{
+    var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("div_movimientos_hardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareHojasDeVida'
     +'&inputBuscarHardware='+inputBuscarHardware
     );
 }

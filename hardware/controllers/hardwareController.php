@@ -148,6 +148,12 @@ class hardwareController extends controllerClass
             // $this->view->fitrarHardware($_REQUEST['inputBuscarHardware']);
             $this->hojasdeVidaView->traerHardwareFiltrado($_REQUEST['inputBuscarHardware']);
         }
+        if($_REQUEST['opcion']=='fitrarHardwareHojasDeVida')
+        {
+            // $this->view->fitrarHardware($_REQUEST['inputBuscarHardware']);
+            $hardware = $this->model->traerHardwareFiltroSerialHojasDeVida($_REQUEST['inputBuscarHardware']);
+            $this->hojasdeVidaView->traerHardwareHojasDeVida($hardware);
+        }
 
         if($_REQUEST['opcion']=='filtrarHardwarePorSerial')
         {
@@ -264,6 +270,17 @@ class hardwareController extends controllerClass
         {
             // $this->printR($_REQUEST);
             $this->model->actualizarCostos($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='actualizarOnchengeUbicacion')
+        {
+            // $this->printR($_REQUEST);
+            $this->model->actualizarOnchengeUbicacion($_REQUEST);
+        }
+ 
+        if($_REQUEST['opcion']=='actualizarOnchangeProcesador')
+        {
+            // $this->printR($_REQUEST);
+            $this->model->actualizarOnchangeProcesador($_REQUEST);
         }
  
 

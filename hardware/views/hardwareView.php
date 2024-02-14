@@ -53,7 +53,7 @@ class hardwareView extends vista
             <div class="col-lg-2"></div>
             <div class="col-lg-2"></div> -->
             <div  class="row" id="botones" class="mt-3 " >
-                <div class="col-lg-2">
+                <!-- <div class="col-lg-2">
                     <button type="button" 
                     data-bs-toggle="modal" 
                     data-bs-target="#modalNuevoHardware"
@@ -62,7 +62,7 @@ class hardwareView extends vista
                     >
                     Nuevo Hardware
                     </button>
-                </div>
+                </div> -->
                 <div class="col-lg-2">
                     <button type="button" 
                     data-bs-toggle="modal" 
@@ -249,8 +249,8 @@ class hardwareView extends vista
                     
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
-                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >SubirArchivo++</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="" >Cerrar</button>
+                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="" >SubirArchivo</button>
                 </div>
                 </div>
             </div>
@@ -478,46 +478,62 @@ class hardwareView extends vista
         <div class="row">
                 <div class="col-md-3">
                     <label for="">Ubicacion</label>
-                    <input class ="form-control" type="text" id="ubicacion" value ="<?php  echo $producto['ubicacion'] ?>" >          
+                    <select class ="form-control" id="ubicacion" onchange="actualizarOnchengeUbicacion(<?php echo $producto['id']; ?>);">
+                        <?php
+                            $ubicaciones = $this->hardwareModel->traerUbicaciones();
+                            foreach($ubicaciones as $ubicacion)
+                            {
+                                if($ubicacion['ubicacion']== $producto['ubicacion'])
+                                {
+                                    echo '<option selected value="'.$ubicacion['ubicacion'].'">'.$ubicacion['ubicacion'].'</option>';      
+
+                                }else{
+
+                                    echo '<option value="'.$ubicacion['ubicacion'].'">'.$ubicacion['ubicacion'].'</option>';      
+                                }
+                            }
+                        ?>
+                    </select>
+                    <!-- <input class ="form-control" type="text" id="ubicacion" value ="<?php  //echo $producto['ubicacion'] ?>" >           -->
                 </div>
                 <div class="col-md-3">
                     <label for="">Importacion/Proveedor</label>
-                      <input class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
+                      <input readonly class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
                 </div>
                 <div class="col-md-3">
                     <label for="">Lote/Factura:</label>
-                      <input class ="form-control" type="text" id="lote" value ="<?php  echo $producto['lote'] ?>">          
+                      <input readonly  class ="form-control" type="text" id="lote" value ="<?php  echo $producto['lote'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">SKU:</label>
-                      <input class ="form-control" type="text" id="sku" value ="<?php  echo $producto['sku'] ?>">          
+                      <input  readonly class ="form-control" type="text" id="sku" value ="<?php  echo $producto['sku'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Serial:</label>
-                      <input class ="form-control" type="text" id="serial" value ="<?php  echo $producto['serial'] ?>">          
+                      <input readonly class ="form-control" type="text" id="serial" value ="<?php  echo $producto['serial'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Marca:</label>
-                      <input class ="form-control" type="hidden" id="marca" value ="<?php  echo $producto['idMarca'] ?>">   
-                      <input class ="form-control" type="text" id="nombremarca" onfocus="blur();" value ="<?php  echo $marca[0]['marca'] ?>">   
+                      <input readonly class ="form-control" type="hidden" id="marca" value ="<?php  echo $producto['idMarca'] ?>">   
+                      <input  readonly class ="form-control" type="text" id="nombremarca" onfocus="blur();" value ="<?php  echo $marca[0]['marca'] ?>">   
                 </div>
         </div>
         <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="">Producto:</label>
-                      <input class ="form-control" type="text" id="tipoProd" value ="<?php  echo $tipoParte['descripcion'] ?>">          
+                      <input readonly class ="form-control" type="text" id="tipoProd" value ="<?php  echo $tipoParte['descripcion'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Chasis/Tipo:</label>
-                      <input class ="form-control" type="text" id="chasis" value ="<?php  echo $producto['chasis'] ?>">          
+                      <input  readonly class ="form-control" type="text" id="chasis" value ="<?php  echo $producto['chasis'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Modelo:</label>
-                      <input class ="form-control" type="text" id="modelo" value ="<?php  echo $producto['modelo'] ?>">          
+                      <input  readonly class ="form-control" type="text" id="modelo" value ="<?php  echo $producto['modelo'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Pulgadas/Condicion:</label>
-                      <input class ="form-control" type="text" id="pulgadas" value ="<?php  echo $producto['pulgadas'] ?>">          
+                      <input  readonly class ="form-control" type="text" id="pulgadas" value ="<?php  echo $producto['pulgadas'] ?>">          
                 </div>
         </div>
         <div class="row mt-3">
@@ -527,7 +543,24 @@ class hardwareView extends vista
             ?>
                 <div class="col-md-3">
                     <label for="">Procesador:</label>
-                    <input class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+                    <select class ="form-control" id="procesador" onchange="actualizarOnchangeProcesador(<?php echo $producto['id']; ?>);">
+                        <?php
+                            $procesadores = $this->procesadorModel->traerProcesadores();
+                            foreach($procesadores as $procesador)
+                            {
+                                if($procesador['procesador']== $producto['procesador'])
+                                {
+                                    echo '<option selected value="'.$procesador['procesador'].'">'.$procesador['procesador'].'</option>';      
+
+                                }else{
+
+                                    echo '<option value="'.$procesador['procesador'].'">'.$procesador['procesador'].'</option>';      
+                                }
+                            }
+                        ?>
+                    </select>
+
+                    <!-- <input class ="form-control" type="text" id="procesador" value ="<?php  //echo $producto['procesador'] ?>">           -->
                 </div>
 
             <?php 

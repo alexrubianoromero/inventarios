@@ -610,7 +610,7 @@ class pedidosView extends vista
                        <th>Ram GB</th>
                        <th>Disco GB</th>
                        <th>Estado</th>
-                       <th>Precio</th>
+                       <th>Precio/Unit</th>
                        <th>Accion</th>
                     </tr>
                 </thead> 

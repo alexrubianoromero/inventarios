@@ -60,6 +60,28 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    public function traerHardwareFiltroSerialHojasDeVida($traerHardwareFiltro)
+    {
+        $sql = "select * 
+                from hardware 
+                where serial like '%".$traerHardwareFiltro."%' 
+                and idSucursal = '".$_SESSION['idSucursal']."'  
+                order by id asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+    public function traerHardwareFiltroHojasDeVida($traerHardwareFiltro)
+    {
+        $sql = "select * 
+                from hardware 
+                where serial like '%".$traerHardwareFiltro."%' 
+                and idSucursal = '".$_SESSION['idSucursal']."'  
+                order by id asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
 
     public function traerHardwarePulgadasFiltro($inputBuscarPulgadas)
     {
@@ -378,6 +400,18 @@ class HardwareModel extends Conexion
         //  die($sql ); 
         $consulta = mysql_query($sql,$this->connectMysql());
     }
+    public function actualizarOnchengeUbicacion($request)
+    {
+        $sql = "update hardware set ubicacion = '".$request['ubicacion']."'  where id='".$request['idHardware']."'"; 
+        //  die($sql ); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    public function actualizarOnchangeProcesador($request)
+    {
+        $sql = "update hardware set procesador = '".$request['procesador']."'  where id='".$request['idHardware']."'"; 
+        //  die($sql ); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
     
     public function traerHardwareDisponibles()
     {
@@ -425,6 +459,13 @@ class HardwareModel extends Conexion
         ";
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
+    }
+    public function traerUbicaciones()
+    {
+        $sql="select DISTINCT(ubicacion) from hardware  group by ubicacion";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $ubicaciones = $this->get_table_assoc($consulta); 
+        return $ubicaciones;
     }
     
  
