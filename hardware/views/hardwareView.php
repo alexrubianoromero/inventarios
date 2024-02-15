@@ -252,8 +252,8 @@ class hardwareView extends vista
                     
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="" >Cerrar</button>
-                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="" >SubirArchivo</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();" >Cerrar</button>
+                    <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >SubirArchivo</button>
                 </div>
                 </div>
             </div>
@@ -509,7 +509,11 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-3">
                     <label for="">SKU:</label>
-                      <input  readonly class ="form-control" type="text" id="sku" value ="<?php  echo $producto['sku'] ?>">          
+                      <input  
+                        readonly 
+                        class ="form-control" 
+                        type="text" id="sku" 
+                        value ="<?php  echo $producto['sku'].'-'.$producto['comodin'] ?>">          
                 </div>
                 <div class="col-md-3">
                     <label for="">Serial:</label>
@@ -1311,7 +1315,7 @@ class hardwareView extends vista
                       <th>Estado</th>
                       <!-- <th>TipoMov</th> -->
                       <th>Observaciones</th>
-                      <th>Devolucion</th>
+                      <!-- <th>Devolucion</th> -->
                   </thead>
               <tbody>
                   <?php
@@ -1334,16 +1338,16 @@ class hardwareView extends vista
                         // echo '<td>'.$movimiento['idTipoMov'].'</td>';
                         echo '<td>'.$movimiento['observaciones'].'</td>';
 
-                        if($movimiento['idMovimiento'] == $maxIdMovimientosHardware)    
-                        {
+                        // if($movimiento['idMovimiento'] == $maxIdMovimientosHardware)    
+                        // {
 
-                            echo '<td><button 
-                            class="btn btn-primary btn-sm " 
-                            onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
-                            >Devolucion</button></td>';
-                        }else {
-                            echo '<td></td>';
-                        }
+                        //     echo '<td><button 
+                        //     class="btn btn-primary btn-sm " 
+                        //     onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
+                        //     >Devolucion</button></td>';
+                        // }else {
+                        //     echo '<td></td>';
+                        // }
 
 
                          echo '</tr>';  

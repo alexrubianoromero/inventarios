@@ -239,7 +239,7 @@ function traerUltimoIdPartes($conexion){
                                     
                                     $sql = "insert into hardware 
                                     (hardwareoparte,serial,ubicacion,idImportacion,lote,
-                                    sku,idMarca,idSubInv,chasis,
+                                    idMarca,idSubInv,chasis,
                                     modelo,pulgadas,procesador,
                                     idRam1,idRam2,idRam3,idRam4,
                                     idDisco1, idDisco2,
@@ -249,13 +249,13 @@ function traerUltimoIdPartes($conexion){
                                     )
                                     values (
                                         '".$am['A']."','".$am['B']."','".$am['C']."','".$am['D']."'
-                                        ,'".$am['E']."','".$am['F']."','".$infoMarca['id']."','".$infoSubtipoProducto['id']."'
+                                        ,'".$am['E']."','".$infoMarca['id']."','".$infoSubtipoProducto['id']."'
                                         ,'".$am['I']."','".$am['J']."','".$am['K']."','".$am['L']."'
                                         ,'".$infoSubtipoRam1['id']."','".$infoSubtipoRam2['id']."','".$infoSubtipoRam3['id']."','".$infoSubtipoRam4am['id']."'
                                         ,'".$infoSubtipoDisco1['id']."','".$infoSubtipoDisco2['id']."'
                                         ,'".$am['S']."','".$am['T']."'
                                         ,'".$am['U']."','".$am['V']."','".$am['W']."','".$am['X']."'
-                                        ,'".$am['Y']."','".$am['Z']."'
+                                        ,'".$am['Y']."','".$am['F']."'
                                         ,'".$_SESSION['idSucursal']."'
                                     
                                     )"; 

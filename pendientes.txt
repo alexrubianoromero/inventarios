@@ -101,25 +101,31 @@ cada serial con sul valor de venta unitario que salga en el reporte financiero e
 **namda es modificabvle excepto
 **procesador solo para algunos perfiles y con dropdown
 *impotration on oes modificable ni lote factura
-
-3 niveles de permisos 
-
-permisos esta pendiente 
-
-solo un usuario que va a poder agregar y quirar
-
-
-los valores de hardware seran restringidos a ciertos perfiles 
-el modelo cuando se esta creadno del item de inicio pedido solo texto
-cuando se cree 
-
-en consulta de hardware o parte con serial cuando muestra todos los hardware colocar un contador
- con el numero de las devoluviopnes que se han realizado 
- 
--el numero de devoluciones o sdk se incrementara cuando se realize una devolucion haciendo clieck en el boton devoluciones 
+**el numero de devoluciones o sdk se incrementara cuando se realize una devolucion haciendo clieck en el boton devoluciones 
  por que en hojas de vida no salio el serial que busque 
  **revisar porque el buscador no me trajo los seriales en hojas de vida 
 
 
 **agregar tambien el numero que se agrego o se quito en lo movimientos de partes 
 
+**quitar boton de devolver en el historial de hojas de vida 
+**grabar el valor de sku del excel en el campo comodin
+**visualmente mostrara el  sku con el comidin 
+
+revisar que el tecnico solo pueda ver sus pedidos 
+
+los valores de hardware seran restringidos a ciertos perfiles 
+el modelo cuando se esta creadno del item de inicio pedido solo texto
+cuando se cree. 
+ 
+
+ cuando el tecnico termine el pedido  debe salir ese item de su pantalla
+ y que queden en pedidos completados (como un historial de sus pedidos )
+ cuando el estado sea entregado hay pasa a pedidos completados 
+
+
+3 niveles de permisos 
+
+permisos esta pendiente 
+
+solo un usuario que va a poder agregar y quitar
