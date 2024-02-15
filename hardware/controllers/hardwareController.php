@@ -294,6 +294,12 @@ class hardwareController extends controllerClass
             $this->realizarDevolucionABodega($_REQUEST);
         }
  
+        if($_REQUEST['opcion']=='filtrarUbicacionInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->filtrarUbicacionInventario($_REQUEST);
+        }
+ 
 
 
         
@@ -428,9 +434,9 @@ class hardwareController extends controllerClass
         $hardware =  $this->model->traerHardwareProcesadorFiltro($request['inputBuscarProcesador']);
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }
-    public function fitrarHardwareGeneracionInventario($request)
+    public function filtrarUbicacionInventario($request)
     {
-        $hardware =  $this->model->traerHardwaregeneracionFiltro($request['inputBuscarGeneracion']);
+        $hardware =  $this->model->filtrarUbicacionInventario($request['inputBuscarUbicacion']);
 
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }

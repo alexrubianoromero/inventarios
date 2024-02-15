@@ -1388,7 +1388,7 @@ class hardwareView extends vista
         $tipopartes = $this->tipoParteModel->traerTipoParteHardware('1');
         $subtipos = $this->SubtipoParteModel->traerSubtiposHardware();
         $procesadores = $this->procesadorModel->traerProcesadores();
-        $generaciones =  $this->generacionModel->traerGeneracion();
+        $ubicaciones =  $this->hardwareModel->traerUbicaciones();
         $idImportaciones =  $this->hardwareModel->traerInfoCampoTablaHardware('idImportacion');
         $lotes =  $this->hardwareModel->traerInfoCampoTablaHardware('lote');
         // $this->printR($generaciones);
@@ -1400,12 +1400,12 @@ class hardwareView extends vista
                 <input class="form-control"type="text" id="inputBuscarHardware" onkeyup="fitrarHardwareSerialInventario();">
             </div>
         </div>
-        <div class="row"  >
+        <!-- <div class="row"  >
             <span class="col-lg-4">Pulgadas:</span>
             <div class="col-lg-8" align="right">
                 <input class="form-control"type="text" id="inputBuscarPulgadas" onkeyup="fitrarHardwarePulgadasInventario();">
             </div>
-        </div>
+        </div> -->
         <div class="row"  >
             <span class="col-lg-4">Procesador:</span>
             <div class="col-lg-8" align="right">
@@ -1415,10 +1415,24 @@ class hardwareView extends vista
             </div>
         </div>
         <div class="row"  >
-            <span class="col-lg-4">Generacion:</span>
+            <span class="col-lg-4">Ubicacion:</span>
             <div class="col-lg-8" align="right">
-                <select class ="form-control"  id="inputBuscarGeneracion" onchange="fitrarHardwareGeneracionInventario();" >
-                        <?php  $this->colocarSelecGeneraciones($generaciones);  ?>
+                <select class ="form-control"  id="inputBuscarUbicacion" onchange="filtrarUbicacionInventario();" >
+                <?php
+                            // $ubicaciones = $this->hardwareModel->traerUbicaciones();
+                            echo '<option value="-1">Seleccione...</option>';  
+                            foreach($ubicaciones as $ubicacion)
+                            {
+                                if($ubicacion['ubicacion']== $producto['ubicacion'])
+                                {
+                                    echo '<option selected value="'.$ubicacion['ubicacion'].'">'.$ubicacion['ubicacion'].'</option>';      
+
+                                }else{
+
+                                    echo '<option value="'.$ubicacion['ubicacion'].'">'.$ubicacion['ubicacion'].'</option>';      
+                                }
+                            }
+                        ?>
                     </select>  
             </div>
         </div>

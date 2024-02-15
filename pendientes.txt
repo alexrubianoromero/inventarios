@@ -129,3 +129,15 @@ cuando se cree.
 permisos esta pendiente 
 
 solo un usuario que va a poder agregar y quitar
+
+en que momento se le cambia el estado a un pedido 
+com ose maneja eso cuales son los estados de un pedido 
+
+no se va a manejar un estado de pedido sino estado de item 
+y coneste se mostraran los items completados o por completar
+
+en hojas de vida mostrar las caracteristicas de un serial pero no editable solo informacion
+
+**quitar el filtro de generacion en filtros de hardware  revision general de filtros solo los de bodega debe traer
+**y colocar el filtro de ubicacion
+

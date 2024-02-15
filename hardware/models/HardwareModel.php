@@ -86,21 +86,29 @@ class HardwareModel extends Conexion
 
     public function traerHardwarePulgadasFiltro($inputBuscarPulgadas)
     {
-        $sql = "select * from hardware where pulgadas like '%".$inputBuscarPulgadas."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        $sql = "select * from hardware where pulgadas like '%".$inputBuscarPulgadas."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
     public function traerHardwareProcesadorFiltro($inputBuscarProcesador)
     {
-        $sql = "select * from hardware where procesador like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        $sql = "select * from hardware where procesador like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+    public function filtrarUbicacionInventario($inputBuscarUbicacion)
+    {
+        $sql = "select * from hardware where ubicacion like '%".$inputBuscarUbicacion."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
     public function traerHardwaregeneracionFiltro($inputBuscarProcesador)
     {
-        $sql = "select * from hardware where generacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        $sql = "select * from hardware where generacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
@@ -108,7 +116,7 @@ class HardwareModel extends Conexion
     }
     public function traerHardwareImportacionFiltro($inputBuscarProcesador)
     {
-        $sql = "select * from hardware where idImportacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        $sql = "select * from hardware where idImportacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0   order by id asc";
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
@@ -116,7 +124,7 @@ class HardwareModel extends Conexion
     }
     public function traerHardwareLoteFiltro($inputBuscarProcesador)
     {
-        $sql = "select * from hardware where lote like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."'  order by id asc";
+        $sql = "select * from hardware where lote like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);

@@ -786,6 +786,23 @@ function fitrarHardwareProcesadorInventario()
     +'&inputBuscarProcesador='+inputBuscarProcesador
     );
 }
+function filtrarUbicacionInventario()
+{
+    var inputBuscarUbicacion = document.getElementById('inputBuscarUbicacion').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=filtrarUbicacionInventario'
+    +'&inputBuscarUbicacion='+inputBuscarUbicacion
+    );
+}
 function fitrarHardwareGeneracionInventario()
 {
     var inputBuscarGeneracion = document.getElementById('inputBuscarGeneracion').value;
