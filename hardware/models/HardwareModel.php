@@ -67,6 +67,7 @@ class HardwareModel extends Conexion
                 where serial like '%".$traerHardwareFiltro."%' 
                 and idSucursal = '".$_SESSION['idSucursal']."'  
                 order by id asc";
+                // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
@@ -468,5 +469,11 @@ class HardwareModel extends Conexion
         return $ubicaciones;
     }
     
+    public function aumentarSkuIdHardware($idHardware,$valorSku)
+    {
+        $sql= "update hardware set sku = '".$valorSku."'  where id = '".$idHardware."'";  
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+    }
  
 }

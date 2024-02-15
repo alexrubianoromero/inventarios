@@ -282,10 +282,16 @@ class hardwareController extends controllerClass
             // $this->printR($_REQUEST);
             $this->model->actualizarOnchangeProcesador($_REQUEST);
         }
+        if($_REQUEST['opcion']=='formuRealizarDevolucionABodega')
+        {
+            // $this->printR($_REQUEST);
+            $this->view->formuRealizarDevolucionABodega($_REQUEST['idHardware']);
+        }
+
         if($_REQUEST['opcion']=='realizarDevolucionABodega')
         {
             // $this->printR($_REQUEST);
-            $this->model->realizarDevolucionABodega($_REQUEST['idHardware']);
+            $this->realizarDevolucionABodega($_REQUEST);
         }
  
 
@@ -295,6 +301,45 @@ class hardwareController extends controllerClass
 
 
     }
+
+    public function realizarDevolucionABodega($request)
+    {
+        $infoHardware =  $this->model->traerHardwareId($request[idHardware]); 
+
+        ////codigo anterior
+        //revisar este codigo 
+        //si es renta aumentar el sku
+        $valorSkuActual = $infoHardware['sku'];
+        $nuevoSku = $valorSkuActual + 1 ; 
+
+        if($infoHardware['idEstadoInventario']==2)
+        {
+            $this->model->aumentarSkuIdHardware($request['idHardware'],$nuevoSku);
+        }
+        $regresaAInventario = 0;
+        $this->model->actualizarEstadoHardware($request['idHardware'],$regresaAInventario);
+        //generar movimiento de devolucion 
+         //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
+          //falta crear el movimiento historico 
+          // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+
+        //  $infoMovimiento =  $this->MovHardwareModel->traerMovimientoId($request['idMovimiento']);
+        //  $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($infoMovimiento['idItemInicio'] );
+
+          $tipoMov = 1 ; //entra al inventario;
+          $infoMov = new stdClass();
+
+          $infoMov->idTipoMov = $tipoMov ;  
+          $infoMov->idItemInicio = $request['idItemDev'] ;  
+          $infoMov->observaciones = 'Se realiza reingreso Hardware  de Pedido '.$request['idPedidoDev'].' id Item '.$request['idItemDev'].' ';
+          $infoMov->observaciones .= $request['obseDevolucion'];
+          $infoMov->idHardware = $request['idHardware'];  
+          $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+
+          
+
+          echo 'Reingreso Realizado';
+    } 
 
     public function habilitarHardware ($request) 
     {

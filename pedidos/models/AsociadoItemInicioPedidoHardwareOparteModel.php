@@ -67,6 +67,13 @@ class AsociadoItemInicioPedidoHardwareOparteModel extends Conexion
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
         }
+        public function traerUltimoItemInicioAsociadoIdHArdware($idHardware)
+        {
+            $sql = "select max(id) as maxId from asociadoItemInicioPedidoHardwareOparte where idHardwareOParte= '".$idHardware."' ";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $arrMax= mysql_fetch_assoc($consulta); 
+            return $arrMax['maxId'];
+        }
 
     
 

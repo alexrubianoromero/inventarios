@@ -12,6 +12,7 @@ require_once($raiz.'/hardware/models/ProcesadorModel.php');
 require_once($raiz.'/hardware/models/GeneracionModel.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/clientes/models/ClienteModel.php'); 
+require_once($raiz.'/pedidos/models/AsociadoItemInicioPedidoHardwareOparteModel.php'); 
 require_once($raiz.'/vista/vista.php'); 
 
 class hardwareView extends vista
@@ -28,6 +29,7 @@ class hardwareView extends vista
     protected $pedidoModel;
     protected $clienteModel;
     protected $estadoInicioPedidoModel;
+    protected $asociadoItemPedido;
 
     public function __construct()
     {
@@ -43,6 +45,7 @@ class hardwareView extends vista
         $this->pedidoModel = new PedidoModel();
         $this->clienteModel = new ClienteModel();
         $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
+        $this->asociadoItemPedido = new AsociadoItemInicioPedidoHardwareOparteModel();
     }
     public function hardwareMenu($hardware)
     {
@@ -1448,6 +1451,40 @@ class hardwareView extends vista
             </div>
         </div>
         <?php
+    }
+
+    function formuRealizarDevolucionABodega($idHardware)
+    {
+        //traer el registro del ultimo item donde fue incluido este idHArdware 
+        $infoHardware = $this->hardwareModel->traerHardwareId($idHardware); 
+        $ultimoAsocItemInicio = $this->asociadoItemPedido->traerUltimoItemInicioAsociadoIdHArdware($idHardware);
+        $infoAsociado = $this->asociadoItemPedido->traerAsociadoItemIdAsociado($ultimoAsocItemInicio);
+        $infoItemInicio = $this->itemInicioPedidoModel->traerItemInicioPedidoId($infoAsociado['idItemInicioPedido']);
+        $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($infoHardware);
+        // $this->printR($infoItemInicio);
+    ?>
+        <div class="row" >
+
+            <input type="hidden" id="idPedidoDev" value="<?php  echo $infoItemInicio['idPedido']; ?>" >
+            <input type="hidden" id="idItemDev" value="<?php  echo $infoAsociado['idItemInicioPedido']; ?>" >
+
+            <label class="col-lg-5">Serial: </label>
+            <label class="col-lg-7"><?php echo $infoHardware['serial'];    ?></label>
+
+            <label class="col-lg-5">Ultimo Pedido Asociado: </label>
+            <label class="col-lg-7"><?php echo $infoItemInicio['idPedido'];    ?></label>
+
+            <label class="col-lg-5">Item: </label>
+            <label class="col-lg-7"><?php echo $infoAsociado['idItemInicioPedido'];    ?></label>
+            <label>Observaciones Devolucion:</label>
+            <textarea id="obseDevolucion" class="form-control" ></textarea>
+            <button 
+                onclick ="realizarDevolucionABodega(<?php echo $idHardware    ?>);"
+                class="btn btn-primary mt-3 btn-block"
+            >Realizar Devolucion</button>
+        </div>
+
+    <?php
     }
 }
 ?>
