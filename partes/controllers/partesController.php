@@ -158,10 +158,10 @@ class partesController
         $infoMov = new stdClass();
 
         if($request['tipoMov']=="1"){
-            $infoMov->observaciones = 'Se agrega existencias a partes  '.$request['observaciones'];
+            $infoMov->observaciones = 'Se agrega existencias a partes  '.'Cantidad '.$request['cantidad'].' '.$request['observaciones'];
         }
         if($request['tipoMov']=="2"){
-            $infoMov->observaciones = 'Se reduce existencias a partes '.$request['observaciones'];
+            $infoMov->observaciones = 'Se reduce existencias a partes '.'Cantidad  '.$request['cantidad'].' '.$request['observaciones'];
         }
 
         $infoMov->idParte = $request['idParte'];

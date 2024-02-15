@@ -282,6 +282,11 @@ class hardwareController extends controllerClass
             // $this->printR($_REQUEST);
             $this->model->actualizarOnchangeProcesador($_REQUEST);
         }
+        if($_REQUEST['opcion']=='realizarDevolucionABodega')
+        {
+            // $this->printR($_REQUEST);
+            $this->model->realizarDevolucionABodega($_REQUEST['idHardware']);
+        }
  
 
 
