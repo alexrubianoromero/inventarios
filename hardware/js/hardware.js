@@ -82,6 +82,21 @@ function verHardware(id)
                     +'&id='+id
                 );
 }
+function verHardwareHojasDeVida(id)
+{
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status ==200){
+                           document.getElementById("modalBodyHardwareMostrarHojasDeVida").innerHTML  = this.responseText;
+                    }
+                };
+                http.open("POST",url);
+                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                http.send('opcion=verHardwareHojasDeVida'
+                    +'&id='+id
+                );
+}
 
 function quitarRam(idHardware,idRam,numeroRam)
 {

@@ -56,6 +56,10 @@ class hardwareController extends controllerClass
         {
             $this->verHardware($_REQUEST);
         }
+        if($_REQUEST['opcion']=='verHardwareHojasDeVida')
+        {
+            $this->verHardwareHojasDeVida($_REQUEST);
+        }
         if($_REQUEST['opcion']=='quitarRam')
         {
             $this->quitarRam($_REQUEST);
@@ -478,6 +482,16 @@ class hardwareController extends controllerClass
         // echo '</pre>';
         // die();
         $this->view->verHardware($hardware);
+
+    }
+    public function verHardwareHojasDeVida($request)
+    {
+        $hardware = $this->model->verHardware($request['id']);
+        // echo '<pre>';
+        // print_r($hardware); 
+        // echo '</pre>';
+        // die();
+        $this->view->verHardwareHojasDeVida($hardware);
 
     }
     public function llamarRegistroMovimientoQuitarHardware ($idHardware,$idParte,$tipoMov)

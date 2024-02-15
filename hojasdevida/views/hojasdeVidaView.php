@@ -59,6 +59,7 @@ class hojasdeVidaView extends vista
                </div>
           </div>
           <?php  $this->modalDevolucionABodega(); ?>
+          <?php  $this->modalHardwareMostrarHojasDeVida(); ?>
       </body>
       </html>
       
@@ -75,6 +76,7 @@ class hojasdeVidaView extends vista
                 <th>Serial</th>
                 <th>No Importacion</th>
                 <th>Estado</th>
+                <th>Ver mas</th>
                 <th>Devolver</th>
                 <th>Dar Baja</th>
                 
@@ -92,6 +94,14 @@ class hojasdeVidaView extends vista
                        echo '<td>'.$hardward['serial'].'</td>';
                        echo '<td>'.$hardward['idImportacion'].'</td>';
                        echo '<td>'.$infoEstado['descripcion'].'</td>';
+                       echo '<td>';
+                       echo '<button 
+                       data-bs-toggle="modal" 
+                       data-bs-target="#modalHardwareMostrarHojasDeVida"
+                       onclick="verHardwareHojasDeVida('.$hardward['id'].');" class="btn btn-primary btn-sm ">
+                       Ver
+                       </button>' ;
+                       echo '</td>';
                        if($hardward['idEstadoInventario']>0)
                        {
                            echo '<td><button 
@@ -153,6 +163,31 @@ class hojasdeVidaView extends vista
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hojasdevida();" >Cerrar</button>
 
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php
+    }
+
+    public function modalHardwareMostrarHojasDeVida()
+    {
+        ?>
+            <!-- Modal -->
+            <div class="modal fade" id="modalHardwareMostrarHojasDeVida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Info Hardware</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyHardwareMostrarHojasDeVida">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hardwareMenu();">Cerrar</button>
+                    <!-- <button onclick ="actualizarProducto();" type="button" class="btn btn-primary">Actualizar Producto</button> -->
                 </div>
                 </div>
             </div>

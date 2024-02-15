@@ -897,6 +897,433 @@ class hardwareView extends vista
 
         <?php
     }
+    public function verHardwareHojasDeVida($producto)
+    {
+        $marca = $this->MarcaModel->traerMarcaId($producto['idMarca']);
+        $disco1 = $this->partesModel->traerParte($producto['idDisco1']);
+        $subTipoDisco1 = $this->SubtipoParteModel->traerSubTipoParte($disco1[0]['idSubtipoParte']);
+        $disco2 = $this->partesModel->traerParte($producto['idDisco2']);
+        $subTipoDisco2 = $this->SubtipoParteModel->traerSubTipoParte($disco2[0]['idSubtipoParte']);
+        $ram1 = $this->partesModel->traerParte($producto['idRam1']);
+        $subTipoRam1 = $this->SubtipoParteModel->traerSubTipoParte($ram1[0]['idSubtipoParte']);
+        $ram2 = $this->partesModel->traerParte($producto['idRam2']);
+        $subTipoRam2 = $this->SubtipoParteModel->traerSubTipoParte($ram2[0]['idSubtipoParte']);
+        $ram3 = $this->partesModel->traerParte($producto['idRam3']);
+        $subTipoRam3 = $this->SubtipoParteModel->traerSubTipoParte($ram3[0]['idSubtipoParte']);
+        $ram4 = $this->partesModel->traerParte($producto['idRam4']);
+        $subTipoRam4 = $this->SubtipoParteModel->traerSubTipoParte($ram4[0]['idSubtipoParte']);
+        $cargador = $this->partesModel->traerParte($producto['idCargador']);
+        $subTipoCargador = $this->SubtipoParteModel->traerSubTipoParte($cargador[0]['idSubtipoParte']);
+
+
+
+
+
+        $tipoParte  = $this->tipoParteModel->traerTipoParteId($producto['idTipoInv']);  
+        ?>
+        <div class="row" >
+            <?php
+                 if($producto['idRam1']==0 && $producto['idRam2']==0 && $producto['idRam3']==0 &&$producto['idRam4']==0)
+                 {
+                    $this->mostrarInfoCargueArchivoRam($producto);
+                 }
+                 if($producto['idDisco1']==0 && $producto['idDisco2']==0 )
+                 {
+                    $this->mostrarInfoCargueArchivoDisco($producto);
+                 }
+            ?>
+        </div>
+        <div class="row">
+                <div class="col-md-3">
+                    <label for="">Ubicacion</label>
+                    <input readonly class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['ubicacion'] ?>" > 
+                  
+                    <!-- <input class ="form-control" type="text" id="ubicacion" value ="<?php  //echo $producto['ubicacion'] ?>" >           -->
+                </div>
+                <div class="col-md-3">
+                    <label for="">Importacion/Proveedor</label>
+                      <input readonly class ="form-control" type="text" id="idImportacion" value ="<?php  echo $producto['idImportacion'] ?>" >          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Lote/Factura:</label>
+                      <input readonly  class ="form-control" type="text" id="lote" value ="<?php  echo $producto['lote'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">SKU:</label>
+                      <input  
+                        readonly 
+                        class ="form-control" 
+                        type="text" id="sku" 
+                        value ="<?php  echo $producto['sku'].'-'.$producto['comodin'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Serial:</label>
+                      <input readonly class ="form-control" type="text" id="serial" value ="<?php  echo $producto['serial'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Marca:</label>
+                      <input readonly class ="form-control" type="hidden" id="marca" value ="<?php  echo $producto['idMarca'] ?>">   
+                      <input  readonly class ="form-control" type="text" id="nombremarca" onfocus="blur();" value ="<?php  echo $marca[0]['marca'] ?>">   
+                </div>
+        </div>
+        <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="">Producto:</label>
+                      <input readonly class ="form-control" type="text" id="tipoProd" value ="<?php  echo $tipoParte['descripcion'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Chasis/Tipo:</label>
+                      <input  readonly class ="form-control" type="text" id="chasis" value ="<?php  echo $producto['chasis'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Modelo:</label>
+                      <input  readonly class ="form-control" type="text" id="modelo" value ="<?php  echo $producto['modelo'] ?>">          
+                </div>
+                <div class="col-md-3">
+                    <label for="">Pulgadas/Condicion:</label>
+                      <input  readonly class ="form-control" type="text" id="pulgadas" value ="<?php  echo $producto['pulgadas'] ?>">          
+                </div>
+        </div>
+        <div class="row mt-3">
+            <?php
+              if($producto['hardwareoparte']==1)
+              {
+            ?>
+                <div class="col-md-3">
+                    <label for="">Procesador:</label>
+                 
+
+                    <input readonly class ="form-control" type="text" id="procesador" value ="<?php  echo $producto['procesador'] ?>">          
+                </div>
+
+            <?php 
+            
+              }
+            ?>
+            <!-- <div class="col-md-3">
+                <label for="">Generacion:</label>
+                <input class ="form-control" type="text" id="generacion" value ="<?php  echo $producto['generacion'] ?>">          
+            </div> -->
+        </div>
+        <div class="mt-3">
+            <?php
+               if($producto['ramdividida']==0)
+               {
+                //    echo '<button 
+                //             class ="btn btn-success" 
+                //             data-bs-toggle="modal" 
+                //             data-bs-target="#modalDividirRam"
+                //             onclick= "formuDividirRam('.$producto['id'].'); "
+                //         >DividirRam</button>';
+               }
+            ?>
+        </div>
+        <?php  
+         if($producto['hardwareoparte']==1)
+         {
+         ?>        
+        <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="">Ram 1:</label>
+                    <input   readonly  class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram1[0]['capacidad'].'GB-'.$subTipoRam1[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idRam1']==0)
+                    //    {
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-success" 
+                    //            onclick="formuAgregarRam('.$producto['id'].',1);"
+                    //            >+1</button>';
+       
+                    //    }else{
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-primary" 
+                    //            onclick="quitarRam('.$producto['id'].','.$producto['idRam1'].',1);"
+                    //            >-</button>';
+                    //    }
+                    ?>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Ram 2:</label>
+                    <input readonly class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram2[0]['capacidad'].'GB-'.$subTipoRam2[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idRam2']==0)
+                    //    {
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-success" 
+                    //            onclick="formuAgregarRam('.$producto['id'].',2);"
+                    //            >+</button>';
+       
+                    //    }else{
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-primary" 
+                    //            onclick="quitarRam('.$producto['id'].','.$producto['idRam2'].',2);"
+                    //            >-</button>';
+       
+                    //    }
+                    ?>
+                </div>
+        </div>
+       
+   
+        <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="">Ram 3:</label>
+                    <input readonly  class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram3[0]['capacidad'].'GB-'.$subTipoRam3[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idRam3']==0)
+                    //    {
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-success" 
+                    //            onclick="formuAgregarRam('.$producto['id'].',3);"
+                    //            >+</button>';
+       
+                    //    }else{
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-primary" 
+                    //            onclick="quitarRam('.$producto['id'].','.$producto['idRam3'].',3);"
+                    //            >-</button>';
+       
+                    //    }
+                    ?>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Ram 4:</label>
+                    <input  readonly class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $ram4[0]['capacidad'].'GB-'.$subTipoRam4[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idRam4']==0)
+                    //    {
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-success" 
+                    //            onclick="formuAgregarRam('.$producto['id'].',4);"
+                    //            >+</button>';
+       
+                    //    }else{
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-primary" 
+                    //            onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].',4);"
+                    //            >-</button>';
+       
+                    //    }
+                    ?>
+                </div>
+               
+             
+        </div>
+        <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="">Disco1 :</label>
+                    <input readonly class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $disco1[0]['capacidad'].'GB-'.$subTipoDisco1[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idDisco1']==0)
+                    //    {
+                    //        echo '<button 
+                    //            data-bs-toggle="modal" 
+                    //            data-bs-target="#modalAgregarRam"
+                    //            class ="btn btn-success" 
+                    //            onclick="formuAgregarDisco('.$producto['id'].',1);"
+                    //            >+</button>';
+       
+                    //    }else{
+                    //        echo '<button 
+                    //        data-bs-toggle="modal" 
+                    //        data-bs-target="#modalAgregarRam"
+                    //        class ="btn btn-primary" 
+                    //        onclick="quitarDisco('.$producto['id'].','.$producto['idDisco1'].',1);"
+                    //        >-</button>';
+                           
+                    //    }
+                    ?>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Disco2 :</label>
+                    <input readonly class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $disco2[0]['capacidad'].'GB-'.$subTipoDisco2[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idDisco2']==0)
+                    //    {
+                    //        echo '<button 
+                    //        data-bs-toggle="modal" 
+                    //        data-bs-target="#modalAgregarRam"
+                    //        class ="btn btn-success" 
+                    //        onclick="formuAgregarDisco('.$producto['id'].',2);"
+                    //        >+</button>';
+                           
+                    //     }else{
+                    //         echo '<button 
+                    //         data-bs-toggle="modal" 
+                    //         data-bs-target="#modalAgregarRam"
+                    //         class ="btn btn-primary" 
+                    //         onclick="quitarDisco('.$producto['id'].','.$producto['idDisco2'].',2);"
+                    //         >-</button>';
+                            
+                    //     }
+                        ?>
+                </div>
+
+        </div>
+        
+        <div class="row mt-3">
+
+                <div class="col-md-10">
+                    <label for="">Cargador :</label>
+                    <input readonly class ="form-control" type="text" onfocus="blur();" 
+                    value ="<?php  echo $cargador[0]['capacidad'].''.$subTipoCargador[0]['descripcion']  ?>"
+                    >   
+                </div>
+                <div class="col-md-2">
+                    <label>Accion </label>
+                    <?php
+                    //    if($producto['idCargador']==0)
+                    //    {
+                    //        echo '<button 
+                    //        data-bs-toggle="modal" 
+                    //        data-bs-target="#modalAgregarRam"
+                    //        class ="btn btn-success" 
+                    //        onclick="formuAgregarCargador('.$producto['id'].');"
+                    //        >+</button>';
+                           
+                    //     }else{
+                    //         echo '<button 
+                    //         data-bs-toggle="modal" 
+                    //         data-bs-target="#modalAgregarRam"
+                    //         class ="btn btn-primary" 
+                    //         onclick="quitarCargador('.$producto['id'].','.$producto['idCargador'].');"
+                    //         >-</button>';
+                            
+                    //     }
+                        ?>
+                </div>
+               
+        </div>
+        <?php
+        }
+        ?>
+        
+
+        <!--  botones de quitar ram y disco   -->
+            <div class="col-md-6">
+            <?php 
+            // if($producto['idDisco']==0)
+            //     {
+            //         echo '<button 
+            //                 data-bs-toggle="modal" 
+            //                 data-bs-target="#modalAgregarRam"
+            //                 class ="btn btn-success" 
+            //                 onclick="formuAgregarDisco('.$producto['id'].');"
+            //                 >AGREGAR DISCO</button>';
+
+            //     }else{
+            //         echo '<button 
+            //                 data-bs-toggle="modal" 
+            //                 data-bs-target="#modalAgregarRam"
+            //                 class ="btn btn-primary" 
+            //                 onclick="quitarDisco('.$producto['id'].','.$producto['idDisco'].');"
+            //                 >QUITAR DISCO</button>';
+            //     }
+             ?>       
+            </div>    
+        </div>
+        <br>
+        <div class="row">
+                <label>Comentarios:</label>
+                <div class="col-md-12 mt-03">
+                    
+                      <textarea readonly class="form-control" id="comentarios" rows="4" placeholder="Comentarios"><?php  echo $producto['comentarios']  ?></textarea>     
+                </div>
+        </div>
+        <div class="row mt-3">
+            <label>Condicion/Especificaciones: </label>
+             <?php
+                    //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                    //         //  echo '<pre>';
+                    //         //     print_r($condiciones); 
+                    //         //     echo '</pre>';
+                    //         //     die();
+                    //  echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
+                    //   $this->colocarSelectCampoConOpcionSeleccionadaPorNombre($condiciones,$producto['idCondicion']); 
+                    // echo '</select>';
+                    
+             ?>
+             <input readonly type="text"  id = "idCondicion"  value="<?php   echo $producto['idCondicion']   ?>"  >
+        </div>
+        <div class="row mt-3">
+            <label>Condicion 2 </label>
+             <?php
+                //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                //  echo '<select class ="form-control"  id="idCondicion2" onchange = "actualizarCondicion2Hardware('.$producto['id'].');">';
+                //  $this->colocarSelectCampoConOpcionSeleccionadaPorNombre($condiciones,$producto['idCondicion2']); 
+                //  echo '</select>';
+                    //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                    //  echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
+                    //   $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
+                    // echo '</select>';
+                    
+             ?>
+             <input readonly type="text"  id = "idCondicion2"  value="<?php   echo $producto['idCondicion2']   ?>"  >
+        </div>
+
+        <br>
+        <?php
+        // if($_SESSION['nivel']==3)
+        // {
+        //     $this->verCostos($producto['id']);
+        // }
+        ?>
+        <div class="row mt-3">
+            <!-- <button ></button> -->
+        </div>
+       
+        
+
+
+        <?php
+    }
+
     public function mostrarInfoCargueArchivoRam($producto)
     {
         $tipoParte =    $this->SubtipoParteModel->traerSubTipoParte($producto['tipoRamCargue']);
