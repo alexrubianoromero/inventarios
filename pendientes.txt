@@ -133,6 +133,9 @@ solo un usuario que va a poder agregar y quitar
 en que momento se le cambia el estado a un pedido 
 com ose maneja eso cuales son los estados de un pedido 
 
+itemsInicioPorCompletar
+
+verificar que muestre pedidos solo a los que etan logueados como tecnicos
 no se va a manejar un estado de pedido sino estado de item 
 y coneste se mostraran los items completados o por completar pero solo para el tecnico que este logueado en ese momento 
 
@@ -141,3 +144,5 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 **quitar el filtro de generacion en filtros de hardware  revision general de filtros solo los de bodega debe traer
 **y colocar el filtro de ubicacion
 
+almacenar la sucursal del usuario cuando se crea un item inicio pedido 
+revisar porque no muestra la opcion para poder cambiar las opciones del tecnico cuando tiene asignado un item 

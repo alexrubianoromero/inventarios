@@ -47,7 +47,7 @@ class ItemInicioPedidoModel extends Conexion
 
             $sql = "insert into itemsInicioPedido(idPedido,cantidad,tipo,subtipo,modelo,pulgadas,
             procesador,generacion,ram,disco,estado,fecha,precio,total,observaciones,tipoItem,capacidadRam
-            ,capacidadDisco,idNuevaSucursal,vrUnitario) 
+            ,capacidadDisco,idNuevaSucursal,vrUnitario,idSucursalTecnico) 
             values ('".$request['idPedido']."','".$request['icantidad']."','".$request['itipo']."'
             ,'".$request['isubtipo']."'
             ,'".$request['imodelo']."'
@@ -61,6 +61,7 @@ class ItemInicioPedidoModel extends Conexion
             ,'".$request['icapacidaddisco']."'
             ,'".$request['idNuevaSucursal']."'
             ,'".$request['iprecio']."'
+            ,'".$_SESSION['idSucursal']."'
             )";   
             // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql());
@@ -266,7 +267,80 @@ class ItemInicioPedidoModel extends Conexion
         {
             
         }
+
+        public function traerItemInicioPedidosPendientes()
+        {
+            //definir el estado de los pedidos pendientes 
+            //pues los que no esten finalizados 
+            //estados de un pedido 
+            
+            $sql = "select * from itemsInicioPedido where idEstadoProcesoItem < 2   and  idSucursal = '".$_SESSION['idSucursal']."' "; 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $itemsInicio = $this->get_table_assoc($consulta);
+            // die($sql); 
+            return $itemsInicio; 
+        }
         
+        public function traerPedidosConItemsInicioPendientesTodos(){
+            
+        }
+        public function traerPedidosConItemsInicioPendientesXSucursal(){
+            $sql = "SELECT DISTINCT(idPedido) FROM itemsInicioPedido 
+                    WHERE idEstadoProcesoItem < 2 
+                    and idSucursalTecnico = '".$_SESSION['idSucursal']."' 
+                    and anulado=0
+                    order by idPedido asc";
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidosConItemsPendientes = $this->get_table_assoc($consulta);
+            return $pedidosConItemsPendientes;
+        }
+        
+        public function traerInfodePedidosRelacionados($idPedidos)
+        {
+            $params = '';
+            foreach($idPedidos as $idPedido)
+            {
+                $params .= "'".$idPedido['idPedido']."',";
+            }
+            $params .= "' '";
+            $sql ="select * from pedidos  where idPedido in (".$params.") and idSucursal = '".$_SESSION['idSucursal']."' ";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidosConItemsPendientes = $this->get_table_assoc($consulta);
+            
+            // die($sql);  
+            return $pedidosConItemsPendientes; 
+        }
+        
+        
+        
+        public function itemsInicioCompletadosHistorialXSucursal(){
+            $sql = "SELECT DISTINCT(idPedido) 
+                    FROM itemsInicioPedido 
+                    WHERE idEstadoProcesoItem = 2 
+                    and idSucursalTecnico = '".$_SESSION['idSucursal']."' 
+                        and anulado=0
+                    order by idPedido asc";
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidosConItemsFinalizados = $this->get_table_assoc($consulta);
+            return $pedidosConItemsFinalizados;
+        }
+        
+        // public function traerInfodePedidosRelacionados($idPedidos)
+        // {
+        //     $params = '';
+        //     foreach($idPedidos as $idPedido)
+        //     {
+        //         $params .= "'".$idPedido['idPedido']."',";
+        //     }
+        //     $params .= "' '";
+        //     $sql ="select * from pedidos  where idPedido in (".$params.") and idSucursal = '".$_SESSION['idSucursal']."' ";
+        //     $consulta = mysql_query($sql,$this->connectMysql());
+        //     $pedidosConItemsPendientes = $this->get_table_assoc($consulta);
+            
+        //     // die($sql);  
+        //     return $pedidosConItemsPendientes; 
+        // }
     }
     
     

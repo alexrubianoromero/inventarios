@@ -56,12 +56,28 @@ class pedidosView extends vista
         <div style="padding:10px;"  id="div_general_pedidos" class="row">
 
             <div id="botones" class="row">
-                <div class="col-lg-3">
+                <!-- <div class="col-lg-3">
                     <button type="button" 
                     class="btn btn-primary " 
                     onclick="pedidosPorCompletar();"
                     >
                     PEDIDOS POR COMPLETAR
+                    </button> 
+                </div> -->
+                <div class="col-lg-3">
+                    <button type="button" 
+                    class="btn btn-primary " 
+                    onclick="pedidosConItemsIniciopendientes();"
+                    >
+                    PEDIDOS ITEMS X COMPLETAR 
+                    </button> 
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" 
+                    class="btn btn-primary " 
+                    onclick="itemsCompletadosHistorial();"
+                    >
+                    PEDIDOS COMPLETADOS
                     </button> 
                 </div>
                 <div class="col-lg-3">
@@ -773,6 +789,77 @@ class pedidosView extends vista
     }
 
     public function pedidosPorCompletar($pedidosPorCompletar)
+    {
+        // $this->printR($pedidosPorCompletar);
+        echo '<div class="row">'; 
+        foreach($pedidosPorCompletar as $pedido)
+        {
+            //con este arreglo traigo cuantos tecnicos estan asignados al pedido
+            $tecnicos = $this->pedidoModel->traerLosTecnicosConAsginacionIdPedido($pedido['idPedido']);
+            $numeroT=0;
+            foreach($tecnicos as $tecnico)
+            {
+            //    echo '<br>buenas '.$numeroT;   
+               $numeroT++;
+            } 
+            
+
+            if($numeroT==0){
+                $altoFila= 40;
+            }
+            if($numeroT==1){
+                $altoFila= 70*$numeroT;
+            }
+            if($numeroT==2){
+                $altoFila= 55*$numeroT;
+            }
+            if($numeroT==3){
+                $altoFila= 46*$numeroT;
+            }
+            if($numeroT==4){
+                $altoFila= 46*$numeroT;
+            }
+            if($numeroT>4){
+                $altoFila= 40*$numeroT;
+            }
+            // die($numeroT);
+            //  $this->printR($tecnicos); 
+            ?>
+                <!-- <div style="width:150px; height:<?php echo $altoFila ?>px; border:1px solid; display:inline;margin:5px;padding:10px;"> -->
+                <div style="width:150px; height:<?php echo $altoFila ?>px;  display:inline;margin:5px;padding:10px;">
+                    <div class="row">
+                        OC <?php echo $pedido['idPedido'] ?>
+                    </div>
+                    <div class="row" style="padding:2px;">
+                        <?php 
+                            foreach($tecnicos as $tecnico)
+                            {
+                                $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
+                                $estadoProcesoItem = $this->itemInicioPedidoModel->traerEstadoItemInicioPedidoIdTecnico($pedido['idPedido'],$tecnico['idTecnico']);
+                                // $this->printR($estadoProcesoItem);
+                                if($estadoProcesoItem == 0){$claseBoton = 'btn-primary'; }
+                                if($estadoProcesoItem == 1){$claseBoton = 'btn-warning'; }
+                                if($estadoProcesoItem == 2){$claseBoton = 'btn-success'; }
+                            //    die($claseBoton); 
+                                // if($pedido)
+                                echo '<br>';
+                                echo '<button 
+                                        onclick="mostrarItemsInicioPedidoTecnicoNuevo('.$pedido['idPedido'].','.$tecnico['idTecnico'].')"; 
+                                        class="btn '.$claseBoton.' btn-sm" 
+                                        style="margin-bottom:3px"
+                                        >'.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
+                                        '</button>';
+                                        // data-bs-toggle="modal" 
+                                        // data-bs-target="#modalPedidoVerItemTecnico"
+                            }
+                        ?>    
+                    </div>
+                </div>
+            <?php       
+        }
+        echo '</div>'; 
+    }
+    public function pedidosItemsCompletados($pedidosPorCompletar)
     {
         // $this->printR($pedidosPorCompletar);
         echo '<div class="row">'; 

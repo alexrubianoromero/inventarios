@@ -17,7 +17,6 @@ class pedidosController
 
     public function __construct()
     {
-        $this->itemInicioModel = new  ItemInicioPedidoModel();
         // die('desde controlador') ;
         session_start();
         if(!isset($_SESSION['id_usuario']))
@@ -26,10 +25,11 @@ class pedidosController
             echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
             die();
         }
-    //     echo '<pre>'; 
-    // print_r($_SESSION); 
-    // echo '</pre>';
-    // die(); 
+        //     echo '<pre>'; 
+        // print_r($_SESSION); 
+        // echo '</pre>';
+        // die(); 
+        $this->itemInicioModel = new  ItemInicioPedidoModel();
         $this->view = new pedidosView();
         $this->model = new pedidoModel();
         $this->pagoModel = new PagoModel();
@@ -92,23 +92,38 @@ class pedidosController
         }
         if($_REQUEST['opcion']=='pedidosPorCompletar')
         {
-            // die('pasooo 2 '); 
             $pedidosPorCompletar = $this->model->traerPedidosPendientes();
 
             $this->view->pedidosPorCompletar($pedidosPorCompletar);
         }
+        if($_REQUEST['opcion']=='pedidosConItemsIniciopendientes')
+        {
+            $pedidosConItemsPendientes = $this->itemInicioModel->traerPedidosConItemsInicioPendientesXSucursal();
+        
+            $pedidosPorCompletar = $this->itemInicioModel->traerInfodePedidosRelacionados($pedidosConItemsPendientes);
+            $this->view->pedidosPorCompletar($pedidosPorCompletar);
+        }
+
+        if($_REQUEST['opcion']=='itemsCompletadosHistorial')
+        {
+            $pedidosConItemsCompletados = $this->itemInicioModel->itemsInicioCompletadosHistorialXSucursal();
+            //     echo '<pre>'; 
+            // print_r($pedidosConItemsCompletados); 
+            // echo '</pre>';
+            // die(); 
+            $pedidosPorCompletar = $this->itemInicioModel->traerInfodePedidosRelacionados($pedidosConItemsCompletados);
+            //aqui ya se traer con los items que estan completados
+            $this->view->pedidosItemsCompletados($pedidosPorCompletar);
+        }
         if($_REQUEST['opcion']=='verPagosPedido')
         {
-            // die('llego a controlador'); 
             $pagosPedido = $this->pagoModel->traerPagosPedido($_REQUEST['idPedido']); 
             $this->view->verPagosPedido($_REQUEST['idPedido'],$pagosPedido );
         }
         if($_REQUEST['opcion']=='aplicarPagosPedido')
         {
-            // die('llego a controlador'); 
             $pagosPedido = $this->pagoModel->aplicarPagosPedido($_REQUEST); 
             $idPedido = $this->pagoModel->traerpedidoIdPago($_REQUEST['idPago']);
-            // die('idPedido  '.$idPedido);
             $pagosPedido = $this->pagoModel->traerPagosPedido($idPedido); 
             $this->view->verPagosPedido($idPedido,$pagosPedido );
         }
