@@ -837,20 +837,29 @@ class pedidosView extends vista
                                 $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
                                 $estadoProcesoItem = $this->itemInicioPedidoModel->traerEstadoItemInicioPedidoIdTecnico($pedido['idPedido'],$tecnico['idTecnico']);
                                 // $this->printR($estadoProcesoItem);
-                                if($estadoProcesoItem == 0){$claseBoton = 'btn-primary'; }
-                                if($estadoProcesoItem == 1){$claseBoton = 'btn-warning'; }
-                                if($estadoProcesoItem == 2){$claseBoton = 'btn-success'; }
+                                if($estadoProcesoItem['idEstadoProcesoItem'] == 0){$claseBoton = 'btn-primary'; }
+                                if($estadoProcesoItem['idEstadoProcesoItem'] == 1){$claseBoton = 'btn-warning'; }
+                                if($estadoProcesoItem['idEstadoProcesoItem'] == 2){$claseBoton = 'btn-success'; }
+                                
+                                if($estadoProcesoItem['idPrioridad'] == 1){$prioridad = 'B'; }
+                                if($estadoProcesoItem['idPrioridad'] == 2){$prioridad = 'I'; }
+                                if($estadoProcesoItem['idPrioridad'] == 2){$prioridad = 'A'; }
+
                             //    die($claseBoton); 
                                 // if($pedido)
-                                if($estadoProcesoItem < 2)
+
+                                if($estadoProcesoItem['idEstadoProcesoItem'] < 2)
                                 {
+                                    //aqui se puede evaluar la prioridad 
+                                    //con el IdPedido y el tecnico se pueden traer los itemsinicio y hay se toma la prioridad 
+                                    //traer la prioridad de iteminicio
 
                                     echo '<br>';
                                     echo '<button 
                                     onclick="mostrarItemsInicioPedidoTecnicoNuevo('.$pedido['idPedido'].','.$tecnico['idTecnico'].')"; 
                                     class="btn '.$claseBoton.' btn-sm" 
-                                    style="margin-bottom:3px"
-                                    >'.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
+                                    style="margin-bottom:3px;"
+                                    >'.$prioridad.' '.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
                                     '</button>';
                                 }
                             }
@@ -914,13 +923,14 @@ class pedidosView extends vista
                                         $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
                                         $estadoProcesoItem = $this->itemInicioPedidoModel->traerEstadoItemInicioPedidoIdTecnico($pedido['idPedido'],$tecnico['idTecnico']);
                                         // $this->printR($estadoProcesoItem);
-                                        if($estadoProcesoItem == 0){$claseBoton = 'btn-primary'; }
-                                        if($estadoProcesoItem == 1){$claseBoton = 'btn-warning'; }
-                                        if($estadoProcesoItem == 2){$claseBoton = 'btn-success'; }
+                                        if($estadoProcesoItem['idEstadoProcesoItem'] == 0){$claseBoton = 'btn-primary'; }
+                                        if($estadoProcesoItem['idEstadoProcesoItem'] == 1){$claseBoton = 'btn-warning'; }
+                                        if($estadoProcesoItem['idEstadoProcesoItem'] == 2){$claseBoton = 'btn-success'; }
                                     //    die($claseBoton); 
                                         // if($pedido)
                                         //aqui evaluar que el item que tiene asignado el tecnico este finalizado
-                                        if($estadoProcesoItem==2)
+
+                                        if($estadoProcesoItem['idEstadoProcesoItem'] ==2)
                                         {
 
                                             echo   '<br>';

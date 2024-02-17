@@ -158,7 +158,7 @@ class ItemInicioPedidoModel extends Conexion
         
         public function traerEstadoItemInicioPedidoIdTecnico($idPedido,$idTecnicoAsignado)
         {
-            $sql = "select  idEstadoProcesoItem from itemsInicioPedido   
+            $sql = "select * from itemsInicioPedido   
             where idPedido = '".$idPedido."'  
             and anulado = 0
             and idTecnico = '".$idTecnicoAsignado."'   limit 1 "; 
@@ -169,7 +169,8 @@ class ItemInicioPedidoModel extends Conexion
             // print_r($infoItemInicio); 
             // echo '</pre>';
             // die(); 
-            return $infoItemInicio['idEstadoProcesoItem'];   
+            // return $infoItemInicio['idEstadoProcesoItem']; 
+            return  $infoItemInicio;
         }
         
         

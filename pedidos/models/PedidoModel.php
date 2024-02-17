@@ -202,6 +202,6 @@ class PedidoModel extends Conexion
             $saldo = $sumaItems - $sumaPagos; 
             return $saldo;   
         }
-  
+
         
 }
