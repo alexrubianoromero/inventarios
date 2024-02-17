@@ -115,8 +115,8 @@ cada serial con sul valor de venta unitario que salga en el reporte financiero e
 revisar que el tecnico solo pueda ver sus pedidos 
 
 los valores de hardware seran restringidos a ciertos perfiles 
-el modelo cuando se esta creadno del item de inicio pedido solo texto
-cuando se cree. 
+**el modelo cuando se esta creadno del item de inicio pedido solo texto
+
  
 
  cuando el tecnico termine el pedido  debe salir ese item de su pantalla
@@ -145,4 +145,20 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 **y colocar el filtro de ubicacion
 
 almacenar la sucursal del usuario cuando se crea un item inicio pedido 
-revisar porque no muestra la opcion para poder cambiar las opciones del tecnico cuando tiene asignado un item 
+
+cambiar los titulode los filtros en inventario
+
+revisar como se puede indicar la prioridad con la que quedo creado el item 
+Ajustar los valores por defecto cuando se escogen las opciones de agregar un item inicio
+cambiar costo a alfnaumerico y utilizarlo como especificaciones 
+ajustar hojas de vida para que muestre todos los seriales independientes de la bodega 
+revisar en reporte financiero que salgan las columasn de ram y disco 
+en el reporte financiero al lado de oc la fecha en que se creo la oc 
+
+el reporte de estado de equipo es el mismo reporte financiero pero solo hasta al columna esrado inlcuido ademnas que 
+se relacionel tecnico que lo alisto 
+en el reporte de ventas sacar resumido el valor total de toda la oc y que salga una sola vez 
+no importa que tenga variosa items  y que muestre el saldo de esa oc
+en reporte de estado de equipo solocar otra opcion para ver lo que esta en bodega  pero solo de la bodega ligada al usuario 
+opcion tablero pedidos 
+
