@@ -1817,7 +1817,9 @@ class hardwareView extends vista
         $procesadores = $this->procesadorModel->traerProcesadores();
         $ubicaciones =  $this->hardwareModel->traerUbicaciones();
         $idImportaciones =  $this->hardwareModel->traerInfoCampoTablaHardware('idImportacion');
+        $idproveedores =  $this->hardwareModel->traerInfoCampoPartesConserialHardware('idImportacion');
         $lotes =  $this->hardwareModel->traerInfoCampoTablaHardware('lote');
+        $facturas =  $this->hardwareModel->traerInfoCampoPartesConserialHardware('lote');
         // $this->printR($generaciones);
         ?>
         <P>FILTROS</P>
@@ -1872,6 +1874,14 @@ class hardwareView extends vista
             </div>
         </div>
         <div class="row"  >
+            <span class="col-lg-4">Proveedor:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarProveedor" onchange="fitrarHardwareProveedorInventario();" >
+                        <?php  $this->colocarSelectCampo($idproveedores);  ?>
+                    </select>
+            </div>
+        </div>
+        <div class="row"  >
             <span class="col-lg-4">lote:</span>
             <div class="col-lg-8" align="right">
             <select class ="form-control"  id="inputBuscarLote" onchange="fitrarHardwareLoteInventario();" >
@@ -1880,6 +1890,14 @@ class hardwareView extends vista
             </div>
         </div>
         <div class="row"  >
+            <span class="col-lg-4">Factura:</span>
+            <div class="col-lg-8" align="right">
+            <select class ="form-control"  id="inputBuscarFactura" onchange="fitrarHardwareFacturaInventario();" >
+                        <?php  $this->colocarSelectCampo($facturas);  ?>
+            </select>
+            </div>
+        </div>
+        <!-- <div class="row"  >
             <span class="col-lg-4">Tipo:</span>
             <div class="col-lg-8" align="right">
             <select class ="form-control"  id="inputBuscarTipo" onchange="fitrarHardwareTipoInventario();">
@@ -1894,7 +1912,7 @@ class hardwareView extends vista
                             <?php  $this->colocarSelect($subtipos);  ?>
                     </select>
             </div>
-        </div>
+        </div> -->
         <?php
     }
 

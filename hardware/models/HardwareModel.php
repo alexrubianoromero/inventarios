@@ -122,9 +122,41 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    /**
+     * el mismo campo de importacion para hardware , se utiliza como proveedor para partes con Serial 
+     */
+    public function traerHardwareProveedorFiltro($inputBuscarProcesador)
+    {
+        $sql = "select * from hardware where idImportacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0   order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
     public function traerHardwareLoteFiltro($inputBuscarProcesador)
     {
-        $sql = "select * from hardware where lote like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        $sql = "select * from hardware 
+        where lote like '%".$inputBuscarProcesador."%' 
+        and idSucursal = '".$_SESSION['idSucursal']."' 
+        and idEstadoInventario = 0  
+        and hardwareoparte = 1
+        order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+    /**
+     * el campo factura es para partes con serial y utiliza el mismo campo lote de hardware
+     */
+    public function traerHardwareFacturaFiltro($inputBuscarFactura)
+    {
+        $sql = "select * from hardware 
+        where lote like '%".$inputBuscarFactura."%' 
+        and idSucursal = '".$_SESSION['idSucursal']."' 
+        and idEstadoInventario = 0  
+        and hardwareoparte = 2
+        order by id asc";
         // die($sql);
         $consulta = mysql_query($sql,$this->connectMysql());
         $hardware = $this->get_table_assoc($consulta);
@@ -362,7 +394,27 @@ class HardwareModel extends Conexion
     //y se soloca el nombre del campo de la tabla hardware 
     public function traerInfoCampoTablaHardware($campo)
     {
-        $sql = "select distinct(".$campo.") as id from hardware  where 1=1 and idSucursal = '".$_SESSION['idSucursal']."' group by ".$campo ;
+        $sql = "select distinct(".$campo.") as id from hardware  
+        where 1=1 
+        and idSucursal = '".$_SESSION['idSucursal']."' 
+        and hardwareoparte = 1
+        group by ".$campo ;
+        // die($sql); 
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $arrIdImport = $this->get_table_assoc($consulta); 
+        return $arrIdImport;
+    }
+    /**
+     * para las partes con serial se maneja el mismo campo de importacion
+     * pero aqui se aclara que es para las partes con serial osea hardwareoparte = 2
+     */
+    public function traerInfoCampoPartesConserialHardware($campo)
+    {
+        $sql = "select distinct(".$campo.") as id 
+        from hardware  where 1=1 
+        and idSucursal = '".$_SESSION['idSucursal']."' 
+        and hardwareoparte = 2
+        group by ".$campo ;
         // die($sql); 
         $consulta = mysql_query($sql,$this->connectMysql());
         $arrIdImport = $this->get_table_assoc($consulta); 

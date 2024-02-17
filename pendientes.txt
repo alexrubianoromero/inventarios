@@ -143,10 +143,13 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 
 **quitar el filtro de generacion en filtros de hardware  revision general de filtros solo los de bodega debe traer
 **y colocar el filtro de ubicacion
+**ajustar el ver mas de hojas de vida que no puedan cambiar las dos condiciones solo de lectura 
+**filtro importacion solo debe traer lel campo de inportacion pero de los hardwares 
+**el campo proveedor solo se busca para partes con serial en el caso de los filtors 
 
 almacenar la sucursal del usuario cuando se crea un item inicio pedido 
 
-cambiar los titulode los filtros en inventario
+**cambiar los titulode los filtros en inventario
 
 revisar como se puede indicar la prioridad con la que quedo creado el item 
 Ajustar los valores por defecto cuando se escogen las opciones de agregar un item inicio
@@ -161,4 +164,3 @@ en el reporte de ventas sacar resumido el valor total de toda la oc y que salga 
 no importa que tenga variosa items  y que muestre el saldo de esa oc
 en reporte de estado de equipo solocar otra opcion para ver lo que esta en bodega  pero solo de la bodega ligada al usuario 
 opcion tablero pedidos 
-

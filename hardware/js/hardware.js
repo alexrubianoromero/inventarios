@@ -852,6 +852,23 @@ function fitrarHardwareImportacionInventario()
     +'&inputBuscarImportacion='+inputBuscarImportacion
     );
 }
+function fitrarHardwareProveedorInventario()
+{
+    var inputBuscarProveedor = document.getElementById('inputBuscarProveedor').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareProveedorInventario'
+    +'&inputBuscarProveedor='+inputBuscarProveedor
+    );
+}
 function fitrarHardwareLoteInventario()
 {
     var inputBuscarLote = document.getElementById('inputBuscarLote').value;
@@ -867,6 +884,23 @@ function fitrarHardwareLoteInventario()
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send('opcion=fitrarHardwareLoteInventario'
     +'&inputBuscarLote='+inputBuscarLote
+    );
+}
+function fitrarHardwareFacturaInventario()
+{
+    var inputBuscarFactura = document.getElementById('inputBuscarFactura').value;
+    const http=new XMLHttpRequest();
+    const url = 'hardware/hardware.php';
+    http.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status ==200){
+            document.getElementById("divResultadosHardware").innerHTML  = this.responseText;
+        }
+    };
+    http.open("POST",url);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send('opcion=fitrarHardwareFacturaInventario'
+    +'&inputBuscarFactura='+inputBuscarFactura
     );
 }
 function fitrarHardwareTipoInventario()

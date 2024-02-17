@@ -255,10 +255,20 @@ class hardwareController extends controllerClass
             // $this->printR($_REQUEST);
             $this->fitrarHardwareImportacionInventario($_REQUEST);
         }
+        if($_REQUEST['opcion']=='fitrarHardwareProveedorInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareProveedorInventario($_REQUEST);
+        }
         if($_REQUEST['opcion']=='fitrarHardwareLoteInventario')
         {
             // $this->printR($_REQUEST);
             $this->fitrarHardwareLoteInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='fitrarHardwareFacturaInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->fitrarHardwareFacturaInventario($_REQUEST);
         }
         if($_REQUEST['opcion']=='fitrarHardwareTipoInventario')
         {
@@ -450,9 +460,21 @@ class hardwareController extends controllerClass
 
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }
+    public function fitrarHardwareProveedorInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareProveedorFiltro($request['inputBuscarProveedor']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
     public function fitrarHardwareLoteInventario($request)
     {
         $hardware =  $this->model->traerHardwareLoteFiltro($request['inputBuscarLote']);
+
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function fitrarHardwareFacturaInventario($request)
+    {
+        $hardware =  $this->model->traerHardwareFacturaFiltro($request['inputBuscarFactura']);
 
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }
