@@ -151,9 +151,10 @@ almacenar la sucursal del usuario cuando se crea un item inicio pedido
 
 **cambiar los titulode los filtros en inventario
 
-revisar como se puede indicar la prioridad con la que quedo creado el item 
+**revisar como se puede indicar la prioridad con la que quedo creado el item 
+
 Ajustar los valores por defecto cuando se escogen las opciones de agregar un item inicio
-cambiar costo a alfnaumerico y utilizarlo como especificaciones 
+cambiar costo a alfanumerico y utilizarlo como especificaciones 
 ajustar hojas de vida para que muestre todos los seriales independientes de la bodega 
 revisar en reporte financiero que salgan las columasn de ram y disco 
 en el reporte financiero al lado de oc la fecha en que se creo la oc 
