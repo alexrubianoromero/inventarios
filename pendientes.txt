@@ -146,15 +146,12 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 **ajustar el ver mas de hojas de vida que no puedan cambiar las dos condiciones solo de lectura 
 **filtro importacion solo debe traer lel campo de inportacion pero de los hardwares 
 **el campo proveedor solo se busca para partes con serial en el caso de los filtors 
-
-almacenar la sucursal del usuario cuando se crea un item inicio pedido 
-
+**almacenar la sucursal del usuario cuando se crea un item inicio pedido 
 **cambiar los titulode los filtros en inventario
-
 **revisar como se puede indicar la prioridad con la que quedo creado el item 
+**Ajustar los valores por defecto cuando se escogen las opciones de agregar un item inicio
 
-Ajustar los valores por defecto cuando se escogen las opciones de agregar un item inicio
-cambiar costo a alfanumerico y utilizarlo como especificaciones 
+--cambiar costo a alfanumerico y utilizarlo como especificaciones en componentes
 ajustar hojas de vida para que muestre todos los seriales independientes de la bodega 
 revisar en reporte financiero que salgan las columasn de ram y disco 
 en el reporte financiero al lado de oc la fecha en que se creo la oc 

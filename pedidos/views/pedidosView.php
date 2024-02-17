@@ -654,17 +654,17 @@ class pedidosView extends vista
                         <th>
                             <!-- <input type="text" id="ipulgadas" size="1px"> -->
                             <select class ="form-control"  id="ipulgadas" size="1px">
-                                <?php  $this->colocarSelectCampo($pulgadas);  ?>
+                                <?php  $this->colocarSelectCampoPorDefectoBlanco($pulgadas);  ?>
                             </select>  
                         </th>
                         <th>
                             <select class ="form-control"  id="iprocesador" size="1px">
-                                <?php  $this->colocarSelectCampo($procesadores);  ?>
+                                <?php  $this->colocarSelectCampoPorDefectoBlanco($procesadores);  ?>
                             </select>  
                             <!-- <input type="text" id="iprocesador" size="1px"> -->
                         </th>
                         <th>   <select class ="form-control"  id="igeneracion"  size="1px">
-                            <?php  $this->colocarSelectCampo($generaciones);  ?>
+                            <?php  $this->colocarSelectCampoPorDefectoBlanco($generaciones);  ?>
                         </select>  
                     </th>
                     <th>
@@ -685,12 +685,12 @@ class pedidosView extends vista
                     </th>
                     <th>
                         <select class ="form-control"  id="icapacidadram"  size="1px">
-                            <?php  $this->colocarSelectCampo($capacidadram);  ?>
+                            <?php  $this->colocarSelectCampoPorDefectoBlanco($capacidadram);  ?>
                         </select>  
                     </th>
                     <th>
                         <select class ="form-control"  id="icapacidaddisco"  size="1px">
-                            <?php  $this->colocarSelectCampo($capacidaddisco);  ?>
+                            <?php  $this->colocarSelectCampoPorDefectoBlanco($capacidaddisco);  ?>
                         </select>  
                     </th>
                     

@@ -55,6 +55,19 @@ class vista
                 echo ' <option value="'.$valor['id'].'">'.$valor['id'].'</option>';
             }
     
+    }  
+    /**
+     * esta opsion es la misma de colocarSelectCampo pero el valor por defecto es espacio en blanco 
+     *  */         
+    public function colocarSelectCampoPorDefectoBlanco($valores)
+    {
+        echo '<option value="">Sel.</option>';
+        
+            foreach($valores as $valor)
+            {
+                echo ' <option value="'.$valor['id'].'">'.$valor['id'].'</option>';
+            }
+    
     }           
     public function colocarSelectCampoDescripcion($valores)
     {

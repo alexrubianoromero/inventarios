@@ -132,38 +132,38 @@ function validaInfoNuevoItem()
         document.getElementById('itipo').focus();
         return 0;
     }
-    if( document.getElementById('imodelo').value == ''){
-        alert('Por favor digitar imodelo');
-        document.getElementById('imodelo').focus();
-        return 0;
-    }
-    if( document.getElementById('ipulgadas').value == ''){
-        alert('Por favor digitar ipulgadas');
-        document.getElementById('ipulgadas').focus();
-        return 0;
-    }
-    if( document.getElementById('iprocesador').value == ''){
-        alert('Por favor digitar iprocesador');
-        document.getElementById('iprocesador').focus();
-        return 0;
-    }
-    if( document.getElementById('igeneracion').value == ''){
-        alert('Por favor digitar igeneracion');
-        document.getElementById('igeneracion').focus();
-        return 0;
-    }
-    if( document.getElementById('iram').value == ''){
-        alert('Por favor digitar iram');
-        document.getElementById('iram').focus();
-        return 0;
-    }
-    if( document.getElementById('idisco').value == ''){
-        alert('Por favor digitar idisco');
-        document.getElementById('idisco').focus();
-        return 0;
-    }
+    // if( document.getElementById('imodelo').value == ''){
+    //     alert('Por favor digitar imodelo');
+    //     document.getElementById('imodelo').focus();
+    //     return 0;
+    // }
+    // if( document.getElementById('ipulgadas').value == ''){
+    //     alert('Por favor digitar ipulgadas');
+    //     document.getElementById('ipulgadas').focus();
+    //     return 0;
+    // }
+    // if( document.getElementById('iprocesador').value == ''){
+    //     alert('Por favor digitar iprocesador');
+    //     document.getElementById('iprocesador').focus();
+    //     return 0;
+    // }
+    // if( document.getElementById('igeneracion').value == ''){
+    //     alert('Por favor digitar igeneracion');
+    //     document.getElementById('igeneracion').focus();
+    //     return 0;
+    // }
+    // if( document.getElementById('iram').value == ''){
+    //     alert('Por favor digitar iram');
+    //     document.getElementById('iram').focus();
+    //     return 0;
+    // }
+    // if( document.getElementById('idisco').value == ''){
+    //     alert('Por favor digitar idisco');
+    //     document.getElementById('idisco').focus();
+    //     return 0;
+    // }
     if( document.getElementById('idEstadoInicio').value == ''){
-        alert('Por favor digitar idEstadoInicio');
+        alert('Por favor digitar Estado');
         document.getElementById('idEstadoInicio').focus();
         return 0;
     }
