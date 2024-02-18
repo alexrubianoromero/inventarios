@@ -151,8 +151,10 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 **revisar como se puede indicar la prioridad con la que quedo creado el item 
 **Ajustar los valores por defecto cuando se escogen las opciones de agregar un item inicio
 
---cambiar costo a alfanumerico y utilizarlo como especificaciones en componentes
-ajustar hojas de vida para que muestre todos los seriales independientes de la bodega 
+**cambiar costo a alfanumerico y utilizarlo como especificaciones en componentes
+**ajustar hojas de vida para que muestre todos los seriales independientes de la bodega 
+--para revisar lo de la ram y disco en el informe se debe revisar como esta grabando la ram que trae el hardware
+
 revisar en reporte financiero que salgan las columasn de ram y disco 
 en el reporte financiero al lado de oc la fecha en que se creo la oc 
 

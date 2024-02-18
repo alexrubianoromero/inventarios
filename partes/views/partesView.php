@@ -242,33 +242,33 @@ class partesView extends vista
         $tipopartes = $this->TipoParteModel->traerTipoParteHardware('2');
         ?>
          <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 mt-3">
                     <!-- computador monitor impresora -->
                     <label for="">Tipo:</label>
                     <select class ="form-control"  id="itipo" onchange="buscarSuptiposParaSelectDesdeCrearParte();">
                             <?php  $this->colocarSelect($tipopartes);  ?>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 mt-3">
                     <label for="">Subtipo:</label>
                     <select class ="form-control"  id="isubtipo">
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 mt-3">
                     <label id="campovariable">Caracteristicas</label>
                       <input class ="form-control" type="text" id="capacidad" value ="<?php  echo $producto['capacidad'] ?>">          
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 mt-3">
                     <label for="">Cantidad </label>
                       <input class ="form-control" type="text" id="cantidad" value ="<?php  echo $producto['cantidad'] ?>">          
                 </div>
-                <div class="col-md-3">
-                    <label for="">Costo </label>
+                <div class="col-md-3 mt-3">
+                    <label for="">Especificaciones </label>
                       <input class ="form-control" type="text" id="costo" value ="<?php  echo $producto['costo'] ?>">          
                 </div>
             
         </div>
-        <div class="row">
+        <div class="row mt-3">
                 <button type="button" 
                 class="btn btn-primary  float-right mt-3" 
                 onclick="grabarNuevaParte()"
