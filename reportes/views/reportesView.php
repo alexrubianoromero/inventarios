@@ -2,6 +2,7 @@
 $raiz = dirname(dirname(dirname(__file__)));
 require_once($raiz.'/clientes/models/ClienteModel.php'); 
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
+require_once($raiz.'/pagos/models/PagoModel.php');  
 require_once($raiz.'/pedidos/models/EstadoInicioPedidoModel.php');  
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php');  
 require_once($raiz.'/pedidos/models/EstadoProcesoItemModel.php');  
@@ -27,6 +28,7 @@ class reportesView extends vista
     protected $pedidoModel ; 
     protected $usuarioModel ; 
     protected $asociadoItemModel ; 
+    protected $pagoModel ; 
  
 
     public function __construct()
@@ -41,6 +43,7 @@ class reportesView extends vista
         $this->usuarioModel = new UsuarioModel();
         $this->EstadoProcesoItemModel = new EstadoProcesoItemModel();
         $this->asociadoItemModel = new AsociadoItemInicioPedidoHardwareOparteModel();
+        $this->pagoModel = new PagoModel();
     }
 
     public function reportesMenu()
@@ -116,8 +119,9 @@ class reportesView extends vista
                         <th>Pedido</th>
                         <th>Fecha</th>
                         <th>Cliente</th>
-                        <th>Tipo</th>  <!--hardware o parte -->
+                        <!-- <th>Tipo</th>  hardware o parte -->
                         <th>Total</th>
+                        <th>Saldo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,23 +131,36 @@ class reportesView extends vista
                        {
                           $infoCliente =  $this->clienteModel->traerClienteId($item['idCliente']); 
                           if($item['tipoItem']==1){$tipo = 'Hardware';} else { $tipo = 'Parte';}
+                          $sumaItems = $this->itemInicioPedidoModel->traerSumaItemInicioPedido($item['idPedido']);
+                          $pagospedido = $this->pagoModel->traerPagosPedido($item['idPedido']); 
+                          $sumaPagos = 0;
+                          foreach($pagospedido as $pago)
+                          {
+                            $sumaPagos = $sumaPagos + $pago['valor']; 
+                          }
+                          $saldoPedido = $sumaItems - $sumaPagos;
+                        
                         //   $this->printR($infoCliente); 
                           echo '<tr>';  
                           echo '<td>'.$item['idPedido'].'</td>'; 
                           echo '<td>'.$item['fecha'].'</td>'; 
                           echo '<td>'.$infoCliente[0]['nombre'].'</td>'; 
-                          echo '<td>'.$tipo.'</td>'; 
-                          echo '<td align="right">'.number_format($item['total'],0,",",".").'</td>'; 
-                          echo '</tr>';  
-                          $granTotal = $granTotal + $item['total']; 
+                          echo '<td align ="right">'.number_format($sumaItems,0,",",".").'</td>'; 
+                          echo '<td align ="right">'.number_format($saldoPedido,0,",",".").'</td>'; 
+                          
+
+                        //   echo '<td>'.$tipo.'</td>'; 
+                        //   echo '<td align="right">'.number_format($item['total'],0,",",".").'</td>'; 
+                        //   echo '</tr>';  
+                        //   $granTotal = $granTotal + $item['total']; 
                         }  
-                        echo '<tr>';  
-                        echo '<td></td>';
-                        echo '<td></td>';
-                        echo '<td></td>';
-                        echo '<td></td>';
-                        echo '<td align="right">'.number_format($granTotal,0,",",".").'</td>';
-                        echo '</tr>';  
+                        // echo '<tr>';  
+                        // echo '<td></td>';
+                        // echo '<td></td>';
+                        // echo '<td></td>';
+                        // echo '<td></td>';
+                        // echo '<td align="right">'.number_format($granTotal,0,",",".").'</td>';
+                        // echo '</tr>';  
 
                     ?>
                 </tbody>
@@ -244,6 +261,131 @@ class reportesView extends vista
     <?php
     }
     
+    public function verEquiposFinancieroEstadoEquipo($hardwards,$idEnviarExcel)
+    {
+        if($idEnviarExcel==1)
+        {
+            echo '<br>se debe enviar a excdl ';
+            // header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+            // header("Content-Disposition: attachment; filename=archivo.xls");
+
+            header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+            header("Content-Disposition: attachment; filename=archivo.xls");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private",false);
+        }
+        ?>
+         <table class="table table-striped hover-hover mt-3">
+                <thead>
+                    <th>No Importacion</th>
+                    <th>Lote</th>
+                    <th>Serial</th>
+                    <th>TipoProducto</th>
+                    <th>Chasis</th>
+                    <th>Modelo</th>
+                    <th>Pulgadas</th>
+                    <th>Procesador</th>
+                    <th>Generacion</th>
+                    <th>Ram</th>
+                    <th>Disco</th>
+                    <th>Marca</th>
+                    <th>OC</th>
+                    <th>Fecha OC</th>
+                    <th>Cliente</th>
+                    <th>Estado</th>
+                    <th>Tecnicos</th>
+                  
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($hardwards as $hardward)
+                    {
+                        $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($hardward['idEstadoInventario']);
+                        $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($hardward['idSubInv']);  
+                        $infoMarca = $this->marcaModel->traerMarcaId($hardward['idMarca']); 
+                        //$numeroPedido  tambien trae precioVenta de asociado
+                        $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idAsociacionItem']);
+                        // $this->printR($numeroPedido);
+                        $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido['pedido']); 
+
+                        $infoAsociadoItemInicio = $this->asociadoItemModel->traerAsociadoItemIdAsociado($hardward['idAsociacionItem']); 
+                        $nombreCliente =    $this->itemInicioPedidoModel->traerClientePedido($numeroPedido['pedido']);
+                        $gananBase = $hardward['precioMinimoVenta'] - $hardward['costoProducto'];
+                        $ganancia = $numeroPedido['precioVenta'] -  $hardward['costoProducto'] ;
+
+                        $estado =  $hardward['idEstadoInventario'];
+                   
+                      
+                        //traer Ram hardware
+                        // $this->printR($infoRam1);
+                        $infoRam1 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam1']);   
+                        $infoRam2 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam2']);   
+                        $infoRam3 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam3']);   
+                        $infoRam4 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam4']);   
+                        $valoresRam = $infoRam1[0]['descripcion'].'-'.$infoRam2[0]['descripcion'].'-'.$infoRam3[0]['descripcion'].'-'.$infoRam4[0]['descripcion'];
+                        
+                        //traer los discos 
+                        $infoDisco1 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idDisco1']);   
+                        $infoDisco2 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idDisco2']);   
+                        $valoresDiscos = $infoDisco1[0]['descripcion'].'-'.$infoDisco2[0]['descripcion'];
+
+                        //tecnicos
+                        $tecnicos = $this->itemInicioPedidoModel->traertecnicosAsociadosAidPedido($numeroPedido['pedido']); 
+                        $nombresTecnicos = '';
+                        foreach ($tecnicos as $tecnico)
+                        {
+                            $nombresTecnicos .= $tecnico['nombre'];
+                        }
+
+                        echo '<tr>'; 
+                        echo '<td>'.$hardward['idImportacion'].'</td>';
+                        echo '<td>'.$hardward['lote'].'</td>';
+                        echo '<td>'.$hardward['serial'].'</td>';
+                        echo '<td>'.$infoSubtipo[0]['descripcion'].'</td>';
+                        echo '<td>'.$hardward['chasis'].'</td>';
+                        echo '<td>'.$hardward['modelo'].'</td>';
+                        echo '<td>'.$hardward['pulgadas'].'</td>';
+                        echo '<td>'.$hardward['procesador'].'</td>';
+                        echo '<td>'.$hardward['generacion'].'</td>';
+                        echo '<td>'.$valoresRam.'</td>';
+                        echo '<td>'.$valoresDiscos.'</td>';
+                        echo '<td>'.$infoMarca[0]['marca'].'</td>';
+                        echo '<td>'.$numeroPedido['pedido'] .'</td>';
+                        echo '<td>'.$infoPedido['fecha'].'</td>';
+                        echo '<td>'.$nombreCliente .'</td>';
+                        echo '<td>'.$infoEstado['descripcion'].'</td>';
+                        echo '<td>'.$nombresTecnicos.'</td>';
+
+                      
+                        //    $dadodebaja = 4;
+                        //    if($estado == $dadodebaja)
+                        //    {
+                            
+                            //        echo '<td><button 
+                            //                    class="btn btn-secondary btn-sm " 
+                            //                    onclick="habilitarHardware('.$hardward['id'].');"
+                            //                    >Habilitar</button></td>';
+                            //    }else{
+                                
+                                //        echo '<td><button 
+                                //                    class="btn btn-primary btn-sm " 
+                                //                    onclick="verificarDarDeBaja('.$hardward['id'].');"
+                                //                    >Dar Baja</button></td>';
+                                //    }
+                                
+                                //    echo '<td><button 
+                                //                class="btn btn-primary btn-sm " 
+                                //                onclick="verMovimientosHardware('.$hardward['id'].');"
+                                //                >Historial</button></td>';
+                                //    echo '</tr>';  
+                            }
+                            ?>
+                  </tbody>
+              </table> 
+
+        <?php
+    }
     public function verEquiposFinanciero($hardwards,$idEnviarExcel)
     {
         if($idEnviarExcel==1)
@@ -270,8 +412,11 @@ class reportesView extends vista
                     <th>Pulgadas</th>
                     <th>Procesador</th>
                     <th>Generacion</th>
+                    <th>Ram</th>
+                    <th>Disco</th>
                     <th>Marca</th>
                     <th>OC</th>
+                    <th>Fecha OC</th>
                     <th>Cliente</th>
                     <th>Estado</th>
                     <th>Costo Item</th>
@@ -294,9 +439,10 @@ class reportesView extends vista
                         $infoMarca = $this->marcaModel->traerMarcaId($hardward['idMarca']); 
                         //$numeroPedido  tambien trae precioVenta de asociado
                         $numeroPedido =   $this->itemInicioPedidoModel->traerPedidoConIdAsociadoItem($hardward['idAsociacionItem']);
+                        // $this->printR($numeroPedido);
                         $infoPedido =  $this->pedidoModel->traerPedidoId($numeroPedido['pedido']); 
+
                         $infoAsociadoItemInicio = $this->asociadoItemModel->traerAsociadoItemIdAsociado($hardward['idAsociacionItem']); 
-                        // $this->printR($infoPedido);
                         $nombreCliente =    $this->itemInicioPedidoModel->traerClientePedido($numeroPedido['pedido']);
                         $gananBase = $hardward['precioMinimoVenta'] - $hardward['costoProducto'];
                         $ganancia = $numeroPedido['precioVenta'] -  $hardward['costoProducto'] ;
@@ -313,6 +459,20 @@ class reportesView extends vista
                         else{
                             $wo='NO';
                         }
+                        //traer Ram hardware
+                        // $this->printR($infoRam1);
+                        $infoRam1 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam1']);   
+                        $infoRam2 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam2']);   
+                        $infoRam3 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam3']);   
+                        $infoRam4 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idRam4']);   
+                        $valoresRam = $infoRam1[0]['descripcion'].'-'.$infoRam2[0]['descripcion'].'-'.$infoRam3[0]['descripcion'].'-'.$infoRam4[0]['descripcion'];
+                        
+                        //traer los discos 
+                        $infoDisco1 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idDisco1']);   
+                        $infoDisco2 =   $this->subtipoParteModel->traerSubTipoParte($hardward['idDisco2']);   
+                        $valoresDiscos = $infoDisco1[0]['descripcion'].'-'.$infoDisco2[0]['descripcion'];
+
+
                         echo '<tr>'; 
                         echo '<td>'.$hardward['idImportacion'].'</td>';
                         echo '<td>'.$hardward['lote'].'</td>';
@@ -323,8 +483,11 @@ class reportesView extends vista
                         echo '<td>'.$hardward['pulgadas'].'</td>';
                         echo '<td>'.$hardward['procesador'].'</td>';
                         echo '<td>'.$hardward['generacion'].'</td>';
+                        echo '<td>'.$valoresRam.'</td>';
+                        echo '<td>'.$valoresDiscos.'</td>';
                         echo '<td>'.$infoMarca[0]['marca'].'</td>';
                         echo '<td>'.$numeroPedido['pedido'] .'</td>';
+                        echo '<td>'.$infoPedido['fecha'].'</td>';
                         echo '<td>'.$nombreCliente .'</td>';
                         echo '<td>'.$infoEstado['descripcion'].'</td>';
 

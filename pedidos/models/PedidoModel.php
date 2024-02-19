@@ -56,7 +56,7 @@ class PedidoModel extends Conexion
             {  $sql .= " and p.fecha >= '".$request['fechaIn']."'   "; }        
             if($request['fechaFn'] != '')
             { $sql .= " and p.fecha <= '".$request['fechaFin']."'   "; }        
-            $sql .= "order by p.idPedido desc";
+            $sql .= "  group by p.idPedido order by p.idPedido desc";
             // die($sql ); 
             $consulta = mysql_query($sql,$this->connectMysql());
             $pedidos = $this->get_table_assoc($consulta);

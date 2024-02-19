@@ -158,15 +158,21 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 **para revisar lo de la ram y disco en el informe se debe revisar como esta grabando la ram que trae el hardware
 --revisar como se procesa que quite un componente 
 **revisar que el componente que se crea quede con la sucursal del usuario (se reviso y si queda la sucursal grabada cuando se crea la parte )
---revisar como queda grabado el componente que se quita 
+--revisar como queda grabado el componente que se quita
+--garantizar que cuando se quite un componente quede grabado el registro en partes con la cantidad que se quito, si no existe se debe crear el registro 
+que quede registrado en partes con el id de la subparte  
+ 
 y que agregue un componente 
 
-revisar en reporte financiero que salgan las columasn de ram y disco 
-en el reporte financiero al lado de oc la fecha en que se creo la oc 
+**revisar en reporte financiero que salgan las columasn de ram y disco 
+**en el reporte financiero al lado de oc la fecha en que se creo la oc 
 
-el reporte de estado de equipo es el mismo reporte financiero pero solo hasta al columna esrado inlcuido ademnas que 
-se relacionel tecnico que lo alisto 
-en el reporte de ventas sacar resumido el valor total de toda la oc y que salga una sola vez 
-no importa que tenga variosa items  y que muestre el saldo de esa oc
+**el reporte de estado de equipo es el mismo reporte financiero pero solo hasta al columna estado inlcuido ademas que 
+**se relacionel tecnico que lo alisto 
+
+**en el reporte de ventas sacar resumido el valor total de toda la oc y que salga una sola vez 
+**no importa que tenga variosa items  y que muestre el saldo de esa oc
+
+
 en reporte de estado de equipo solocar otra opcion para ver lo que esta en bodega  pero solo de la bodega ligada al usuario 
 opcion tablero pedidos 

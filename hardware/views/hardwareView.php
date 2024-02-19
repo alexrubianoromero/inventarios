@@ -668,9 +668,12 @@ class hardwareView extends vista
    
         <div class="row mt-3">
                 <div class="col-md-4">
+                    <?php 
+                         $infosubParte =   $this->SubtipoParteModel->traerSubTipoParte($producto['idRam3']);   
+                    ?>
                     <label for="">Ram 3:</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $ram3[0]['capacidad'].'GB-'.$subTipoRam3[0]['descripcion']  ?>"
+                    value ="<?php  echo $infosubParte[0]['descripcion']; ?>"
                     >   
                 </div>
                 <div class="col-md-2">
@@ -698,9 +701,12 @@ class hardwareView extends vista
                     ?>
                 </div>
                 <div class="col-md-4">
+                    <?php 
+                         $infosubParte =   $this->SubtipoParteModel->traerSubTipoParte($producto['idRam4']);   
+                    ?>
                     <label for="">Ram 4:</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $ram4[0]['capacidad'].'GB-'.$subTipoRam4[0]['descripcion']  ?>"
+                    value ="<?php  echo $infosubParte[0]['descripcion']; ?>"
                     >   
                 </div>
                 <div class="col-md-2">
@@ -732,9 +738,12 @@ class hardwareView extends vista
         </div>
         <div class="row mt-3">
                 <div class="col-md-4">
+                <?php 
+                         $infosubParte =   $this->SubtipoParteModel->traerSubTipoParte($producto['idDisco1']);   
+                    ?>
                     <label for="">Disco1 :</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $disco1[0]['capacidad'].'GB-'.$subTipoDisco1[0]['descripcion']  ?>"
+                    value ="<?php  echo $infosubParte[0]['descripcion']; ?>"
                     >   
                 </div>
                 <div class="col-md-2">
@@ -762,9 +771,12 @@ class hardwareView extends vista
                     ?>
                 </div>
                 <div class="col-md-4">
+                <?php 
+                         $infosubParte =   $this->SubtipoParteModel->traerSubTipoParte($producto['idDisco2']);   
+                    ?>
                     <label for="">Disco2 :</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $disco2[0]['capacidad'].'GB-'.$subTipoDisco2[0]['descripcion']  ?>"
+                    value ="<?php  echo $infosubParte[0]['descripcion']; ?>"
                     >   
                 </div>
                 <div class="col-md-2">

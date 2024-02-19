@@ -326,6 +326,19 @@ class ItemInicioPedidoModel extends Conexion
             $pedidosConItemsFinalizados = $this->get_table_assoc($consulta);
             return $pedidosConItemsFinalizados;
         }
+        public function traertecnicosAsociadosAidPedido($idPedido)
+        {
+            $sql = "  select u.nombre from itemsInicioPedido  i
+            inner join usuarios u on (u.id_usuario = i.idTecnico)
+            where idpedido = '".$idPedido."'  ";    
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $tecnicos = $this->get_table_assoc($consulta);
+            //   echo '<pre>'; 
+            // print_r($tecnicos); 
+            // echo '</pre>';
+            // die(); 
+            return $tecnicos; 
+        }
         
         // public function traerInfodePedidosRelacionados($idPedidos)
         // {

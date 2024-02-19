@@ -4,12 +4,13 @@ require_once($raiz.'/reportes/views/reportesView.php');
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/pedidos/models/ItemInicioPedidoModel.php'); 
 require_once($raiz.'/hardware/models/HardwareModel.php'); 
+require_once($raiz.'/vista/vista.php'); 
 // require_once($raiz.'/pagos/models/PagoModel.php'); 
 // require_once($raiz.'/pedidos/models/AsignacionTecnicoPedidoModel.php'); 
 // die('controller'.$raiz);
 // die('control123'.$raiz);
 
-class reportesController
+class reportesController extends vista
 {
     protected $view; 
     protected $pedidoModel;
@@ -75,18 +76,27 @@ class reportesController
     public function generarReporteVentas($request)
     {
         //  $traerPedidosFechas = $this->pedidoModel->traerPedidosFechas($request);     
-         $itemsVentasPedidosFechas = $this->pedidoModel->traerItemsPedidoFechas($request);   
+         $itemsVentasPedidosFechas = $this->pedidoModel->traerItemsPedidoFechas($request);  
+        //  $this->printR($itemsVentasPedidosFechas);
+
         //  echo '<pre>'; print_r($_REQUEST);  echo '</pre>';  
         //  $traerVentasdePedidos =  $this->itemInicioModel->traerItemsVentas(); 
         $this->view->mostrarReporteVentas($itemsVentasPedidosFechas);
     }
 
+    // public function reporteEstadoEquipo($request)
+    // {
+    //     $hardwards = $this->HardwareModel->traerHardwareTodosLosEstados(); 
+    //     //    echo '<pre>'; print_r($hardwards);  echo '</pre>';
+    //     //     die('llego aca '); 
+    //     $this->view->reporteEstadoEquipo($hardwards);
+    // }
     public function reporteEstadoEquipo($request)
     {
         $hardwards = $this->HardwareModel->traerHardwareTodosLosEstados(); 
         //    echo '<pre>'; print_r($hardwards);  echo '</pre>';
         //     die('llego aca '); 
-        $this->view->reporteEstadoEquipo($hardwards);
+        $this->view->verEquiposFinancieroEstadoEquipo($hardwards,$request['idEnviarExcel']) ;
     }
 
     public function traerEquiposFiltradoEstado($request)
