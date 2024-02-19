@@ -451,6 +451,7 @@ class hardwareView extends vista
         $subTipoDisco2 = $this->SubtipoParteModel->traerSubTipoParte($disco2[0]['idSubtipoParte']);
         $ram1 = $this->partesModel->traerParte($producto['idRam1']);
         $subTipoRam1 = $this->SubtipoParteModel->traerSubTipoParte($ram1[0]['idSubtipoParte']);
+        // $this->printR($subTipoRam1); 
         $ram2 = $this->partesModel->traerParte($producto['idRam2']);
         $subTipoRam2 = $this->SubtipoParteModel->traerSubTipoParte($ram2[0]['idSubtipoParte']);
         $ram3 = $this->partesModel->traerParte($producto['idRam3']);
@@ -598,13 +599,17 @@ class hardwareView extends vista
          ?>        
         <div class="row mt-3">
                 <div class="col-md-4">
+                    <?php 
+                         $infosubParte =   $this->SubtipoParteModel->traerSubTipoParte($producto['idRam1']);   
+                    ?>
                     <label for="">Ram 1:</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $ram1[0]['capacidad'].'GB-'.$subTipoRam1[0]['descripcion']  ?>"
+                    value ="<?php  echo $infosubParte[0]['descripcion']; ?>"
                     >   
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idRam1']==0)
                        {
@@ -626,13 +631,17 @@ class hardwareView extends vista
                     ?>
                 </div>
                 <div class="col-md-4">
+                   <?php 
+                         $infosubParte =   $this->SubtipoParteModel->traerSubTipoParte($producto['idRam2']);   
+                    ?>
                     <label for="">Ram 2:</label>
                     <input class ="form-control" type="text" onfocus="blur();" 
-                    value ="<?php  echo $ram2[0]['capacidad'].'GB-'.$subTipoRam2[0]['descripcion']  ?>"
+                    value ="<?php  echo $infosubParte[0]['descripcion']; ?>"
                     >   
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idRam2']==0)
                        {
@@ -666,6 +675,7 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idRam3']==0)
                        {
@@ -695,6 +705,7 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idRam4']==0)
                        {
@@ -728,6 +739,7 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idDisco1']==0)
                        {
@@ -757,6 +769,7 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idDisco2']==0)
                        {
@@ -791,6 +804,7 @@ class hardwareView extends vista
                 </div>
                 <div class="col-md-2">
                     <label>Accion </label>
+                    <br>
                     <?php
                        if($producto['idCargador']==0)
                        {

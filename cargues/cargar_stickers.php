@@ -214,14 +214,48 @@ function traerUltimoIdPartes($conexion){
 									// echo '<br>'.$am['A'];
                                     //aqui comeinzan traduccion de datos 
                                     $infoMarca =  $marcaModel->traerMarcaXMarca($am['G']);
-                                    $infoSubtipoProducto = $subtipoParteModel->traerSubTipoParteNombre($am['H']);
+
+                                    // $infoSubtipoProducto = $subtipoParteModel->traerSubTipoParteNombre($am['H']);
+
+                                    if($am['A']=='1')
+                                    {
+                                        $infoSubtipoProducto = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['H'],1);
+                                    }
+                                    if($am['A']=='2')
+                                    {
+                                        $infoSubtipoProducto = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['H'],1);
+                                    }
+
+
+                                    //estas son las 4 solumnas de ram 
+                                    //si no existe la descripcion de la ram entonces debe ser creada
+                                    //la subparte de ram va con id de tipoParte = 4
+                                    //y asignarle ese id 
                                     $infoSubtipoRam1 = $subtipoParteModel->traerSubTipoParteNombre($am['M']);
                                     $infoSubtipoRam2 = $subtipoParteModel->traerSubTipoParteNombre($am['N']);
                                     $infoSubtipoRam3 = $subtipoParteModel->traerSubTipoParteNombre($am['O']);
                                     $infoSubtipoRam4 = $subtipoParteModel->traerSubTipoParteNombre($am['P']);
+                                    
+                                    // $existeRam1 = $subtipoParteModel->existeNombreSubtipo($am['M']);
+                                    // if($existeRam1){
+                                    //     $idRam1 = $subtipoParteModel->traerIdSubtipoConNombreSubtipo($am['M']);
+                                    // }else{
+                                    //     $subtipoParteModel->crearSubtipoPArte($am['M'],4);
+                                    // }
 
+                                    // $infoSubtipoRam1 = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['M'],4);
+                                    // $infoSubtipoRam2 = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['N'],4);
+                                    // $infoSubtipoRam3 = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['O'],4);
+                                    // $infoSubtipoRam4 = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['P'],4);
+                                    
+                                    
+                                    //estos son las 2 columnas de disco
                                     $infoSubtipoDisco1 = $subtipoParteModel->traerSubTipoParteNombre($am['Q']);
                                     $infoSubtipoDisco2 = $subtipoParteModel->traerSubTipoParteNombre($am['R']);
+                                    
+                                    // $infoSubtipoDisco1 = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['Q'],3);
+                                    // $infoSubtipoDisco2 = $subtipoParteModel->traerSubTipoParteNombreRespuestaMejoradaCargues($am['R'],3);
+
 
                                     //hay que traer el id de las condiciones y ese es el que queda eh hardware 
                                     // $infoCondicion1  = $condicionModel->traerCondicionXCondicion($am['S']);    
@@ -251,7 +285,7 @@ function traerUltimoIdPartes($conexion){
                                         '".$am['A']."','".$am['B']."','".$am['C']."','".$am['D']."'
                                         ,'".$am['E']."','".$infoMarca['id']."','".$infoSubtipoProducto['id']."'
                                         ,'".$am['I']."','".$am['J']."','".$am['K']."','".$am['L']."'
-                                        ,'".$infoSubtipoRam1['id']."','".$infoSubtipoRam2['id']."','".$infoSubtipoRam3['id']."','".$infoSubtipoRam4am['id']."'
+                                        ,'".$infoSubtipoRam1['id']."','".$infoSubtipoRam2['id']."','".$infoSubtipoRam3['id']."','".$infoSubtipoRam4['id']."'
                                         ,'".$infoSubtipoDisco1['id']."','".$infoSubtipoDisco2['id']."'
                                         ,'".$am['S']."','".$am['T']."'
                                         ,'".$am['U']."','".$am['V']."','".$am['W']."','".$am['X']."'
@@ -281,6 +315,7 @@ function traerUltimoIdPartes($conexion){
                                     $consulta = mysql_query($sql,$conexion); 
                                     // die(); 
 									$i++;
+                                    // if($i==2){die(); }
 								}
 					 } // parece fin de sizeof
 							

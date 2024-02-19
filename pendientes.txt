@@ -153,7 +153,13 @@ y coneste se mostraran los items completados o por completar pero solo para el t
 
 **cambiar costo a alfanumerico y utilizarlo como especificaciones en componentes
 **ajustar hojas de vida para que muestre todos los seriales independientes de la bodega 
---para revisar lo de la ram y disco en el informe se debe revisar como esta grabando la ram que trae el hardware
+**revisar como esta guardando los valores de ram en la tabla de hardware (las condiciones con ñ o simbolos raros no pasan  )
+**como hace el sistema para traer el valor de la ram del segundo serial (el id que guarda en la tabla de hardware para ram  es el de subtipoParte)
+**para revisar lo de la ram y disco en el informe se debe revisar como esta grabando la ram que trae el hardware
+--revisar como se procesa que quite un componente 
+**revisar que el componente que se crea quede con la sucursal del usuario (se reviso y si queda la sucursal grabada cuando se crea la parte )
+--revisar como queda grabado el componente que se quita 
+y que agregue un componente 
 
 revisar en reporte financiero que salgan las columasn de ram y disco 
 en el reporte financiero al lado de oc la fecha en que se creo la oc 
