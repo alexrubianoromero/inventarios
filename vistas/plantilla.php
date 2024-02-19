@@ -23,8 +23,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
     <?php
-    include("modulos/navbar.php");
-    include("modulos/aside.php");
+      session_start();
+        //        echo '<pre>'; 
+        // print_r($_SESSION); 
+        // echo '</pre>';
+        // die(); 
+      if(!isset($_SESSION['id_usuario']))
+      {
+          echo 'la sesion ha caducado';
+        //   echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+          die();
+      }
+     include("modulos/navbar.php");
+     include("modulos/aside.php");
 
     ?>
 

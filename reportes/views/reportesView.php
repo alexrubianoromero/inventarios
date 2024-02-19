@@ -63,9 +63,12 @@ class reportesView extends vista
                 <!-- <div class="col-lg-2">
                 <button class="btn btn-primary" onclick="reporteItemsAlistados();">Items Alistados Tecnico</button>
                 </div> -->
+                <?php  if($_SESSION['nivel']>6){ ?>
                 <div class="col-lg-2">
                     <button class="btn btn-primary" onclick="verReporteFinanciero();">Reporte Financiero</button>
                 </div>
+                <?php } ?>
+
                 <div class="col-lg-2">
                     <select id="idEnviarExcel" class="form-control">
                         <option value ="-1">Excel...</option>

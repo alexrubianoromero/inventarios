@@ -909,7 +909,7 @@ class hardwareView extends vista
 
         <br>
         <?php
-        if($_SESSION['nivel']==3)
+        if($_SESSION['nivel']>6)
         {
             $this->verCostos($producto['id']);
         }

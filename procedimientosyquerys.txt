@@ -1,6 +1,7 @@
 truncate movimientosPartes;
 truncate hardware;
-truncate partes;
+--truncate partes;
+--truncate subtipoParte
 
 update itemsInicioPedido set asignado = 0;
 
@@ -13,6 +14,7 @@ truncate pedidos;
 truncate itemsInicioPedido;
 truncate asignacionTecnicoPedido;
 truncate asociadoItemInicioPedidoHardwareOparte;
+truncate pagos;
 update hardware set idEstadoInventario = 0, idAsociacionItem=0;
 
 

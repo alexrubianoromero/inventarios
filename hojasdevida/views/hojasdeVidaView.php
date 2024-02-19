@@ -124,11 +124,15 @@ class hojasdeVidaView extends vista
                                        onclick="habilitarHardware('.$hardward['id'].');"
                                        >Habilitar</button></td>';
                        }else{
-                           
-                           echo '<td><button 
-                                       class="btn btn-primary btn-sm " 
-                                       onclick="verificarDarDeBaja('.$hardward['id'].');"
-                                       >Dar Baja</button></td>';
+                           if($_SESSION['nivel'] >6)
+                           {
+                                    echo '<td><button 
+                                    class="btn btn-primary btn-sm " 
+                                    onclick="verificarDarDeBaja('.$hardward['id'].');"
+                                    >Dar Baja</button></td>';
+                           }else {
+                            echo '<td></td>';
+                           }
                        }
 
                        echo '<td><button 
