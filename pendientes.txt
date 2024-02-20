@@ -164,6 +164,7 @@ que quede registrado en partes con el id de la subparte
  
 y que agregue un componente 
 
+
 **revisar en reporte financiero que salgan las columasn de ram y disco 
 **en el reporte financiero al lado de oc la fecha en que se creo la oc 
 
@@ -176,3 +177,13 @@ y que agregue un componente
 
 en reporte de estado de equipo solocar otra opcion para ver lo que esta en bodega  pero solo de la bodega ligada al usuario 
 opcion tablero pedidos 
+
+
+revisar las opciones de jefe de bodega
+revisar que jefe de bodega no ´pueda cambiar el estado de un item 
+
+el tecnico si puede cambiar el estado del item pero no puede agregar seriales
+filtros de pulgadas y tipos de producto
+chasis o tipo y sku
+
+verificar que no colooque nada en ram y disco cuando se agrega un item al pedido que no tiene ram ni disco

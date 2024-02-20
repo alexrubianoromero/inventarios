@@ -14,7 +14,10 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                 
-    
+                <?php 
+                    if($_SESSION['nivel']>5)
+                    {
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="sucursales();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -23,7 +26,16 @@
                             </p>
                         </a>
                     </li>
-                    <?php  if($_SESSION['nivel']!=6) {?>
+                    <?php
+                    }
+                    ?>
+                    <?php  
+                    if($_SESSION['nivel']>3 ) 
+                    { }
+                    else 
+                    {
+                        // if() {
+                    ?>           
                         <li class="nav-item">
                             <a style="cursor:pointer;" class="nav-link" onclick="users();">
                                 <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -32,17 +44,33 @@
                                 </p>
                             </a>
                         </li>
-                        <?php } ?>
+                    <?php 
+                        // } 
+                    } 
+                    
+                    ?>
 
 
+                    <?php 
+                    if($_SESSION['nivel']>4)
+                    {
+                    ?>
                     <li class="nav-item">
-                    <a style="cursor:pointer;" class="nav-link" onclick="perfiles();">
+                        <a style="cursor:pointer;" class="nav-link" onclick="perfiles();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->
                             <p>
                                 Perfiles
                             </p>
                         </a>
                     </li>
+                    <?php
+                    }
+                    ?>
+                    
+                    <?php 
+                    if($_SESSION['nivel']>4)
+                    {
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="inventarios();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -51,6 +79,11 @@
                             </p>
                         </a>
                     </li>
+                    <?php
+                    }
+                    ?>
+
+                  
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="pedidos();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -59,6 +92,12 @@
                             </p>
                         </a>
                     </li>
+               
+
+                     <?php 
+                    if($_SESSION['nivel']>4)
+                    {
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="clientes();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -67,6 +106,9 @@
                             </p>
                         </a>
                     </li>
+                    <?php
+                    }
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="hojasdevida();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -75,6 +117,11 @@
                             </p>
                         </a>
                     </li>
+
+                    <?php 
+                    if($_SESSION['nivel']>4)
+                    {
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="tablerotecnicos();">
                            
@@ -83,6 +130,13 @@
                             </p>
                         </a>
                     </li>
+                    <?php
+                    }
+                    ?>
+                     <?php 
+                    if($_SESSION['nivel']>4)
+                    {
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="reportes();">
                        
@@ -91,7 +145,9 @@
                             </p>
                         </a>
                     </li>
-                   
+                    <?php
+                    }
+                    ?>
                     <li class="nav-item">
                     <a style="cursor:pointer;" class="nav-link" onclick="salir();">
                             <!-- <i class="nav-icon fas fa-th"></i> -->

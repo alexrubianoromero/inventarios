@@ -64,7 +64,13 @@ class itemInicioPedidoController
         }
         if($_REQUEST['opcion']=='mostrarItemsInicioPedidoTecnicoNuevo')
         {
-            $this->itemInicioview->mostrarItemsInicioPedidoTecnicoNuevo($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
+            if($_SESSION['nivel']>6 || $_SESSION['nivel']==5 )
+            {
+                $this->itemInicioview->mostrarItemsInicioPedidoTecnicoNuevo($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
+            }else {
+                echo '<div style="color:red;">Perfil no autorizado</div>';
+            }
+
         }
         if($_REQUEST['opcion']=='modificarItemInicioPedido')
         {

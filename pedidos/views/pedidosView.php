@@ -34,6 +34,13 @@ class pedidosView extends vista
 
     public function __construct()
     {
+        session_start();
+        if(!isset($_SESSION['id_usuario']))
+        {
+            echo 'la sesion ha caducado';
+            echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            die();
+        }
         $this->pedidoModel = new PedidoModel();
         $this->prioridadModel = new PrioridadModel();
         $this->usuarioModel = new UsuarioModel();
@@ -72,6 +79,11 @@ class pedidosView extends vista
                     PEDIDOS ITEMS X COMPLETAR 
                     </button> 
                 </div>
+
+                <?php   
+                if($_SESSION['nivel']!=4)
+                {
+                ?>   
                 <div class="col-lg-3">
                     <button type="button" 
                     class="btn btn-primary " 
@@ -80,6 +92,9 @@ class pedidosView extends vista
                     ITEMS COMPLETADOS
                     </button> 
                 </div>
+                <?php 
+                }
+                ?>  
                 <div class="col-lg-3">
                     <select id = "idCLiente" onchange="pedidosFiltrados();" class="form-control" >
                        <option value="-1">SeleccionarCliente</option>
@@ -91,16 +106,25 @@ class pedidosView extends vista
                        ?>
                     </select>
                 </div>
-                <div class="col-lg-3">
-                    <button type="button" 
-                    class="btn btn-primary " 
-                    onclick="pedirInfoNuevoPedido();"
-                    >
-                    <!-- data-bs-toggle="modal" 
-                    data-bs-target="#modalPedido" -->
-                   NUEVO PEDIDO
-                    </button> 
-                </div>
+                <?php   
+                if($_SESSION['nivel']>5)
+                {
+                ?>           
+                    <div class="col-lg-3">
+                        <button type="button" 
+                        class="btn btn-primary " 
+                        onclick="pedirInfoNuevoPedido();"
+                        >
+                        <!-- data-bs-toggle="modal" 
+                        data-bs-target="#modalPedido" -->
+                    NUEVO PEDIDO
+                        </button> 
+                    </div>
+                <?php 
+                    }
+                ?>           
+
+
                 <div class="col-lg-3">
 
                 </div>
@@ -153,10 +177,15 @@ class pedidosView extends vista
                           echo '<td>'.$infoCliente[0]['nombre'].'</td>';
                            echo '<td>'.$pedido['observaciones'].'</td>';
                            echo '<td>'.$pedido['idestadoPedido'].'</td>';
-                           echo '<td><button 
-                                     class="btn btn-primary btn-sm " 
-                                     onclick="siguientePantallaPedido('.$pedido['idPedido'].');"
-                                     >Ver</button></td>';
+                           if($_SESSION['nivel']>6)
+                           {
+                               echo '<td><button 
+                               class="btn btn-primary btn-sm " 
+                               onclick="siguientePantallaPedido('.$pedido['idPedido'].');"
+                               >Ver</button></td>';
+                            }else {
+                                echo '<td></td>';
+                            }
                            echo '<td>';
                            echo '<a href="pedidos/pdf/ordenPdf3.php?idPedido='.$pedido['idPedido'].'" target="_blank" >PDF</a>'; 
                            echo '</td>';

@@ -104,13 +104,15 @@ class hojasdeVidaView extends vista
                        echo '</td>';
                        if($hardward['idEstadoInventario']>0)
                        {
-                           echo '<td><button 
-                                        class="btn btn-info btn-sm"
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#modalDevolucionABodega"
-                                        onclick="formuRealizarDevolucionABodega('.$hardward['id'].');"
-                                        >Devolucion</button></td>';
-
+                            if($_SESSION['nivel'] >6 || $_SESSION['nivel'] ==5)
+                            {
+                                echo '<td><button 
+                                    class="btn btn-info btn-sm"
+                                     data-bs-toggle="modal" 
+                                    data-bs-target="#modalDevolucionABodega"
+                                    onclick="formuRealizarDevolucionABodega('.$hardward['id'].');"
+                                    >Devolucion</button></td>';
+                            }else { echo '<td></td>';}    
                        }else{
                         echo '<td></td>';
                        }
@@ -124,7 +126,7 @@ class hojasdeVidaView extends vista
                                        onclick="habilitarHardware('.$hardward['id'].');"
                                        >Habilitar</button></td>';
                        }else{
-                           if($_SESSION['nivel'] >6)
+                           if($_SESSION['nivel'] >6 || $_SESSION['nivel'] ==5)
                            {
                                     echo '<td><button 
                                     class="btn btn-primary btn-sm " 

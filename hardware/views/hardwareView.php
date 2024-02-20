@@ -551,6 +551,10 @@ class hardwareView extends vista
             ?>
                 <div class="col-md-3">
                     <label for="">Procesador:</label>
+                    <?php    
+                    if($_SESSION['nivel']>6 || $_SESSION['nivel']==5)
+                    {  
+                    ?>
                     <select class ="form-control" id="procesador" onchange="actualizarOnchangeProcesador(<?php echo $producto['id']; ?>);">
                         <?php
                             $procesadores = $this->procesadorModel->traerProcesadores();
@@ -567,8 +571,12 @@ class hardwareView extends vista
                             }
                         ?>
                     </select>
+                    <?php    
+                    }else{
+                        echo '<input readonly  class ="form-control" type="text" id="procesador" value ="'.$producto['procesador'].'"> ';
+                    }
+                    ?>
 
-                    <!-- <input class ="form-control" type="text" id="procesador" value ="<?php  //echo $producto['procesador'] ?>">           -->
                 </div>
 
             <?php 
@@ -611,22 +619,25 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idRam1']==0)
+                       if($_SESSION['nivel']>6 || $_SESSION['nivel']==5)
                        {
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarRam('.$producto['id'].',1);"
-                               >+1</button>';
-       
-                       }else{
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam1'].',1);"
-                               >-</button>';
+                            if($producto['idRam1']==0)
+                            {
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-success" 
+                                    onclick="formuAgregarRam('.$producto['id'].',1);"
+                                    >+1</button>';
+            
+                            }else{
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-primary" 
+                                    onclick="quitarRam('.$producto['id'].','.$producto['idRam1'].',1);"
+                                    >-</button>';
+                            }
                        }
                     ?>
                 </div>
@@ -643,23 +654,26 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idRam2']==0)
+                       if($_SESSION['nivel']>6 || $_SESSION['nivel']==5)
                        {
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarRam('.$producto['id'].',2);"
-                               >+</button>';
-       
-                       }else{
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam2'].',2);"
-                               >-</button>';
-       
+                            if($producto['idRam2']==0)
+                            {
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-success" 
+                                    onclick="formuAgregarRam('.$producto['id'].',2);"
+                                    >+</button>';
+            
+                            }else{
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-primary" 
+                                    onclick="quitarRam('.$producto['id'].','.$producto['idRam2'].',2);"
+                                    >-</button>';
+            
+                            }
                        }
                     ?>
                 </div>
@@ -680,25 +694,29 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idRam3']==0)
-                       {
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarRam('.$producto['id'].',3);"
-                               >+</button>';
-       
-                       }else{
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam3'].',3);"
-                               >-</button>';
-       
-                       }
-                    ?>
+                        if($_SESSION['nivel']>6 || $_SESSION['nivel']==5)
+                        {
+
+                            if($producto['idRam3']==0)
+                            {
+                                echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalAgregarRam"
+                                class ="btn btn-success" 
+                                onclick="formuAgregarRam('.$producto['id'].',3);"
+                                >+</button>';
+                                
+                            }else{
+                                echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalAgregarRam"
+                                class ="btn btn-primary" 
+                                    onclick="quitarRam('.$producto['id'].','.$producto['idRam3'].',3);"
+                                    >-</button>';
+                                    
+                            }
+                        }
+                        ?>
                 </div>
                 <div class="col-md-4">
                     <?php 
@@ -713,24 +731,27 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idRam4']==0)
-                       {
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarRam('.$producto['id'].',4);"
-                               >+</button>';
-       
-                       }else{
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-primary" 
-                               onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].',4);"
-                               >-</button>';
-       
-                       }
+                      if($_SESSION['nivel']>6 || $_SESSION['nivel']==5 )
+                      {
+                            if($producto['idRam4']==0)
+                            {
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-success" 
+                                    onclick="formuAgregarRam('.$producto['id'].',4);"
+                                    >+</button>';
+            
+                            }else{
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-primary" 
+                                    onclick="quitarRam('.$producto['id'].','.$producto['idRam4'].',4);"
+                                    >-</button>';
+            
+                            }
+                        }    
                     ?>
                 </div>
                
@@ -750,23 +771,26 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idDisco1']==0)
+                       if($_SESSION['nivel']>6)
                        {
-                           echo '<button 
-                               data-bs-toggle="modal" 
-                               data-bs-target="#modalAgregarRam"
-                               class ="btn btn-success" 
-                               onclick="formuAgregarDisco('.$producto['id'].',1);"
-                               >+</button>';
-       
-                       }else{
-                           echo '<button 
-                           data-bs-toggle="modal" 
-                           data-bs-target="#modalAgregarRam"
-                           class ="btn btn-primary" 
-                           onclick="quitarDisco('.$producto['id'].','.$producto['idDisco1'].',1);"
-                           >-</button>';
-                           
+                            if($producto['idDisco1']==0)
+                            {
+                                echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-success" 
+                                    onclick="formuAgregarDisco('.$producto['id'].',1);"
+                                    >+</button>';
+            
+                            }else{
+                                echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalAgregarRam"
+                                class ="btn btn-primary" 
+                                onclick="quitarDisco('.$producto['id'].','.$producto['idDisco1'].',1);"
+                                >-</button>';
+                                
+                            }
                        }
                     ?>
                 </div>
@@ -783,23 +807,26 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idDisco2']==0)
+                       if($_SESSION['nivel']>6)
                        {
-                           echo '<button 
-                           data-bs-toggle="modal" 
-                           data-bs-target="#modalAgregarRam"
-                           class ="btn btn-success" 
-                           onclick="formuAgregarDisco('.$producto['id'].',2);"
-                           >+</button>';
-                           
-                        }else{
-                            echo '<button 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#modalAgregarRam"
-                            class ="btn btn-primary" 
-                            onclick="quitarDisco('.$producto['id'].','.$producto['idDisco2'].',2);"
-                            >-</button>';
-                            
+                            if($producto['idDisco2']==0)
+                            {
+                                echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalAgregarRam"
+                                class ="btn btn-success" 
+                                onclick="formuAgregarDisco('.$producto['id'].',2);"
+                                >+</button>';
+                                
+                                }else{
+                                    echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-primary" 
+                                    onclick="quitarDisco('.$producto['id'].','.$producto['idDisco2'].',2);"
+                                    >-</button>';
+                                    
+                                }
                         }
                         ?>
                 </div>
@@ -818,25 +845,28 @@ class hardwareView extends vista
                     <label>Accion </label>
                     <br>
                     <?php
-                       if($producto['idCargador']==0)
-                       {
-                           echo '<button 
-                           data-bs-toggle="modal" 
-                           data-bs-target="#modalAgregarRam"
-                           class ="btn btn-success" 
-                           onclick="formuAgregarCargador('.$producto['id'].');"
-                           >+</button>';
-                           
-                        }else{
-                            echo '<button 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#modalAgregarRam"
-                            class ="btn btn-primary" 
-                            onclick="quitarCargador('.$producto['id'].','.$producto['idCargador'].');"
-                            >-</button>';
-                            
-                        }
-                        ?>
+                     if($_SESSION['nivel']>6)
+                     {
+                            if($producto['idCargador']==0)
+                            {
+                                echo '<button 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalAgregarRam"
+                                class ="btn btn-success" 
+                                onclick="formuAgregarCargador('.$producto['id'].');"
+                                >+</button>';
+                                
+                                }else{
+                                    echo '<button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAgregarRam"
+                                    class ="btn btn-primary" 
+                                    onclick="quitarCargador('.$producto['id'].','.$producto['idCargador'].');"
+                                    >-</button>';
+                                    
+                                }
+                      }
+                    ?>
                 </div>
                
         </div>
@@ -879,32 +909,42 @@ class hardwareView extends vista
         <div class="row mt-3">
             <label>Condicion/Especificaciones: </label>
              <?php
-                     $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
                             //  echo '<pre>';
                             //     print_r($condiciones); 
                             //     echo '</pre>';
                             //     die();
+                 if($_SESSION['nivel']>6)
+                 {
                      echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
                       $this->colocarSelectCampoConOpcionSeleccionadaPorNombre($condiciones,$producto['idCondicion']); 
                     echo '</select>';
+                 }else{
+                        echo '  <input readonly type="text"  id = "idCondicion"  value="'.$producto['idCondicion'].'"  >';
+                 }
                     
              ?>
-             <!-- <input type="text"  id = "idCondicion"  value="<?php   //echo $producto['idCondicion']   ?>"  > -->
+           
         </div>
         <div class="row mt-3">
             <label>Condicion 2 </label>
              <?php
                  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
+                 if($_SESSION['nivel']>6)
+                 { 
                  echo '<select class ="form-control"  id="idCondicion2" onchange = "actualizarCondicion2Hardware('.$producto['id'].');">';
                  $this->colocarSelectCampoConOpcionSeleccionadaPorNombre($condiciones,$producto['idCondicion2']); 
                  echo '</select>';
+                 }else{
+                    echo '   <input readonly  type="text"  id = "idCondicion2"  value="'.$producto['idCondicion2'].'"  >';
+                 }
                     //  $condiciones =  $this->hardwareModel->traerInfoTablaParaColocarenSelect('condicion');
                     //  echo '<select class ="form-control"  id="idCondicion" onchange = "actualizarCondicionHardware('.$producto['id'].');">';
                     //   $this->colocarSelectCampoConOpcionSeleccionada($condiciones,$producto['idCondicion']); 
                     // echo '</select>';
                     
              ?>
-             <!-- <input type="text"  id = "idCondicion2"  value="<?php  // echo $producto['idCondicion2']   ?>"  > -->
+          
         </div>
 
         <br>
