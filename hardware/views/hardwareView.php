@@ -270,7 +270,7 @@ class hardwareView extends vista
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Subir Archivo</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filtros</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBodyModalFiltros">
@@ -1886,7 +1886,10 @@ class hardwareView extends vista
         $idproveedores =  $this->hardwareModel->traerInfoCampoPartesConserialHardware('idImportacion');
         $lotes =  $this->hardwareModel->traerInfoCampoTablaHardware('lote');
         $facturas =  $this->hardwareModel->traerInfoCampoPartesConserialHardware('lote');
-        // $this->printR($generaciones);
+        $skus =  $this->hardwareModel->traerSkus();
+        $chasises =  $this->hardwareModel->traerChasises();
+        $pulgadas =  $this->hardwareModel->traerPulgadas();
+        // $this->printR($skus);
         ?>
         <P>FILTROS</P>
         <div class="row" >
@@ -1963,6 +1966,52 @@ class hardwareView extends vista
             </select>
             </div>
         </div>
+        <div class="row"  >
+            <span class="col-lg-4">Sku:</span>
+            <div class="col-lg-8" align="right">
+                <select class ="form-control"  id="inputBuscarSku" onchange="filtrarSkuInventario();" >
+                <?php
+                            // $ubicaciones = $this->hardwareModel->traerUbicaciones();
+                            echo '<option value="-1">Sel...</option>';  
+                            foreach($skus as $sku)
+                            {
+                                    echo '<option value="'.$sku['comodin'].'">'.$sku['comodin'].'</option>';      
+                            }
+                ?>
+                </select>  
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Chasis:</span>
+            <div class="col-lg-8" align="right">
+                <select class ="form-control"  id="inputBuscarChasis" onchange="filtrarChasisInventario();" >
+                <?php
+                            // $ubicaciones = $this->hardwareModel->traerUbicaciones();
+                            echo '<option value="-1">Sel...</option>';  
+                            foreach($chasises as $chasis)
+                            {
+                                    echo '<option value="'.$chasis['chasis'].'">'.$chasis['chasis'].'</option>';      
+                            }
+                ?>
+                </select>  
+            </div>
+        </div>
+        <div class="row"  >
+            <span class="col-lg-4">Pulgadas:</span>
+            <div class="col-lg-8" align="right">
+                <select class ="form-control"  id="inputBuscarPulgadas" onchange="filtrarPulgadasInventario();" >
+                <?php
+                            // $ubicaciones = $this->hardwareModel->traerUbicaciones();
+                            echo '<option value="-1">Sel...</option>';  
+                            foreach($pulgadas as $pulgada)
+                            {
+                                    echo '<option value="'.$pulgada['pulgadas'].'">'.$pulgada['pulgadas'].'</option>';      
+                            }
+                ?>
+                </select>  
+            </div>
+        </div>
+
         <!-- <div class="row"  >
             <span class="col-lg-4">Tipo:</span>
             <div class="col-lg-8" align="right">

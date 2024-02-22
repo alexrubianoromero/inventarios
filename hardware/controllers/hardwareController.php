@@ -313,6 +313,20 @@ class hardwareController extends controllerClass
             // $this->printR($_REQUEST);
             $this->filtrarUbicacionInventario($_REQUEST);
         }
+        if($_REQUEST['opcion']=='filtrarSkuInventario')
+        {
+            // $this->printR($_REQUEST);
+            $this->filtrarSkuInventario($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='filtrarChasisInventario')
+        {
+            $this->filtrarChasisInventario($_REQUEST);
+        }
+ 
+        if($_REQUEST['opcion']=='filtrarPulgadasInventario')
+        {
+            $this->filtrarPulgadasInventario($_REQUEST);
+        }
  
 
 
@@ -454,6 +468,25 @@ class hardwareController extends controllerClass
 
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }
+
+    public function filtrarSkuInventario($request)
+    {
+        $hardware =  $this->model->filtrarSkuInventario($request['inputBuscarSku']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function filtrarChasisInventario($request)
+    {
+        $hardware =  $this->model->filtrarChasisInventario($request['inputBuscarChasis']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+
+    public function filtrarPulgadasInventario($request)
+    {
+        // die('paso 2 '); 
+        $hardware =  $this->model->filtrarPulgadasInventario($request['inputBuscarPulgadas']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+
     public function fitrarHardwareImportacionInventario($request)
     {
         $hardware =  $this->model->traerHardwareImportacionFiltro($request['inputBuscarImportacion']);

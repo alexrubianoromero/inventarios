@@ -106,6 +106,30 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    public function filtrarSkuInventario($inputBuscarSku)
+    {
+        $sql = "select * from hardware where comodin like '%".$inputBuscarSku."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+    public function filtrarChasisInventario($inputBuscarChasis)
+    {
+        $sql = "select * from hardware where chasis like '%".$inputBuscarChasis."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
+    public function filtrarPulgadasInventario($inputBuscarPulgadas)
+    {
+        $sql = "select * from hardware where pulgadas like '%".$inputBuscarPulgadas."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
     public function traerHardwaregeneracionFiltro($inputBuscarProcesador)
     {
         $sql = "select * from hardware where generacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
@@ -527,6 +551,33 @@ class HardwareModel extends Conexion
         $consulta = mysql_query($sql,$this->connectMysql());
         $ubicaciones = $this->get_table_assoc($consulta); 
         return $ubicaciones;
+    }
+
+    /**
+     * se definio que el valor de sku que trae el archivo de exccel se almacenaria en comodin
+     * y para mostrarlo se concatenara con el campo sku que es el contador de devoluviones de renta 
+     */
+    public function traerSkus()
+    {
+        $sql="select DISTINCT(comodin) as comodin from hardware  group by comodin";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $skus = $this->get_table_assoc($consulta); 
+        return $skus;
+    }
+    public function traerChasises()
+    {
+        $sql="select DISTINCT(chasis) as chasis from hardware  group by chasis";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $chasises = $this->get_table_assoc($consulta); 
+        return $chasises;
+    }
+    
+    public function traerPulgadas()
+    {
+        $sql="select DISTINCT(pulgadas) as pulgadas from hardware  group by pulgadas";
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $pulgadas = $this->get_table_assoc($consulta); 
+        return $pulgadas;
     }
     
     public function aumentarSkuIdHardware($idHardware,$valorSku)

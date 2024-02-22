@@ -184,8 +184,10 @@ revisar las opciones de jefe de bodega
 revisar que jefe de bodega no ´pueda cambiar el estado de un item 
 
 el tecnico si puede cambiar el estado del item pero no puede agregar seriales
-filtros de pulgadas y tipos de producto
-chasis o tipo y sku
+
+*filtros de pulgadas y tipos de producto
+**chasis o tipo  
+**filtro sku
 
 verificar que no colooque nada en ram y disco cuando se agrega un item al pedido que no tiene ram ni disco
 
