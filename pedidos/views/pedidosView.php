@@ -212,7 +212,8 @@ class pedidosView extends vista
                     
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidosPorCompletar();" >Cerrar</button>
+                    <!-- <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidosPorCompletar();" >Cerrar</button> -->
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="pedidosConItemsIniciopendientes();" >Cerrar</button>
                     <!-- <button  type="button" class="btn btn-primary"  id="btnEnviar"  onclick="realizarCargaArchivo();" >Crear Pedido</button> -->
                 </div>
                 </div>
@@ -819,12 +820,19 @@ class pedidosView extends vista
 
     public function pedidosPorCompletar($pedidosPorCompletar)
     {
+        // $this->printR($pedidosPorCompletar); 
         // $this->printR($pedidosPorCompletar);
         echo '<div class="row">'; 
         foreach($pedidosPorCompletar as $pedido)
         {
             //con este arreglo traigo cuantos tecnicos estan asignados al pedido
-            $tecnicos = $this->pedidoModel->traerLosTecnicosConAsginacionIdPedido($pedido['idPedido']);
+            if($_SESSION['nivel']==4)
+            {
+                $tecnicos = $this->pedidoModel->traerLosTecnicosConAsginacionIdPedidoSoloTecnicoLogueado($pedido['idPedido']);
+            }else{
+                $tecnicos = $this->pedidoModel->traerLosTecnicosConAsginacionIdPedido($pedido['idPedido']);
+            }
+            
             $numeroT=0;
             foreach($tecnicos as $tecnico)
             {
@@ -860,12 +868,14 @@ class pedidosView extends vista
                         OC <?php echo $pedido['idPedido'] ?>
                     </div>
                     <div class="row" style="padding:2px;">
-                        <?php 
-                            foreach($tecnicos as $tecnico)
-                            {
-                                $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
-                                $estadoProcesoItem = $this->itemInicioPedidoModel->traerEstadoItemInicioPedidoIdTecnico($pedido['idPedido'],$tecnico['idTecnico']);
-                                // $this->printR($estadoProcesoItem);
+                    <?php 
+                    foreach($tecnicos as $tecnico)
+                    {
+                            //aqui se podria colocar el filtro para los tecnicos 
+                        // if($_SESSION['nivel'==4])    
+                            $infoTecnico = $this->usuarioModel->traerInfoId($tecnico['idTecnico']);
+                            $estadoProcesoItem = $this->itemInicioPedidoModel->traerEstadoItemInicioPedidoIdTecnico($pedido['idPedido'],$tecnico['idTecnico']);
+                            // $this->printR($estadoProcesoItem);
                                 if($estadoProcesoItem['idEstadoProcesoItem'] == 0){$claseBoton = 'btn-primary'; }
                                 if($estadoProcesoItem['idEstadoProcesoItem'] == 1){$claseBoton = 'btn-warning'; }
                                 if($estadoProcesoItem['idEstadoProcesoItem'] == 2){$claseBoton = 'btn-success'; }
@@ -909,9 +919,9 @@ class pedidosView extends vista
                                     
                                     >'.$icono.$prioridad1.' '.$infoTecnico['nombre'].' ' .$infoTecnico['apellido'].
                                     '</button>';
-                                }
-                            }
-                        ?>    
+                        }
+                    }
+                    ?>    
                     </div>
                 </div>
             <?php       

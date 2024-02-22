@@ -285,6 +285,18 @@ class ItemInicioPedidoModel extends Conexion
         public function traerPedidosConItemsInicioPendientesTodos(){
             
         }
+        public function traerPedidosConItemsInicioPendientesXSucursalYTecnico(){
+            $sql = "SELECT DISTINCT(idPedido) FROM itemsInicioPedido 
+                    WHERE idEstadoProcesoItem < 2 
+                    and idSucursalTecnico = '".$_SESSION['idSucursal']."' 
+                    and idTecnico = '".$_SESSION['id_usuario']."'
+                    and anulado=0
+                    order by idPedido asc";
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $pedidosConItemsPendientes = $this->get_table_assoc($consulta);
+            return $pedidosConItemsPendientes;
+        }
         public function traerPedidosConItemsInicioPendientesXSucursal(){
             $sql = "SELECT DISTINCT(idPedido) FROM itemsInicioPedido 
                     WHERE idEstadoProcesoItem < 2 

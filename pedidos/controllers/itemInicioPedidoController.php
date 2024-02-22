@@ -64,7 +64,7 @@ class itemInicioPedidoController
         }
         if($_REQUEST['opcion']=='mostrarItemsInicioPedidoTecnicoNuevo')
         {
-            if($_SESSION['nivel']>6 || $_SESSION['nivel']==5 )
+            if($_SESSION['nivel']>6 || $_SESSION['nivel']==5  || $_SESSION['nivel']==4 )
             {
                 $this->itemInicioview->mostrarItemsInicioPedidoTecnicoNuevo($_REQUEST['idPedido'],$_REQUEST['idTecnico']);
             }else {

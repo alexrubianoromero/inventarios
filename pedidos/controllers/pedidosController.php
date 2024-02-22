@@ -98,9 +98,15 @@ class pedidosController
         }
         if($_REQUEST['opcion']=='pedidosConItemsIniciopendientes')
         {
-            $pedidosConItemsPendientes = $this->itemInicioModel->traerPedidosConItemsInicioPendientesXSucursal();
+            if($_SESSION['nivel']==4){
+                // die('es un tecnico ');
+                $pedidosConItemsPendientes = $this->itemInicioModel->traerPedidosConItemsInicioPendientesXSucursalYTecnico();
+            }else{
+                $pedidosConItemsPendientes = $this->itemInicioModel->traerPedidosConItemsInicioPendientesXSucursal();
+            }
         
             $pedidosPorCompletar = $this->itemInicioModel->traerInfodePedidosRelacionados($pedidosConItemsPendientes);
+
             $this->view->pedidosPorCompletar($pedidosPorCompletar);
         }
 

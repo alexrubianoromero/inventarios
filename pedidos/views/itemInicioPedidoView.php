@@ -31,6 +31,14 @@ class iteminicioPedidoView extends vista
 
     public function __construct()
     {
+        session_start();
+        if(!isset($_SESSION['id_usuario']))
+        {
+            echo 'la sesion ha caducado';
+            echo '<button class="btn btn-primary" onclick="irPantallaLogueo();">Continuar</button>';
+            die();
+        }
+
         $this->itemIniciopedidoModel = new ItemInicioPedidoModel();
         $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
         $this->pedidoModel = new PedidoModel();
@@ -560,6 +568,7 @@ class iteminicioPedidoView extends vista
         $infoTipo = $this->tipoParteModel->traerTipoParteConId($item['tipo']);
         $infoSubtipo =  $this->subtipoParteModel->traerSubTipoParte($item['subtipo']);
         $infoEstadoProcesoItem = $this->estadoProcesoItemModel->traerEstadoProcesoItemId($item['idEstadoProcesoItem']);
+        // $this->printR($infoEstadoProcesoItem); 
         ?>
         <div class="row" id="div_ver_opciones_itemInicio">
         <?php
@@ -568,26 +577,35 @@ class iteminicioPedidoView extends vista
         ?>
    
 
-        <label class="col-lg-3">Estado..</label>
+        <label class="col-lg-3">Estado</label>
         <div class="col-lg-9">
-            <select id="idEstadoProcesoItem" class="form-control" onchange="actulizarEstadoProcesoItem(<?php echo $item['id'] ?> );">
-                <?php
-                    //   $this->colocarSelectCampoConOpcionSeleccionada($estadosProcesoItem,$item['idEstadoProcesoItem']); 
-                    echo '<option value ="-1" >Seleccione</option>';    
-                    foreach($estadosProcesoItem as $estado)
+
+            <?php
+            if($_SESSION['nivel']==5)
+            {
+                echo '<label>'.$infoEstadoProcesoItem[0]['descripcion'].'</label>';
+            }else{
+
+                echo '<select id="idEstadoProcesoItem" class="form-control" onchange="actulizarEstadoProcesoItem('.$item['id'].');">';
+                //   $this->colocarSelectCampoConOpcionSeleccionada($estadosProcesoItem,$item['idEstadoProcesoItem']); 
+                echo '<option value ="-1" >Seleccione</option>';    
+                foreach($estadosProcesoItem as $estado)
+                {
+                    
+                    if($estado['idEstadoProceso']== $item['idEstadoProcesoItem'])
                     {
-
-                        if($estado['idEstadoProceso']== $item['idEstadoProcesoItem'])
-                        {
-                            echo '<option selected value ="'.$estado['idEstadoProceso'].'" >'.$estado['descripcion'].'</option>';    
-
-                        }else{
-                            echo '<option value ="'.$estado['idEstadoProceso'].'" >'.$estado['descripcion'].'</option>';    
-
-                        }
+                        echo '<option selected value ="'.$estado['idEstadoProceso'].'" >'.$estado['descripcion'].'</option>';    
+                        
+                    }else{
+                        echo '<option value ="'.$estado['idEstadoProceso'].'" >'.$estado['descripcion'].'</option>';    
+                        
                     }
-                ?>
-            </select>
+                 }
+                echo '</select>';    
+             }
+            ?>
+            
+            
         </div>
     </div>
     <div class="row mt-3">
@@ -633,32 +651,37 @@ class iteminicioPedidoView extends vista
     </div>
     <div class=" row mt-3 " >
         <div class="col-lg-6">
-            <?php
-            if($item['tipoItem'] == 1)
+        <?php
+            if($_SESSION['nivel'] ==4 )
+            {}else
             {
-            //  echo '<div >'; 
-             echo '<button 
-             style="margin:3px;"
-             onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
-             class="btn btn-primary btn-sm "
-             data-bs-toggle="modal" 
-             data-bs-target="#modalPedidoBuscarParteOSerial"
-             > BUSCAR SERIAL. </button>';
-            //  echo '</div>'; 
+
+                if($item['tipoItem'] == 1)
+                {
+                    //  echo '<div >'; 
+                    echo '<button 
+                    style="margin:3px;"
+                    onclick = "buscarHardwareAgregarItemPedido('.$item['id'].')"
+                    class="btn btn-primary btn-sm "
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalPedidoBuscarParteOSerial"
+                    > BUSCAR SERIAL</button>';
+                    //  echo '</div>'; 
+                }
+                if($item['tipoItem'] == 2)
+                {
+                    // echo '<div >'; 
+                    echo '<button 
+                    style="margin:3px;"
+                    onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
+                    class="btn btn-primary btn-sm "
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalPedidoBuscarParteOSerial"
+                    > BUSCAR PARTE. </button>';
+                    // echo '</div>'; 
+                }
             }
-            if($item['tipoItem'] == 2)
-            {
-                // echo '<div >'; 
-                echo '<button 
-                style="margin:3px;"
-                onclick = "buscarParteAgregarItemPedido('.$item['id'].')"
-                class="btn btn-primary btn-sm "
-                data-bs-toggle="modal" 
-                data-bs-target="#modalPedidoBuscarParteOSerial"
-                > BUSCAR PARTE. </button>';
-                // echo '</div>'; 
-            }
-            ?>
+        ?>
         </div>
         <div class="row col-lg-6">
             <button style="margin:3px;" type="button" class="btn btn-secondary btn-sm "  data-bs-dismiss="modal" onclick="pedidosPorCompletar();" >Cerrar</button>

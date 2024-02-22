@@ -180,6 +180,22 @@ class PedidoModel extends Conexion
             $idTecnicos = $this->get_table_assoc($consulta);
             return $idTecnicos; 
         }       
+        public function traerLosTecnicosConAsginacionIdPedidoSoloTecnicoLogueado($idPedido)
+        {
+            $sql = "select  DISTINCT ( i.idTecnico ) as idTecnico 
+            from  itemsInicioPedido i 
+            where 1=1 
+            and i.idEstadoItem = 0
+            and i.asignado = 1
+            and i.idPedido = '".$idPedido."'
+            and i.idTecnico = '".$_SESSION['id_usuario']."'
+            group by i.idTecnico
+            "; 
+            // die($sql); 
+            $consulta = mysql_query($sql,$this->connectMysql());
+            $idTecnicos = $this->get_table_assoc($consulta);
+            return $idTecnicos; 
+        }       
         
         public function traerPedidosPendientes()
         {

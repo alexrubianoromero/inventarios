@@ -30,9 +30,7 @@
                     }
                     ?>
                     <?php  
-                    if($_SESSION['nivel']>3 ) 
-                    { }
-                    else 
+                    if($_SESSION['nivel']==7 ) 
                     {
                         // if() {
                     ?>           
@@ -52,7 +50,7 @@
 
 
                     <?php 
-                    if($_SESSION['nivel']>4)
+                    if($_SESSION['nivel']>5  )
                     {
                     ?>
                     <li class="nav-item">
@@ -95,7 +93,7 @@
                
 
                      <?php 
-                    if($_SESSION['nivel']>4)
+                    if($_SESSION['nivel']>5)
                     {
                     ?>
                     <li class="nav-item">
@@ -119,7 +117,7 @@
                     </li>
 
                     <?php 
-                    if($_SESSION['nivel']>4)
+                    if($_SESSION['nivel']>5)
                     {
                     ?>
                     <li class="nav-item">
@@ -134,7 +132,7 @@
                     }
                     ?>
                      <?php 
-                    if($_SESSION['nivel']>4)
+                    if($_SESSION['nivel']>5)
                     {
                     ?>
                     <li class="nav-item">

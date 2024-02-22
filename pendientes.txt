@@ -179,6 +179,7 @@ en reporte de estado de equipo solocar otra opcion para ver lo que esta en bodeg
 opcion tablero pedidos 
 
 
+
 revisar las opciones de jefe de bodega
 revisar que jefe de bodega no ´pueda cambiar el estado de un item 
 
@@ -187,3 +188,5 @@ filtros de pulgadas y tipos de producto
 chasis o tipo y sku
 
 verificar que no colooque nada en ram y disco cuando se agrega un item al pedido que no tiene ram ni disco
+
+cotizar el vambio adicional para majear dos archivos 
