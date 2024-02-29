@@ -699,7 +699,7 @@ class pedidosView extends vista
                     </th>
                     <th>
                         <select class ="form-control"  id="iram" size="1px" >
-                            <option value ="-1">Sel..</option>
+                            <option value ="">Sel..</option>
                             <option value ="DDR2">DDR2</option>
                             <option value ="DDR3">DDR3</option>
                             <option value ="DDR4">DDR4</option>
@@ -707,7 +707,7 @@ class pedidosView extends vista
                     </th>
                     <th>
                         <select class ="form-control"  id="idisco" size="1px" >
-                            <option value ="-1">Sel..</option>
+                            <option value ="">Sel..</option>
                             <option value ="Solido">Solido</option>
                             <option value ="Mecanico">Mecanico</option>
                         </select>  
