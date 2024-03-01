@@ -304,7 +304,16 @@ class hardwareController extends controllerClass
 
         if($_REQUEST['opcion']=='realizarDevolucionABodega')
         {
-            // $this->printR($_REQUEST);
+            // $this->printR($_FILES);
+            // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+            // $tipoMov = 2 ; //sale del inventario;
+            // $infoMov = new stdClass();
+            // $infoMov->idTipoMov = $tipoMov ;  
+            // $infoMov->idItemInicio = $_REQUEST['idItemAgregar'] ;  
+            // $infoMov->observaciones = 'Se agrega Hardware  a Pedido '.$infoItem['idPedido'].' id Item '.$_REQUEST['idItemAgregar'].' ';
+            // $infoMov->idHardware = $_REQUEST['idHardware'];  
+            // $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+            
             $this->realizarDevolucionABodega($_REQUEST);
         }
  
@@ -327,25 +336,47 @@ class hardwareController extends controllerClass
         {
             $this->filtrarPulgadasInventario($_REQUEST);
         }
+        if($_REQUEST['opcion']=='descargarPdfMovimiento')
+        {
+            $this->descargarPdfMovimiento($_REQUEST);
+        }
  
-
-
-        
-
 
 
     }
 
+    public function descargarPdfMovimiento($request)
+    {
+        // die('llego a descaraga'); 
+        $infoMovimiento = $this->MovHardwareModel->traerMovimientoId($request['idMovimiento']);
+        header("Content-type: application/pdf");
+        readfile('../archivos/hoja.pdf');
+    }
+
+    public function subirArchivoDevolucion()
+    {
+        //  $this->printR($_FILES);
+         $nombre_archivo = $_FILES['archivo']['name'];
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'],  'archivos/'.$nombre_archivo)){
+                echo "El archivo ha sido cargado correctamente.";
+            }else{
+                echo "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+            }
+            // die('Archivo subido');
+
+    }
     public function realizarDevolucionABodega($request)
     {
-        $infoHardware =  $this->model->traerHardwareId($request[idHardware]); 
 
+        
+        $infoHardware =  $this->model->traerHardwareId($request[idHardware]); 
+        
         ////codigo anterior
         //revisar este codigo 
         //si es renta aumentar el sku
         $valorSkuActual = $infoHardware['sku'];
         $nuevoSku = $valorSkuActual + 1 ; 
-
+        
         if($infoHardware['idEstadoInventario']==2)
         {
             $this->model->aumentarSkuIdHardware($request['idHardware'],$nuevoSku);
@@ -353,27 +384,35 @@ class hardwareController extends controllerClass
         $regresaAInventario = 0;
         $this->model->actualizarEstadoHardware($request['idHardware'],$regresaAInventario);
         //generar movimiento de devolucion 
-         //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
-          //falta crear el movimiento historico 
-          // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
-
+        //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
+        //falta crear el movimiento historico 
+        // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
+        
         //  $infoMovimiento =  $this->MovHardwareModel->traerMovimientoId($request['idMovimiento']);
         //  $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($infoMovimiento['idItemInicio'] );
-
-          $tipoMov = 1 ; //entra al inventario;
-          $infoMov = new stdClass();
-
-          $infoMov->idTipoMov = $tipoMov ;  
-          $infoMov->idItemInicio = $request['idItemDev'] ;  
-          $infoMov->observaciones = 'Se realiza reingreso Hardware  de Pedido '.$request['idPedidoDev'].' id Item '.$request['idItemDev'].' ';
-          $infoMov->observaciones .= $request['obseDevolucion'];
-          $infoMov->idHardware = $request['idHardware'];  
-          $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
-
-          
-
-          echo 'Reingreso Realizado';
+        
+        $tipoMov = 5 ; //devuelto;
+        $infoMov = new stdClass();
+        
+        $infoMov->idTipoMov = $tipoMov ;  
+        $infoMov->idItemInicio = $request['idItemDev'] ;  
+        $infoMov->observaciones = 'Se realiza reingreso Hardware  de Pedido '.$request['idPedidoDev'].' id Item '.$request['idItemDev'].' ';
+        $infoMov->observaciones .= $request['obseDevolucion'];
+        $infoMov->idHardware = $request['idHardware'];  
+        $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+        
+        //subir el pdf
+        $this->subirArchivoDevolucion();
+        //actualizar la ruta del archivo pdf
+        $nombre_archivo = $_FILES['archivo']['name'];
+        $this->MovHardwareModel->actualizarRutaArchivoPdfIdMov($idMov,$nombre_archivo);
+        
+        
+        echo 'Reingreso Realizado';
     } 
+
+
+
 
     public function habilitarHardware ($request) 
     {

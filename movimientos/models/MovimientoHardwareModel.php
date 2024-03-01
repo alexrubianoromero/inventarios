@@ -14,6 +14,10 @@ class MovimientoHardwareModel extends Conexion
             session_start();
             $this->sucursalModel = new SucursalModel();  
         }
+        /**
+         * esta funcion recibe los parametros contenidos en un objeto
+         * idTipoMov   1 entrada  2 salida  3 cambio bodega  4 dado de baja  5 devuelto 
+         */
 
         public function registrarMovimientohardware($infoMov)
         {
@@ -81,6 +85,14 @@ class MovimientoHardwareModel extends Conexion
             // die($sql);
             $consulta = mysql_query($sql,$this->connectMysql());
             
+        }
+        
+        public function actualizarRutaArchivoPdfIdMov($idMov,$nombre_archivo)
+        {
+            $sql = "update movimientosHardware 
+            set rutaImagen = '".'archivos/'.$nombre_archivo."'   
+            where idMovimiento = '".$idMov."'   ";
+            $consulta = mysql_query($sql,$this->connectMysql());
         }
         
 

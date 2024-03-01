@@ -189,6 +189,20 @@ el tecnico si puede cambiar el estado del item pero no puede agregar seriales
 **chasis o tipo  
 **filtro sku
 
-verificar que no colooque nada en ram y disco cuando se agrega un item al pedido que no tiene ram ni disco
+**verificar que no coloque nada en ram y disco cuando se agrega un item al pedido que no tiene ram ni disco
 
 cotizar el vambio adicional para majear dos archivos 
+
+
+Tener en cuenta para desarrollo de cargue y descargue de archivos de devolucion y de movimiento 
+
+que almacene el usuario que realizo esta devolucion o movimiento manual 
+
+que en el movimiento que se crea de un serial que se le halla realizado una devolucion indique estado devuelto para ese movimiento 
+osea se marcara en el movimiento como tipo de movimiento 3 que es devolusion y asi se podra indicar que esta devuelto solo devuelto 
+que significa devuelto a bodega 
+
+cuando se creee un comentario manual hay si mostrara el estado en ql que se encuentre actualmente ose el de siempre el del item inicio 
+eh hojas de vida debe aparecer el usuario que realizo el movimiento o comentario 
+loo mejor es crear una columna donde se vea el usuario que realizao el movimiento 
+coocar una confirmacion de si esta seguro de realizar estaq devolucion
