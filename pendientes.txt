@@ -206,3 +206,8 @@ cuando se creee un comentario manual hay si mostrara el estado en ql que se encu
 eh hojas de vida debe aparecer el usuario que realizo el movimiento o comentario 
 loo mejor es crear una columna donde se vea el usuario que realizao el movimiento 
 coocar una confirmacion de si esta seguro de realizar estaq devolucion
+
+formuCrearMovimientoManual
+
+
+revisar que despues de devuelto el estado debe ser bodega

@@ -1026,6 +1026,8 @@ function realizarDevolucion(idHardware,idMovimiento)
     +'&idMovimiento='+idMovimiento
     );
 }
+
+
 function verificarDarDeBaja(idHardware)
 {
     // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
@@ -1118,6 +1120,25 @@ function formuRealizarDevolucionABodega(idHardware)
         );
 }
 
+function formuCrearMovimientoManual(idHardware)
+{
+    // alert('crear moviiento'+idHardware); 
+    // var inputBuscarHardware = document.getElementById('inputBuscarHardware').value;
+        const http=new XMLHttpRequest();
+        const url = 'hardware/hardware.php';
+        http.onreadystatechange = function(){
+            
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("modalBodymodalCrearMovimientoManual").innerHTML  = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send('opcion=formuCrearMovimientoManual'
+        +'&idHardware='+idHardware
+        );
+}
+
 
 function realizarDevolucionABodega_ante(idHardware)
 {
@@ -1145,23 +1166,25 @@ function realizarDevolucionABodega_ante(idHardware)
         );
     }  
 }
-function descargarPdfMovimiento(idMovimiento)
-{
-        const http=new XMLHttpRequest();
-        const url = 'hardware/hardware.php';
-        http.onreadystatechange = function(){
+
+
+// function descargarPdfMovimiento(idMovimiento)
+// {
+//         const http=new XMLHttpRequest();
+//         const url = 'hardware/hardware.php';
+//         http.onreadystatechange = function(){
             
-            if(this.readyState == 4 && this.status ==200){
-                // document.getElementById("modalBodyDevolucionABodega").innerHTML  = this.responseText;
-            }
-        };
-        http.open("POST",url);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send('opcion=descargarPdfMovimiento'
-        +'&idMovimiento='+idMovimiento
-        );
+//             if(this.readyState == 4 && this.status ==200){
+//                 // document.getElementById("modalBodyDevolucionABodega").innerHTML  = this.responseText;
+//             }
+//         };
+//         http.open("POST",url);
+//         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//         http.send('opcion=descargarPdfMovimiento'
+//         +'&idMovimiento='+idMovimiento
+//         );
     
-}
+// }
 
 function realizarDevolucionABodega(idHardware)
 {
@@ -1187,6 +1210,37 @@ function realizarDevolucionABodega(idHardware)
             .then(decodificado => {
                 console.log(decodificado.archivo);
                 document.getElementById("modalBodyDevolucionABodega").innerHTML = 'Archivo subido y Registro Creado!!';
+            });
+    } else {
+        alert("Selecciona un archivo");
+    }
+}
+
+
+function crearMovimientoManual(idHardware)
+{
+
+    var idPedidoDev = document.getElementById('idPedidoDev').value;
+    var idItemDev = document.getElementById('idItemDev').value;
+    var obseDevolucion = document.getElementById('obseDevolucion').value;
+    // alert(obseDevolucion);
+    var inputFile = document.getElementById('archivo');
+    if (inputFile.files.length > 0) {
+        let formData = new FormData();
+        formData.append("archivo", inputFile.files[0]); // En la posición 0; es decir, el primer elemento
+        formData.append("opcion", 'crearMovimientoManual'); // En la posición 0; es decir, el primer elemento
+        formData.append("idHardware", idHardware); // En la posición 0; es decir, el primer elemento
+        formData.append("idPedidoDev", idPedidoDev); // En la posición 0; es decir, el primer elemento
+        formData.append("idItemDev", idItemDev); // En la posición 0; es decir, el primer elemento
+        formData.append("obseDevolucion", obseDevolucion); // En la posición 0; es decir, el primer elemento
+        fetch("hardware/hardware.php", {
+            method: 'POST',
+            body: formData,
+        })
+            .then(respuesta => respuesta.text())
+            .then(decodificado => {
+                console.log(decodificado.archivo);
+                document.getElementById("modalBodymodalCrearMovimientoManual").innerHTML = 'Archivo subido y Registro Creado!!';
             });
     } else {
         alert("Selecciona un archivo");

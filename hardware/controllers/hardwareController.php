@@ -304,17 +304,11 @@ class hardwareController extends controllerClass
 
         if($_REQUEST['opcion']=='realizarDevolucionABodega')
         {
-            // $this->printR($_FILES);
-            // $infoItem = $this->itemInicioModel->traerItemInicioPedidoId($_REQUEST['idItemAgregar']);
-            // $tipoMov = 2 ; //sale del inventario;
-            // $infoMov = new stdClass();
-            // $infoMov->idTipoMov = $tipoMov ;  
-            // $infoMov->idItemInicio = $_REQUEST['idItemAgregar'] ;  
-            // $infoMov->observaciones = 'Se agrega Hardware  a Pedido '.$infoItem['idPedido'].' id Item '.$_REQUEST['idItemAgregar'].' ';
-            // $infoMov->idHardware = $_REQUEST['idHardware'];  
-            // $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
-            
             $this->realizarDevolucionABodega($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='crearMovimientoManual')
+        {
+            $this->crearMovimientoManual($_REQUEST);
         }
  
         if($_REQUEST['opcion']=='filtrarUbicacionInventario')
@@ -339,6 +333,10 @@ class hardwareController extends controllerClass
         if($_REQUEST['opcion']=='descargarPdfMovimiento')
         {
             $this->descargarPdfMovimiento($_REQUEST);
+        }
+        if($_REQUEST['opcion']=='formuCrearMovimientoManual')
+        {
+            $this->view->formuCrearMovimientoManual($_REQUEST['idHardware']);
         }
  
 
@@ -365,12 +363,11 @@ class hardwareController extends controllerClass
             // die('Archivo subido');
 
     }
+
+    
     public function realizarDevolucionABodega($request)
     {
-
-        
-        $infoHardware =  $this->model->traerHardwareId($request[idHardware]); 
-        
+        $infoHardware =  $this->model->traerHardwareId($request['idHardware']); 
         ////codigo anterior
         //revisar este codigo 
         //si es renta aumentar el sku
@@ -409,6 +406,28 @@ class hardwareController extends controllerClass
         
         
         echo 'Reingreso Realizado';
+    } 
+
+    public function crearMovimientoManual($request)
+    {
+        // die('llego a creacion manual'); 
+        $infoHardware =  $this->model->traerHardwareId($request['idHardware']); 
+        $tipoMov = 6 ; // 6 es la forma de indicar que es creado manualmente;
+        $infoMov = new stdClass();
+        $infoMov->idTipoMov = $tipoMov ;  
+        $infoMov->idItemInicio = $request['idItemDev'] ;  
+        // $infoMov->idItemInicio = '' ;  
+        // $infoMov->observaciones = 'Creacion Manual de Historial '.$request['idPedidoDev'].' id Item '.$request['idItemDev'].' ';
+        $infoMov->observaciones = 'Creacion Manual de Historial';
+        $infoMov->observaciones .= $request['obseDevolucion'];
+        $infoMov->idHardware = $request['idHardware'];  
+        $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+        //subir el pdf
+        $this->subirArchivoDevolucion();
+        //actualizar la ruta del archivo pdf
+        $nombre_archivo = $_FILES['archivo']['name'];
+        $this->MovHardwareModel->actualizarRutaArchivoPdfIdMov($idMov,$nombre_archivo);
+        echo 'Creacion  Realizada';
     } 
 
 

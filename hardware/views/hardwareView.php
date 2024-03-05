@@ -383,6 +383,7 @@ class hardwareView extends vista
         <?php
     }
 
+
     public function formularioSubirArchivo()
     {
         // echo 'subir archivo '; 
@@ -1799,20 +1800,32 @@ class hardwareView extends vista
         $maxIdMovimientosHardware = $this->movimientoHardwareModel->traerMaxIdMovimientoHardwareId($idHardware);
         // die('max'.$maxIdMovimientosHardware); 
         ?>
-          <table class="table table-striped hover-hover">
-                  <thead>
-                      <th>Serial</th>
-                      <th>Fecha</th>
-                      <th>Cliente</th>
+        <div class="row">
+            <div class="col-lg-3">
+                <button 
+                    class="btn btn-primary"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalCrearMovimientoManual"
+                    onclick="formuCrearMovimientoManual('<?php echo $idHardware ?>');"
+                    >CREAR REGISTRO MOVIMIENTO MANUAL</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <table class="table table-striped hover-hover">
+                <thead>
+                    <th>Serial</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
                       <th># OC</th>
                       <th>Estado</th>
                       <th>Pdf</th>
                       <!-- <th>TipoMov</th> -->
                       <th>Observaciones</th>
                       <!-- <th>Devolucion</th> -->
-                  </thead>
-              <tbody>
-                  <?php
+                    </thead>
+                    <tbody>
+                        <?php
                     foreach($movimientos as $movimiento)
                     {
                         $infoItemInicio =  $this->itemInicioPedidoModel->traerItemInicioPedidoId($movimiento['idItemInicio']); 
@@ -1826,14 +1839,18 @@ class hardwareView extends vista
                         echo '<td>'.$movimiento['fecha'].'</td>';
                         echo '<td>'.$infoCliente[0]['nombre'].'</td>';
                         echo '<td>'.$infoItemInicio['idPedido'].'</td>';
-                        if($movimiento['idTipoMov']==5){
-                            echo '<td>DEVUELTO</td>';
-                        }else{
-                            echo '<td>'.$infoEstado['descripcion'].'</td>';
-                        }
+
+                        $informacion = $infoEstado['descripcion'];
+
+                        if($movimiento['idTipoMov']==5){ $informacion = 'DEVUELTO'; }
+                        if($movimiento['idTipoMov']==6){ $informacion .= '(M)' ; }
+
+                        echo '<td>'.$informacion.'</td>';
+                        
+
                         $rutaArchivo = $_SERVER['DOCUMENT_ROOT']."/hardware".'/'.$movimiento['rutaImagen'];
                         $path = dirname(dirname(__FILE__)); 
-
+                        
                         if($movimiento['rutaImagen']=='0' ){
                             // echo '<td>'.$movimiento['idMovimiento'].'</td>';
                             echo '<td></td>';
@@ -1849,28 +1866,29 @@ class hardwareView extends vista
                             </svg>
                             </a></td>';
                         }
-
+                        
                         // echo '<td>'.$movimiento['idTipoMov'].'</td>';
                         echo '<td>'.$movimiento['observaciones'].'</td>';
-
+                        
                         // if($movimiento['idMovimiento'] == $maxIdMovimientosHardware)    
                         // {
-
-                        //     echo '<td><button 
-                        //     class="btn btn-primary btn-sm " 
-                        //     onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
-                        //     >Devolucion</button></td>';
-                        // }else {
-                        //     echo '<td></td>';
-                        // }
-
-
-                         echo '</tr>';  
-                      }
-                      ?>
+                            
+                            //     echo '<td><button 
+                            //     class="btn btn-primary btn-sm " 
+                            //     onclick="formuDevolucionHardware('.$movimiento['idMovimiento'].');"
+                            //     >Devolucion</button></td>';
+                            // }else {
+                                //     echo '<td></td>';
+                                // }
+                                
+                                
+                                echo '</tr>';  
+                            }
+                            ?>
                   </tbody>
-              </table> 
-        
+                </table> 
+        </div>
+                
 
         <?php
     }
@@ -2062,7 +2080,7 @@ class hardwareView extends vista
         $infoItemInicio = $this->itemInicioPedidoModel->traerItemInicioPedidoId($infoAsociado['idItemInicioPedido']);
         $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($infoHardware);
         // $this->printR($infoItemInicio);
-    ?>
+        ?>
         <div class="row" >
             <form method="post"  enctype="multipart/form-data">
                 <input type="hidden" id="idPedidoDev" value="<?php  echo $infoItemInicio['idPedido']; ?>" >
@@ -2089,7 +2107,57 @@ class hardwareView extends vista
             >Realizar Devolucion</button>
         </div>
 
-    <?php
+        <?php
+    }
+
+    function formuCrearMovimientoManual($idHardware)
+    {
+        //traer el registro del ultimo item donde fue incluido este idHArdware 
+        $infoHardware = $this->hardwareModel->traerHardwareId($idHardware); 
+        $ultimoAsocItemInicio = $this->asociadoItemPedido->traerUltimoItemInicioAsociadoIdHArdware($idHardware);
+        $infoAsociado = $this->asociadoItemPedido->traerAsociadoItemIdAsociado($ultimoAsocItemInicio);
+        $infoItemInicio = $this->itemInicioPedidoModel->traerItemInicioPedidoId($infoAsociado['idItemInicioPedido']);
+        $infoEstado = $this->estadoInicioPedidoModel->traerEstadosInicioPedidoId($infoHardware['idEstadoInventario']);
+        // $this->printR($infoEstado);
+        ?>
+        <div class="row" >
+            <form method="post"  enctype="multipart/form-data">
+                <input type="hidden" id="idPedidoDev" value="<?php  echo $infoItemInicio['idPedido']; ?>" >
+                <input type="hidden" id="idItemDev" value="<?php  echo $infoAsociado['idItemInicioPedido']; ?>" >
+                <div class="row">
+                    <label class="col-lg-5">Serial: </label>
+                    <label class="col-lg-7"><?php echo $infoHardware['serial'];    ?></label>
+                </div>
+                
+                <div class="row">
+                    <label class="col-lg-5">Estado Actual: </label>
+                    <label class="col-lg-7"><?php echo $infoEstado['descripcion'];    ?></label>
+                </div>
+                
+                <div class="row">
+                    <label class="col-lg-5">Ultimo Pedido Asociado: </label>
+                    <label class="col-lg-7"><?php echo $infoItemInicio['idPedido'];    ?></label>
+                </div>
+                
+                <div class="row">
+                    <label class="col-lg-5">Item: </label>
+                    <label class="col-lg-7"><?php echo $infoAsociado['idItemInicioPedido'];    ?></label>
+                </div>
+
+                <label>Observaciones Registro Historial:</label>
+                <textarea id="obseDevolucion" class="form-control" ></textarea>
+                <div>
+                        <input type="file" id="archivo" name="archivo">
+                        <!-- <button type="submit">Subir Pdf</button> -->
+                </div>
+            </form>
+            <button 
+                onclick ="crearMovimientoManual(<?php echo $idHardware    ?>);"
+                class="btn btn-primary mt-3 btn-block"
+            >CREAR REGISTRO HISTORIAL</button>
+        </div>
+
+        <?php
     }
 }
 ?>
