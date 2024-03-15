@@ -130,6 +130,14 @@ class HardwareModel extends Conexion
         $hardware = $this->get_table_assoc($consulta);
         return $hardware;
     }
+    public function filtrarBuscarProducto($inputBuscarProducto)
+    {
+        $sql = "select * from hardware where hardwareoparte = '".$inputBuscarProducto."' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";
+        // die($sql);
+        $consulta = mysql_query($sql,$this->connectMysql());
+        $hardware = $this->get_table_assoc($consulta);
+        return $hardware;
+    }
     public function traerHardwaregeneracionFiltro($inputBuscarProcesador)
     {
         $sql = "select * from hardware where generacion like '%".$inputBuscarProcesador."%' and idSucursal = '".$_SESSION['idSucursal']."' and idEstadoInventario = 0  order by id asc";

@@ -79,6 +79,7 @@ class partesView extends vista
                         <th>Parte</th>
                         <th>Tipo</th>
                         <th>Caracteristicas</th>
+                        <th>Especificaciones</th>
                         <th>Cantidad</th>
                         <?php
                             if($_SESSION['nivel']==3)
@@ -103,6 +104,8 @@ class partesView extends vista
                           echo '<td>'.$tipoParte[0]['descripcion'].'</td>';
                           echo '<td>'.$subTipoParte[0]['descripcion'].'</td>';
                           echo '<td>'.$parte['capacidad'].'</td>';
+                          echo '<td>'.$parte['costo'].'</td>';
+
                           echo '<td>'.$parte['cantidad'].'</td>';
                           if($_SESSION['nivel']==3)
                           {

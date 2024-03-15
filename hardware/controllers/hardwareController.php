@@ -330,6 +330,12 @@ class hardwareController extends controllerClass
         {
             $this->filtrarPulgadasInventario($_REQUEST);
         }
+        
+        if($_REQUEST['opcion']=='filtrarBuscarProducto')
+        {
+            $this->filtrarBuscarProducto($_REQUEST);
+        }
+
         if($_REQUEST['opcion']=='descargarPdfMovimiento')
         {
             $this->descargarPdfMovimiento($_REQUEST);
@@ -380,6 +386,8 @@ class hardwareController extends controllerClass
         }
         $regresaAInventario = 0;
         $this->model->actualizarEstadoHardware($request['idHardware'],$regresaAInventario);
+        $idItem = 0; // esto porque lo que se busca es desligar el serial del item al que estaba asociado y esto se consigue dejando el valor de 0 eb ese campo
+        $this->model->actualizarIdAsociacionItemEnHardware($request['idHardware'],$idItem);
         //generar movimiento de devolucion 
         //falta relacionar el item en el hardware cambiar el estado a lo que se deba en la tabla de hardware  
         //falta crear el movimiento historico 
@@ -397,7 +405,11 @@ class hardwareController extends controllerClass
         $infoMov->observaciones .= $request['obseDevolucion'];
         $infoMov->idHardware = $request['idHardware'];  
         $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
-        
+        //crear otro movimiento para que le salga bodega de acuedo a lo solicitado por Sebastian
+        // //el quiere ver un movimiento que diga bodega 
+        // $infoMov->idItemInicio = 0;
+        // $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
+        // $infoMov->observaciones= 'Movimiento para indicar estado Bodega';
         //subir el pdf
         $this->subirArchivoDevolucion();
         //actualizar la ruta del archivo pdf
@@ -415,12 +427,24 @@ class hardwareController extends controllerClass
         $tipoMov = 6 ; // 6 es la forma de indicar que es creado manualmente;
         $infoMov = new stdClass();
         $infoMov->idTipoMov = $tipoMov ;  
-        $infoMov->idItemInicio = $request['idItemDev'] ;  
+        //como es registro manual osea de idTipoMov = 6  se debe verificar si el serial esta asociado a algun item 
+        //si el serial no esta asociado a ningun item
+        //si el serial no esta asociado a un item pues debe traer el estado que tiene el serial no el estado del item
+        //claro que esto deberia ser mas en la parte visual 
+       if($infoHardware['idEstadoInventario']==0) //osea si esta en bodega no esta asociado a ningun item 
+       {
+           $infoMov->idItemInicio = 0 ;  
+       }else 
+       {
+           $infoMov->idItemInicio = $request['idItemDev'] ;  
+       }
+
         // $infoMov->idItemInicio = '' ;  
         // $infoMov->observaciones = 'Creacion Manual de Historial '.$request['idPedidoDev'].' id Item '.$request['idItemDev'].' ';
         $infoMov->observaciones = 'Creacion Manual de Historial';
         $infoMov->observaciones .= $request['obseDevolucion'];
         $infoMov->idHardware = $request['idHardware'];  
+
         $idMov = $this->MovHardwareModel->registrarMovimientohardware($infoMov); 
         //subir el pdf
         $this->subirArchivoDevolucion();
@@ -542,6 +566,12 @@ class hardwareController extends controllerClass
     {
         // die('paso 2 '); 
         $hardware =  $this->model->filtrarPulgadasInventario($request['inputBuscarPulgadas']);
+        $this->view->traerHardwareMostrarmenu($hardware) ;
+    }
+    public function filtrarBuscarProducto($request)
+    {
+        // die('paso 2 '); 
+        $hardware =  $this->model->filtrarBuscarProducto($request['inputBuscarProducto']);
         $this->view->traerHardwareMostrarmenu($hardware) ;
     }
 

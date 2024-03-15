@@ -209,5 +209,21 @@ coocar una confirmacion de si esta seguro de realizar estaq devolucion
 
 formuCrearMovimientoManual
 
+pendientes 
 
 revisar que despues de devuelto el estado debe ser bodega
+colocar columna de usuario 
+
+
+columan especificaciones en componenetes osea el campo costo
+darle mas espacio a modelo en el pdf 
+se pueden achicar otra columasn como pulgadas disco ram 
+
+
+revisar filtro producto 
+control para no dejar subir dos veces el serial 
+restablecer la contreaseña
+
+
+
+en hardware filtro de producto  que salgan todos los productos que hallan en esa columna

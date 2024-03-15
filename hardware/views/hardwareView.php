@@ -12,7 +12,9 @@ require_once($raiz.'/hardware/models/ProcesadorModel.php');
 require_once($raiz.'/hardware/models/GeneracionModel.php'); 
 require_once($raiz.'/pedidos/models/PedidoModel.php'); 
 require_once($raiz.'/clientes/models/ClienteModel.php'); 
+require_once($raiz.'/login/models/UsuarioModel.php'); 
 require_once($raiz.'/pedidos/models/AsociadoItemInicioPedidoHardwareOparteModel.php'); 
+
 require_once($raiz.'/vista/vista.php'); 
 
 class hardwareView extends vista
@@ -30,6 +32,7 @@ class hardwareView extends vista
     protected $clienteModel;
     protected $estadoInicioPedidoModel;
     protected $asociadoItemPedido;
+    protected $usuarioModel;
 
     public function __construct()
     {
@@ -46,6 +49,7 @@ class hardwareView extends vista
         $this->clienteModel = new ClienteModel();
         $this->estadoInicioPedidoModel = new EstadoInicioPedidoModel();
         $this->asociadoItemPedido = new AsociadoItemInicioPedidoHardwareOparteModel();
+        $this->usuarioModel = new UsuarioModel();
     }
     public function hardwareMenu($hardware)
     {
@@ -1803,29 +1807,29 @@ class hardwareView extends vista
         <div class="row">
             <div class="col-lg-3">
                 <button 
-                    class="btn btn-primary"
-                    data-bs-toggle="modal" 
-                    data-bs-target="#modalCrearMovimientoManual"
-                    onclick="formuCrearMovimientoManual('<?php echo $idHardware ?>');"
-                    >CREAR REGISTRO MOVIMIENTO MANUAL</button>
+                class="btn btn-primary"
+                data-bs-toggle="modal" 
+                data-bs-target="#modalCrearMovimientoManual"
+                onclick="formuCrearMovimientoManual('<?php echo $idHardware ?>');"
+                >CREAR REGISTRO MOVIMIENTO MANUAL</button>
             </div>
         </div>
         <div class="row mt-3">
-
+            
             <table class="table table-striped hover-hover">
                 <thead>
                     <th>Serial</th>
                     <th>Fecha</th>
                     <th>Cliente</th>
-                      <th># OC</th>
-                      <th>Estado</th>
-                      <th>Pdf</th>
-                      <!-- <th>TipoMov</th> -->
-                      <th>Observaciones</th>
-                      <!-- <th>Devolucion</th> -->
-                    </thead>
-                    <tbody>
-                        <?php
+                    <th># OC</th>
+                    <th>Estado</th>
+                    <th>Pdf</th>
+                    <th>Usuario</th>
+                    <th>Observaciones</th>
+                    <!-- <th>Devolucion</th> -->
+                </thead>
+                <tbody>
+                    <?php
                     foreach($movimientos as $movimiento)
                     {
                         $infoItemInicio =  $this->itemInicioPedidoModel->traerItemInicioPedidoId($movimiento['idItemInicio']); 
@@ -1834,6 +1838,7 @@ class hardwareView extends vista
                         // $this->printR($infoItemInicio); 
                         $infoPedido =  $this->pedidoModel->traerPedidoId($infoItemInicio['idPedido']); 
                         $infoCliente =   $this->clienteModel->traerClienteId($infoPedido['idCliente']); 
+                        $infoUsuario =  $this->usuarioModel->traerInfoId($movimiento['idUsuario']);
                         echo '<tr>'; 
                         echo '<td>'.$infoHardware['serial'].'</td>';
                         echo '<td>'.$movimiento['fecha'].'</td>';
@@ -1867,7 +1872,7 @@ class hardwareView extends vista
                             </a></td>';
                         }
                         
-                        // echo '<td>'.$movimiento['idTipoMov'].'</td>';
+                        echo '<td>'.$infoUsuario['nombre'].'</td>';
                         echo '<td>'.$movimiento['observaciones'].'</td>';
                         
                         // if($movimiento['idMovimiento'] == $maxIdMovimientosHardware)    
@@ -2051,6 +2056,16 @@ class hardwareView extends vista
                 </select>  
             </div>
         </div>
+        <div class="row"  >
+            <span class="col-lg-4">Producto:</span>
+            <div class="col-lg-8" align="right">
+                <select class ="form-control"  id="inputBuscarProducto" onchange="filtrarBuscarProducto();" >
+                    <option value ="">Sel...</option>
+                    <option value ="1">Hardware</option>
+                    <option value ="2">Parte</option>
+                </select>  
+            </div>
+        </div>
 
         <!-- <div class="row"  >
             <span class="col-lg-4">Tipo:</span>
@@ -2070,6 +2085,8 @@ class hardwareView extends vista
         </div> -->
         <?php
     }
+
+
 
     function formuRealizarDevolucionABodega($idHardware)
     {
